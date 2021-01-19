@@ -12,4 +12,8 @@
     <color name="colorDialogBackground">#B3000000</color>
     <color name="colorBackgroundGray">#F1F1F1</color>
 
+    <color name="gray8D">#8B8B8B</color>
+    <color name="grayE7">#E7E8E7</color>
+    <color name="green">#048548</color>
+
 </resources>

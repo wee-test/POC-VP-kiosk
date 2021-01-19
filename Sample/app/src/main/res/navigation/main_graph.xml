@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/comFragment">
+    app:startDestination="@id/advFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -66,5 +66,19 @@
     <action
         android:id="@+id/action_global_selectableFragment"
         app:destination="@id/selectableFragment" />
+    <fragment
+        android:id="@+id/advFragment"
+        android:name="wee.digital.sample.ui.fragment.adv.AdvFragment"
+        android:label="AdvFragment" />
+    <action
+        android:id="@+id/action_global_advFragment"
+        app:destination="@id/advFragment" />
+    <fragment
+        android:id="@+id/verifyFaceFragment"
+        android:name="wee.digital.sample.ui.fragment.face.VerifyFaceFragment"
+        android:label="VerifyFaceFragment" />
+    <action
+        android:id="@+id/action_global_verifyFaceFragment"
+        app:destination="@id/verifyFaceFragment" />
 
 </navigation>

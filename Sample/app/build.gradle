@@ -71,6 +71,9 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ["libs"]
+            assets {
+                srcDirs 'src/main/assets'
+            }
         }
     }
 
@@ -82,6 +85,8 @@ android {
 dependencies {
 
     implementation project(":library")
+
+    implementation project(":camera")
 
     implementation fileTree(include: ["*.jar", "*aar"], dir: "libs")
     implementation deps.kotlin.stdlib
@@ -131,6 +136,12 @@ dependencies {
     // CUSTOM VIEWS
     implementation deps.roundedimageview
     implementation deps.lottie
+
+    //Slider
+    implementation deps.slider
+    implementation deps.nineoandroid
+    implementation deps.picasso
+    implementation deps.circle
 
     // TESTINGS
     testImplementation deps.test.junit
