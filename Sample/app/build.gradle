@@ -132,6 +132,11 @@ dependencies {
     implementation deps.roundedimageview
     implementation deps.lottie
 
+    //Slider
+    implementation deps.slider
+    implementation deps.nineoandroid
+    implementation deps.picasso
+
     // TESTINGS
     testImplementation deps.test.junit
     testImplementation 'org.mockito:mockito-core:3.0.0'

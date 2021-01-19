@@ -49,6 +49,12 @@
     <action
         android:id="@+id/action_global_registerFragment"
         app:destination="@id/registerFragment" />
-
+    <fragment
+        android:id="@+id/advFragment"
+        android:name="wee.digital.sample.ui.fragment.adv.AdvFragment"
+        android:label="AdvFragment" />
+    <action
+        android:id="@+id/action_global_advFragment"
+        app:destination="@id/advFragment" />
 
 </navigation>
