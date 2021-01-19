@@ -5,6 +5,14 @@
     android:id="@+id/main"
     app:startDestination="@id/splashFragment">
 
+    <fragment
+        android:id="@+id/comFragment"
+        android:name="wee.digital.sample.ui.fragment.com.ComFragment"
+        android:label="ComFragment"
+        tools:layout="@layout/com" />
+    <action
+        android:id="@+id/action_global_comFragment"
+        app:destination="@id/comFragment" />
 
     <fragment
         android:id="@+id/splashFragment"
@@ -26,7 +34,7 @@
 
     <dialog
         android:id="@+id/alertFragment"
-        android:name="wee.digital.sample.ui.fragment.alert.AlertFragment"
+        android:name="wee.digital.sample.ui.fragment.dialog.alert.AlertFragment"
         android:label="AlertFragment"
         tools:layout="@layout/alert" />
     <action
@@ -50,5 +58,13 @@
         android:id="@+id/action_global_registerFragment"
         app:destination="@id/registerFragment" />
 
+    <dialog
+        android:id="@+id/selectableFragment"
+        android:name="wee.digital.sample.ui.fragment.dialog.selectable.SelectableFragment"
+        android:label="SelectableFragment"
+        tools:layout="@layout/selectable" />
+    <action
+        android:id="@+id/action_global_selectableFragment"
+        app:destination="@id/selectableFragment" />
 
 </navigation>

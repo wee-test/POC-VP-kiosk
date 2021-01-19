@@ -8,7 +8,8 @@
     <style name="Dialog" />
 
     <!--TEXT VIEW-->
-    <style name="TextView" parent="WrapContent">
+    <style name="TextView"
+        parent="WrapContent">
         <item name="android:ellipsize">end</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_12ssp</item>
@@ -16,11 +17,13 @@
     </style>
 
     <style name="TextView.PlaceHolder">
-         <item name="android:textSize">@dimen/_24ssp</item>
-         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/_24ssp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="Button" parent="TextView">
+    <style name="Button"
+        parent="TextView">
         <item name="android:layout_height">@dimen/_38sdp</item>
         <item name="android:gravity">center</item>
         <item name="android:letterSpacing">-0.02</item>
@@ -33,7 +36,58 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <style name="EditText"
+        parent="TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/_38sdp</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:includeFontPadding">true</item>
+        <item name="android:textIsSelectable">false</item>
+        <item name="android:privateImeOptions">nm</item>
+        <item name="android:longClickable">false</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textColorHint">#BEBEBE</item>
+        <item name="android:maxLength">256</item>
+        <item name="android:background">@null</item>
+    </style>
+
     <!--IMAGE VIEW-->
     <style name="ImageView" />
+
+    <!--DIALOG-->
+    <style name="Dialog.BottomLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/_200sdp</item>
+        <item name="android:paddingBottom">@dimen/_16sdp</item>
+        <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <style name="Dialog.Title"
+        parent="TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_54sdp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/_20sdp</item>
+        <item name="android:paddingEnd">@dimen/_20sdp</item>
+        <item name="android:text">@string/app_name</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:layout_marginBottom">@dimen/margin5</item>
+    </style>
+
+    <style name="Dialog.TitleIcon">
+        <item name="android:layout_width">@dimen/_54sdp</item>
+        <item name="android:layout_height">@dimen/_54sdp</item>
+        <item name="android:padding">@dimen/_22sdp</item>
+        <item name="android:tint">#424242</item>
+    </style>
+
 
 </resources>

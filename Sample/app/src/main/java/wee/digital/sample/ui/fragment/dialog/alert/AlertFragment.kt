@@ -1,4 +1,4 @@
-package wee.digital.sample.ui.fragment.alert
+package wee.digital.sample.ui.fragment.dialog.alert
 
 import android.widget.TextView
 import kotlinx.android.synthetic.main.alert.*
