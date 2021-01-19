@@ -26,6 +26,7 @@ allprojects {
         maven { url "https://jitpack.io" }
         jcenter()
         google()
+        maven { url "https://dl.bintray.com/intel-realsense/librealsense" }
     }
 }
 

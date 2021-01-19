@@ -178,3 +178,6 @@ deps.okhttp = okhttp
 deps.slider = "com.daimajia.slider:library:1.1.5@aar"
 deps.picasso ="com.squareup.picasso:picasso:2.5.2"
 deps.nineoandroid="com.nineoldandroids:library:2.4.0"
+
+//UI
+deps.circle = "de.hdodenhof:circleimageview:3.1.0"

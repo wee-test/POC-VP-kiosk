@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
+import wee.digital.library.extension.hideSystemUI
 import wee.digital.library.util.Logger
 
 abstract class BaseActivity : AppCompatActivity(), BaseView {
@@ -45,6 +46,11 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     final override val fragmentActivity: FragmentActivity get() = this
 
     final override val lifecycleOwner: LifecycleOwner get() = this
+
+    override fun onResume() {
+        super.onResume()
+        hideSystemUI()
+    }
 
     /**
      * [BaseActivity] properties
