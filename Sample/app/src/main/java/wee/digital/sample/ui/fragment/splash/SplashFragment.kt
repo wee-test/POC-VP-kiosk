@@ -1,5 +1,6 @@
 package wee.digital.sample.ui.fragment.splash
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import wee.digital.sample.R
 import wee.digital.sample.ui.main.MainFragment
 
@@ -10,6 +11,7 @@ class SplashFragment : MainFragment() {
     }
 
     override fun onViewCreated() {
+        LinearLayoutManager
     }
 
     override fun onLiveDataObserve() {
