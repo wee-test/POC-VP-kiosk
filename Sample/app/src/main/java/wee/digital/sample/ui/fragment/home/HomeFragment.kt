@@ -14,4 +14,5 @@ class HomeFragment : MainFragment() {
 
     override fun onLiveDataObserve() {
     }
+
 }
