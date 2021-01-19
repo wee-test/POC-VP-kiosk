@@ -1,16 +1,16 @@
-package wee.digital.sample.ui.fragment.alert
+package wee.digital.sample.ui.fragment.dialog.alert
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import wee.digital.library.extension.string
 import wee.digital.sample.R
 
 class Alert {
 
     class Arg constructor(
+
             var icon: Int = R.drawable.ic_placeholder,
 
-            var title: String = string(R.string.app_name),
+            var title: String = "",
 
             var message: String? = null,
 
