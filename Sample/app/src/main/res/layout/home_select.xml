@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin2"
+    android:layout_marginHorizontal="@dimen/margin2">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/homeLabelSelect"
+        style="@style/TextView"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="Chọn dịch vụ bên dưới"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/marginY2"
+        android:background="@color/gray_info"
+        app:layout_constraintBottom_toBottomOf="@+id/homeLabelSelect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/homeLabelSelect"
+        app:layout_constraintTop_toTopOf="@+id/homeLabelSelect"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeTabSelectAuto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/margin2"
+        android:background="@mipmap/tab_select_auto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeLabelSelect">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Đăng ký\nmở thẻ\ntự động"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/svn_gilroy_bold"
+            android:textSize="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/margin3"
+            android:layout_marginStart="@dimen/margin2"
+            style="@style/TextView"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextView"
+            android:text="Tự thực hiện đăng ký và in thẻ"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginStart="@dimen/margin2"
+            android:layout_marginBottom="@dimen/margin2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeTabSelectSupport"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/margin3"
+        android:background="@mipmap/tab_select_support"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeTabSelectAuto">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Đăng ký\nmở thẻ với\nhỗ trợ"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/svn_gilroy_bold"
+            android:textSize="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/margin3"
+            android:layout_marginStart="@dimen/margin2"
+            style="@style/TextView"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextView"
+            android:text="Thực hiện đăng ký có hỗ trợ\ncủa GDV"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginStart="@dimen/margin2"
+            android:layout_marginBottom="@dimen/margin2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

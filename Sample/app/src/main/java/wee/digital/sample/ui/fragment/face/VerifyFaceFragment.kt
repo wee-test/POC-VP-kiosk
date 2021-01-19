@@ -7,7 +7,9 @@ import wee.digital.camera.job.FaceCaptureJob
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
+import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainFragment
 
 class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
@@ -40,11 +42,13 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onPortraitCaptured(image: Bitmap) {
         mFaceDetectJob.pauseDetect()
+        Shared.faceCapture.postValue(image)
         activity?.runOnUiThread {
             faceLabelStatusFace.text = "Chờ chút nhé..."
             if (isComplete) return@runOnUiThread
             isComplete = true
             faceFrame.setImageBitmap(image)
+            navigate(MainDirections.actionGlobalHomeFragment())
         }
     }
 

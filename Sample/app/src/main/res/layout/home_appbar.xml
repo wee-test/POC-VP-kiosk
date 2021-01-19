@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchWidth"
+    android:padding="@dimen/margin2"
+    android:background="@color/colorWhite">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/homeLogo"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:src="@mipmap/logo_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/homeLabelKiosk"
+        style="@style/TextView"
+        android:drawableEnd="@drawable/ic_vector"
+        android:drawablePadding="@dimen/marginY2"
+        android:text="Kiosk Demo"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/homeLabelLanguage"
+        style="@style/TextView"
+        android:layout_marginEnd="@dimen/margin"
+        android:drawableEnd="@drawable/ic_vector"
+        android:drawablePadding="@dimen/marginY2"
+        android:drawableStart="@drawable/ic_setting"
+        android:text="Tiếng việt"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/homeLabelKiosk"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
