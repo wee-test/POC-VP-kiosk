@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "761055463658",
+    "firebase_url": "https://example-32b9d.firebaseio.com",
+    "project_id": "example-32b9d",
+    "storage_bucket": "example-32b9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761055463658:android:6433c219ea0b47e7b12f93",
+        "android_client_info": {
+          "package_name": "wee.digital.sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761055463658-pkf9i9h8h3hniqiesbduk4glhr9utc89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw7XuBx9488fvZzbzXOkFQqX3vbp4XePE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761055463658-pkf9i9h8h3hniqiesbduk4glhr9utc89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761055463658:android:96ee99092cff608eb12f93",
+        "android_client_info": {
+          "package_name": "wee.digital.sample.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761055463658-pkf9i9h8h3hniqiesbduk4glhr9utc89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw7XuBx9488fvZzbzXOkFQqX3vbp4XePE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761055463658-pkf9i9h8h3hniqiesbduk4glhr9utc89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761055463658:android:86a520b8cfe8b724b12f93",
+        "android_client_info": {
+          "package_name": "wee.digital.sample.qc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761055463658-pkf9i9h8h3hniqiesbduk4glhr9utc89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw7XuBx9488fvZzbzXOkFQqX3vbp4XePE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761055463658-pkf9i9h8h3hniqiesbduk4glhr9utc89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

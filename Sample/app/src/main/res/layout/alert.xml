@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialogView"
+    style="@style/MatchParent"
+    android:clickable="true"
+    android:focusable="true"
+    tools:background="#BC454545">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/MatchWidth"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/_32sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/alertImageViewIcon"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:src="@drawable/ic_placeholder"
+            android:tint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/alertTextViewTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/alertTextViewTitle"
+            style="@style/TextView"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/alertTextViewMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alertImageViewIcon"
+            tools:text="@string/app_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/alertTextViewMessage"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center_horizontal"
+            android:maxLines="6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alertTextViewTitle"
+            tools:text="@tools:sample/lorem" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/alertViewAccept"
+            style="@style/Button.Primary"
+            android:layout_marginTop="@dimen/_32sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alertTextViewMessage"
+            tools:text="@tools:sample/lorem" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/alertViewCancel"
+            style="@style/Button"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alertViewAccept"
+            tools:text="@tools:sample/lorem" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

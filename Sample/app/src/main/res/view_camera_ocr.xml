@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/frameLayout"
+        android:layout_width="match_parent" android:layout_height="@dimen/_280sdp"
+        android:background="@color/white" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+
+        <vn.wee.facepay.utils.camera.PreviewFullScreen android:id="@+id/actCamera_previewFull"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_width="match_parent"
+            android:layout_height="@dimen/_280sdp"
+            android:background="@color/white"></vn.wee.facepay.utils.camera.PreviewFullScreen>
+
+        <vn.wee.facepay.utils.camera.GraphicOverlay android:id="@+id/actCamera_graphicOverlay"
+            android:layout_width="match_parent" android:layout_height="match_parent" />
+
+        <vn.wee.facepay.utils.canvas.BackgroundCamera android:id="@+id/cameraView"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout android:id="@+id/contentGuid" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:paddingHorizontal="@dimen/contentMargin"
+        android:orientation="vertical" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+
+        <vn.wee.facepay.utils.canvas.DrawTriangle android:id="@+id/triangle"
+            android:layout_width="@dimen/_14sdp" android:layout_height="@dimen/_8sdp"
+            android:layout_gravity="center" />
+
+        <LinearLayout android:id="@+id/statusBackground" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:padding="@dimen/_10sdp"
+            android:layout_gravity="center" android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/bg_rounded" android:gravity="center">
+
+            <TextView android:id="@+id/statusTextView" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="CONTENT ERROR"
+                android:textAlignment="center" android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp" android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/buttonTryAgain" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_gravity="center"
+        android:gravity="center" android:orientation="horizontal" android:visibility="invisible"
+        android:paddingHorizontal="@dimen/_20sdp" android:paddingVertical="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView android:id="@+id/textViewTryAgain"
+            style="@style/BodySemibold" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:letterSpacing="-0.01"
+            android:text="@string/txt_try_again" android:textColor="@color/colorTextPrimary" />
+
+        <ImageView android:layout_width="@dimen/_10sdp" android:layout_height="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp" android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

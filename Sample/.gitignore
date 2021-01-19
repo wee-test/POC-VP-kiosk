@@ -1,0 +1,16 @@
+*.iml
+*.DS_Store
+*.log
+*.DS_Store
+.gradle/
+node_modules/
+dist/
+build/
+app/build/
+app/dev/
+app/prod/
+app/io/
+.gradle/
+target/
+dist/
+.idea/

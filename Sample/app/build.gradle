@@ -1,0 +1,145 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+
+    compileSdkVersion builds.compile_sdk
+
+    defaultConfig {
+        applicationId "wee.digital.sample"
+        minSdkVersion builds.min_sdk
+        targetSdkVersion builds.target_sdk
+        versionCode builds.version_code
+        versionName builds.version_name
+        flavorDimensions "default"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    signingConfigs {
+        release {
+
+        }
+    }
+
+    buildTypes {
+        all {
+        }
+        release {
+            signingConfig signingConfigs.release
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+
+    productFlavors {
+        all {
+        }
+        dev {
+            resValue "string", "app_name", "Sample Dev"
+            applicationIdSuffix ".dev"
+        }
+        qc {
+            resValue "string", "app_name", "Sample QC"
+            applicationIdSuffix ".qc"
+        }
+        prod {
+            resValue "string", "app_name", "Sample"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["libs"]
+        }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+    }
+}
+
+dependencies {
+
+    implementation project(":library")
+
+    implementation fileTree(include: ["*.jar", "*aar"], dir: "libs")
+    implementation deps.kotlin.stdlib
+    implementation deps.android.appcompat
+    implementation deps.android.corektx
+    implementation deps.android.constraintlayout
+    implementation deps.android.recyclerview
+    implementation deps.android.cardview
+    implementation deps.android.exifinterface
+    implementation deps.android.vectordrawable_animated
+    implementation deps.android.legacy
+    implementation deps.android.legacy_v4
+    implementation deps.android.material
+    implementation deps.android.browser
+
+    // PAGING RECYCLER VIEW ADAPTIVE
+    implementation deps.paging.runtime
+    implementation deps.paging.rx
+
+    // FRAGMENT NAVIGATION
+    implementation deps.navigation.fragment
+    implementation deps.navigation.ui
+
+    // LIFECYCLE
+    implementation deps.lifecycle.extensions
+    kapt deps.lifecycle.compiler
+
+    // MULTI DIMENSIONS
+    implementation deps.dimens.sdp
+    implementation deps.dimens.ssp
+
+    // JSON CONVERTER
+    implementation deps.google.gson
+
+    // REST API LIBS
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.gson
+
+    // OK HTTP
+    implementation deps.okhttp.http
+    implementation deps.okhttp.url
+
+    // ASYNC IMAGE LOAD
+    implementation deps.glide.glide
+    kapt deps.glide.compiler
+
+    // CUSTOM VIEWS
+    implementation deps.roundedimageview
+    implementation deps.lottie
+
+    // TESTINGS
+    testImplementation deps.test.junit
+    testImplementation 'org.mockito:mockito-core:3.0.0'
+    androidTestImplementation deps.test.extension
+    androidTestImplementation deps.test.espresso
+    androidTestImplementation deps.test.navigation
+    androidTestImplementation deps.test.fragment
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
+}
+
+apply plugin: "com.google.gms.google-services"
