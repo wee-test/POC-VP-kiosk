@@ -61,6 +61,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onPause() {
         super.onPause()
+        RealSense.imagesLiveData.postValue(null)
         RealSense.stop()
     }
 

@@ -21,17 +21,12 @@
         app:layout_constraintGuide_percent="1.1" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
-        android:src="@mipmap/icon_vp"
-        app:layout_constraintEnd_toEndOf="@id/faceGuide2"
-        app:layout_constraintTop_toTopOf="@+id/faceGuide1" />
-
-    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/faceLogo"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin4"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.05"
+        android:layout_marginTop="@dimen/margin3"
         android:src="@mipmap/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
