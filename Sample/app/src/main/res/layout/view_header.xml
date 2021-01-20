@@ -10,6 +10,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/headerAction"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_8sdp"

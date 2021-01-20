@@ -7,9 +7,10 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/textFieldImageViewIcon"
-        android:layout_width="@dimen/_28sdp"
+        android:layout_width="@dimen/_18sdp"
         android:layout_height="0dp"
         android:src="@drawable/ic_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -17,10 +18,11 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textFieldTextViewTitle"
         style="@style/TextView"
+        android:textColor="@color/black40"
         android:layout_width="0dp"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/marginY2"
+        android:textSize="@dimen/_9ssp"
         app:layout_constraintStart_toEndOf="@+id/textFieldImageViewIcon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Title goes here" />
@@ -30,10 +32,11 @@
         style="@style/TextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/marginY2"
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="2"
+        android:textSize="@dimen/_12ssp"
         android:minHeight="@dimen/_24sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textFieldTextViewTitle"

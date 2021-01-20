@@ -1,11 +1,10 @@
 package wee.digital.sample.ui.fragment.face
 
 import android.graphics.Bitmap
-import kotlinx.android.synthetic.main.fragment_verify_face.*
+import kotlinx.android.synthetic.main.verify_face.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
 import wee.digital.library.extension.gone
-import wee.digital.library.extension.load
 import wee.digital.library.extension.show
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -18,7 +17,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
     private var isComplete = false
 
-    override fun layoutResource(): Int = R.layout.fragment_verify_face
+    override fun layoutResource(): Int = R.layout.verify_face
 
     override fun onViewCreated() {
         mFaceDetectJob.observe(viewLifecycleOwner)

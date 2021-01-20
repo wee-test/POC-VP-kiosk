@@ -1,0 +1,27 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchWidth"
+    android:background="@drawable/drw_tab"
+    android:clipToPadding="false"
+    android:padding="@dimen/_2sdp"
+    tools:layout_height="@dimen/_30sdp"
+    tools:layout_width="match_parent">
+
+    <View
+        android:id="@+id/tabViewIndicator"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_28sdp"
+        app:tabIndicatorColor="@null"
+        app:tabPaddingBottom="-1dp"
+        app:tabPaddingEnd="-1dp"
+        app:tabPaddingStart="-1dp"
+        app:tabPaddingTop="-1dp"
+        app:tabRippleColor="@null" />
+
+</FrameLayout>

@@ -1,0 +1,22 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tabItemView"
+    android:layout_width="@dimen/_80sdp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:orientation="vertical"
+    tools:background="@color/colorWhite">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tabItemTitle"
+        style="@style/TextView"
+        android:gravity="center"
+        android:textSize="@dimen/_7ssp"
+        android:drawablePadding="@dimen/_2sdp"
+        android:textColor="@color/black60"
+        tools:text="Title" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

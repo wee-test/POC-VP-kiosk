@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/ocrConfirmFragment">
+    app:startDestination="@id/advFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -40,7 +40,6 @@
     <action
         android:id="@+id/action_global_alertFragment"
         app:destination="@id/alertFragment" />
-
     <fragment
         android:id="@+id/loginFragment"
         android:name="wee.digital.sample.ui.fragment.login.LoginFragment"
@@ -67,7 +66,6 @@
     <action
         android:id="@+id/action_global_selectableFragment"
         app:destination="@id/selectableFragment" />
-
     <fragment
         android:id="@+id/advFragment"
         android:name="wee.digital.sample.ui.fragment.adv.AdvFragment"
@@ -75,7 +73,6 @@
     <action
         android:id="@+id/action_global_advFragment"
         app:destination="@id/advFragment" />
-
     <fragment
         android:id="@+id/verifyFaceFragment"
         android:name="wee.digital.sample.ui.fragment.face.VerifyFaceFragment"
@@ -83,7 +80,6 @@
     <action
         android:id="@+id/action_global_verifyFaceFragment"
         app:destination="@id/verifyFaceFragment" />
-
     <fragment
         android:id="@+id/documentFragment"
         android:name="wee.digital.sample.ui.fragment.member.DocumentFragment"
@@ -91,7 +87,6 @@
     <action
         android:id="@+id/action_global_documentFragment"
         app:destination="@id/documentFragment" />
-
     <fragment
         android:id="@+id/ocrFragment"
         android:name="wee.digital.sample.ui.fragment.ocr.OcrFragment"
@@ -99,7 +94,6 @@
     <action
         android:id="@+id/action_global_ocrFragment"
         app:destination="@id/ocrFragment" />
-
     <fragment
         android:id="@+id/ocrConfirmFragment"
         android:name="wee.digital.sample.ui.fragment.ocr.OcrConfirmFragment"
@@ -108,5 +102,4 @@
     <action
         android:id="@+id/action_global_ocrConfirmFragment"
         app:destination="@id/ocrConfirmFragment" />
-
 </navigation>

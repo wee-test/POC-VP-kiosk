@@ -7,7 +7,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/documentRootNid"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_130sdp"
+        android:layout_height="@dimen/_90sdp"
         android:layout_marginHorizontal="@dimen/margin2"
         android:layout_marginTop="@dimen/margin2"
         app:cardCornerRadius="@dimen/_10sdp"
@@ -23,33 +23,63 @@
                 android:id="@+id/documentTitleNid"
                 style="@style/TextView"
                 android:layout_marginStart="@dimen/margin2"
-                android:layout_marginTop="@dimen/margin3"
                 android:fontFamily="@font/svn_gilroy_bold"
-                android:text="Chứng minh\nnhân dân"
+                android:text="Chứng minh\nnhân dân loại cũ"
                 android:textSize="@dimen/_15ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/documentContentNid"
-                style="@style/TextView"
-                android:layout_marginStart="@dimen/margin2"
-                android:layout_marginTop="@dimen/margin2"
-                android:text="Bao gồm giấy tờ 9 số\nvà 12 số"
-                android:textSize="@dimen/_10ssp"
-                android:textColor="@color/black60"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/documentTitleNid" />
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/documentImageNid"
-                android:layout_width="@dimen/_120sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/nid"
+                android:layout_marginEnd="@dimen/margin2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/documentContentNid"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/documentRootNid12"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginVertical="@dimen/margin2"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/documentRootNid">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/documentTitleNid12"
+                style="@style/TextView"
+                android:layout_marginStart="@dimen/margin2"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:text="Chứng minh\nnhân dân 12 số"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/documentImageNid12"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginEnd="@dimen/margin2"
+                android:scaleType="fitXY"
+                android:src="@mipmap/nid_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -59,14 +89,13 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/documentRootCccd"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_130sdp"
+        android:layout_height="@dimen/_90sdp"
         android:layout_marginHorizontal="@dimen/margin2"
         android:layout_marginVertical="@dimen/margin2"
         app:cardCornerRadius="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/documentRootNid">
+        app:layout_constraintTop_toBottomOf="@+id/documentRootNid12">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -76,33 +105,64 @@
                 android:id="@+id/documentTitleCccd"
                 style="@style/TextView"
                 android:layout_marginStart="@dimen/margin2"
-                android:layout_marginTop="@dimen/margin3"
                 android:fontFamily="@font/svn_gilroy_bold"
                 android:text="Căn cước\ncông dân"
                 android:textSize="@dimen/_15ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/documentContentCccd"
-                style="@style/TextView"
-                android:layout_marginStart="@dimen/margin2"
-                android:layout_marginTop="@dimen/margin2"
-                android:text="Hình thức mới của\nchứng minh nhân dân"
-                android:textSize="@dimen/_10ssp"
-                android:textColor="@color/black60"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/documentTitleCccd" />
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/documentImageCccd"
-                android:layout_width="@dimen/_120sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginEnd="@dimen/margin2"
                 android:scaleType="fitXY"
                 android:src="@mipmap/cccd"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/documentContentCccd"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/documentRootPassport"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginVertical="@dimen/margin2"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/documentRootCccd">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/documentTitlePassport"
+                style="@style/TextView"
+                android:layout_marginStart="@dimen/margin2"
+                android:fontFamily="@font/svn_gilroy_bold"
+                android:text="Hộ chiếu"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/documentImagePassport"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginEnd="@dimen/margin2"
+                android:scaleType="fitXY"
+                android:src="@mipmap/passport"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

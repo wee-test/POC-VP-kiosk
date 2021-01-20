@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchParent"
+    android:background="@color/gray_bg">
+
+    <include layout="@layout/view_header"/>
+
+    <ProgressBar
+        app:layout_constraintStart_toStartOf="@+id/loadingEllipse"
+        app:layout_constraintEnd_toEndOf="@+id/loadingEllipse"
+        app:layout_constraintTop_toTopOf="@+id/loadingEllipse"
+        app:layout_constraintBottom_toBottomOf="@+id/loadingEllipse"
+        android:layout_marginBottom="@dimen/marginY2"
+        android:indeterminateTint="@color/green"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/loadingEllipse"
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="@dimen/_170sdp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ellipse_loading"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:src="@mipmap/card1"
+        app:layout_constraintBottom_toBottomOf="@+id/loadingEllipse"
+        app:layout_constraintEnd_toEndOf="@+id/loadingEllipse"
+        app:layout_constraintStart_toStartOf="@+id/loadingEllipse"
+        app:layout_constraintTop_toTopOf="@+id/loadingEllipse" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/loadingLabelTitle"
+        style="@style/TextView"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/margin3"
+        android:layout_marginTop="@dimen/margin3"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="Bạn chờ một chút nhé"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadingEllipse" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/loadingLabelContent"
+        style="@style/TextView"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/margin3"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_regular"
+        android:text="Thẻ của bạn sẽ sẵn sàng trong giây lát..."
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadingLabelTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

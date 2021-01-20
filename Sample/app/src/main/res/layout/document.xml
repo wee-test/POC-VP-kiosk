@@ -42,7 +42,7 @@
                     android:layout_marginTop="@dimen/margin2"
                     android:fontFamily="@font/svn_gilroy_bold"
                     android:text="Chọn loại giấy tờ"
-                    android:textSize="@dimen/_15ssp"
+                    android:textSize="@dimen/_18ssp"
                     app:layout_constraintEnd_toEndOf="@+id/documentGuide1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

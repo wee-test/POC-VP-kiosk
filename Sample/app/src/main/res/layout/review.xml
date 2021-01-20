@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_bg">
+
+    <include
+        android:id="@+id/reviewToolbar"
+        layout="@layout/view_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/reviewTitle"
+        style="@style/TextView"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="Xác nhận thông tin"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewToolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reviewRootInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin2"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/gray_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewTitle">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/reviewGuide1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/reviewImageFace"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginVertical="@dimen/margin"
+            android:src="@color/colorBlack"
+            app:civ_border_color="@color/colorWhite"
+            app:civ_border_width="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reviewGuide1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/reviewLabelName"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:fontFamily="@font/svn_gilroy_bold"
+            android:text="Nguyễn Hoàng Yến"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/reviewGuide1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:text="Regular member"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/reviewGuide1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <wee.digital.sample.widget.TabReview
+        android:id="@+id/reviewTab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewRootInfo" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/reviewPager"
+        android:padding="@dimen/margin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_210sdp"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="@dimen/margin2"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewTab" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/reviewActionAccept"
+        style="@style/Button.Ocr"
+        android:layout_marginBottom="@dimen/margin2"
+        android:background="@drawable/bg_gradient"
+        android:text="Xác nhận"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

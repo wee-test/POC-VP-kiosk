@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/failIcon"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:src="@drawable/ic_x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/failTitle"
+        style="@style/TextView"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:gravity="center"
+        android:text="Thông tin không\ntrùng khớp"
+        android:textSize="@dimen/_20ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/failContent"
+        style="@style/TextView"
+        android:layout_marginHorizontal="@dimen/margin3"
+        android:fontFamily="@font/svn_gilroy_regular"
+        android:text="fail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/failActionAgain"
+        style="@style/Button.Ocr"
+        android:layout_marginBottom="@dimen/margin"
+        android:background="@drawable/bg_gradient"
+        android:drawableEnd="@null"
+        android:text="Thử lại"
+        app:layout_constraintBottom_toTopOf="@+id/failActionSupport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/failActionSupport"
+        style="@style/Button.Ocr"
+        android:layout_marginTop="@dimen/margin"
+        android:background="@drawable/bg_line"
+        android:drawableEnd="@null"
+        android:text="Gọi cho hỗ trợ viên"
+        android:textColor="@color/green"
+        android:layout_marginBottom="@dimen/margin4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

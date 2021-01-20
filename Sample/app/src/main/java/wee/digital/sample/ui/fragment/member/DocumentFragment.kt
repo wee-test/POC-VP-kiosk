@@ -12,8 +12,8 @@ class DocumentFragment : MainFragment() {
 
     override fun onLiveDataObserve() {
     }
-/*start video
-val urlPath = "android.resource://" + activity?.packageName + "/" + R.raw.card
+    /*start video
+    val urlPath = "android.resource://" + activity?.packageName + "/" + R.raw.card
     tipVideo.setVideoURI(Uri.parse(urlPath))
     tipVideo.start()
     tipVideo.setOnCompletionListener { it.start() }*/
