@@ -123,4 +123,11 @@
     <action
         android:id="@+id/action_global_failFragment"
         app:destination="@id/failFragment" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="wee.digital.sample.ui.fragment.member.LoadingFragment"
+        android:label="LoadingFragment" />
+    <action
+        android:id="@+id/action_global_loadingFragment"
+        app:destination="@id/loadingFragment" />
 </navigation>
