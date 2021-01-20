@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_210sdp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/reviewCardGuide1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/reviewCardImage"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginEnd="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin2"
+        android:scaleType="fitXY"
+        android:src="@mipmap/card1"
+        app:layout_constraintEnd_toEndOf="@+id/reviewCardGuide1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/reviewCardNameCard"
+        style="@style/TextView"
+        android:layout_width="0dp"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="VPBank Platinum Cashback"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/reviewCardImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/reviewCardGuide1"
+        app:layout_constraintTop_toTopOf="@+id/reviewCardImage"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/reviewCardLabelNote"
+        style="@style/TextView"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/margin"
+        android:fontFamily="@font/svn_gilroy_regular"
+        android:text="Thẻ tín dụng hoàn tiền"
+        android:textColor="@color/green"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/reviewCardGuide1"
+        app:layout_constraintTop_toBottomOf="@+id/reviewCardNameCard" />
+
+    <wee.digital.sample.widget.TextVerticalView
+        android:id="@+id/reviewCardholder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_custom"
+        android:text="NGUYEN HOANG YEN"
+        android:title="Chủ thẻ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/reviewCardGuide1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewCardImage"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <wee.digital.sample.widget.TextVerticalView
+        android:id="@+id/reviewCardLevel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin"
+        android:src="@drawable/ic_custom"
+        android:text="50,000,000"
+        android:title="Hạn mức"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/reviewCardGuide1"
+        app:layout_constraintTop_toBottomOf="@+id/reviewCardImage"
+        app:layout_constraintVertical_bias="0.6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

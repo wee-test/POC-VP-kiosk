@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/advFragment">
+    app:startDestination="@id/reviewFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -102,4 +102,11 @@
     <action
         android:id="@+id/action_global_ocrConfirmFragment"
         app:destination="@id/ocrConfirmFragment" />
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="wee.digital.sample.ui.fragment.review.ReviewFragment"
+        android:label="ReviewFragment" />
+    <action
+        android:id="@+id/action_global_reviewFragment"
+        app:destination="@id/reviewFragment" />
 </navigation>
