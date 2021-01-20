@@ -41,10 +41,16 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
     override fun onInitialize(context: Context, types: TypedArray) {
         hint = types.hint
         inputEditText.setText(types.text)
+        if (text.isNullOrEmpty()) {
+            inputViewLayout.setTransition(R.id.unfocused, R.id.focused)
+        } else {
+            inputViewLayout.setTransition(R.id.focused, R.id.unfocused)
+        }
         inputEditText.addTextChangedListener(this)
         onIconInitialize(inputImageViewIcon, types)
         onEditTextInitialize(inputEditText, types)
         inputViewLayout.addTransitionListener(this)
+
     }
 
     private fun onIconInitialize(it: AppCompatImageView, types: TypedArray) {
