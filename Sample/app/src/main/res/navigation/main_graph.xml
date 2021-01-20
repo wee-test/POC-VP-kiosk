@@ -116,4 +116,11 @@
     <action
         android:id="@+id/action_global_callFragment"
         app:destination="@id/callFragment" />
+    <fragment
+        android:id="@+id/failFragment"
+        android:name="wee.digital.sample.ui.fragment.member.FailFragment"
+        android:label="FailFragment" />
+    <action
+        android:id="@+id/action_global_failFragment"
+        app:destination="@id/failFragment" />
 </navigation>
