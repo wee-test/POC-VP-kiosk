@@ -5,11 +5,12 @@
     <color name="colorPrimaryDark">#016730</color>
     <color name="colorAccent">#EC1E25</color>
 
-    <color name="colorInputUnfocused">#1A016730</color>
     <color name="colorInputFocused">@color/colorPrimary</color>
-    <color name="colorInputError">@color/colorAccent</color>
+    <color name="colorInputUnfocused">#1A016730</color>
+    <color name="colorInputError">#E47F7F</color>
 
     <color name="colorDialogBackground">#B3000000</color>
+    <color name="colorBackgroundGray">#F1F1F1</color>
 
     <color name="gray8D">#8B8B8B</color>
     <color name="grayE7">#E7E8E7</color>

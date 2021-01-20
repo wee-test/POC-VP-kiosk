@@ -1,5 +1,6 @@
 package wee.digital.sample.widget
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Paint
@@ -23,6 +24,10 @@ import kotlinx.android.synthetic.main.widget_text_input.view.*
 import wee.digital.library.extension.*
 import wee.digital.library.widget.AppCustomView
 import wee.digital.sample.R
+import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
+import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
+import wee.digital.sample.ui.main.Main
+import wee.digital.sample.ui.main.MainVM
 
 class TextInputView : AppCustomView, SimpleMotionTransitionListener,
         OnFocusChangeListener, SimpleTextWatcher {
@@ -280,5 +285,45 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
 
     fun addDateWatcher() {
         inputEditText.addDateWatcher()
+    }
+
+    var selectable: Selectable? = null
+
+    fun <T : Selectable> buildSelectable(
+            mainVM: MainVM,
+            data: List<T>?,
+            adaptive: SelectableAdapter<T>.() -> Unit = {}
+    ) {
+
+        data ?: return
+
+        val showDialog = {
+            (context as? Activity)?.hideKeyboard()
+            val adapter = SelectableAdapter<T>().also {
+                it.set(data)
+                @Suppress("UNCHECKED_CAST")
+                it.selectedItem = selectable as? T
+                it.onDismiss = {
+                    when (this) {
+                        is TextInputView -> {
+                            text = selectable?.text
+                            onFocusChange(null, this.hasFocus())
+                        }
+                    }
+                }
+                it.addOnItemClick { model, _ ->
+                    selectable = model
+                }
+            }
+            mainVM.selectableLiveData.value = adapter
+            mainVM.dialogLiveData.value = Main.selectable
+            adapter.adaptive()
+        }
+        addViewClickListener {
+            when (this) {
+                is TextInputView -> drawBorder(R.color.colorInputFocused)
+            }
+            showDialog()
+        }
     }
 }

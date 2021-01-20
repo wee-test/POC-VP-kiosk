@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchParent"
+    android:background="@color/colorBackgroundGray">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/view_header" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/cardTextViewTitle"
+        style="@style/TextView"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:text="Chọn loại thẻ"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView"
+        style="@style/TextView"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Tận hưởng những ưu đãi đẳng cấp cùng thẻ VPBank"
+        app:layout_constraintStart_toStartOf="@+id/cardTextViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/cardTextViewTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView2"
+        style="@style/TextView"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:text="Thẻ tín dụng hoàn tiền"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/cardTextViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+
+    <View
+        android:id="@+id/view"
+        style="@style/VerticalSeparator"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView2"
+        app:layout_constraintEnd_toEndOf="@+id/appCompatTextView"
+        app:layout_constraintStart_toEndOf="@+id/appCompatTextView2"
+        app:layout_constraintTop_toTopOf="@+id/appCompatTextView2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView3"
+        style="@style/TextView"
+        android:text="Thẻ tín dụng đồng thương hiệu"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_32sdp"
+        app:layout_constraintStart_toStartOf="@+id/cardTextViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/cardRecyclerView1" />
+
+    <View
+        style="@style/VerticalSeparator"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView3"
+        app:layout_constraintEnd_toEndOf="@+id/appCompatTextView"
+        app:layout_constraintStart_toEndOf="@+id/appCompatTextView3"
+        app:layout_constraintTop_toTopOf="@+id/appCompatTextView3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cardRecyclerView1"
+        style="@style/RecyclerView"
+        android:orientation="horizontal"
+        app:layout_constraintVertical_bias="0.2"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="@+id/appCompatTextView"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
+        tools:listitem="@layout/card_item" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cardRecyclerView2"
+        style="@style/RecyclerView"
+        android:orientation="horizontal"
+        app:layout_constraintVertical_bias="0.2"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="@+id/appCompatTextView"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3"
+        tools:listitem="@layout/card_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

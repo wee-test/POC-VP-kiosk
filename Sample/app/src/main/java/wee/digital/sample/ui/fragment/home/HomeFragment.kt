@@ -25,4 +25,5 @@ class HomeFragment : MainFragment() {
             homeImageFace.setImageBitmap(it)
         }
     }
+
 }

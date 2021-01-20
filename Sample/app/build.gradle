@@ -88,6 +88,8 @@ dependencies {
 
     implementation project(":camera")
 
+    implementation project(":opencv")
+
     implementation fileTree(include: ["*.jar", "*aar"], dir: "libs")
     implementation deps.kotlin.stdlib
     implementation deps.android.appcompat

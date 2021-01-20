@@ -59,6 +59,16 @@
             android:layout_marginTop="@dimen/_2sdp"
             motion:layout_constraintStart_toStartOf="@id/inputEditText"
             motion:layout_constraintTop_toBottomOf="@id/inputEditText" />
+        <Constraint
+            motion:layout_constraintVertical_bias="0.0"
+            android:layout_height="0dp"
+            motion:layout_constraintStart_toStartOf="@id/inputEditText"
+            motion:layout_constraintTop_toTopOf="@id/inputEditText"
+            motion:layout_constraintBottom_toBottomOf="@id/inputEditText"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintEnd_toEndOf="@id/inputEditText"
+            android:layout_width="0dp"
+            android:id="@+id/inputViewBackground" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/focused">
