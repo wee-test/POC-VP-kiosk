@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/ocrFragment">
+    app:startDestination="@id/advFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -94,4 +94,12 @@
     <action
         android:id="@+id/action_global_ocrFragment"
         app:destination="@id/ocrFragment" />
+    <fragment
+        android:id="@+id/ocrConfirmFragment"
+        android:name="wee.digital.sample.ui.fragment.ocr.OcrConfirmFragment"
+        android:label="OcrConfirmFragment"
+        tools:layout="@layout/ocr_confirm" />
+    <action
+        android:id="@+id/action_global_ocrConfirmFragment"
+        app:destination="@id/ocrConfirmFragment" />
 </navigation>
