@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ocrRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -30,17 +31,17 @@
         style="@style/TextView"
         android:text="Mặt trước"
         android:textColor="@color/black20"
-        app:layout_constraintBottom_toBottomOf="@+id/orcFrameFront"
-        app:layout_constraintEnd_toEndOf="@+id/orcFrameFront"
-        app:layout_constraintStart_toStartOf="@+id/orcFrameFront"
-        app:layout_constraintTop_toTopOf="@+id/orcFrameFront" />
+        app:layout_constraintBottom_toBottomOf="@+id/ocrFrameFront"
+        app:layout_constraintEnd_toEndOf="@+id/ocrFrameFront"
+        app:layout_constraintStart_toStartOf="@+id/ocrFrameFront"
+        app:layout_constraintTop_toTopOf="@+id/ocrFrameFront" />
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/orcFrameFront"
+        android:id="@+id/ocrFrameFront"
         style="@style/OCR.ImageCapture"
         android:layout_marginTop="@dimen/margin3"
         android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@id/orcFrameBack"
+        app:layout_constraintEnd_toStartOf="@id/ocrFrameBack"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrTitle" />
@@ -49,42 +50,42 @@
         android:id="@+id/ocrResetFont"
         style="@style/OCR.ImageTrash"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/orcFrameFront"
-        app:layout_constraintTop_toTopOf="@+id/orcFrameFront"
+        app:layout_constraintEnd_toEndOf="@+id/ocrFrameFront"
+        app:layout_constraintTop_toTopOf="@+id/ocrFrameFront"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/TextView"
         android:text="Mặt sau"
         android:textColor="@color/black20"
-        app:layout_constraintBottom_toBottomOf="@+id/orcFrameBack"
-        app:layout_constraintEnd_toEndOf="@+id/orcFrameBack"
-        app:layout_constraintStart_toStartOf="@+id/orcFrameBack"
-        app:layout_constraintTop_toTopOf="@+id/orcFrameBack" />
+        app:layout_constraintBottom_toBottomOf="@+id/ocrFrameBack"
+        app:layout_constraintEnd_toEndOf="@+id/ocrFrameBack"
+        app:layout_constraintStart_toStartOf="@+id/ocrFrameBack"
+        app:layout_constraintTop_toTopOf="@+id/ocrFrameBack" />
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/orcFrameBack"
+        android:id="@+id/ocrFrameBack"
         style="@style/OCR.ImageCapture"
         android:scaleType="fitCenter"
         android:layout_marginTop="@dimen/margin3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/orcFrameFront"
+        app:layout_constraintStart_toEndOf="@+id/ocrFrameFront"
         app:layout_constraintTop_toBottomOf="@+id/ocrTitle" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ocrResetBack"
         style="@style/OCR.ImageTrash"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/orcFrameBack"
-        app:layout_constraintTop_toTopOf="@+id/orcFrameBack"
+        app:layout_constraintEnd_toEndOf="@+id/ocrFrameBack"
+        app:layout_constraintTop_toTopOf="@+id/ocrFrameBack"
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/orcRootCamera"
+        android:id="@+id/ocrRootCamera"
         style="@style/OCR.Camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orcFrameFront">
+        app:layout_constraintTop_toBottomOf="@+id/ocrFrameFront">
 
         <wee.dev.weeocr.camera.PreviewFullScreen
             android:id="@+id/ocrPreview"
@@ -109,6 +110,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/orcFrameAnim"
+        style="@style/OCR.ImageResult"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/ocrRootCamera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ocrRootCamera" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrLabelNote"
         style="@style/TextView"
@@ -120,7 +130,7 @@
         android:textSize="@dimen/_13ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orcRootCamera" />
+        app:layout_constraintTop_toBottomOf="@+id/ocrRootCamera" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrActionNext"
