@@ -8,18 +8,16 @@ import android.graphics.Rect
 import android.text.Editable
 import android.text.InputFilter
 import android.util.AttributeSet
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.view.View.OnClickListener
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
-import androidx.annotation.ColorRes
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.widget_text_input.view.*
 import wee.digital.library.extension.*
 import wee.digital.library.widget.AppCustomView
@@ -29,8 +27,10 @@ import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
 import wee.digital.sample.ui.main.Main
 import wee.digital.sample.ui.main.MainVM
 
-class TextInputView : AppCustomView, SimpleMotionTransitionListener,
-        OnFocusChangeListener, SimpleTextWatcher {
+class TextInputView : AppCustomView,
+        SimpleMotionTransitionListener,
+        OnFocusChangeListener,
+        SimpleTextWatcher {
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
@@ -40,17 +40,18 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
 
     override fun onInitialize(context: Context, types: TypedArray) {
         hint = types.hint
-        inputEditText.setText(types.text)
-        if (text.isNullOrEmpty()) {
-            inputViewLayout.setTransition(R.id.unfocused, R.id.focused)
-        } else {
-            inputViewLayout.setTransition(R.id.focused, R.id.unfocused)
-        }
-        inputEditText.addTextChangedListener(this)
+        textColorHint = types.textColorHint
         onIconInitialize(inputImageViewIcon, types)
         onEditTextInitialize(inputEditText, types)
         inputViewLayout.addTransitionListener(this)
 
+        if (text.isNullOrEmpty()) {
+            inputViewLayout.setTransition(R.id.unfocused, R.id.focused)
+            updateViewOnFocus(false)
+        } else {
+            inputViewLayout.setTransition(R.id.focused, R.id.unfocused)
+            updateViewOnFocus(true)
+        }
     }
 
     private fun onIconInitialize(it: AppCompatImageView, types: TypedArray) {
@@ -62,6 +63,10 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
     }
 
     private fun onEditTextInitialize(it: AppCompatEditText, types: TypedArray) {
+        it.setText(types.text)
+        it.setTextColor(types.textColor)
+        it.addTextChangedListener(this)
+
         it.onFocusChangeListener = this@TextInputView
         it.paintFlags = it.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
 
@@ -149,9 +154,7 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
 
     override fun onTransitionCompleted(layout: MotionLayout?, currentId: Int) {
         when (currentId) {
-            R.id.focused -> inputTextViewHint.setBackgroundResource(R.color.colorWhite)
-            R.id.unfocused -> {
-            }
+            R.id.focused -> inputViewHintSeparator.background = (this.parent as? ViewGroup)?.background
         }
     }
 
@@ -179,18 +182,38 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
      */
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
         onFocusChange.forEach { it.onFocusChange(this, hasFocus) }
+        transitionOnFocus(hasFocus)
+        updateViewOnFocus(hasFocus)
+    }
+
+    private fun updateViewOnFocus(hasFocus: Boolean) {
         when {
             hasFocus -> {
-                inputViewLayout.transitionToState(R.id.focused)
-                drawBorder(R.color.colorInputFocused)
+                inputEditText.backgroundTint(ContextCompat.getColor(context, R.color.colorInputFocused))
+                inputTextViewHint.setTextColor(ContextCompat.getColor(context, R.color.colorInputFocused))
             }
             !hasFocus && text.isNullOrEmpty() -> {
-                clearBorder()
-                inputViewLayout.transitionToState(R.id.unfocused)
+                inputEditText.backgroundTint(ContextCompat.getColor(context, R.color.colorInputUnfocused))
+                inputTextViewHint.setTextColor(textColorHint)
+                inputViewHintSeparator.setBackgroundResource(0)
             }
             !hasFocus && !text.isNullOrEmpty() -> {
-                drawBorder(R.color.colorInputUnfocused)
-                inputViewLayout.transitionToState(R.id.focused)
+                inputEditText.backgroundTint(ContextCompat.getColor(context, R.color.colorInputUnfocused))
+                inputTextViewHint.setTextColor(textColorHint)
+            }
+        }
+    }
+
+    private fun transitionOnFocus(hasFocus: Boolean) {
+        when {
+            hasFocus -> {
+                inputViewLayout.safeTransitionTo(R.id.focused)
+            }
+            !hasFocus && text.isNullOrEmpty() -> {
+                inputViewLayout.safeTransitionTo(R.id.unfocused)
+            }
+            !hasFocus && !text.isNullOrEmpty() -> {
+                inputViewLayout.safeTransitionTo(R.id.focused)
             }
         }
     }
@@ -205,7 +228,7 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
             }
             hasError -> {
                 error = null
-                drawBorder(R.color.colorAccent)
+                inputEditText.backgroundTintRes(R.color.colorAccent)
             }
         }
     }
@@ -234,9 +257,12 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
         set(value) {
             inputTextViewError.text = value
             if (error != null) {
-                drawBorder(R.color.colorInputError)
+                inputEditText.backgroundTintRes(R.color.colorInputError)
             }
         }
+
+    @ColorInt
+    var textColorHint: Int = 0
 
     private val onFocusChange = mutableListOf<OnFocusChangeListener>()
 
@@ -270,23 +296,10 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
         }
     }
 
-    fun drawBorder(@ColorRes res: Int) {
-        if (!text.isNullOrEmpty() || hasFocus()) {
-            inputTextViewHint.textColor(res)
-        }
-        inputEditText.backgroundTintRes(res)
-    }
-
-    private fun clearBorder() {
-        inputTextViewHint.textColor(R.color.colorInputUnfocused)
-        inputEditText.backgroundTintRes(R.color.colorInputUnfocused)
-        inputTextViewHint.background = null
-    }
 
     fun clear() {
         inputEditText.text = null
         error = null
-        clearBorder()
     }
 
     fun addDateWatcher() {
@@ -313,7 +326,7 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
                     when (this) {
                         is TextInputView -> {
                             text = selectable?.text
-                            onFocusChange(null, this.hasFocus())
+
                         }
                     }
                 }
@@ -327,9 +340,10 @@ class TextInputView : AppCustomView, SimpleMotionTransitionListener,
         }
         addViewClickListener {
             when (this) {
-                is TextInputView -> drawBorder(R.color.colorInputFocused)
+                is TextInputView -> onFocusChange(null, true)
             }
             showDialog()
         }
     }
+
 }

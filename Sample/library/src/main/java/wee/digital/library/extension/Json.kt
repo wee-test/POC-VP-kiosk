@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import java.io.StringReader
 import java.math.BigDecimal
+import kotlin.reflect.KClass
 
 private val convertFactory: Gson = Gson()
 
@@ -42,42 +43,42 @@ fun <T> Collection<T?>?.toJsonArray(): JsonArray? {
     return jsonArray
 }
 
-fun <T> JsonObject?.parse(cls: Class<T>): T? {
+fun <T : Any> JsonObject?.parse(cls: KClass<T>): T? {
     this ?: return null
     return this.toString().parse(cls)
 }
 
-fun <T> JsonArray?.parse(cls: Class<Array<T>>): List<T>? {
+fun <T> JsonArray?.parse(cls: KClass<Array<T>>): List<T>? {
     this ?: return null
     return this.toString().parse(cls)
 }
 
-fun <T> String?.parse(cls: Class<T>): T? {
+fun <T : Any> String?.parse(cls: KClass<T>): T? {
     this ?: return null
     if (isNullOrEmpty()) {
         return null
     }
     return try {
-        return convertFactory.fromJson(this, cls)
+        return convertFactory.fromJson(this, cls.java)
     } catch (ignore: Exception) {
         null
     }
 }
 
-fun <T> String?.parse(cls: Class<Array<T>>): List<T>? {
+fun <T> String?.parse(cls: KClass<Array<T>>): List<T>? {
     this ?: return null
     if (isNullOrEmpty()) {
         return null
     }
     return try {
-        return convertFactory.fromJson(StringReader(this), cls).toList()
+        return convertFactory.fromJson(StringReader(this), cls.java).toList()
     } catch (ignore: Exception) {
         null
     }
 }
 
 fun readObject(fileName: String): JsonObject? {
-    return readAsset(fileName).parse(JsonObject::class.java)
+    return readAsset(fileName).parse(JsonObject::class)
 }
 
 fun JsonElement?.toObject(): JsonObject? {
@@ -156,7 +157,6 @@ fun JsonObject?.list(key: String): List<JsonObject>? {
     }
 }
 
-
 fun JsonObject?.listString(key: String): List<String>? {
     val s = array(key).toString()
     return try {
@@ -165,7 +165,6 @@ fun JsonObject?.listString(key: String): List<String>? {
         null
     }
 }
-
 
 fun JsonObject?.str(key: String, default: String? = null): String? {
     this ?: return default
@@ -228,7 +227,7 @@ fun JsonObject?.float(key: String, default: Float = 0f): Float {
 }
 
 fun String?.toArray(): JsonArray? {
-    return parse(JsonArray::class.java)
+    return parse(JsonArray::class)
 }
 
 fun (JsonObject.() -> Unit).build(): JsonObject {

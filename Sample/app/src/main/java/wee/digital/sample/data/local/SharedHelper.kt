@@ -3,9 +3,10 @@ package wee.digital.sample.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import wee.digital.library.extension.parse
 import wee.digital.sample.BuildConfig
 import wee.digital.sample.app.app
-import wee.digital.library.extension.parse
+import kotlin.reflect.KClass
 
 class SharedHelper {
 
@@ -61,11 +62,11 @@ class SharedHelper {
         }
     }
 
-    fun <T> obj(key: String, cls: Class<T>): T? {
+    fun <T : Any> obj(key: String, cls: KClass<T>): T? {
         return str(key).parse(cls) ?: return null
     }
 
-    fun <T> array(key: String, cls: Class<Array<T>>): List<T>? {
+    fun <T> array(key: String, cls: KClass<Array<T>>): List<T>? {
         return str(key).parse(cls) ?: return null
     }
 

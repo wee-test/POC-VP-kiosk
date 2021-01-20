@@ -27,6 +27,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dialogTextViewTitle" />
 
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/selectableEditTextSearch"
+            style="@style/EditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/selectableRecyclerView"
             style="@style/ScrollView"
@@ -36,7 +43,7 @@
             android:paddingBottom="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle"
+            app:layout_constraintTop_toBottomOf="@id/selectableEditTextSearch"
             tools:itemCount="3"
             tools:listitem="@layout/selectable_item" />
 
