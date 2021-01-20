@@ -100,4 +100,19 @@
         <item name="android:padding">@dimen/margin</item>
     </style>
 
+    <!--OCR-->
+    <style name="OCR" />
+
+    <!--<style name="OCR.ImageCapture">
+        <item name="android:layout_width">@dimen/_120sdp</item>
+        <item name="android:layout_height">@dimen/_80sdp</item>
+        <item name="android:background">@mipmap/img_orc_placeholder</item>
+        <item name="android:backgroundTint">@color/colorLightGray</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="layout_constraintDimensionRatio">@string/cardRatio</item>
+        <item name="riv_border_color">@color/colorBackgroundPrimary</item>
+        <item name="riv_border_width">@dimen/_2sdp</item>
+        <item name="riv_corner_radius">@dimen/_9sdp</item>
+    </style>-->
+
 </resources>

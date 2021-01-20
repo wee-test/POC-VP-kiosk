@@ -1,6 +1,6 @@
 package wee.digital.sample.ui.fragment.adv
 
-import kotlinx.android.synthetic.main.fragment_adv.*
+import kotlinx.android.synthetic.main.adv.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.ui.base.viewModel
@@ -10,7 +10,7 @@ class AdvFragment : MainFragment() {
 
     private val advVM : AdvVM by lazy { viewModel(AdvVM::class) }
 
-    override fun layoutResource(): Int = R.layout.fragment_adv
+    override fun layoutResource(): Int = R.layout.adv
 
     override fun onViewCreated() {
         advVM.getListAdv()

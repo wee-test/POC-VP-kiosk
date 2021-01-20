@@ -11,7 +11,7 @@ class SplashFragment : MainFragment() {
     }
 
     override fun onViewCreated() {
-        LinearLayoutManager
+
     }
 
     override fun onLiveDataObserve() {
