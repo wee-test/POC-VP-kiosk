@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@+id/orcFrameFront">
 
         <wee.dev.weeocr.camera.PreviewFullScreen
-            android:id="@+id/orcPreview"
+            android:id="@+id/ocrPreview"
             style="@style/MatchParent"
             android:hardwareAccelerated="true"
             android:orientation="horizontal"
@@ -97,7 +97,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <wee.dev.weeocr.camera.GraphicOverlay
-                android:id="@+id/orcGraphicOverlay"
+                android:id="@+id/ocrGraphicOverlay"
                 style="@style/MatchParent" />
 
             <View
