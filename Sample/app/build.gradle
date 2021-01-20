@@ -90,6 +90,8 @@ dependencies {
 
     implementation project(":opencv")
 
+    implementation project(":weeocr")
+
     implementation fileTree(include: ["*.jar", "*aar"], dir: "libs")
     implementation deps.kotlin.stdlib
     implementation deps.android.appcompat
@@ -144,6 +146,19 @@ dependencies {
     implementation deps.nineoandroid
     implementation deps.picasso
     implementation deps.circle
+
+    //OCR
+    implementation deps.recognition
+    implementation deps.detection
+    implementation deps.automl
+    implementation deps.tesseract4android
+    implementation deps.scanning
+    implementation deps.ocr
+    implementation deps.model
+    implementation deps.plugin
+    implementation deps.okhttpocr
+    implementation deps.urlconnection
+    implementation deps.interceptor
 
     // TESTINGS
     testImplementation deps.test.junit

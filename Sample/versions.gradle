@@ -181,3 +181,16 @@ deps.nineoandroid="com.nineoldandroids:library:2.4.0"
 
 //UI
 deps.circle = "de.hdodenhof:circleimageview:3.1.0"
+
+//OCR
+deps.recognition = "com.google.android.gms:play-services-mlkit-text-recognition:16.1.2"
+deps.detection = "com.google.mlkit:object-detection:16.2.2"
+deps.automl = "com.google.mlkit:image-labeling-automl:16.2.1"
+deps.tesseract4android = "cz.adaptech.android:tesseract4android:2.1.0"
+deps.scanning = "com.google.mlkit:barcode-scanning:16.1.0"
+deps.ocr = "com.huawei.hms:ml-computer-vision-ocr:2.0.0.300"
+deps.model = "com.huawei.hms:ml-computer-vision-ocr-latin-model:2.0.0.300"
+deps.plugin = "com.huawei.hms:ml-computer-card-gcr-plugin:2.0.0.300"
+deps.okhttpocr = "com.squareup.okhttp3:okhttp:4.9.0"
+deps.urlconnection = "com.squareup.okhttp3:okhttp-urlconnection:4.7.2"
+deps.interceptor = "com.squareup.okhttp3:logging-interceptor:4.9.0"

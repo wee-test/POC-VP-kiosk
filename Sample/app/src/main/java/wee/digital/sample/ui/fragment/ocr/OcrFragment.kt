@@ -5,7 +5,7 @@ import wee.digital.sample.ui.main.MainFragment
 
 class OcrFragment : MainFragment() {
 
-    override fun layoutResource(): Int = R.layout.fragment_ocr
+    override fun layoutResource(): Int = R.layout.ocr
 
     override fun onViewCreated() {
     }

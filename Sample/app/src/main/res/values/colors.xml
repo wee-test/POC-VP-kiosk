@@ -18,5 +18,6 @@
     <color name="gray_bg">#EEEEEE</color>
     <color name="gray_info">#EAEAEA</color>
     <color name="black60">#99191919</color>
+    <color name="black20">#33191919</color>
 
 </resources>

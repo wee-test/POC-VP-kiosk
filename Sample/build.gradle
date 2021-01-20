@@ -27,6 +27,7 @@ allprojects {
         jcenter()
         google()
         maven { url "https://dl.bintray.com/intel-realsense/librealsense" }
+        maven {url 'https://developer.huawei.com/repo/'}
     }
 }
 

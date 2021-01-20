@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/ocrToolbar"
+        layout="@layout/view_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrTitle"
+        style="@style/TextView"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:gravity="center"
+        android:text="Chụp ảnh giấy tờ tùy thân"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrToolbar" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/TextView"
+        android:text="Mặt trước"
+        android:textColor="@color/black20"
+        app:layout_constraintBottom_toBottomOf="@+id/orcFrameFront"
+        app:layout_constraintEnd_toEndOf="@+id/orcFrameFront"
+        app:layout_constraintStart_toStartOf="@+id/orcFrameFront"
+        app:layout_constraintTop_toTopOf="@+id/orcFrameFront" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/orcFrameFront"
+        style="@style/OCR.ImageCapture"
+        android:layout_marginTop="@dimen/margin3"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@id/orcFrameBack"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrTitle" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ocrResetFont"
+        style="@style/OCR.ImageTrash"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/orcFrameFront"
+        app:layout_constraintTop_toTopOf="@+id/orcFrameFront"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/TextView"
+        android:text="Mặt sau"
+        android:textColor="@color/black20"
+        app:layout_constraintBottom_toBottomOf="@+id/orcFrameBack"
+        app:layout_constraintEnd_toEndOf="@+id/orcFrameBack"
+        app:layout_constraintStart_toStartOf="@+id/orcFrameBack"
+        app:layout_constraintTop_toTopOf="@+id/orcFrameBack" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/orcFrameBack"
+        style="@style/OCR.ImageCapture"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="@dimen/margin3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/orcFrameFront"
+        app:layout_constraintTop_toBottomOf="@+id/ocrTitle" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ocrResetBack"
+        style="@style/OCR.ImageTrash"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/orcFrameBack"
+        app:layout_constraintTop_toTopOf="@+id/orcFrameBack"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/orcRootCamera"
+        style="@style/OCR.Camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orcFrameFront">
+
+        <wee.dev.weeocr.camera.PreviewFullScreen
+            android:id="@+id/orcPreview"
+            style="@style/MatchParent"
+            android:hardwareAccelerated="true"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <wee.dev.weeocr.camera.GraphicOverlay
+                android:id="@+id/orcGraphicOverlay"
+                style="@style/MatchParent" />
+
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@mipmap/bg_camera" />
+
+        </wee.dev.weeocr.camera.PreviewFullScreen>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrLabelNote"
+        style="@style/TextView"
+        android:layout_marginHorizontal="@dimen/margin3"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:gravity="center"
+        android:text="Bạn vui lòng đưa mặt trước giấy tờ\nvào hộp tối bên dưới"
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orcRootCamera" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrActionNext"
+        android:visibility="gone"
+        style="@style/Button.Ocr"
+        android:background="@drawable/bg_gradient"
+        android:text="Tiếp theo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrLabelNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

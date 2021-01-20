@@ -103,16 +103,45 @@
     <!--OCR-->
     <style name="OCR" />
 
-    <!--<style name="OCR.ImageCapture">
+    <style name="OCR.ImageCapture">
         <item name="android:layout_width">@dimen/_120sdp</item>
         <item name="android:layout_height">@dimen/_80sdp</item>
-        <item name="android:background">@mipmap/img_orc_placeholder</item>
-        <item name="android:backgroundTint">@color/colorLightGray</item>
+        <item name="android:background">@mipmap/frame_ocr</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="layout_constraintDimensionRatio">@string/cardRatio</item>
-        <item name="riv_border_color">@color/colorBackgroundPrimary</item>
         <item name="riv_border_width">@dimen/_2sdp</item>
         <item name="riv_corner_radius">@dimen/_9sdp</item>
-    </style>-->
+    </style>
+
+    <style name="OCR.ImageTrash">
+        <item name="android:layout_width">@dimen/_20sdp</item>
+        <item name="android:layout_height">@dimen/_20sdp</item>
+        <item name="android:src">@drawable/ic_trash</item>
+        <item name="android:layout_marginTop">@dimen/marginY2</item>
+        <item name="android:layout_marginEnd">@dimen/marginY2</item>
+    </style>
+
+    <style name="OCR.Camera">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/_200sdp</item>
+        <item name="android:layout_marginTop">@dimen/margin2</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="layout_constraintDimensionRatio">w,16:9</item>
+    </style>
+
+    <!--Button-->
+    <style name="Button.Ocr">
+        <item name="fontFamily">@font/svn_gilroy_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:drawableEnd">@drawable/ic_bigger</item>
+        <item name="android:paddingStart">@dimen/margin2</item>
+        <item name="android:paddingEnd">@dimen/margin3</item>
+        <item name="background">@drawable/bg_gradient</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_30sdp</item>
+        <item name="android:layout_marginStart">@dimen/margin3</item>
+        <item name="android:layout_marginEnd">@dimen/margin3</item>
+    </style>
 
 </resources>

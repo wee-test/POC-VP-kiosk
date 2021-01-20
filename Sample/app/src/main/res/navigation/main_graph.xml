@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/documentFragment">
+    app:startDestination="@id/ocrFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -87,5 +87,11 @@
     <action
         android:id="@+id/action_global_documentFragment"
         app:destination="@id/documentFragment" />
-
+    <fragment
+        android:id="@+id/ocrFragment"
+        android:name="wee.digital.sample.ui.fragment.ocr.OcrFragment"
+        android:label="OcrFragment" />
+    <action
+        android:id="@+id/action_global_ocrFragment"
+        app:destination="@id/ocrFragment" />
 </navigation>
