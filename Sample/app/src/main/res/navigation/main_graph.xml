@@ -109,4 +109,11 @@
     <action
         android:id="@+id/action_global_reviewFragment"
         app:destination="@id/reviewFragment" />
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="wee.digital.sample.ui.fragment.member.CallFragment"
+        android:label="CallFragment" />
+    <action
+        android:id="@+id/action_global_callFragment"
+        app:destination="@id/callFragment" />
 </navigation>
