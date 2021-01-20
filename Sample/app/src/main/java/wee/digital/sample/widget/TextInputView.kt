@@ -8,7 +8,10 @@ import android.graphics.Rect
 import android.text.Editable
 import android.text.InputFilter
 import android.util.AttributeSet
-import android.view.*
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.view.View.OnClickListener
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
@@ -16,7 +19,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.widget_text_input.view.*
 import wee.digital.library.extension.*
@@ -152,12 +154,6 @@ class TextInputView : AppCustomView,
         }
     }
 
-    override fun onTransitionCompleted(layout: MotionLayout?, currentId: Int) {
-        when (currentId) {
-            R.id.focused -> inputViewHintSeparator.background = (this.parent as? ViewGroup)?.background
-        }
-    }
-
     override fun onDetachedFromWindow() {
         inputViewLayout.clearAnimation()
         onFocusChange.clear()
@@ -190,16 +186,12 @@ class TextInputView : AppCustomView,
         when {
             hasFocus -> {
                 inputEditText.backgroundTint(ContextCompat.getColor(context, R.color.colorInputFocused))
-                inputTextViewHint.setTextColor(ContextCompat.getColor(context, R.color.colorInputFocused))
             }
             !hasFocus && text.isNullOrEmpty() -> {
                 inputEditText.backgroundTint(ContextCompat.getColor(context, R.color.colorInputUnfocused))
-                inputTextViewHint.setTextColor(textColorHint)
-                inputViewHintSeparator.setBackgroundResource(0)
             }
             !hasFocus && !text.isNullOrEmpty() -> {
                 inputEditText.backgroundTint(ContextCompat.getColor(context, R.color.colorInputUnfocused))
-                inputTextViewHint.setTextColor(textColorHint)
             }
         }
     }
@@ -316,6 +308,9 @@ class TextInputView : AppCustomView,
 
         data ?: return
 
+        if (!data.isNullOrEmpty()){
+            inputImageViewDropdown.setImageResource(R.drawable.drw_text_input_dropdown)
+        }
         val showDialog = {
             (context as? Activity)?.hideKeyboard()
             val adapter = SelectableAdapter<T>().also {
@@ -334,9 +329,9 @@ class TextInputView : AppCustomView,
                     selectable = model
                 }
             }
+            adapter.adaptive()
             mainVM.selectableLiveData.value = adapter
             mainVM.dialogLiveData.value = Main.selectable
-            adapter.adaptive()
         }
         addViewClickListener {
             when (this) {

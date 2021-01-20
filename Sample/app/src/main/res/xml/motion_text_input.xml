@@ -16,9 +16,8 @@
         <Constraint
             android:id="@id/inputEditText"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_38sdp"
+            android:layout_height="@dimen/_42sdp"
             android:layout_marginStart="1px"
-            android:layout_marginTop="@dimen/_14sdp"
             android:layout_marginEnd="1px"
             android:textSize="@dimen/_10ssp"
             motion:layout_constrainedWidth="true"
@@ -27,24 +26,14 @@
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintWidth_default="percent" />
         <Constraint
-            android:id="@id/inputImageViewIcon"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:scaleX="1.0"
-            android:scaleY="1.0"
-            motion:layout_constraintBottom_toBottomOf="@+id/inputEditText"
-            motion:layout_constraintStart_toStartOf="@id/inputEditText"
-            motion:layout_constraintTop_toTopOf="@+id/inputEditText" />
-        <Constraint
             android:id="@id/inputTextViewHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_34sdp"
             android:scaleX="1"
             android:scaleY="1"
             motion:layout_constraintBottom_toBottomOf="@+id/inputEditText"
-            motion:layout_constraintStart_toEndOf="@+id/inputImageViewIcon"
+            motion:layout_constraintStart_toStartOf="@+id/inputEditText"
             motion:layout_constraintTop_toTopOf="@+id/inputEditText" />
         <Constraint
             android:id="@id/inputTextViewError"
@@ -70,9 +59,8 @@
         <Constraint
             android:id="@id/inputEditText"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_38sdp"
+            android:layout_height="@dimen/_42sdp"
             android:layout_marginStart="1px"
-            android:layout_marginTop="@dimen/_14sdp"
             android:layout_marginEnd="1px"
             motion:layout_constrainedWidth="true"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -80,23 +68,15 @@
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintWidth_default="percent" />
         <Constraint
-            android:id="@id/inputImageViewIcon"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:scaleX=".0"
-            android:scaleY=".0"
-            motion:layout_constraintBottom_toBottomOf="@+id/inputEditText"
-            motion:layout_constraintStart_toStartOf="@id/inputEditText"
-            motion:layout_constraintTop_toTopOf="@+id/inputEditText" />
-        <Constraint
             android:id="@id/inputTextViewHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleX=".8"
             android:scaleY=".8"
-            motion:layout_constraintBottom_toTopOf="@+id/inputEditText"
-            motion:layout_constraintStart_toStartOf="@+id/inputImageViewIcon"
+            android:layout_marginStart="@dimen/_34sdp"
+            motion:layout_constraintBottom_toBottomOf="@+id/inputEditText"
+            motion:layout_constraintStart_toStartOf="@+id/inputEditText"
+            motion:layout_constraintVertical_bias=".20"
             motion:layout_constraintTop_toTopOf="@+id/inputEditText" />
         <Constraint
             android:id="@id/inputTextViewError"

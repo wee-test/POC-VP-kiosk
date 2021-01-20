@@ -13,7 +13,7 @@ import wee.digital.sample.R
 open class SelectableAdapter<T : Selectable> : BaseRecyclerAdapter<T>() {
 
     @StringRes
-    var title: Int = 0
+    var title: Int = R.string.app_name
 
     var onItemSelected: (T) -> Unit = { }
 

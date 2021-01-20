@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/advFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -69,28 +69,41 @@
     <fragment
         android:id="@+id/advFragment"
         android:name="wee.digital.sample.ui.fragment.adv.AdvFragment"
-        android:label="AdvFragment" />
+        android:label="AdvFragment"
+        tools:layout="@layout/adv" />
+
     <action
         android:id="@+id/action_global_advFragment"
         app:destination="@id/advFragment" />
     <fragment
         android:id="@+id/verifyFaceFragment"
         android:name="wee.digital.sample.ui.fragment.face.VerifyFaceFragment"
-        android:label="VerifyFaceFragment" />
+        android:label="VerifyFaceFragment"
+        tools:layout="@layout/verify_face" />
     <action
         android:id="@+id/action_global_verifyFaceFragment"
         app:destination="@id/verifyFaceFragment" />
     <fragment
         android:id="@+id/documentFragment"
         android:name="wee.digital.sample.ui.fragment.member.DocumentFragment"
-        android:label="DocumentFragment" />
+        android:label="DocumentFragment"
+        tools:layout="@layout/document" >
+        <action
+            android:id="@+id/action_documentFragment_to_ocrFragment"
+            app:destination="@id/ocrFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_documentFragment"
         app:destination="@id/documentFragment" />
     <fragment
         android:id="@+id/ocrFragment"
         android:name="wee.digital.sample.ui.fragment.ocr.OcrFragment"
-        android:label="OcrFragment" />
+        android:label="OcrFragment"
+        tools:layout="@layout/ocr" >
+        <action
+            android:id="@+id/action_ocrFragment_to_ocrConfirmFragment"
+            app:destination="@id/ocrConfirmFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_ocrFragment"
         app:destination="@id/ocrFragment" />
@@ -102,4 +115,36 @@
     <action
         android:id="@+id/action_global_ocrConfirmFragment"
         app:destination="@id/ocrConfirmFragment" />
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="wee.digital.sample.ui.fragment.review.ReviewFragment"
+        android:label="ReviewFragment"
+        tools:layout="@layout/review" />
+    <action
+        android:id="@+id/action_global_reviewFragment"
+        app:destination="@id/reviewFragment" />
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="wee.digital.sample.ui.fragment.member.CallFragment"
+        android:label="CallFragment"
+        tools:layout="@layout/fragment_call" />
+    <action
+        android:id="@+id/action_global_callFragment"
+        app:destination="@id/callFragment" />
+    <fragment
+        android:id="@+id/failFragment"
+        android:name="wee.digital.sample.ui.fragment.member.FailFragment"
+        android:label="FailFragment"
+        tools:layout="@layout/fail" />
+    <action
+        android:id="@+id/action_global_failFragment"
+        app:destination="@id/failFragment" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="wee.digital.sample.ui.fragment.member.LoadingFragment"
+        android:label="LoadingFragment"
+        tools:layout="@layout/loading" />
+    <action
+        android:id="@+id/action_global_loadingFragment"
+        app:destination="@id/loadingFragment" />
 </navigation>

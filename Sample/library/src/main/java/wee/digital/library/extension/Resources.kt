@@ -1,6 +1,7 @@
 package wee.digital.library.extension
 
 import android.app.Application
+import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.animation.Animation
@@ -40,7 +41,11 @@ fun color(@ColorRes res: Int): Int {
 }
 
 fun string(@StringRes res: Int): String {
-    return app.getString(res)
+    return try {
+        app.getString(res)
+    }catch (e : Resources.NotFoundException){
+        "Resources.NotFoundException"
+    }
 }
 
 fun string(@StringRes res: Int, vararg args: Any?): String {
