@@ -159,6 +159,7 @@ dependencies {
     implementation deps.okhttpocr
     implementation deps.urlconnection
     implementation deps.interceptor
+    //implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
     // TESTINGS
     testImplementation deps.test.junit

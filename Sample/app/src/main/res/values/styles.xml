@@ -188,7 +188,14 @@
         <item name="android:minWidth">@dimen/_24sdp</item>
     </style>
 
-    <style name="UIPaymentNumber" parent="TextView">
+    <style name="ReceiveRadio"
+        parent="MatchWidth">
+        <item name="android:background">@drawable/drw_receive_radio</item>
+        <item name="android:backgroundTint">@color/colorWhite</item>
+    </style>
+
+    <style name="UIPaymentNumber"
+        parent="TextView">
         <item name="android:textSize">@dimen/_20ssp</item>
         <item name="android:letterSpacing">0.05</item>
         <item name="android:textColor">#FAFF00</item>
@@ -199,11 +206,14 @@
         <item name="android:fontFamily">@font/svn_gilroy_bold</item>
     </style>
 
-    <style name="UIPayment" parent="TextView">
+    <style name="UIPayment"
+        parent="TextView">
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:ellipsize">end</item>
         <item name="lineHeight">@dimen/_20sdp</item>
         <item name="android:fontFamily">@font/svn_gilroy_regular</item>
+        >>>>>>> 003730abd6daa8759e6950376e8efa5c1659984a
     </style>
+
 </resources>
