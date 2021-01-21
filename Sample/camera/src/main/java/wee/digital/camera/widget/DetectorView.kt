@@ -2,6 +2,7 @@ package wee.digital.camera.widget
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -44,12 +45,12 @@ class DetectorView : ConstraintLayout, DebugDetectJob.UiListener {
         return true
     }
 
-    override fun onFaceRect(left: Int, top: Int, width: Int, height: Int): Boolean {
-        textViewLeft.text = left.toString()
-        textViewTop.text = top.toString()
-        textViewWidth.text = width.toString()
-        textViewHeight.text = height.toString()
-        faceRectListener(left, top, width, height)
+    override fun onFaceRect(faceRect: Rect): Boolean {
+        textViewLeft.text = faceRect.left.toString()
+        textViewTop.text = faceRect.top.toString()
+        textViewWidth.text = faceRect.width().toString()
+        textViewHeight.text = faceRect.height().toString()
+        faceRectListener( faceRect.left,  faceRect.top,  faceRect.width(),  faceRect.height())
         return true
     }
 
@@ -94,6 +95,10 @@ class DetectorView : ConstraintLayout, DebugDetectJob.UiListener {
 
     override fun onFaceChanged() {
         textViewFaceStatus.text = "Changed"
+    }
+
+    override fun onManyFaces() {
+
     }
 
     override fun onFacePerformed() {

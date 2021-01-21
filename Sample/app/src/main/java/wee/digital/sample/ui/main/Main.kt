@@ -16,7 +16,6 @@ object Main {
     /**
      * Fragment destinations
      */
-    val splash get() = MainDirections.actionGlobalSplashFragment()
 
     val home get() = MainDirections.actionGlobalHomeFragment()
 

@@ -1,6 +1,7 @@
 package wee.digital.camera.job
 
 import android.graphics.Bitmap
+import android.graphics.Rect
 import androidx.lifecycle.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.detector.FaceDetector
@@ -66,8 +67,8 @@ class FaceDetectJob(private var uiListener: Listener) :
         return score > 0.9
     }
 
-    override fun onFaceRect(left: Int, top: Int, width: Int, height: Int): Boolean {
-        return width > 170
+    override fun onFaceRect(faceRect: Rect): Boolean {
+        return faceRect.width() > 170
     }
 
     override fun onFaceDegrees(x: Double, y: Double): Boolean {
@@ -111,6 +112,10 @@ class FaceDetectJob(private var uiListener: Listener) :
     override fun onFaceChanged() {
         noneFaceCount.set(0)
         invalidFaceCount.set(0)
+    }
+
+    override fun onManyFaces() {
+
     }
 
     /**

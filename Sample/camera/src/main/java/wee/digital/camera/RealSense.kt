@@ -12,6 +12,7 @@ import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.intel.realsense.librealsense.DeviceListener
 import com.intel.realsense.librealsense.RsContext
 
 object RealSense {
@@ -21,10 +22,28 @@ object RealSense {
      */
     private var mApp: Application? = null
 
+    private var mRsContext: RsContext? = null
+
     var app: Application
         set(value) {
             mApp = value
             RsContext.init(value)
+            mRsContext = RsContext()
+            var isDetach = false
+            mRsContext?.setDevicesChangedCallback(object : DeviceListener{
+                override fun onDeviceAttach() {
+                    if(!isDetach) return
+                    isDetach = false
+                    Thread.sleep(3000)
+                    start()
+                }
+
+                override fun onDeviceDetach() {
+                    stop()
+                    isDetach = true
+                }
+
+            })
             filterConfigByDevice()
         }
         get() {
@@ -146,15 +165,14 @@ object RealSense {
         isStarting = true
         Thread {
             control = RealSenseControl().also {
-                Thread.sleep(2400)
-                it.onCreate()
+                it.onCreate(mRsContext)
                 isStarting = false
             }
         }.start()
     }
 
     fun stop() {
-        control?.onPause()
+        control?.onStop()
         control = null
     }
 

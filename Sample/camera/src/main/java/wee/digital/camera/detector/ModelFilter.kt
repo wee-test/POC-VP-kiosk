@@ -1,29 +1,28 @@
 package wee.digital.camera.detector
 
 import android.graphics.Bitmap
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.automl.FirebaseAutoMLLocalModel
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler
-import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabelerOptions
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeler
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.automl.AutoMLImageLabelerLocalModel
+import com.google.mlkit.vision.label.automl.AutoMLImageLabelerOptions
 
 class ModelFilter(fileName: String) {
 
-    private var imageLabeler: FirebaseVisionImageLabeler? = null
+    private var imageLabeler: ImageLabeler? = null
 
     private var isChecking: Boolean = false
 
     init {
         try {
-            val model = FirebaseAutoMLLocalModel.Builder()
+            val model = AutoMLImageLabelerLocalModel
+                    .Builder()
                     .setAssetFilePath(fileName)
                     .build()
-            val options =
-                    FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder(model)
-                            .setConfidenceThreshold(0.5f)
-                            .build()
-            imageLabeler = FirebaseVision.getInstance()
-                    .getOnDeviceAutoMLImageLabeler(options)
+            val options = AutoMLImageLabelerOptions.Builder(model)
+                    .setConfidenceThreshold(0.5f)
+                    .build()
+            imageLabeler = ImageLabeling.getClient(options)
         } catch (e: Exception) {
         }
     }
@@ -35,8 +34,8 @@ class ModelFilter(fileName: String) {
         }
         isChecking = true
         try {
-            val image = FirebaseVisionImage.fromBitmap(bitmap)
-            imageLabeler?.processImage(image)
+            val image = InputImage.fromBitmap(bitmap,0)
+            imageLabeler?.process(image)
                     ?.addOnSuccessListener {
                         val label = it.firstOrNull()
                         onResult(label?.text, label?.confidence ?: 100f)

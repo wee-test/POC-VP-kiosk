@@ -3,6 +3,7 @@ package wee.digital.camera
 import android.graphics.Bitmap
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import com.intel.realsense.librealsense.*
 
 /**
@@ -12,8 +13,13 @@ import com.intel.realsense.librealsense.*
  * Product ID: 2888
  */
 class RealSenseControl {
-
-    private var colorizer: Colorizer? = null
+    companion object{
+        const val TAG = "RealSenseControl"
+    }
+    private val colorizer = Colorizer().apply {
+        setValue(Option.COLOR_SCHEME, 0f)
+    }
+    private val align = Align(StreamType.COLOR)
     private var pipeline: Pipeline? = null
     private var pipelineProfile: PipelineProfile? = null
 
@@ -34,6 +40,7 @@ class RealSenseControl {
     private val streamRunnable: Runnable = object : Runnable {
         override fun run() {
             var isNext = true
+            var errMess = ""
             try {
                 FrameReleaser().use { fr ->
                     if (isPauseCamera || isProcessingFrame || !RealSense.imagesLiveData.hasObservers()) {
@@ -47,8 +54,9 @@ class RealSenseControl {
                         when {
                             mFrameCount > 0 -> {
                                 val colorFrame: Frame = frames.first(StreamType.COLOR).releaseWith(fr)
-                                val processFrame = frames.applyFilter(colorizer).releaseWith(fr)
-                                val depthFrame: Frame = processFrame.first(StreamType.DEPTH).releaseWith(fr)
+                                val alignProcess = align.process(frames).releaseWith(fr)
+                                val depthFrame = alignProcess.applyFilter(colorizer).releaseWith(fr)
+                                        .first(StreamType.DEPTH).releaseWith(fr)
                                 frameProcessing(colorFrame, depthFrame)
                             }
                             mFrameCount < RealSense.FRAME_MAX_SLEEP -> {
@@ -60,15 +68,20 @@ class RealSenseControl {
                     isSleep = false
                 }
             } catch (e: Exception) {
+                errMess = e.message.toString()
                 isNext = false
             } finally {
                 isProcessingFrame = false
             }
 
             if (isNext) {
-                mHandler?.postDelayed(this, 60)
+                if(mHandlerThread?.isAlive==true) {
+                    mHandler?.post(this)
+                }
             } else {
+                Log.d(TAG,"Err: $errMess")
                 isFrameOK = false
+                isStreaming = false
                 hardwareReset()
             }
         }
@@ -81,10 +94,8 @@ class RealSenseControl {
         }
     }
 
-    fun onCreate() {
-        colorizer = Colorizer().apply {
-            setValue(Option.COLOR_SCHEME, 0f)
-        }
+    fun onCreate(rsContext: RsContext?) {
+        if(isDestroy)
         if (isStreaming) return
         try {
             val config = Config().apply {
@@ -99,37 +110,36 @@ class RealSenseControl {
                         StreamFormat.Z16, RealSense.FRAME_RATE
                 )
             }
+
             pipeline = Pipeline()
             pipelineProfile = pipeline?.start(config)?.apply {
                 isStreaming = true
                 mHandler?.post(streamRunnable)
+                Log.d(TAG,"onCreate")
             }
         } catch (t: Throwable) {
             isStreaming = false
         }
     }
 
-    fun onPause() {
+    fun onStop() {
+        if(isDestroy) return
         try {
             isStreaming = false
             isDestroy = true
-            mHandlerThread?.quitSafely()
-            pipelineProfile?.close()
+            mHandlerThread?.quit()
+            mHandlerThread = null
+            RealSense.imagesLiveData.postValue(null)
             pipeline?.stop()
+            pipelineProfile?.close()
+            Log.d(TAG,"onStop")
         } catch (t: Throwable) {
+            Log.e("RealSense","onPause: ${t.message}")
         }
     }
 
     private fun frameProcessing(colorFrame: Frame, depthFrame: Frame) {
         try {
-            /*ByteArray(RealSense.COLOR_SIZE).also {
-                colorFrame.getData(it)
-                colorBitmap = it.getColorBitmap()
-            }
-            ByteArray(RealSense.DEPTH_SIZE).also {
-                depthFrame.getData(it)
-                depthBitmap = it.getDepthBitmap()
-            }*/
             colorBitmap = colorFrame.rgbToBitmapOpenCV()
             depthBitmap = depthFrame.rgbToBitmapOpenCV()
             if (colorBitmap != null && depthBitmap != null) {
@@ -149,6 +159,7 @@ class RealSenseControl {
     private fun hardwareReset() {
         try {
             pipelineProfile?.device?.hardwareReset()
+            Log.d(TAG,"hardwareReset")
         } catch (ignore: RuntimeException) {
         }
     }
