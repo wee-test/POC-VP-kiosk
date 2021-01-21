@@ -11,6 +11,7 @@
     <style name="TextView"
         parent="WrapContent">
         <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/svn_gilroy_regular</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textColor">@color/colorBlack</item>
@@ -136,10 +137,10 @@
         <item name="android:background">@mipmap/frame_ocr</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="layout_constraintDimensionRatio">@string/cardRatio</item>
-        <item name="riv_border_width">@dimen/_2sdp</item>
-        <item name="riv_corner_radius">@dimen/_9sdp</item>
-    </style>
 
+    </style>
+    <!--<item name="riv_border_width">@dimen/_2sdp</item>
+    <item name="riv_corner_radius">@dimen/_9sdp</item>-->
     <style name="OCR.ImageTrash">
         <item name="android:layout_width">@dimen/_20sdp</item>
         <item name="android:layout_height">@dimen/_20sdp</item>
@@ -216,4 +217,24 @@
         >>>>>>> 003730abd6daa8759e6950376e8efa5c1659984a
     </style>
 
+    <!--Card receive method-->
+
+    <style name="CardMethod.Title"
+        parent="TextView">
+        <item name="android:textSize">@dimen/_22ssp</item>
+        <item name="android:textColor">#191919</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">@font/svn_gilroy_bold</item>
+    </style>
+
+    <style name="CardMethod.MethodContent"
+        parent="TextView">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/black60</item>
+        <item name="android:gravity">start</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">@font/svn_gilroy_regular</item>
+    </style>
 </resources>

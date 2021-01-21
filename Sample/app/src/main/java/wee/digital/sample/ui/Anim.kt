@@ -19,7 +19,6 @@ fun ConstraintLayout.animOcrCaptured(bitmap: Bitmap?, animView: ImageView, targe
         constrainHeight(id, targetView.height)
         connect(id, ConstraintSet.START, targetView.id, ConstraintSet.START)
         connect(id, ConstraintSet.TOP, targetView.id, ConstraintSet.TOP)
-
     }.applyTo(this)
     postDelayed({
         animView.setImageBitmap(null)

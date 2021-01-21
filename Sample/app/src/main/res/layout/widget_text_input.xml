@@ -38,6 +38,7 @@
         android:clickable="false"
         android:src="@drawable/ic_placeholder"
         android:tint="#A3A3A3"
+        android:padding="@dimen/_4sdp"
         android:layout_marginStart="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="@+id/inputEditText"
         app:layout_constraintStart_toStartOf="@id/inputEditText"
