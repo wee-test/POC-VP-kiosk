@@ -23,7 +23,7 @@ class ToggleRadioButton : AppCustomView {
     override fun onInitialize(context: Context, types: TypedArray) {
         text = types.text
         src = types.srcRes
-
+        isChecked = types.checked
     }
 
     override fun onViewClick(v: View?) {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <include
         android:id="@+id/include"
@@ -11,11 +11,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cardTextViewTitle"
-        style="@style/TextView"
-        android:layout_marginStart="@dimen/_16sdp"
+        style="@style/CardMethod.Title"
+        android:layout_marginStart="@dimen/_24sdp"
         android:layout_marginTop="@dimen/_32sdp"
         android:text="Hình thức nhận thẻ"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
@@ -36,11 +35,12 @@
             <wee.digital.sample.widget.ToggleRadioButton
                 android:id="@+id/receiveRadioDirectly"
                 style="@style/ReceiveRadio"
-                android:src="@drawable/ic_placeholder"
+                android:checked="true"
+                android:src="@drawable/ic_print_green"
                 android:text="Nhận thẻ trực tiếp">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextView"
+                    style="@style/CardMethod.MethodContent"
                     android:text="Thẻ sẽ được in trực tiếp từ thiết bị. Thời gian in thẻ từ 3-5 phút." />
 
             </wee.digital.sample.widget.ToggleRadioButton>
@@ -49,14 +49,14 @@
                 android:id="@+id/receiveRadioHome"
                 style="@style/ReceiveRadio"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:src="@drawable/ic_placeholder"
+                android:src="@drawable/ic_home_green"
                 android:text="Nhận thẻ tại nhà">
 
                 <wee.digital.sample.widget.TextInputView
                     android:id="@+id/receiveInputFullName"
                     style="@style/InputView"
                     android:hint="Tên người nhận"
-                    android:src="@drawable/ic_placeholder"
+                    android:src="@drawable/ic_user_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +65,7 @@
                     android:id="@+id/receiveInputPhone"
                     style="@style/InputView"
                     android:hint="Số điện thoại"
-                    android:src="@drawable/ic_placeholder"
+                    android:src="@drawable/ic_phone_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveInputFullName" />
@@ -74,7 +74,7 @@
                     android:id="@+id/receiveInputProvince"
                     style="@style/InputView"
                     android:hint="Tỉnh thành"
-                    android:src="@drawable/ic_placeholder"
+                    android:src="@drawable/ic_location_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveInputPhone" />
@@ -84,7 +84,7 @@
                     style="@style/InputView"
                     android:hint="Quận huyện"
                     android:inputType="number"
-                    android:src="@drawable/ic_placeholder"
+                    android:src="@drawable/ic_location_gray"
                     app:layout_constraintEnd_toStartOf="@+id/ocrInputWard"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:hint="Phường xã"
-                    android:src="@drawable/ic_placeholder"
+                    android:src="@drawable/ic_location_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ocrInputDistrict"
                     app:layout_constraintTop_toBottomOf="@+id/receiveInputProvince" />
@@ -105,7 +105,7 @@
                     android:id="@+id/receiveInputAddress"
                     style="@style/InputView"
                     android:hint="Địa chỉ"
-                    android:src="@drawable/ic_placeholder"
+                    android:src="@drawable/ic_location_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ocrInputDistrict" />
@@ -117,27 +117,34 @@
                 android:id="@+id/receiveRadioBranch"
                 style="@style/ReceiveRadio"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:src="@drawable/ic_placeholder"
+                android:src="@drawable/ic_bank"
                 android:text="Nhận thẻ trực tiếp">
 
                 <androidx.appcompat.widget.AppCompatTextView
+
                     android:id="@+id/receiveTextViewBranchName"
-                    style="@style/TextView"
+                    style="@style/TextView.Bold"
                     android:text="Chi nhánh Tân Bình"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <wee.digital.sample.widget.IconTextView
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:id="@+id/receiveTextViewBranchPhone"
                     style="@style/TextView"
-                    android:text="046 274 8478"
+                    android:tint="@color/black40"
+                    android:title="046 274 8478"
+                    android:src="@drawable/ic_phone_gray"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveTextViewBranchName" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <wee.digital.sample.widget.IconTextView
+                    android:layout_marginTop="@dimen/_16sdp"
                     style="@style/TextView"
-                    android:text="B20 Bạch Đằng, Phường 2, Tân Bình, Hồ Chí Minh"
+                    android:title="B20 Bạch Đằng, Phường 2, Tân Bình, Hồ Chí Minh"
+                    android:src="@drawable/ic_location_gray"
+                    android:tint="@color/black40"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveTextViewBranchPhone" />
 
@@ -146,5 +153,17 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrActionNext"
+        style="@style/Button.Ocr"
+        android:background="@drawable/bg_gradient_rounded"
+        android:text="Tiếp theo"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/margin2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

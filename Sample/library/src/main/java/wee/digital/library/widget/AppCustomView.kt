@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -69,6 +70,11 @@ abstract class AppCustomView : ConstraintLayout {
 
     val TypedArray.clickable: Boolean
         get() = getBoolean(R.styleable.CustomView_android_clickable, true)
+
+    val TypedArray.textStyle: Int
+        get() {
+            return getResourceId(R.styleable.CustomView_android_textStyle, Typeface.NORMAL)
+        }
 
     /**
      * Input type

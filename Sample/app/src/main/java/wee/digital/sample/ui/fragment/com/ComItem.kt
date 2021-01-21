@@ -24,5 +24,6 @@ val listCom = listOf(
         ComItem("review", "review.jpg", MainDirections.actionGlobalReviewFragment()),
         ComItem("loading", "loading.jpg", MainDirections.actionGlobalLoadingFragment()),
         ComItem("evaluate", "evaluate.jpg", MainDirections.actionGlobalRatingFragment()),
-        ComItem("call", "call.jpg", MainDirections.actionGlobalCallFragment())
+        ComItem("call", "call.jpg", MainDirections.actionGlobalCallFragment()),
+        ComItem("cardReceiveMethod", "card.jpg", MainDirections.actionGlobalCardReceiveFragment()),
 )
