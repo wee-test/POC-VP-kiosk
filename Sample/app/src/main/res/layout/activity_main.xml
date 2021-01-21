@@ -18,4 +18,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/main_graph" />
 
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/mainVideoCallView"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

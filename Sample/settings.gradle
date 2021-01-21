@@ -1,3 +1,4 @@
+include ':WeeWebRTC'
 include ':library'
 include ':app'
 include ':camera'
