@@ -31,7 +31,7 @@ class ComFragment : MainFragment() {
         override fun layoutResource(model: ComItem, position: Int): Int = R.layout.com_item
 
         override fun View.onBindModel(model: ComItem, position: Int, layout: Int) {
-            comItemImage.load(model.image)
+            comItemImage.load("${URL_COM}${model.image}")
             comItemLabel.text = model.name
         }
 
