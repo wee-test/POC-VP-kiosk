@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchParent"
     android:orientation="vertical">
 
@@ -22,17 +22,33 @@
 
             <wee.digital.sample.widget.TextVerticalView
                 style="@style/MatchWidth"
-                android:layout_marginTop="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/margin2"
                 android:src="@drawable/ic_placeholder"
                 android:text="Hello"
                 android:title="TextHorizontalView" />
 
             <wee.digital.sample.widget.TextInputView
                 style="@style/MatchWidth"
-                android:layout_marginTop="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/margin"
                 android:hint="TextHorizontalView"
                 android:src="@drawable/ic_placeholder"
                 android:text="Hello" />
+
+            <wee.digital.sample.widget.TextInputView
+                android:id="@+id/comInputDate"
+                style="@style/MatchWidth"
+                android:layout_marginTop="@dimen/margin"
+                android:hint="date"
+                android:inputType="number"
+                android:src="@drawable/ic_placeholder"
+                android:text="01/01/2021" />
+
+            <wee.digital.sample.widget.TextInputView
+                android:id="@+id/comInputList"
+                style="@style/MatchWidth"
+                android:layout_marginTop="@dimen/margin"
+                android:hint="list"
+                android:src="@drawable/ic_placeholder" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comRecycler"
@@ -48,7 +64,8 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/comViewNext"
-        style="@style/Button.Primary"
+        style="@style/Button.Ocr"
+        android:background="@drawable/bg_gradient"
         android:layout_margin="@dimen/_8sdp"
         android:text="Next" />
 

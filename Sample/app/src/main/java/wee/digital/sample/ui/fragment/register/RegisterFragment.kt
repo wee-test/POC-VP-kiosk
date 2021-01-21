@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.register.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
 import wee.digital.library.extension.gone
+import wee.digital.library.extension.load
 import wee.digital.library.extension.show
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -39,6 +40,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
      * [FaceCaptureJob.Listener] implement
      */
     override fun onCaptureTick(second: String?) {
+        if(isComplete) return
         registerLabelTime.text = second
         registerFrameBg ?: return
         if (second != null) registerFrameBg.show() else registerFrameBg.gone()
@@ -48,9 +50,10 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
         mFaceDetectJob.pauseDetect()
         Shared.faceCapture.postValue(image)
         activity?.runOnUiThread {
-            registerStatusFace.text = "Chờ chút nhé..."
             if (isComplete) return@runOnUiThread
             isComplete = true
+            registerStatusFace.text = "Chờ chút nhé..."
+            registerFrameBg.show()
             registerFrame.setImageBitmap(image)
             navigate(MainDirections.actionGlobalHomeFragment())
         }
@@ -64,6 +67,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onResume() {
         super.onResume()
+        registerFrameBg.load(R.drawable.face_white)
         RealSense.start()
     }
 

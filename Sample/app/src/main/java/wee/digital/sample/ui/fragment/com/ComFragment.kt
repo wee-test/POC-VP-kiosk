@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.com_item.view.*
 import wee.digital.library.adapter.BaseRecyclerAdapter
 import wee.digital.library.extension.load
 import wee.digital.sample.R
+import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainFragment
 
 class ComFragment : MainFragment() {
@@ -17,6 +18,12 @@ class ComFragment : MainFragment() {
     }
 
     override fun onViewCreated() {
+        setupRecycler()
+        comInputDate.addDateWatcher()
+        comInputList.buildSelectable(mainVM, Shared.provinceList)
+    }
+
+    private fun setupRecycler() {
         adapter.set(listCom)
         adapter.bind(comRecycler, 3)
         adapter.onItemClick = { model, _ ->

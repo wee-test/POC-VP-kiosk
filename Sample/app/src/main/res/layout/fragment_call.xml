@@ -18,6 +18,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="@dimen/_350sdp"
+        android:layout_height="@dimen/_350sdp"
+        android:layout_marginEnd="@dimen/_1sdp"
+        android:layout_marginBottom="@dimen/_1sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/callImageOperator"
+        app:layout_constraintEnd_toEndOf="@+id/callImageOperator"
+        app:layout_constraintStart_toStartOf="@+id/callImageOperator"
+        app:layout_constraintTop_toTopOf="@+id/callImageOperator"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="call.json"
+        app:lottie_loop="true" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/callImageOperator"
         android:layout_width="@dimen/_90sdp"
