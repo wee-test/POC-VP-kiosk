@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/cardReceiveFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -147,4 +147,14 @@
     <action
         android:id="@+id/action_global_loadingFragment"
         app:destination="@id/loadingFragment" />
+
+    <fragment
+        android:id="@+id/cardReceiveFragment"
+        android:name="wee.digital.sample.ui.fragment.card.CardReceiveFragment"
+        android:label="CardReceiveFragment"
+        tools:layout="@layout/card_receive_method" />
+    <action
+        android:id="@+id/action_global_cardReceiveFragment"
+        app:destination="@id/cardReceiveFragment" />
+
 </navigation>

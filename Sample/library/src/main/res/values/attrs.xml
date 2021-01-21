@@ -47,14 +47,29 @@
         <attr name="radius" format="dimension" />
         <attr name="topLeftRadius" format="dimension" />
         <attr name="topRightRadius" format="dimension" />
-        <attr name="bottomLeftRadius" format="dimension" />
-        <attr name="bottomRightRadius" format="dimension" />
+        <attr name="bottomLeftRadius"
+            format="dimension" />
+        <attr name="bottomRightRadius"
+            format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="DashView">
-        <attr name="dashLength" format="reference|dimension" />
-        <attr name="dashSpace" format="reference|dimension" />
-        <attr name="dashColor" format="reference|color" />
+        <attr name="dashLength"
+            format="reference|dimension" />
+        <attr name="dashSpace"
+            format="reference|dimension" />
+        <attr name="dashColor"
+            format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpandableLayout">
+        <attr name="el_duration"
+            format="integer" />
+        <attr name="el_expanded"
+            format="boolean" />
+        <attr name="el_parallax"
+            format="float" />
+        <attr name="android:orientation" />
     </declare-styleable>
 
 </resources>

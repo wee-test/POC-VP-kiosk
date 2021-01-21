@@ -15,9 +15,10 @@ import kotlinx.android.synthetic.main.widget_tab_bar.view.*
 import kotlinx.android.synthetic.main.widget_tab_bar_item.view.*
 import wee.digital.library.adapter.ViewPager2Adapter
 import wee.digital.library.extension.VerticalSlide
+import wee.digital.library.widget.AppCustomView
 import wee.digital.sample.R
 
-open class TabBarView : AppView, TabLayout.OnTabSelectedListener {
+open class TabBarView : AppCustomView, TabLayout.OnTabSelectedListener {
 
     open var itemLayoutRes: Int = R.layout.widget_tab_bar_item
 
@@ -29,9 +30,11 @@ open class TabBarView : AppView, TabLayout.OnTabSelectedListener {
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
-    override val layoutRes: Int get() = R.layout.widget_tab_bar
+    override fun layoutResource(): Int {
+        return R.layout.widget_tab_bar
+    }
 
-    override fun onViewInit(context: Context, types: TypedArray) {
+    override fun onInitialize(context: Context, types: TypedArray) {
         tabTabLayout.apply {
             setPadding(paddingLeft, paddingLeft, paddingLeft, paddingLeft)
             tabGravity = TabLayout.GRAVITY_FILL
@@ -39,6 +42,7 @@ open class TabBarView : AppView, TabLayout.OnTabSelectedListener {
             setSelectedTabIndicator(0)
         }
     }
+
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()

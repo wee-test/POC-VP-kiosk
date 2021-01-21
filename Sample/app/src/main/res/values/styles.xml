@@ -162,4 +162,8 @@
         <item name="android:minWidth">@dimen/_24sdp</item>
     </style>
 
+    <style name="ReceiveRadio" parent="MatchWidth">
+        <item name="android:background">@drawable/drw_receive_radio</item>
+        <item name="android:backgroundTint">@color/colorWhite</item>
+    </style>
 </resources>
