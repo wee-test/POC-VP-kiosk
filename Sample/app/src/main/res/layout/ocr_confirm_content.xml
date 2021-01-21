@@ -18,6 +18,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <wee.digital.sample.widget.TextInputView
+        android:id="@+id/ocrInputBirth"
+        style="@style/InputView"
+        android:hint="Ngày sinh"
+        android:inputType="number"
+        android:src="@drawable/ic_placeholder"
+        app:layout_constraintEnd_toStartOf="@+id/ocrInputGender"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputFullName" />
+
+    <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputGender"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,16 +39,6 @@
         app:layout_constraintStart_toEndOf="@+id/ocrInputBirth"
         app:layout_constraintTop_toBottomOf="@+id/ocrInputFullName" />
 
-    <wee.digital.sample.widget.TextInputView
-        android:id="@+id/ocrInputBirth"
-        style="@style/InputView"
-        android:hint="Ngày sinh"
-        android:inputType="number"
-        android:src="@drawable/ic_placeholder"
-        app:layout_constraintEnd_toStartOf="@+id/ocrInputGender"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputFullName" />
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputNumber"

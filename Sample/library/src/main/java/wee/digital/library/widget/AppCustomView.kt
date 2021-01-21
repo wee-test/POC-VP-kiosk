@@ -7,9 +7,11 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import wee.digital.library.Library
 import wee.digital.library.R
+import wee.digital.library.extension.ViewClickListener
 import wee.digital.library.extension.color
 
 abstract class AppCustomView : ConstraintLayout {
@@ -35,6 +37,19 @@ abstract class AppCustomView : ConstraintLayout {
             onInitialize(context, types)
         } finally {
             types.recycle()
+        }
+    }
+
+    open fun onViewClick(v: View?) = Unit
+
+    fun addViewClickListener(vararg views: View) {
+        val onClick = object : ViewClickListener() {
+            override fun onClicks(v: View?) {
+                onViewClick(v)
+            }
+        }
+        views.forEach {
+            it.setOnClickListener(onClick)
         }
     }
 
