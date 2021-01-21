@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/comFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -13,15 +13,6 @@
     <action
         android:id="@+id/action_global_comFragment"
         app:destination="@id/comFragment" />
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="wee.digital.sample.ui.fragment.splash.SplashFragment"
-        android:label="SplashFragment"
-        tools:layout="@layout/splash" />
-    <action
-        android:id="@+id/action_global_splashFragment"
-        app:destination="@id/splashFragment" />
 
     <fragment
         android:id="@+id/homeFragment"
@@ -147,4 +138,11 @@
     <action
         android:id="@+id/action_global_loadingFragment"
         app:destination="@id/loadingFragment" />
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="wee.digital.sample.ui.fragment.card.CardFragment"
+        android:label="CardFragment" />
+    <action
+        android:id="@+id/action_global_cardFragment"
+        app:destination="@id/cardFragment" />
 </navigation>

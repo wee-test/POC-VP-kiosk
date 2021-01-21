@@ -34,7 +34,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="@drawable/drw_text_input_border"
-            android:backgroundtTint="@color/colorInputUnfocused"
+            android:backgroundTint="@color/colorInputUnfocused"
             android:hint="Tìm kiếm"
             android:src="@drawable/ic_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
