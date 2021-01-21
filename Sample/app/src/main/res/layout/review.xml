@@ -99,6 +99,7 @@
         android:padding="@dimen/margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_210sdp"
+        android:minHeight="@dimen/_210sdp"
         android:layout_marginHorizontal="@dimen/margin"
         android:layout_marginTop="@dimen/margin2"
         android:background="@drawable/bg_rounded"

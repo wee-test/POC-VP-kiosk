@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/cardReceiveFragment">
+    app:startDestination="@id/comFragment">
 
     <fragment
         android:id="@+id/comFragment"
@@ -13,15 +13,6 @@
     <action
         android:id="@+id/action_global_comFragment"
         app:destination="@id/comFragment" />
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="wee.digital.sample.ui.fragment.splash.SplashFragment"
-        android:label="SplashFragment"
-        tools:layout="@layout/splash" />
-    <action
-        android:id="@+id/action_global_splashFragment"
-        app:destination="@id/splashFragment" />
 
     <fragment
         android:id="@+id/homeFragment"
@@ -156,5 +147,18 @@
     <action
         android:id="@+id/action_global_cardReceiveFragment"
         app:destination="@id/cardReceiveFragment" />
-
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="wee.digital.sample.ui.fragment.card.CardFragment"
+        android:label="CardFragment" />
+    <action
+        android:id="@+id/action_global_cardFragment"
+        app:destination="@id/cardFragment" />
+    <fragment
+        android:id="@+id/ratingFragment"
+        android:name="wee.digital.sample.ui.fragment.rating.RatingFragment"
+        android:label="RatingFragment" />
+    <action
+        android:id="@+id/action_global_ratingFragment"
+        app:destination="@id/ratingFragment" />
 </navigation>
