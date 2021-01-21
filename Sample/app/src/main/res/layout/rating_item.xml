@@ -16,11 +16,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/imageViewReact"
             android:layout_width="@dimen/_40sdp"
-            tools:src="@drawable/ic_rating_love_select"
             android:layout_height="@dimen/_40sdp"
+            android:gravity="center"
+            android:checked="false"
+            android:clickable="false"
+            android:enabled="false"
+            android:background="@drawable/ic_rating_love"
+            android:button="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,10 +35,9 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewReact"
-        android:textSize="@dimen/_15ssp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:textSize="@dimen/_10ssp"
+        style="@style/TextView.RatingItem"
+        android:layout_marginTop="@dimen/_2sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backgroundReact" />

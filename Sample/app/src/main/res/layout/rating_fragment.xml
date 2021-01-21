@@ -63,22 +63,22 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragRatingTextAccCreated"
             style="@style/TextView.Title"
-            android:text="Tài khoản đã được\nkhởi tạo "
-            android:layout_marginBottom="@dimen/_40sdp"
+            android:text="Tài khoản đã được\nkhởi tạo"
+            android:layout_marginTop="@dimen/_16sdp"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/frgRating"
             app:layout_constraintEnd_toEndOf="@+id/frgRating"
-            app:layout_constraintStart_toStartOf="@+id/frgRating" />
+            app:layout_constraintStart_toStartOf="@+id/frgRating"
+            app:layout_constraintTop_toBottomOf="@+id/fragRatingViewImage" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/fragRatingViewImage"
-            android:src="@mipmap/success"
-            android:layout_marginBottom="@dimen/_16sdp"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            app:layout_constraintBottom_toTopOf="@+id/fragRatingTextAccCreated"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:src="@mipmap/success"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/fragRatingViewLine"
@@ -97,6 +97,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frgRatingBottomLayout"
+        android:background="#E5E5E5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,6 +107,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView1"
             style="@style/TextView.Bold"
+            android:textSize="@dimen/_12ssp"
             android:layout_marginTop="@dimen/_26sdp"
             android:text="Đánh giá quá trình sử dụng dịch vụ"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,10 +130,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/frgRatingActionNext"
-            android:visibility="gone"
+            android:visibility="visible"
             style="@style/Button.Ocr"
             android:background="@drawable/bg_gradient_rounded"
-            android:text="Tiếp theo"
+            android:text="Kết thúc giao dịch"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
