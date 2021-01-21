@@ -3,10 +3,12 @@ package wee.digital.sample.ui.main
 import android.os.Bundle
 import android.view.View
 import androidx.transition.TransitionInflater
+import wee.dev.weewebrtc.WeeCaller
 import wee.digital.sample.ui.base.BaseFragment
 import wee.digital.sample.ui.base.activityVM
 import wee.digital.library.extension.backgroundColor
 import wee.digital.library.extension.statusBarColor
+import wee.digital.sample.app.App
 
 abstract class MainFragment : BaseFragment() {
 
