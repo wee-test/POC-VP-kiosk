@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.ocr
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.View
 import kotlinx.android.synthetic.main.ocr.*
 import wee.dev.weeocr.WeeOCR
@@ -14,6 +15,7 @@ import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.library.util.Utils
+import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
@@ -60,7 +62,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrActionNext -> {
                 if (frameComplete) return
                 frameComplete = true
-                toast("call api")
+                navigate(MainDirections.actionGlobalOcrConfirmFragment())
             }
         }
     }
@@ -111,7 +113,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             }
             if (type != typeCard) resetAllFrame()
             typeCard = type
-            bindFrame(cropped, typeFrontBack)
+            activity?.runOnUiThread { bindFrame(cropped, typeFrontBack) }
         }
     }
 
@@ -173,6 +175,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             frameComplete = false
             ocrFrameFront.setImageBitmap(null)
             ocrResetFont.gone()
+            ocrActionNext.gone()
         }
     }
 
@@ -183,12 +186,13 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             frameComplete = false
             ocrFrameBack.setImageBitmap(null)
             ocrResetBack.gone()
+            ocrActionNext.gone()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        startCamera()
+        /*startCamera()*/
     }
 
     override fun onPause() {

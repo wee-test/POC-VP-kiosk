@@ -275,6 +275,13 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
         recyclerView.adapter = this
     }
 
+    open fun bindHorizontal(recyclerView: RecyclerView, block: (LinearLayoutManager.() -> Unit) = { }) {
+        val layoutManager = LinearLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
+        layoutManager.block()
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = this
+    }
+
     open fun bind(
             recyclerView: RecyclerView,
             spanCount: Int = 1,

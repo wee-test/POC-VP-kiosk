@@ -136,10 +136,10 @@
         <item name="android:background">@mipmap/frame_ocr</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="layout_constraintDimensionRatio">@string/cardRatio</item>
-        <item name="riv_border_width">@dimen/_2sdp</item>
-        <item name="riv_corner_radius">@dimen/_9sdp</item>
-    </style>
 
+    </style>
+    <!--<item name="riv_border_width">@dimen/_2sdp</item>
+    <item name="riv_corner_radius">@dimen/_9sdp</item>-->
     <style name="OCR.ImageTrash">
         <item name="android:layout_width">@dimen/_20sdp</item>
         <item name="android:layout_height">@dimen/_20sdp</item>

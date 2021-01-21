@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ocrRoot"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/MatchParent">
 
-    <include
+    <wee.digital.sample.widget.HeaderView
         android:id="@+id/ocrToolbar"
-        layout="@layout/view_header"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,6 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ocrToolbar" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrLabelSideFont"
         style="@style/TextView"
         android:text="Mặt trước"
         android:textColor="@color/black20"
@@ -41,6 +41,7 @@
         style="@style/OCR.ImageCapture"
         android:layout_marginTop="@dimen/margin3"
         android:scaleType="fitCenter"
+        android:padding="@dimen/_3sdp"
         app:layout_constraintEnd_toStartOf="@id/ocrFrameBack"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +56,7 @@
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrLabelSideBack"
         style="@style/TextView"
         android:text="Mặt sau"
         android:textColor="@color/black20"
@@ -67,6 +69,7 @@
         android:id="@+id/ocrFrameBack"
         style="@style/OCR.ImageCapture"
         android:scaleType="fitCenter"
+        android:padding="@dimen/_3sdp"
         android:layout_marginTop="@dimen/margin3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ocrFrameFront"
@@ -90,8 +93,6 @@
         <wee.dev.weeocr.camera.PreviewFullScreen
             android:id="@+id/ocrPreview"
             style="@style/MatchParent"
-            android:hardwareAccelerated="true"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,6 +103,7 @@
                 style="@style/MatchParent" />
 
             <View
+                android:id="@+id/ocrBgCamera"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:background="@mipmap/bg_camera" />
