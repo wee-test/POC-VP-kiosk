@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<wee.digital.library.widget.AppMotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/inputViewLayout"
@@ -12,22 +13,23 @@
         android:layout_height="0dp"
         android:background="@drawable/drw_text_input_bg"
         app:layout_constraintBottom_toBottomOf="@id/inputEditText"
-        app:layout_constraintEnd_toEndOf="@id/inputEditText"
-        app:layout_constraintStart_toStartOf="@id/inputEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/inputEditText" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/inputEditText"
         style="@style/EditText"
+        android:paddingStart="@dimen/_34sdp"
+        android:paddingTop="@dimen/_8sdp"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        tools:text="con cac vip"
         android:layout_marginStart="1px"
         android:layout_marginEnd="1px"
+        android:backgroundTint="@color/colorInputUnfocused"
         android:background="@drawable/drw_text_input_border"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        android:textSize="@dimen/_10ssp"
-        android:tint="@color/colorInputUnfocused" />
+        android:textSize="@dimen/_10ssp" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/inputImageViewIcon"
@@ -36,31 +38,30 @@
         android:clickable="false"
         android:src="@drawable/ic_placeholder"
         android:tint="#A3A3A3"
-        app:tint="@color/colorInputFocused" />
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/inputEditText"
+        app:layout_constraintStart_toStartOf="@id/inputEditText"
+        app:layout_constraintTop_toTopOf="@+id/inputEditText" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/inputTextViewHint"
         style="@style/TextView"
-        android:paddingStart="@dimen/_4sdp"
-        android:paddingEnd="@dimen/_4sdp"
+        android:transformPivotX="0dp"
         android:textColor="#A3A3A3"
         android:textSize="@dimen/_10ssp"
         tools:text="Hint text" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/inputImageViewDropdown"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/_10sdp"
+        android:layout_height="@dimen/_10sdp"
         android:clickable="false"
-        android:padding="@dimen/_10sdp"
-        android:src="@drawable/ic_placeholder"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:tint="#A3A3A3"
-        android:visibility="gone"
+        app:layout_constraintDimensionRatio="w,2:3"
         app:layout_constraintBottom_toBottomOf="@id/inputEditText"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/inputEditText"
-        app:tint="@color/colorInputFocused" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/inputTextViewError"
@@ -70,5 +71,4 @@
         android:layout_marginTop="@dimen/_2sdp"
         tools:text="Error text" />
 
-
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</wee.digital.library.widget.AppMotionLayout>

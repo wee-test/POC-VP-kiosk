@@ -90,9 +90,9 @@ abstract class AppCustomView : ConstraintLayout {
             return getColor(R.styleable.CustomView_android_textColor, Color.BLACK)
         }
 
-    val TypedArray.hintColor: Int
+    val TypedArray.textColorHint: Int
         get() {
-            return getColor(R.styleable.CustomView_android_textColor, Color.DKGRAY)
+            return getColor(R.styleable.CustomView_android_textColorHint, Color.DKGRAY)
         }
 
     /**
@@ -163,5 +163,3 @@ abstract class AppCustomView : ConstraintLayout {
         get() = getBoolean(R.styleable.CustomView_android_enabled, true)
 
 }
-
-

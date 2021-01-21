@@ -13,7 +13,7 @@ import wee.digital.sample.R
 open class SelectableAdapter<T : Selectable> : BaseRecyclerAdapter<T>() {
 
     @StringRes
-    var title: Int = 0
+    var title: Int = R.string.app_name
 
     var onItemSelected: (T) -> Unit = { }
 
@@ -35,7 +35,7 @@ open class SelectableAdapter<T : Selectable> : BaseRecyclerAdapter<T>() {
     override fun View.onBindModel(model: T, position: Int, layout: Int) {
         selectableImageView.isGone(model.icon == 0)
         selectableTextViewItem.setBackgroundResource(if (position != lastIndex) R.drawable.drw_underline else R.color.colorWhite)
-        selectableImageView.setImageResource(model.icon)
+        selectableImageView.setImageResource(model.icon ?: 0)
         selectableTextViewItem.text = model.text
         if (model != selectedItem) {
             selectableTextViewItem.regular()
@@ -43,5 +43,4 @@ open class SelectableAdapter<T : Selectable> : BaseRecyclerAdapter<T>() {
             selectableTextViewItem.bold()
         }
     }
-
 }

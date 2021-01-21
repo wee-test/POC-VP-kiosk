@@ -2,20 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchWidth"
-    android:minHeight="@dimen/_600sdp"
-    android:orientation="vertical"
+    android:background="@color/colorBackgroundGray"
     android:paddingStart="@dimen/_16sdp"
     android:paddingTop="@dimen/_8sdp"
-    android:paddingEnd="@dimen/_16sdp"
-    android:paddingBottom="@dimen/_164sdp"
-    tools:context=".ui.main.MainActivity">
+    android:paddingEnd="@dimen/_16sdp">
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputFullName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/InputView"
         android:hint="Họ và tên"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,21 +28,9 @@
         app:layout_constraintStart_toEndOf="@+id/ocrInputBirth"
         app:layout_constraintTop_toBottomOf="@+id/ocrInputFullName" />
 
-    <wee.digital.library.widget.DashView
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="@dimen/_8sdp"
-        app:dashColor="@color/colorPrimary"
-        app:dashLength="@dimen/_8sdp"
-        app:dashSpace="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputBirth" />
-
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputBirth"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/InputView"
         android:hint="Ngày sinh"
         android:inputType="number"
         android:src="@drawable/ic_placeholder"
@@ -60,7 +43,6 @@
         android:id="@+id/ocrInputNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_32sdp"
         android:hint="Số giấy tờ"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,8 +51,7 @@
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputIssueDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/InputView"
         android:hint="Ngày cấp"
         android:inputType="number"
         android:src="@drawable/ic_placeholder"
@@ -82,8 +63,7 @@
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputIssuePlace"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/InputView"
         android:layout_marginStart="@dimen/_8sdp"
         android:hint="Nơi cấp"
         android:src="@drawable/ic_placeholder"
@@ -93,8 +73,7 @@
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputHometown"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/InputView"
         android:hint="Nguyên quán"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,9 +82,7 @@
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_32sdp"
+        style="@style/InputView"
         android:hint="Địa chỉ thường trú"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,8 +91,7 @@
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputPhone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/InputView"
         android:hint="Số điện thoại"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintEnd_toStartOf="@id/ocrInputEmail"
@@ -125,8 +101,7 @@
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/InputView"
         android:layout_marginStart="@dimen/_8sdp"
         android:hint="Email"
         android:src="@drawable/ic_placeholder"

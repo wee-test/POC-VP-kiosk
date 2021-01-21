@@ -60,6 +60,10 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
         activity?.runOnUiThread { registerStatusFace.text = message }
     }
 
+    override fun onWarningMessage(message: String) {
+        activity?.runOnUiThread { registerStatusFace.text = message }
+    }
+
     override fun onCaptureTimeout() {}
 
     override fun onResume() {

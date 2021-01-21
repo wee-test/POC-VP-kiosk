@@ -23,7 +23,7 @@ class DashView : View {
 
     private var dashSpace: Float = 10f
 
-    var orientation: Int = HORIZONTAL
+    var orientation: Int = VERTICAL
 
     val path: Path = Path()
 
