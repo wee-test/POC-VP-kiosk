@@ -38,13 +38,12 @@ dependencies {
     implementation deps.reactivex.binding
 
     // GOOGLE SERVICES
-    implementation 'com.google.firebase:firebase-ml-vision:24.0.3'
-    implementation 'com.google.firebase:firebase-ml-model-interpreter:22.0.3'
-    implementation 'com.google.firebase:firebase-ml-vision-automl:18.0.5'
+    implementation 'com.google.mlkit:image-labeling-automl:16.2.1'
 
     // INTER REAL SENSE LIB
-    implementation "com.intel.realsense:librealsense:2.39.0@aar"
+    implementation "com.intel.realsense:librealsense:2.41.0@aar"
     implementation 'org.tensorflow:tensorflow-android:1.13.1'
+
     implementation project(path: ':opencv')
 
 }

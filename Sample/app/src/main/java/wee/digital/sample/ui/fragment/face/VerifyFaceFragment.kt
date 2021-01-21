@@ -55,6 +55,10 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
         activity?.runOnUiThread { faceLabelStatusFace.text = message }
     }
 
+    override fun onWarningMessage(message: String) {
+        activity?.runOnUiThread { faceLabelStatusFace.text = message }
+    }
+
     override fun onCaptureTimeout() {}
 
     override fun onResume() {

@@ -3,6 +3,7 @@ package wee.digital.camera
 import android.graphics.*
 import android.os.Handler
 import android.os.Looper
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -51,6 +52,17 @@ fun Vector<Box>?.largestBox(): Box? {
         }
     }
     return largestFace
+}
+
+fun Vector<Box>?.listBox(): ArrayList<Box>? {
+    if (this.isNullOrEmpty()) return null
+    val listBox = arrayListOf<Box>()
+    this.forEach {
+        //if (it.score > 0.9) {
+            listBox.add(it)
+        //}
+    }
+    return listBox
 }
 
 fun Box.faceWidth(): Int {
@@ -124,7 +136,7 @@ fun Rect.cropPortrait(bitmap: Bitmap, per: Float = 0.80f): Bitmap? {
  * Crop face color image
  * @this: box.transformToRect
  */
-fun Rect.cropColorFace(bitmap: Bitmap): Bitmap? {
+fun Rect.cropFace(bitmap: Bitmap): Bitmap? {
     val rect = this.getRectCrop(bitmap)
     val copiedBitmap = bitmap.copy(Bitmap.Config.RGB_565, true)
     return try {
@@ -358,12 +370,50 @@ fun Bitmap?.toBytes(): ByteArray {
     this ?: return ByteArray(1)
     return try {
         val stream = ByteArrayOutputStream()
-        this.copy(Bitmap.Config.RGB_565, true)?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        this.copy(Bitmap.Config.RGB_565, true)?.compress(Bitmap.CompressFormat.JPEG, 80, stream)
         val byteArray = stream.toByteArray()
         stream.close()
         byteArray
     } catch (e: Exception) {
         ByteArray(1)
+    }
+}
+
+fun Bitmap.resize(maxImageSize: Int,format: Bitmap.CompressFormat = Bitmap.CompressFormat.WEBP):Bitmap{
+    val ratio: Float = (maxImageSize.toFloat() / this.width).coerceAtMost(maxImageSize.toFloat() / this.height)
+    val width = (ratio * this.width).roundToInt()
+    val height = (ratio * this.height).roundToInt()
+    val bitmapCP = this.copy(Bitmap.Config.RGB_565,false)
+    val bm = Bitmap.createScaledBitmap(bitmapCP, width, height,false)
+    val stream = ByteArrayOutputStream()
+    bm.compress(format, 80, stream)
+    val byteArray = stream.toByteArray()
+    stream.close()
+    bitmapCP.recycle()
+    return BitmapFactory.decodeByteArray(byteArray,0,byteArray.size)
+}
+
+fun Bitmap?.toStringBase64(): String {
+    this ?: return ""
+    return try {
+        val stream = ByteArrayOutputStream()
+        this.copy(Bitmap.Config.RGB_565, true)?.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+        val byteArray = stream.toByteArray()
+        stream.close()
+        val base64 = Base64.encodeToString(byteArray, 0, byteArray.size, Base64.NO_WRAP)
+        base64
+    } catch (e: Exception) {
+        ""
+    }
+}
+
+fun ByteArray?.toStringBase64(): String {
+    this ?: return ""
+    return try {
+        val base64 = Base64.encodeToString(this, 0, this.size, Base64.NO_WRAP)
+        base64
+    } catch (e: Exception) {
+        ""
     }
 }
 
@@ -375,10 +425,11 @@ fun Frame?.rgbToBitmapOpenCV(): Bitmap? {
         val colourBuff = ByteArray(videoFrame.height * videoFrame.stride)
         videoFrame.getData(colourBuff)
         mColour.put(0, 0, colourBuff)
-        //Core.transpose(mColour, mColour) // Rotate 90
-        Core.flip(mColour, mColour, +1) // Mirror
+        Core.transpose(mColour, mColour) // Rotate 90
+        Core.flip(mColour, mColour, -1) // Mirror
         val bmpDisplay = Bitmap.createBitmap(mColour.cols(), mColour.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(mColour, bmpDisplay)
+        mColour.release()
         bmpDisplay
     } catch (e: Throwable) {
         null

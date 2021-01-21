@@ -4,12 +4,15 @@ import android.graphics.Bitmap
 import android.graphics.PointF
 import android.graphics.Rect
 import wee.digital.camera.*
+import wee.digital.camera.job.FaceCaptureJob.Companion.MIN_BLUR
+import wee.digital.camera.utils.OpenCVUtils
 
 class FaceDetector {
 
     companion object {
-        const val MIN_DISTANCE = 120
-        const val MIN_SIZE = 300
+        const val MIN_DISTANCE = 100
+        const val MIN_SIZE = 180
+        const val MIN_SCORE = 0.9f
     }
 
     private val maskFilter = ModelFilter("face/mask/manifest.json")
@@ -40,16 +43,25 @@ class FaceDetector {
                 .addOnCanceledListener { isDetecting = false }
                 .addOnFailureListener { statusListener?.onFaceLeaved() }
                 .addOnCompleteListener { task ->
-                    val box: Box? = task.result.largestBox()
+                    val result = task.result
+                    val box: Box? = result.largestBox()
                     if (box == null) {
                         statusListener?.onFaceLeaved()
                     } else {
-                        statusListener?.onFacePerformed()
-                        if (!faceChangeProcess(box)) statusListener?.onFaceChanged()
-                        currentFace = box
-
-                        onFaceDetect(box, colorBitmap, depthBitmap)
+                        val boxSize = result?.listBox()?.size ?: 0
+                        if (optionListener.onCheckManyFaces(boxSize)) {
+                            //statusListener?.onFaceLeaved()
+                            statusListener?.onManyFaces()
+                        }else{
+                            statusListener?.onFacePerformed()
+                            if (!faceChangeProcess(box)) {
+                                statusListener?.onFaceChanged()
+                            }
+                            currentFace = box
+                            onFaceDetect(box, colorBitmap, depthBitmap)
+                        }
                     }
+
                 }
     }
 
@@ -64,9 +76,13 @@ class FaceDetector {
      */
     private fun onFaceDetect(box: Box, colorBitmap: Bitmap, depthBitmap: Bitmap) {
 
-        if (!optionListener.onFaceScore(box.score)) return
+        if (!optionListener.onFaceScore(box.score)) {
+            return
+        }
 
-        if (!optionListener.onFaceRect(box.left(), box.top(), box.faceWidth(), box.faceHeight())) {
+        val rectFace = box.transformToRect()
+
+        if (!optionListener.onFaceRect(rectFace)) {
             return
         }
 
@@ -85,8 +101,7 @@ class FaceDetector {
      * and get vision label to continue [onDepthDetect]
      */
     private fun onMaskDetect(boxRect: Rect, colorBitmap: Bitmap, depthBitmap: Bitmap) {
-
-        val faceBitmap = boxRect.cropColorFace(colorBitmap) ?: return
+        val faceBitmap = onBlurFaceDetect(boxRect, colorBitmap) ?: return
         dataListener?.onFaceColorImage(faceBitmap)
 
         maskFilter.processImage(faceBitmap) { text, confidence ->
@@ -97,20 +112,24 @@ class FaceDetector {
         }
     }
 
+
+    private fun onBlurFaceDetect(boxRect: Rect, colorBitmap: Bitmap): Bitmap? {
+        val faceBitmap = boxRect.cropFace(colorBitmap) ?: return null
+        if (optionListener.onFaceBlurred(faceBitmap)) return null
+        return faceBitmap
+    }
+
     /**
      * Detect method 3rd: use [depthFilter] crop face depth image
      * and get vision label to continue [onGetPortrait]
      */
     private fun onDepthDetect(boxRect: Rect, colorBitmap: Bitmap, depthBitmap: Bitmap) {
 
-        val faceBitmap = if (RealSense.DEPTH_WIDTH != RealSense.COLOR_WIDTH) {
-            boxRect.cropDepthFace(depthBitmap) ?: return
-        } else {
-            boxRect.cropColorFace(depthBitmap) ?: return
-        }
-        dataListener?.onFaceDepthImage(faceBitmap)
+        val faceDepthBitmap = boxRect.cropFace(depthBitmap) ?: return
 
-        depthFilter.processImage(faceBitmap) { text, confidence ->
+        dataListener?.onFaceDepthImage(faceDepthBitmap)
+
+        depthFilter.processImage(faceDepthBitmap) { text, confidence ->
             text ?: return@processImage
             if (optionListener.onDepthLabel(text, confidence)) {
                 onGetPortrait(boxRect, colorBitmap)
@@ -165,6 +184,8 @@ class FaceDetector {
 
         fun onFaceChanged() {}
 
+        fun onManyFaces()
+
     }
 
     /**
@@ -181,15 +202,23 @@ class FaceDetector {
         }
 
         fun onFaceScore(score: Float): Boolean {
-            return true
+            return score >= MIN_SCORE
         }
 
-        fun onFaceRect(left: Int, top: Int, width: Int, height: Int): Boolean {
+        fun onFaceRect(faceRect: Rect): Boolean {
             return true
         }
 
         fun onFaceDegrees(x: Double, y: Double): Boolean {
             return true
+        }
+
+        fun onFaceBlurred(faceCropped: Bitmap, minBlur: Double = MIN_BLUR): Boolean {
+            return OpenCVUtils.checkIfImageIsBlurred(faceCropped, minBlur)
+        }
+
+        fun onCheckManyFaces(faceSize: Int): Boolean {
+            return faceSize > 1
         }
 
     }

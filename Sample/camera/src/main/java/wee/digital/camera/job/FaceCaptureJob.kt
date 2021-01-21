@@ -1,9 +1,11 @@
 package wee.digital.camera.job
 
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.detector.FaceDetector
@@ -12,13 +14,14 @@ import java.util.concurrent.atomic.AtomicInteger
 
 
 class FaceCaptureJob(private val listener: Listener) :
-    FaceDetector.DataListener,
-    FaceDetector.OptionListener,
-    FaceDetector.StatusListener {
+        FaceDetector.DataListener,
+        FaceDetector.OptionListener,
+        FaceDetector.StatusListener {
 
     companion object {
-        const val MIN_SIZE = 100
+        const val MIN_SIZE = 170
         const val MAX_SIZE = 580
+        const val MIN_BLUR = 200.0
     }
 
     private var hasDetect: Boolean = false
@@ -66,11 +69,27 @@ class FaceCaptureJob(private val listener: Listener) :
      * [FaceDetector.OptionListener] implement
      */
     override fun onFaceScore(score: Float): Boolean {
+        Log.e("CheckFace", "onFaceScore $score")
         return score > 0.9
     }
 
-    override fun onFaceRect(left: Int, top: Int, width: Int, height: Int): Boolean {
-        return when (width) {
+    override fun onDepthLabel(label: String, confidence: Float): Boolean {
+        Log.e("CheckFace", "onDepthLabel $label - $confidence")
+        val isReal = super.onDepthLabel(label, confidence)
+        if (!isReal) onPortraitInvalid("Khuôn mặt không hợp lệ")
+        return isReal
+    }
+
+    override fun onFaceDegrees(x: Double, y: Double): Boolean {
+        Log.e("CheckFace", "onFaceDegrees $x - $y")
+        val isValidDegrees = x in -20f..20f && y in -35f..25f
+        if (!isValidDegrees) onPortraitInvalid("Góc mặt không hợp lệ")
+        return isValidDegrees
+    }
+
+    override fun onFaceRect(faceRect: Rect): Boolean {
+        Log.e("CheckFace", "onFaceRect w: ${faceRect.width()} - ${faceRect.centerX()}x${faceRect.centerY()}")
+        return when (faceRect.width()) {
             in 0 until MIN_SIZE -> {
                 onPortraitInvalid("Mời Quý khách đưa gương mặt lại gần hơn")
                 false
@@ -83,6 +102,15 @@ class FaceCaptureJob(private val listener: Listener) :
                 false
             }
         }
+    }
+
+    override fun onFaceChanged() {
+        captureTimer.onCancel()
+        uiThread {
+            listener.onCaptureTick(null)
+            listener.onRecordMessage("Quý khách vui lòng đưa gương mặt vào vùng nhận diện")
+        }
+        super.onFaceChanged()
     }
 
 
@@ -98,6 +126,14 @@ class FaceCaptureJob(private val listener: Listener) :
         uiThread {
             listener.onCaptureTick(null)
             listener.onRecordMessage("Quý khách vui lòng đưa gương mặt vào vùng nhận diện")
+        }
+    }
+
+    override fun onManyFaces() {
+        captureTimer.onCancel()
+        uiThread {
+            listener.onCaptureTick(null)
+            listener.onWarningMessage("Có nhiều hơn 1 khuôn mặt trong vùng nhận diện")
         }
     }
 
@@ -139,7 +175,7 @@ class FaceCaptureJob(private val listener: Listener) :
     private fun onPortraitValid() {
         captureTimer.onStart()
         uiThread {
-            listener.onRecordMessage("Quý khách vui lòng giữ gương mặt\ntrong vùng nhận diện")
+            listener.onRecordMessage("Quý khách vui lòng giữ gương mặt trong vùng nhận diện")
         }
     }
 
@@ -160,6 +196,8 @@ class FaceCaptureJob(private val listener: Listener) :
         fun onPortraitCaptured(image: Bitmap)
 
         fun onRecordMessage(message: String?)
+
+        fun onWarningMessage(message: String)
 
         fun onCaptureTimeout()
     }
