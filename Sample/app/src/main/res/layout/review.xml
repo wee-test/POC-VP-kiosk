@@ -111,7 +111,7 @@
         android:id="@+id/reviewActionAccept"
         style="@style/Button.Ocr"
         android:layout_marginBottom="@dimen/margin2"
-        android:background="@drawable/bg_gradient"
+        android:background="@drawable/bg_gradient_rounded"
         android:text="Xác nhận"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

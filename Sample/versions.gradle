@@ -7,7 +7,7 @@ builds.version_name = "1.0.0"
 ext.builds = builds
 
 def versions = [:]
-versions.android_gradle = '4.1.0'
+versions.android_gradle = '4.1.1'
 versions.kotlin = "1.4.10"
 versions.appcompat = "1.2.0"
 versions.paging = "2.1.2"

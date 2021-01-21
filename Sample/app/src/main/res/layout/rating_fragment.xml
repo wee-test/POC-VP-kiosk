@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/frgRatingLine"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/bg_gradient"
+        android:id="@+id/frgRatingTopLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/frgRatingLine"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/frgRatingCustomerCode"
+            style="@style/TextView.Rating"
+            android:text="#Mã KH: 035622445"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:background="@drawable/br_rounded_green"
+            android:layout_marginHorizontal="@dimen/_32sdp"
+            android:id="@+id/frgRating"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_14sdp"
+            app:layout_constraintBottom_toTopOf="@+id/frgRatingCustomerCode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragRatingCustomerId"
+                style="@style/UIPaymentNumber"
+                android:text="23412323232"
+                android:paddingTop="@dimen/_8sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragRatingCustomerText"
+                style="@style/UIPayment"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="Số tài khoản thanh toán" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragRatingTextAccCreated"
+            style="@style/TextView.Title"
+            android:text="Tài khoản đã được\nkhởi tạo "
+            android:layout_marginBottom="@dimen/_40sdp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/frgRating"
+            app:layout_constraintEnd_toEndOf="@+id/frgRating"
+            app:layout_constraintStart_toStartOf="@+id/frgRating" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fragRatingViewImage"
+            android:src="@mipmap/success"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintBottom_toTopOf="@+id/fragRatingTextAccCreated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fragRatingViewLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:src="@mipmap/line"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@+id/frgRating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragRatingTextAccCreated" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frgRatingBottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/frgRatingLine">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView1"
+            style="@style/TextView.Bold"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:text="Đánh giá quá trình sử dụng dịch vụ"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewReact"
+            style="@style/RecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView1"
+            tools:itemCount="5"
+            tools:listitem="@layout/rating_item" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/frgRatingActionNext"
+            android:visibility="gone"
+            style="@style/Button.Ocr"
+            android:background="@drawable/bg_gradient_rounded"
+            android:text="Tiếp theo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="@dimen/_22sdp"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

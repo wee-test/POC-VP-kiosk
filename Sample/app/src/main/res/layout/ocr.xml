@@ -136,7 +136,7 @@
         android:id="@+id/ocrActionNext"
         android:visibility="gone"
         style="@style/Button.Ocr"
-        android:background="@drawable/bg_gradient"
+        android:background="@drawable/bg_gradient_rounded"
         android:text="Tiếp theo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrLabelNote"

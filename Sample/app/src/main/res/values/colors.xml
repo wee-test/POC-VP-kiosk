@@ -20,5 +20,7 @@
     <color name="black60">#99191919</color>
     <color name="black40">#66191919</color>
     <color name="black20">#33191919</color>
-
+    <color name="gray100">#DFE6E8</color>
+    <color name="white100">#FFFFFF</color>
+    <color name="black">#212121</color>
 </resources>
