@@ -3,7 +3,7 @@ package wee.digital.sample.app
 import android.app.Application
 import androidx.lifecycle.LifecycleObserver
 import wee.digital.camera.RealSense
-import wee.digital.camera.widget.OpenCVUtils
+import wee.digital.camera.utils.OpenCVUtils
 import wee.digital.library.Library
 
 lateinit var app: App private set

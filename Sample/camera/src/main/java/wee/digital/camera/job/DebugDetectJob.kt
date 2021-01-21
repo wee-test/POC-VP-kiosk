@@ -1,6 +1,7 @@
 package wee.digital.camera.job
 
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.*
@@ -65,8 +66,8 @@ class DebugDetectJob(private var uiListener: UiListener) :
         return true
     }
 
-    override fun onFaceRect(left: Int, top: Int, width: Int, height: Int): Boolean {
-        uiCallback { onFaceRect(left, top, width, height) }
+    override fun onFaceRect(faceRect: Rect): Boolean {
+        uiCallback { onFaceRect(faceRect) }
         return true
     }
 
@@ -98,7 +99,7 @@ class DebugDetectJob(private var uiListener: UiListener) :
     override fun onFaceLeaved() {
         uiCallback {
             onFaceScore(0f)
-            onFaceRect(-1, -1, 0, 0)
+            onFaceRect(Rect(-1, -1, 0, 0))
             onFaceDegrees(0.0, 0.0)
             onMaskLabel("", 100f)
             onDepthLabel("", 100f)
@@ -114,6 +115,10 @@ class DebugDetectJob(private var uiListener: UiListener) :
 
     override fun onFaceChanged() {
         uiCallback { onFaceChanged() }
+    }
+
+    override fun onManyFaces() {
+
     }
 
 

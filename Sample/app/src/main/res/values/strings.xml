@@ -6,4 +6,10 @@
 
     <string name="home_name">Xin chào,<br /><b>%s</b></string>
     <string name="cardRatio">h,403:272</string>
+
+    <string name="great">Tuyệt vời</string>
+    <string name="good">Rất tốt</string>
+    <string name="look_good">Dùng được</string>
+    <string name="improve">Khắc phục thêm</string>
+    <string name="hard">Khó dùng!</string>
 </resources>

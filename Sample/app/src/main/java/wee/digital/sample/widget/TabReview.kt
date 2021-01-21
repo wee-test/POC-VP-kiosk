@@ -50,7 +50,7 @@ class TabReview : TabBarView {
     }
 
     fun setUpViewPager(fragment: Fragment, frg1: ReviewInfoFragment, frg2 : ReviewCardFragment, frg3 : ReviewFormFragment, viewPager: ViewPager2) {
-        indicator.setBackgroundResource(R.drawable.bg_gradient)
+        indicator.setBackgroundResource(R.drawable.bg_gradient_rounded)
         val adapter = ViewPager2Adapter(fragment.childFragmentManager, fragment.viewLifecycleOwner).apply {
             addFragments(frg1, frg2, frg3)
         }

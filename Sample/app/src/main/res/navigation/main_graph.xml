@@ -145,4 +145,10 @@
     <action
         android:id="@+id/action_global_cardFragment"
         app:destination="@id/cardFragment" />
+    <fragment
+        android:id="@+id/ratingFragment"
+        android:name="wee.digital.sample.ui.fragment.rating.RatingFragment"
+        tools:layout="@layout/rating_fragment"
+        android:label="RatingFragment" />
+    <action android:id="@+id/action_global_ratingFragment" app:destination="@id/ratingFragment"/>
 </navigation>
