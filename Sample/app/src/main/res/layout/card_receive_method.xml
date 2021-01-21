@@ -22,7 +22,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/cardReceiveActionNext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardTextViewTitle">
 
@@ -130,36 +131,36 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <wee.digital.sample.widget.IconTextView
-                    android:layout_marginTop="@dimen/_16sdp"
                     android:id="@+id/receiveTextViewBranchPhone"
                     style="@style/TextView"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:src="@drawable/ic_phone_gray"
                     android:tint="@color/black40"
                     android:title="046 274 8478"
-                    android:src="@drawable/ic_phone_gray"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveTextViewBranchName" />
 
                 <wee.digital.sample.widget.IconTextView
-                    android:layout_marginTop="@dimen/_16sdp"
                     style="@style/TextView"
-                    android:title="B20 Bạch Đằng, Phường 2, Tân Bình, Hồ Chí Minh"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:src="@drawable/ic_location_gray"
                     android:tint="@color/black40"
+                    android:title="B20 Bạch Đằng, Phường 2, Tân Bình, Hồ Chí Minh"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveTextViewBranchPhone" />
 
             </wee.digital.sample.widget.ToggleRadioButton>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/ocrActionNext"
+        android:id="@+id/cardReceiveActionNext"
         style="@style/Button.Ocr"
         android:background="@drawable/bg_gradient_rounded"
         android:text="Tiếp theo"
-        android:visibility="gone"
         android:layout_marginBottom="@dimen/margin2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

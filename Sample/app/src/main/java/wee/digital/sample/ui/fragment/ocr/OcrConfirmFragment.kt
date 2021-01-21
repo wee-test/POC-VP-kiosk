@@ -18,8 +18,6 @@ class OcrConfirmFragment  : MainFragment(){
         ocrInputBirth.addDateWatcher()
         ocrInputIssueDate.addDateWatcher()
         ocrInputIssuePlace.buildSelectable(mainVM, Shared.provinceList)
-        ocrInputFullName.text = "CON CAC V1P"
-        ocrInputFullName.error = "con cac v1p"
         addClickListener(ocrConfirmActionNext)
     }
 

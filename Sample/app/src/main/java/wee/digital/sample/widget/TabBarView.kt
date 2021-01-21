@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -90,7 +91,7 @@ open class TabBarView : AppCustomView, TabLayout.OnTabSelectedListener {
     fun attachViewPager(viewPager: ViewPager2) {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                val params = tabViewIndicator.layoutParams as LayoutParams
+                val params = tabViewIndicator.layoutParams as FrameLayout.LayoutParams
                 val indicatorWidth = tabTabLayout.width / tabTabLayout.tabCount
                 val translationOffset = (positionOffset + position) * indicatorWidth
                 params.marginStart = translationOffset.toInt()

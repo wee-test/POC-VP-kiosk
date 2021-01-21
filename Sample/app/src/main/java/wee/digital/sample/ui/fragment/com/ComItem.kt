@@ -19,11 +19,11 @@ val listCom = listOf(
         ComItem("ocr", "ocr.jpg", MainDirections.actionGlobalOcrFragment()),
         ComItem("faceRegister", "face_Register.jpg", MainDirections.actionGlobalRegisterFragment()),
         ComItem("fail", "fail.jpg", MainDirections.actionGlobalFailFragment()),
-        ComItem("ocrConfirm", "ocr_input.jpg", MainDirections.actionGlobalOcrConfirmFragment()),
         ComItem("card", "card.jpg", MainDirections.actionGlobalCardFragment()),
+        ComItem("cardReceiveMethod", "input.jpg", MainDirections.actionGlobalCardReceiveFragment()),
+        ComItem("cardConfirm", "input.jpg", MainDirections.actionGlobalOcrConfirmFragment()),
         ComItem("review", "review.jpg", MainDirections.actionGlobalReviewFragment()),
         ComItem("loading", "loading.jpg", MainDirections.actionGlobalLoadingFragment()),
         ComItem("evaluate", "evaluate.jpg", MainDirections.actionGlobalRatingFragment()),
         ComItem("call", "call.jpg", MainDirections.actionGlobalCallFragment()),
-        ComItem("cardReceiveMethod", "card.jpg", MainDirections.actionGlobalCardReceiveFragment()),
 )

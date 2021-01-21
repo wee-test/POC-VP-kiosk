@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchWidth"
-    android:padding="@dimen/margin2"
+    android:padding="@dimen/margin"
     android:background="@color/colorWhite">
 
     <androidx.appcompat.widget.AppCompatImageView

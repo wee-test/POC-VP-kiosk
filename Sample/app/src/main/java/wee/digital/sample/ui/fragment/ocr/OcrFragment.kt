@@ -192,7 +192,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     override fun onResume() {
         super.onResume()
-        /*startCamera()*/
+        startCamera()
     }
 
     override fun onPause() {
