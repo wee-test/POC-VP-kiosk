@@ -6,23 +6,25 @@
     style="@style/MatchParent"
     android:background="@color/colorBackgroundGray">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/view_header" />
+    <wee.digital.sample.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cardTextViewTitle"
-        style="@style/TextView"
+        style="@style/TextView.FragmentTitle"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_32sdp"
         android:text="Chọn loại thẻ"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView"
-        style="@style/TextView"
+        style="@style/TextView.FragmentSubTitle"
         android:layout_marginTop="@dimen/_16sdp"
         android:text="Tận hưởng những ưu đãi đẳng cấp cùng thẻ VPBank"
         app:layout_constraintStart_toStartOf="@+id/cardTextViewTitle"
