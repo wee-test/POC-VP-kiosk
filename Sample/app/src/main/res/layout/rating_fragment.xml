@@ -31,23 +31,24 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:background="@drawable/br_rounded_green"
-            android:layout_marginHorizontal="@dimen/_32sdp"
             android:id="@+id/frgRating"
-            android:orientation="vertical"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_14sdp"
+            android:layout_marginHorizontal="@dimen/_32sdp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/br_rounded_green"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/frgRatingCustomerCode"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragRatingCustomerId"
                 style="@style/UIPaymentNumber"
-                android:text="23412323232"
                 android:paddingTop="@dimen/_8sdp"
+                android:text="23412323232"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,10 +64,11 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragRatingTextAccCreated"
             style="@style/TextView.Title"
+            android:layout_marginTop="20dp"
             android:text="Tài khoản đã được\nkhởi tạo"
-            android:layout_marginTop="@dimen/_16sdp"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="@+id/frgRating"
+            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="@+id/frgRating"
             app:layout_constraintTop_toBottomOf="@+id/fragRatingViewImage" />
 
