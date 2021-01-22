@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:layout_width="@dimen/_350sdp"
         android:layout_height="@dimen/_350sdp"
         android:layout_marginEnd="@dimen/_1sdp"

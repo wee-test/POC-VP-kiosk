@@ -16,6 +16,8 @@ open class MainVM : ViewModel() {
 
     val selectableLiveData = MutableLiveData<SelectableAdapter<*>>()
 
+    val selectableTitle = MutableLiveData<String>()
+
     val alertLiveData = MutableLiveData<Alert.Arg?>()
 
     val webLiveData = MutableLiveData<WebArg>()

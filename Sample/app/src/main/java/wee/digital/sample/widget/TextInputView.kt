@@ -321,7 +321,6 @@ class TextInputView : AppCustomView,
                     when (this) {
                         is TextInputView -> {
                             text = selectable?.text
-
                         }
                     }
                 }
@@ -331,6 +330,7 @@ class TextInputView : AppCustomView,
             }
             adapter.adaptive()
             mainVM.selectableLiveData.value = adapter
+            mainVM.selectableTitle.value = hint
             mainVM.dialogLiveData.value = Main.selectable
         }
         addViewClickListener {

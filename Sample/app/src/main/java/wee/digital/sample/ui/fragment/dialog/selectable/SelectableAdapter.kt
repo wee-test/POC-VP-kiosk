@@ -37,10 +37,10 @@ open class SelectableAdapter<T : Selectable> : BaseRecyclerAdapter<T>() {
         selectableTextViewItem.setBackgroundResource(if (position != lastIndex) R.drawable.drw_underline else R.color.colorWhite)
         selectableImageView.setImageResource(model.icon ?: 0)
         selectableTextViewItem.text = model.text
-        if (model != selectedItem) {
+        /*if (model != selectedItem) {
             selectableTextViewItem.regular()
         } else {
             selectableTextViewItem.bold()
-        }
+        }*/
     }
 }

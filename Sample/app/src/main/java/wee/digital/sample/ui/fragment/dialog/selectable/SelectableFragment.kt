@@ -20,6 +20,7 @@ class SelectableFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         mainVM.selectableLiveData.observe(this::onBindArg)
+        mainVM.selectableTitle.observe { dialogTextViewTitle.text = it }
     }
 
     override fun onDestroyView() {

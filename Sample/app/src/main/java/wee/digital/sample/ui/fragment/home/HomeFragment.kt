@@ -17,7 +17,7 @@ class HomeFragment : MainFragment() {
 
     override fun onViewCreated() {
         homeLabelName.text = getString(R.string.home_name, "Nguyen Van A")
-        addClickListener(homeActionLogout, homeTabSelectAuto)
+        addClickListener(homeActionLogout, homeTabSelectAuto, homeTabSelectSupport)
     }
 
     override fun onLiveDataObserve() {
@@ -33,6 +33,9 @@ class HomeFragment : MainFragment() {
             }
             homeTabSelectAuto -> {
                 navigate(MainDirections.actionGlobalDocumentFragment())
+            }
+            homeTabSelectSupport -> {
+                navigate(MainDirections.actionGlobalCallFragment())
             }
         }
     }
