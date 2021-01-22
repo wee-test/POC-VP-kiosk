@@ -7,8 +7,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/textViewIcon"
-        android:layout_width="@dimen/_15sdp"
-        android:layout_height="@dimen/_15sdp"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:padding="@dimen/_2sdp"
         android:src="@drawable/ic_placeholder"
         android:layout_marginEnd="@dimen/_8sdp"
         app:layout_constraintEnd_toStartOf="@id/textViewTitle"
@@ -16,7 +17,9 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewTitle"
-        style="@style/TextView"
+        android:textSize="@dimen/_10ssp"
+        android:fontFamily="@font/svn_gilroy_regular"
+        android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_marginStart="@dimen/_24sdp"
         android:textColor="@color/black100"

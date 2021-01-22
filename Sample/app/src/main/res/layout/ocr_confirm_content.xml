@@ -4,17 +4,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchWidth"
     android:background="@color/colorBackgroundGray"
-    android:paddingHorizontal="@dimen/margin2"
+    android:paddingHorizontal="@dimen/_24sdp"
     android:paddingTop="@dimen/margin">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrInputViewTitle"
+        style="@style/TextView.Title"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="Xác nhận thông tin \nđăng ký"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputFullName"
         style="@style/InputView"
         android:hint="Họ và tên"
+        android:layout_marginTop="@dimen/margin"
         android:src="@drawable/ic_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/ocrInputViewTitle" />
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputNumber"
@@ -115,11 +128,11 @@
         android:id="@+id/ocrConfirmActionNext"
         android:background="@drawable/bg_gradient_rounded"
         android:text="Xác nhận"
-        android:layout_marginVertical="@dimen/margin3"
+        android:layout_marginVertical="@dimen/margin2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputEmail"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputEmail"
         style="@style/Button.Primary"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

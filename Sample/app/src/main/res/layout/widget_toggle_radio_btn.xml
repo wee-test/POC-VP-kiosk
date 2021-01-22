@@ -10,8 +10,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/radioImageViewIcon"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        android:padding="@dimen/_3sdp"
         android:layout_marginStart="@dimen/_12sdp"
         android:src="@drawable/ic_placeholder"
         android:tint="@color/colorPrimary"
@@ -22,8 +23,9 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/radioTextViewLabel"
         style="@style/TextView.Bold"
+        android:textSize="@dimen/_12ssp"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +35,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/radioImageViewCheck"
-        android:layout_width="@dimen/_16sdp"
+        android:layout_width="@dimen/_14sdp"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:src="@drawable/ic_toggle_radio_uncheck"

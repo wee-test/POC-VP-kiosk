@@ -17,9 +17,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cardTextViewTitle"
-        style="@style/CardMethod.Title"
+        style="@style/TextView.Title"
+        android:textColor="#191919"
         android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_32sdp"
+        android:layout_marginTop="@dimen/margin2"
         android:text="Hình thức nhận thẻ"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
@@ -128,9 +129,9 @@
                 android:text="Nhận thẻ trực tiếp">
 
                 <androidx.appcompat.widget.AppCompatTextView
-
                     android:id="@+id/receiveTextViewBranchName"
                     style="@style/TextView.Bold"
+                    android:textSize="@dimen/_12ssp"
                     android:text="Chi nhánh Tân Bình"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +140,7 @@
                 <wee.digital.sample.widget.IconTextView
                     android:id="@+id/receiveTextViewBranchPhone"
                     style="@style/TextView"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/ic_phone_gray"
                     android:tint="@color/black40"
                     android:title="046 274 8478"
@@ -148,10 +149,10 @@
 
                 <wee.digital.sample.widget.IconTextView
                     style="@style/TextView"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/ic_location_gray"
                     android:tint="@color/black40"
-                    android:title="B20 Bạch Đằng, Phường 2, Tân Bình, Hồ Chí Minh"
+                    android:title="B20 Bạch Đằng, Phường 2, Tân Bình, \nHồ Chí Minh"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveTextViewBranchPhone" />
 
