@@ -21,9 +21,9 @@
 
             <include layout="@layout/home_select"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/homeActionLogout"
-                style="@style/TextView"
+                style="@style/TextView.Medium"
                 android:layout_marginStart="@dimen/margin2"
                 android:layout_marginBottom="@dimen/margin2"
                 android:drawableStart="@drawable/ic_logout"

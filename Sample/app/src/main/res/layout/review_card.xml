@@ -26,11 +26,11 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/reviewCardNameCard"
-        style="@style/TextView"
+        style="@style/TextView.Title"
         android:layout_width="0dp"
         android:fontFamily="@font/svn_gilroy_bold"
         android:text="VPBank Platinum Cashback"
-        android:textSize="@dimen/_18ssp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/reviewCardImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/reviewCardGuide1"
@@ -39,13 +39,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/reviewCardLabelNote"
-        style="@style/TextView"
+        style="@style/TextView.Small"
         android:layout_width="0dp"
         android:layout_marginTop="@dimen/margin"
         android:fontFamily="@font/svn_gilroy_regular"
         android:text="Thẻ tín dụng hoàn tiền"
         android:textColor="@color/green"
-        android:textSize="@dimen/_10ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/reviewCardGuide1"
         app:layout_constraintTop_toBottomOf="@+id/reviewCardNameCard" />
@@ -68,7 +67,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin2"
-        android:layout_marginTop="@dimen/margin"
         android:src="@drawable/ic_custom"
         android:text="50,000,000"
         android:title="Hạn mức"

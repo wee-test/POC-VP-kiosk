@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="textSmall">@dimen/_9ssp</dimen>
+    <dimen name="textMedium">@dimen/_11ssp</dimen>
+    <dimen name="textLarge">@dimen/_14ssp</dimen>
+    <dimen name="textTitle">@dimen/_17ssp</dimen>
+
 </resources>

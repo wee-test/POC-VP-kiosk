@@ -11,11 +11,14 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cardTextViewTitle"
-        style="@style/TextView"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_32sdp"
+        style="@style/TextView.Title"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_bold"
         android:text="Xác nhận thông tin đăng ký"
-        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 

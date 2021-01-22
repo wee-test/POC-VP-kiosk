@@ -29,11 +29,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/homeLabelName"
-        style="@style/TextView"
+        style="@style/TextView.Large"
         android:layout_width="0dp"
         android:layout_marginVertical="@dimen/margin"
         android:text="@string/home_name"
-        android:textSize="@dimen/_15ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/homeGuide1"

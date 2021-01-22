@@ -32,11 +32,10 @@
         app:layout_constraintTop_toTopOf="@+id/advGuide1">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextView"
+            style="@style/TextView.Medium"
             android:fontFamily="@font/svn_gilroy_bold"
             android:text="Bắt đầu với"
-            android:textColor="@color/green"
-            android:textSize="@dimen/_11ssp" />
+            android:textColor="@color/green" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/_50sdp"

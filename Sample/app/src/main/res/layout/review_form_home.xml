@@ -22,12 +22,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/formHomeTitle"
-        style="@style/TextView"
+        style="@style/TextView.Title"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_marginStart="@dimen/margin"
         android:fontFamily="@font/svn_gilroy_bold"
         android:text="Nhận thẻ tại nhà"
-        android:textSize="@dimen/_18ssp"
         app:layout_constraintBottom_toBottomOf="@+id/formHomeIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/formHomeIcon"

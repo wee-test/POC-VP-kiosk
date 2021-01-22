@@ -18,6 +18,18 @@
         <item name="android:lineSpacingExtra">@dimen/_2sdp</item>
     </style>
 
+    <style name="TextView.Small" parent="TextView">
+        <item name="android:textSize">@dimen/textSmall</item>
+    </style>
+
+    <style name="TextView.Medium" parent="TextView">
+        <item name="android:textSize">@dimen/textMedium</item>
+    </style>
+
+    <style name="TextView.Large" parent="TextView">
+        <item name="android:textSize">@dimen/textLarge</item>
+    </style>
+
     <style name="TextView.PlaceHolder">
         <item name="android:textSize">@dimen/_24ssp</item>
         <item name="android:textStyle">bold</item>
@@ -45,7 +57,7 @@
     </style>
 
     <style name="TextView.Title">
-        <item name="android:textSize">@dimen/_20ssp</item>
+        <item name="android:textSize">@dimen/textTitle</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white100</item>
         <item name="android:fontFamily">@font/svn_gilroy_bold</item>

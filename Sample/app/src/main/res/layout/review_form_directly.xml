@@ -15,21 +15,20 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/formDirectlyTitle"
-        style="@style/TextView"
+        style="@style/TextView.Title"
         android:layout_width="0dp"
         android:layout_marginStart="@dimen/margin"
         android:fontFamily="@font/svn_gilroy_bold"
         android:text="Nhận thẻ trực tiếp"
-        android:textSize="@dimen/_18ssp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/formDirectlyIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/formDirectlyIcon"
         app:layout_constraintTop_toTopOf="@+id/formDirectlyIcon" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/TextView"
+        style="@style/TextView.Medium"
         android:layout_marginTop="@dimen/margin3"
-        android:textSize="@dimen/_12ssp"
         android:text="Thẻ sẽ được in trực tiếp từ thiết bị. Thời gian in thẻ từ 3-5 phút.\n\nTrong trường hợp xảy ra sự cố không nhận được thẻ. Bạn vui lòng liên hệ đến hotline: 1900545415 để được hỗ trợ chi tiết."
         android:layout_width="match_parent"
         android:fontFamily="@font/svn_gilroy_regular"

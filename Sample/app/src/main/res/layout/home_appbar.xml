@@ -16,24 +16,22 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/homeLabelKiosk"
-        style="@style/TextView"
+        style="@style/TextView.Small"
         android:drawableEnd="@drawable/ic_vector"
         android:drawablePadding="@dimen/marginY2"
         android:text="Kiosk Demo"
-        android:textSize="@dimen/_9ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/homeLabelLanguage"
-        style="@style/TextView"
+        style="@style/TextView.Small"
         android:layout_marginEnd="@dimen/margin"
         android:drawableEnd="@drawable/ic_vector"
         android:drawablePadding="@dimen/marginY2"
         android:drawableStart="@drawable/ic_setting"
         android:text="Tiếng việt"
-        android:textSize="@dimen/_9ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/homeLabelKiosk"
         app:layout_constraintTop_toTopOf="parent"/>

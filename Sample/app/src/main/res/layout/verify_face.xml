@@ -60,10 +60,9 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceLabelStatusFace"
-        style="@style/TextView"
+        style="@style/TextView.Medium"
         android:layout_marginTop="@dimen/margin5"
         android:fontFamily="@font/svn_gilroy_bold"
-        android:textSize="@dimen/_11ssp"
         android:layout_marginHorizontal="@dimen/margin6"
         android:gravity="center"
         tools:text="Chờ chút nhé..."

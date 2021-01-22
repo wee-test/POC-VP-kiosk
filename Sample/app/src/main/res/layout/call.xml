@@ -44,16 +44,15 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/callLabel"
-        style="@style/TextView"
+        style="@style/TextView.Medium"
         android:fontFamily="@font/svn_gilroy_bold"
         app:layout_constraintVertical_bias="0.7"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_11ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Chờ chút nhé..." />
+        android:text="Chờ chút nhé..." />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/callActionCancel"

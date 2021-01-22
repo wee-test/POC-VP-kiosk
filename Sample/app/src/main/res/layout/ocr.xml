@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ocrRoot"
+    android:background="@color/gray_bg"
     style="@style/MatchParent">
 
     <wee.digital.sample.widget.HeaderView
@@ -14,21 +15,21 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrTitle"
-        style="@style/TextView"
+        style="@style/TextView.Title"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/margin2"
         android:layout_marginTop="@dimen/margin2"
         android:fontFamily="@font/svn_gilroy_bold"
+        android:textColor="@color/black"
         android:gravity="center"
         android:text="Chụp ảnh giấy tờ tùy thân"
-        android:textSize="@dimen/_18ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrToolbar" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrLabelSideFont"
-        style="@style/TextView"
+        style="@style/TextView.Small"
         android:text="Mặt trước"
         android:textColor="@color/black20"
         app:layout_constraintBottom_toBottomOf="@+id/ocrFrameFront"
@@ -57,7 +58,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrLabelSideBack"
-        style="@style/TextView"
+        style="@style/TextView.Small"
         android:text="Mặt sau"
         android:textColor="@color/black20"
         app:layout_constraintBottom_toBottomOf="@+id/ocrFrameBack"
@@ -123,13 +124,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrLabelNote"
-        style="@style/TextView"
+        style="@style/TextView.Medium"
         android:layout_marginHorizontal="@dimen/margin3"
         android:layout_marginTop="@dimen/margin2"
         android:fontFamily="@font/svn_gilroy_bold"
         android:gravity="center"
         android:text="Bạn vui lòng đưa mặt trước giấy tờ\nvào hộp tối bên dưới"
-        android:textSize="@dimen/_13ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrRootCamera" />

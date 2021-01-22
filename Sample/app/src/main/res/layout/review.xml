@@ -15,13 +15,13 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/reviewTitle"
-        style="@style/TextView"
+        style="@style/TextView.Title"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/margin2"
         android:layout_marginTop="@dimen/margin2"
         android:fontFamily="@font/svn_gilroy_bold"
         android:text="Xác nhận thông tin"
-        android:textSize="@dimen/_18ssp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reviewToolbar" />
@@ -59,11 +59,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/reviewLabelName"
-            style="@style/TextView"
+            style="@style/TextView.Large"
             android:layout_width="0dp"
             android:fontFamily="@font/svn_gilroy_bold"
             android:text="Nguyễn Hoàng Yến"
-            android:textSize="@dimen/_15ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/reviewGuide1"
@@ -71,11 +70,10 @@
             app:layout_constraintVertical_bias="0.25" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextView"
+            style="@style/TextView.Small"
             android:layout_width="0dp"
             android:text="Regular member"
             android:textColor="@color/green"
-            android:textSize="@dimen/_10ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/reviewGuide1"

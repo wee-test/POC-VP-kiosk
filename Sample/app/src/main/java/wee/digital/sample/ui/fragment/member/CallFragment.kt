@@ -5,7 +5,7 @@ import wee.digital.sample.ui.main.MainFragment
 
 class CallFragment : MainFragment() {
 
-    override fun layoutResource(): Int = R.layout.fragment_call
+    override fun layoutResource(): Int = R.layout.call
 
     override fun onViewCreated() {
 

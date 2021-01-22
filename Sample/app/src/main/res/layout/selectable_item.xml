@@ -10,15 +10,14 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/selectableTextViewItem"
-        style="@style/TextView"
+        style="@style/TextView.Small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_2sdp"
         android:background="@drawable/drw_underline"
         android:clickable="false"
         android:gravity="center_vertical"
         android:maxLines="4"
-        android:textSize="@dimen/_10ssp"
         android:layout_marginEnd="@dimen/margin3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,8 +27,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/selectableImageView"
-        android:layout_width="@dimen/_34sdp"
-        android:layout_height="@dimen/_34sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         android:clickable="false"
         android:padding="@dimen/_6sdp"
         android:src="@drawable/ic_placeholder"

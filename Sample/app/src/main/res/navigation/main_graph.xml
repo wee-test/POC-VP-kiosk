@@ -118,7 +118,7 @@
         android:id="@+id/callFragment"
         android:name="wee.digital.sample.ui.fragment.member.CallFragment"
         android:label="CallFragment"
-        tools:layout="@layout/fragment_call" />
+        tools:layout="@layout/call" />
     <action
         android:id="@+id/action_global_callFragment"
         app:destination="@id/callFragment" />

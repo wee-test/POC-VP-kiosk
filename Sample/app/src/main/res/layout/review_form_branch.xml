@@ -15,12 +15,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/formBranchTitle"
-        style="@style/TextView"
+        style="@style/TextView.Title"
         android:layout_width="0dp"
+        android:textColor="@color/black"
         android:layout_marginStart="@dimen/margin"
         android:fontFamily="@font/svn_gilroy_bold"
         android:text="Nhận thẻ tại chi nhánh"
-        android:textSize="@dimen/_18ssp"
         app:layout_constraintBottom_toBottomOf="@+id/formBranchIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/formBranchIcon"

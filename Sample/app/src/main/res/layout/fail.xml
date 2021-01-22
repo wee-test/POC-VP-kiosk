@@ -18,11 +18,11 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/failTitle"
-        style="@style/TextView"
+        style="@style/TextView.Title"
         android:fontFamily="@font/svn_gilroy_bold"
         android:gravity="center"
+        android:textColor="@color/black"
         android:text="Thông tin không\ntrùng khớp"
-        android:textSize="@dimen/_20ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +31,11 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/failContent"
-        style="@style/TextView"
+        style="@style/TextView.Medium"
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_marginHorizontal="@dimen/margin3"
-        android:fontFamily="@font/svn_gilroy_regular"
-        android:text="fail"
+        android:text="Thông tin hình ảnh nhận diện và hình ảnh trên giấy tờ không trùng khớp, bạn vui lòng thử lại hoặc liên hệ hỗ trợ viên."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

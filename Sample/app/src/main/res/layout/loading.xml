@@ -40,28 +40,27 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/loadingLabelTitle"
-        style="@style/TextView"
+        style="@style/TextView.Title"
         android:layout_width="0dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:layout_marginHorizontal="@dimen/margin3"
         android:layout_marginTop="@dimen/margin3"
         android:fontFamily="@font/svn_gilroy_bold"
         android:text="Bạn chờ một chút nhé"
-        android:textSize="@dimen/_18ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loadingEllipse" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/loadingLabelContent"
-        style="@style/TextView"
+        style="@style/TextView.Small"
         android:layout_width="0dp"
         android:gravity="center"
         android:layout_marginHorizontal="@dimen/margin3"
         android:layout_marginTop="@dimen/margin2"
         android:fontFamily="@font/svn_gilroy_regular"
         android:text="Thẻ của bạn sẽ sẵn sàng trong giây lát..."
-        android:textSize="@dimen/_10ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loadingLabelTitle" />
