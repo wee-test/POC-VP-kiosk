@@ -1,72 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchParent"
     android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
-        style="@style/ScrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comRecycler"
+        style="@style/RecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/MatchWidth"
-            android:orientation="vertical"
-            android:padding="@dimen/_8sdp">
-
-            <wee.digital.sample.widget.TextHorizontalView
-                style="@style/MatchWidth"
-                android:src="@drawable/ic_placeholder"
-                android:text="Hello"
-                android:title="TextHorizontalView" />
-
-            <wee.digital.sample.widget.TextVerticalView
-                style="@style/MatchWidth"
-                android:layout_marginTop="@dimen/margin2"
-                android:src="@drawable/ic_placeholder"
-                android:text="Hello"
-                android:title="TextHorizontalView" />
-
-            <wee.digital.sample.widget.TextInputView
-                style="@style/MatchWidth"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="TextHorizontalView"
-                android:src="@drawable/ic_placeholder"
-                android:text="Hello" />
-
-            <wee.digital.sample.widget.TextInputView
-                android:id="@+id/comInputDate"
-                style="@style/MatchWidth"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="date"
-                android:inputType="number"
-                android:src="@drawable/ic_placeholder"
-                android:text="01/01/2021" />
-
-            <wee.digital.sample.widget.TextInputView
-                android:id="@+id/comInputList"
-                style="@style/MatchWidth"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="list"
-                android:src="@drawable/ic_placeholder" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/comRecycler"
-                android:overScrollMode="never"
-                android:layout_marginHorizontal="@dimen/margin"
-                android:layout_marginTop="@dimen/margin2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.core.widget.NestedScrollView>
+        android:layout_margin="@dimen/_8sdp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/comViewNext"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="9"
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/com_item"
+        tools:spanCount="3" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/comViewNext"
-        style="@style/Button.Ocr"
-        android:background="@drawable/bg_gradient"
-        android:layout_margin="@dimen/_8sdp"
-        android:text="Next" />
+        style="@style/Button.Primary"
+        android:layout_margin="@dimen/_16sdp"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
