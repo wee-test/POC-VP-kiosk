@@ -7,11 +7,15 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/formDirectlyIcon"
         android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/margin2"
-        android:src="@mipmap/ic_home"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:background="@drawable/bg_oval"
+        android:backgroundTint="@color/green10"
+        android:padding="@dimen/_8sdp"
+        android:src="@drawable/ic_directly"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="w,1:1"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/formDirectlyTitle"

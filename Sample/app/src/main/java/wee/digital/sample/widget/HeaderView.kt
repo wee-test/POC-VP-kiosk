@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import kotlinx.android.synthetic.main.view_header.view.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -29,11 +31,21 @@ class HeaderView : ConstraintLayout{
 
         headerAction.setOnClickListener {
             if (icon == R.drawable.ic_cancel) {
-                (context as MainActivity).navController().navigate(MainDirections.actionGlobalAdvFragment())
+                (context as MainActivity).navigate(MainDirections.actionGlobalAdvFragment()){
+                    setLaunchSingleTop(context.navController())
+                }
             }else{
                 (context as MainActivity).onBackPressed()
             }
         }
+    }
+
+    fun NavOptions.Builder.setLaunchSingleTop(controller : NavController?): NavOptions.Builder {
+        setLaunchSingleTop(true)
+        controller?.graph?.id?.also {
+            setPopUpTo(it, false)
+        }
+        return this
     }
 
 }

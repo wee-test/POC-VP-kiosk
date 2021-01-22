@@ -255,4 +255,5 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:fontFamily">@font/svn_gilroy_regular</item>
     </style>
+
 </resources>
