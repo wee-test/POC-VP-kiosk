@@ -4,9 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchWidth"
     android:background="@color/colorBackgroundGray"
-    android:paddingStart="@dimen/_16sdp"
-    android:paddingTop="@dimen/_8sdp"
-    android:paddingEnd="@dimen/_16sdp">
+    android:paddingHorizontal="@dimen/margin2"
+    android:paddingTop="@dimen/margin">
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputFullName"
@@ -18,15 +17,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <wee.digital.sample.widget.TextInputView
+        android:id="@+id/ocrInputNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Số giấy tờ"
+        android:src="@drawable/ic_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputFullName" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/ocrInputIssueDate"
+        style="@style/InputView"
+        android:hint="Ngày cấp"
+        android:inputType="number"
+        android:src="@drawable/ic_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputNumber" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/ocrInputIssuePlace"
+        style="@style/InputView"
+        android:hint="Nơi cấp"
+        android:src="@drawable/ic_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputIssueDate" />
+
+    <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputBirth"
         style="@style/InputView"
-        android:hint="Ngày sinh"
+        android:hint="Ngày tháng năm sinh"
         android:inputType="number"
         android:src="@drawable/ic_date"
         app:layout_constraintEnd_toStartOf="@+id/ocrInputGender"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputFullName" />
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputIssuePlace" />
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputGender"
@@ -37,40 +66,7 @@
         android:src="@drawable/ic_gender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ocrInputBirth"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputFullName" />
-
-
-    <wee.digital.sample.widget.TextInputView
-        android:id="@+id/ocrInputNumber"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Số giấy tờ"
-        android:src="@drawable/ic_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputBirth" />
-
-    <wee.digital.sample.widget.TextInputView
-        android:id="@+id/ocrInputIssueDate"
-        style="@style/InputView"
-        android:hint="Ngày cấp"
-        android:inputType="number"
-        android:src="@drawable/ic_date"
-        app:layout_constraintEnd_toStartOf="@+id/ocrInputIssuePlace"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputNumber" />
-
-    <wee.digital.sample.widget.TextInputView
-        android:id="@+id/ocrInputIssuePlace"
-        style="@style/InputView"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:hint="Nơi cấp"
-        android:src="@drawable/ic_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ocrInputIssueDate"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputIssuePlace" />
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputHometown"
@@ -79,7 +75,7 @@
         android:src="@drawable/ic_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputIssueDate" />
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputGender" />
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputAddress"
@@ -95,7 +91,7 @@
         style="@style/InputView"
         android:hint="Số điện thoại"
         android:src="@drawable/ic_phone"
-        app:layout_constraintEnd_toStartOf="@id/ocrInputEmail"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrInputAddress" />
@@ -103,23 +99,22 @@
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputEmail"
         style="@style/InputView"
-        android:layout_marginStart="@dimen/_8sdp"
         android:hint="Email"
         android:src="@drawable/ic_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/ocrInputPhone"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputAddress" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputPhone" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrConfirmActionNext"
-        android:background="@drawable/bg_gradient"
+        android:background="@drawable/bg_gradient_rounded"
         android:text="Xác nhận"
         android:layout_marginVertical="@dimen/margin3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrInputEmail"
         app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/Button.Ocr"/>
+        style="@style/Button.Primary"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,13 +73,17 @@
 
     <style name="Button.Primary">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@drawable/drw_btn_primary</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_height">@dimen/_30sdp</item>
+        <item name="background">@drawable/bg_gradient_rounded</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:drawableEnd">@drawable/ic_bigger</item>
         <item name="android:fontFamily">@font/svn_gilroy_bold</item>
         <item name="android:gravity">center</item>
-        <item name="android:drawableEnd">@drawable/ic_bigger</item>
+        <item name="fontFamily">@font/svn_gilroy_bold</item>
         <item name="android:paddingStart">@dimen/margin2</item>
-        <item name="android:paddingEnd">@dimen/margin3</item>
+        <item name="android:paddingEnd">@dimen/margin</item>
+        <item name="android:layout_marginStart">@dimen/margin3</item>
+        <item name="android:layout_marginEnd">@dimen/margin3</item>
     </style>
 
     <style name="EditText"
@@ -183,21 +187,6 @@
         <item name="layout_constraintDimensionRatio">h,403:252</item>
     </style>
 
-    <!--Button-->
-    <style name="Button.Ocr">
-        <item name="fontFamily">@font/svn_gilroy_bold</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:drawableEnd">@drawable/ic_bigger</item>
-        <item name="android:paddingStart">@dimen/margin2</item>
-        <item name="android:paddingEnd">@dimen/margin3</item>
-        <item name="background">@drawable/bg_gradient_rounded</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/_30sdp</item>
-        <item name="android:layout_marginStart">@dimen/margin3</item>
-        <item name="android:layout_marginEnd">@dimen/margin3</item>
-    </style>
-
     <!--App custom view-->
     <style name="InputView">
         <item name="android:layout_width">0dp</item>
@@ -232,7 +221,6 @@
         <item name="android:ellipsize">end</item>
         <item name="lineHeight">@dimen/_20sdp</item>
         <item name="android:fontFamily">@font/svn_gilroy_regular</item>
-        >>>>>>> 003730abd6daa8759e6950376e8efa5c1659984a
     </style>
 
     <!--Card receive method-->
