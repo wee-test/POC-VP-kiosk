@@ -54,6 +54,7 @@
         android:id="@+id/inputImageViewDropdown"
         android:layout_width="@dimen/_10sdp"
         android:layout_height="@dimen/_10sdp"
+        android:padding="@dimen/_2sdp"
         android:clickable="false"
         android:layout_marginEnd="@dimen/_12sdp"
         android:tint="#A3A3A3"
