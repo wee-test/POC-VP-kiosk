@@ -18,6 +18,7 @@ class OcrConfirmFragment  : MainFragment(){
         ocrInputBirth.addDateWatcher()
         ocrInputIssueDate.addDateWatcher()
         ocrInputIssuePlace.buildSelectable(mainVM, Shared.provinceList)
+        ocrInputGender.buildSelectable(mainVM,Shared.genderList)
         addClickListener(ocrConfirmActionNext)
     }
 

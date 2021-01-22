@@ -22,4 +22,8 @@ object Shared {
         readAsset("province_list.json").parse(Array<Selectable>::class)
     }
 
+    val genderList by lazy {
+        readAsset("gender.json").parse(Array<Selectable>::class)
+    }
+
 }

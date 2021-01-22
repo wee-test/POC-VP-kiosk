@@ -23,7 +23,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/frgRatingCustomerCode"
-            style="@style/TextView.Rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/svn_gilroy_medium"
+            android:textColor="@color/white100"
             android:text="#Mã KH: 035622445"
             android:layout_marginBottom="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +50,13 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragRatingCustomerId"
-                style="@style/UIPaymentNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_20ssp"
+                android:letterSpacing="0.05"
+                android:textColor="#FAFF00"
+                android:ellipsize="end"
+                android:fontFamily="@font/svn_gilroy_bold"
                 android:paddingTop="@dimen/_8sdp"
                 android:text="23412323232"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +64,12 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragRatingCustomerText"
-                style="@style/UIPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_14ssp"
+                android:ellipsize="end"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/svn_gilroy_regular"
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="Số tài khoản thanh toán" />
 
@@ -107,7 +122,7 @@
         app:layout_constraintTop_toTopOf="@+id/frgRatingLine">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView1"
+            android:id="@+id/fragRatingTextRate"
             style="@style/TextView.Bold"
             android:textSize="@dimen/_12ssp"
             android:layout_marginTop="@dimen/_26sdp"
@@ -126,7 +141,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView1"
+            app:layout_constraintTop_toBottomOf="@+id/fragRatingTextRate"
             tools:itemCount="5"
             tools:listitem="@layout/rating_item" />
 

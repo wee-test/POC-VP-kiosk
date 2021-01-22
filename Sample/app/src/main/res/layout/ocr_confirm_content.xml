@@ -49,6 +49,7 @@
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputBirth"
         style="@style/InputView"
+        app:layout_constraintHorizontal_weight="2"
         android:hint="Ngày tháng năm sinh"
         android:inputType="number"
         android:src="@drawable/ic_date"
@@ -61,6 +62,7 @@
         android:id="@+id/ocrInputGender"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1.5"
         android:layout_marginStart="@dimen/_8sdp"
         android:hint="Giới tính"
         android:src="@drawable/ic_gender"
