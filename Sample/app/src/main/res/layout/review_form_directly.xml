@@ -9,7 +9,7 @@
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginTop="@dimen/margin2"
-        android:src="@mipmap/ic_directly"
+        android:src="@mipmap/ic_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
