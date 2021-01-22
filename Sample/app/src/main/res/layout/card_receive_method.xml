@@ -81,25 +81,25 @@
                     app:layout_constraintTop_toBottomOf="@id/receiveInputPhone" />
 
                 <wee.digital.sample.widget.TextInputView
-                    android:id="@+id/ocrInputDistrict"
+                    android:id="@+id/receiveInputDistrict"
                     style="@style/InputView"
                     android:hint="Quận huyện"
                     android:inputType="number"
                     android:src="@drawable/ic_location_gray"
-                    app:layout_constraintEnd_toStartOf="@+id/ocrInputWard"
+                    app:layout_constraintEnd_toStartOf="@+id/receiveInputWard"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/receiveInputProvince" />
 
                 <wee.digital.sample.widget.TextInputView
-                    android:id="@+id/ocrInputWard"
+                    android:id="@+id/receiveInputWard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:hint="Phường xã"
                     android:src="@drawable/ic_location_gray"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ocrInputDistrict"
+                    app:layout_constraintStart_toEndOf="@+id/receiveInputDistrict"
                     app:layout_constraintTop_toBottomOf="@+id/receiveInputProvince" />
 
                 <wee.digital.sample.widget.TextInputView
@@ -109,7 +109,7 @@
                     android:src="@drawable/ic_location_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ocrInputDistrict" />
+                    app:layout_constraintTop_toBottomOf="@id/receiveInputDistrict" />
 
 
             </wee.digital.sample.widget.ToggleRadioButton>
