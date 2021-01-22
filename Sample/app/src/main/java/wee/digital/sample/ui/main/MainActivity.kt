@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import wee.dev.weewebrtc.WeeCaller
 import wee.digital.library.extension.toast
 import wee.digital.sample.R
+import wee.digital.sample.app.lib
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
 
@@ -74,6 +75,14 @@ class MainActivity : BaseActivity() {
         directions ?: return
         navigate(directions) {
             setVerticalAnim()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        permissionRequest(android.Manifest.permission.WRITE_EXTERNAL_STORAGE){
+            if(lib != null) return@permissionRequest
+            lib = vplib.Vplib.newLib(1, "$externalCacheDir")
         }
     }
 

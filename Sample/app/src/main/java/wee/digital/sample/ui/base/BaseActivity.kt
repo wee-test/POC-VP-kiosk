@@ -1,8 +1,12 @@
 package wee.digital.sample.ui.base
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -10,9 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import wee.dev.weewebrtc.WeeCaller
+import com.tbruyelle.rxpermissions2.RxPermissions
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.library.util.Logger
+import wee.digital.sample.BuildConfig
+
 
 abstract class BaseActivity : AppCompatActivity(), BaseView {
 
@@ -51,6 +57,24 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     override fun onResume() {
         super.onResume()
         hideSystemUI()
+    }
+
+    @SuppressLint("CheckResult")
+    open fun permissionRequest(vararg permission: String, block: () -> Unit) {
+        RxPermissions(this).requestEach(*permission)
+                .subscribe {
+                    when {
+                        it.granted -> {
+                            block()
+                        }
+                        it.shouldShowRequestPermissionRationale -> {
+                        }
+                        else -> {
+                            val i = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID))
+                            startActivity(i)
+                        }
+                    }
+                }
     }
 
     /**

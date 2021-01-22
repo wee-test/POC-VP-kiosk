@@ -1,3 +1,4 @@
+include ':vplib'
 include ':WeeWebRTC'
 include ':library'
 include ':app'

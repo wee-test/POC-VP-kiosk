@@ -194,3 +194,6 @@ deps.plugin = "com.huawei.hms:ml-computer-card-gcr-plugin:2.0.0.300"
 deps.okhttpocr = "com.squareup.okhttp3:okhttp:4.9.0"
 deps.urlconnection = "com.squareup.okhttp3:okhttp-urlconnection:4.7.2"
 deps.interceptor = "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+//permission
+deps.rxPermission = "com.github.tbruyelle:rxpermissions:0.10.2"

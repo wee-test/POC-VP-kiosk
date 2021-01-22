@@ -7,12 +7,17 @@ import wee.digital.camera.job.FaceCaptureJob
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
+import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.ui.base.viewModel
+import wee.digital.sample.ui.fragment.adv.AdvVM
 import wee.digital.sample.ui.main.MainFragment
 
 class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
+
+    private val faceVM : FaceVM by lazy { viewModel(FaceVM::class) }
 
     private val mFaceDetectJob: FaceCaptureJob = FaceCaptureJob(this)
 
@@ -28,6 +33,9 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
         RealSense.imagesLiveData.observe {
             if (isComplete) return@observe
             faceFrame?.setImageBitmap(it?.first)
+        }
+        faceVM.statusIdentify.observe {
+            toast("$it")
         }
     }
 
