@@ -43,7 +43,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/failActionAgain"
-        style="@style/Button.Ocr"
+        style="@style/Button.Primary"
         android:layout_marginBottom="@dimen/margin"
         android:background="@drawable/bg_gradient_rounded"
         android:drawableEnd="@null"
@@ -54,7 +54,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/failActionSupport"
-        style="@style/Button.Ocr"
+        style="@style/Button.Primary"
         android:layout_marginTop="@dimen/margin"
         android:background="@drawable/bg_line"
         android:drawableEnd="@null"

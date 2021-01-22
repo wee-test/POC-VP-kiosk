@@ -108,13 +108,13 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrConfirmActionNext"
-        android:background="@drawable/bg_gradient"
+        android:background="@drawable/bg_gradient_rounded"
         android:text="Xác nhận"
         android:layout_marginVertical="@dimen/margin3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrInputEmail"
         app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/Button.Ocr"/>
+        style="@style/Button.Primary"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

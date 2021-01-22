@@ -59,6 +59,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/alertViewAccept"
             style="@style/Button.Primary"
+            android:background="@drawable/bg_gradient_rounded"
             android:layout_marginTop="@dimen/_32sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

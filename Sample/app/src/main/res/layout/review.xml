@@ -110,7 +110,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/reviewActionAccept"
-        style="@style/Button.Ocr"
+        style="@style/Button.Primary"
         android:layout_marginBottom="@dimen/margin2"
         android:background="@drawable/bg_gradient_rounded"
         android:text="Xác nhận"

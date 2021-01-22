@@ -138,6 +138,7 @@
         android:id="@+id/ocrActionNext"
         android:visibility="gone"
         style="@style/Button.Primary"
+        android:background="@drawable/bg_gradient_rounded"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:text="Tiếp theo"

@@ -133,7 +133,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/frgRatingActionNext"
             android:visibility="visible"
-            style="@style/Button.Ocr"
+            style="@style/Button.Primary"
             android:background="@drawable/bg_gradient_rounded"
             android:text="Kết thúc giao dịch"
             app:layout_constraintBottom_toBottomOf="parent"
