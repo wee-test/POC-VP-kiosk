@@ -6,9 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
+    <wee.digital.sample.widget.HeaderView
         android:id="@+id/documentToolbar"
-        layout="@layout/view_header" />
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

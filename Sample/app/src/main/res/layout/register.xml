@@ -5,12 +5,14 @@
     style="@style/MatchParent"
     android:background="@color/gray_bg">
 
-    <include
+    <wee.digital.sample.widget.HeaderView
         android:id="@+id/registerToolbar"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        layout="@layout/view_header"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/registerTitle"
