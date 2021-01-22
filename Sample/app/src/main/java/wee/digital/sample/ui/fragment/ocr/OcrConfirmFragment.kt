@@ -33,4 +33,8 @@ class OcrConfirmFragment  : MainFragment(){
     override fun onLiveDataObserve() {
     }
 
+    private fun dataOcrInvalid() : Boolean{
+        return false
+    }
+
 }
