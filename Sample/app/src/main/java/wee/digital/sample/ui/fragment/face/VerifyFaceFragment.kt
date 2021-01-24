@@ -34,8 +34,12 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             if (isComplete) return@observe
             faceFrame?.setImageBitmap(it?.first)
         }
-        faceVM.statusIdentify.observe {
-            toast("$it")
+        faceVM.statusVerify.observe {
+            if(it){
+                navigate(MainDirections.actionGlobalHomeFragment())
+            }else{
+                toast("fail verify face")
+            }
         }
     }
 
@@ -58,7 +62,6 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             faceLabelStatusFace.text = "Chờ chút nhé..."
             faceFrameBg.show()
             faceFrame.setImageBitmap(image)
-            navigate(MainDirections.actionGlobalHomeFragment())
         }
     }
 

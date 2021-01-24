@@ -128,6 +128,11 @@ dependencies {
     implementation deps.navigation.fragment
     implementation deps.navigation.ui
 
+    implementation deps.reactivex.java
+    implementation deps.reactivex.android
+    implementation deps.reactivex.kotlin
+    implementation deps.reactivex.binding
+
     // LIFECYCLE
     implementation deps.lifecycle.extensions
     implementation project(path: ':WeeWebRTC')

@@ -19,35 +19,7 @@ import wee.digital.sample.ui.base.EventLiveData
 
 class FaceVM : BaseViewModel() {
 
-    val statusIdentify = EventLiveData<Boolean>()
-
     val statusVerify = EventLiveData<Boolean>()
-
-    @SuppressLint("CheckResult")
-    fun identifyFace(face: ByteArray) {
-        Single.fromCallable {
-            val body = IdentifyFaceReq(faceImage = Base64.encodeToString(face, Base64.NO_WRAP))
-            lib?.kioskService!!.faceIdentity(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseFaceIdentity>{
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(resp: ResponseFaceIdentity) {
-                        if(resp.responseCode.code != 0L){
-                            statusIdentify.postValue(false)
-                            return
-                        }
-                        statusIdentify.postValue(true)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        statusIdentify.postValue(false)
-                    }
-
-                })
-    }
 
     fun verifyFace(face : ByteArray, customerId : String){
         Single.fromCallable {

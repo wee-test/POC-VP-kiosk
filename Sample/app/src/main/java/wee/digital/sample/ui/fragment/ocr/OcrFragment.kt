@@ -1,7 +1,6 @@
 package wee.digital.sample.ui.fragment.ocr
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.view.View
 import kotlinx.android.synthetic.main.ocr.*
 import wee.dev.weeocr.WeeOCR
@@ -11,16 +10,18 @@ import wee.dev.weeocr.camera.FrameStreamListener
 import wee.dev.weeocr.repository.utils.SystemUrl
 import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
+import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.library.util.Utils
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.shared.Configs
+import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
-import java.lang.Exception
 
 class OcrFragment : MainFragment(), FrameStreamListener {
 
@@ -47,7 +48,34 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
     }
 
-    override fun onLiveDataObserve() {}
+    override fun onLiveDataObserve() {
+        ocrVM.statusVerifyCard.observe {
+            if (!it) {
+                toast("fail verifyCard")
+                return@observe
+            }
+            when (Shared.typeCardOcr.value) {
+                Configs.TYPE_NID -> {
+                    ocrVM.extractNidFront(frameFont!!.toBytes())
+                    ocrVM.extractNidBack(frameBack!!.toBytes())
+                }
+                Configs.TYPE_NID_12 -> {
+                    ocrVM.extractNid12Front(frameFont!!.toBytes())
+                    ocrVM.extractNid12Back(frameBack!!.toBytes())
+                }
+                Configs.TYPE_CCCD -> {
+                    ocrVM.extractCccdFront(frameFont!!.toBytes())
+                    ocrVM.extractCccdBack(frameBack!!.toBytes())
+                }
+            }
+        }
+        ocrVM.statusExtractFront.observe {
+            navigate(MainDirections.actionGlobalOcrConfirmFragment())
+        }
+        ocrVM.statusExtractBack.observe {
+            navigate(MainDirections.actionGlobalOcrConfirmFragment())
+        }
+    }
 
     override fun onViewClick(v: View?) {
         when (v) {
@@ -62,7 +90,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrActionNext -> {
                 if (frameComplete) return
                 frameComplete = true
-                navigate(MainDirections.actionGlobalOcrConfirmFragment())
+                ocrVM.verifyIdCard(frameFont!!.toBytes(), Shared.faceCapture.value!!.toBytes())
             }
         }
     }

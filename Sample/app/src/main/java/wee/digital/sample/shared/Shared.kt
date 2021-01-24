@@ -14,6 +14,8 @@ object Shared {
 
     val faceCapture = MutableLiveData<Bitmap>()
 
+    val typeCardOcr = MutableLiveData<String>()
+
     val branchList by lazy {
         readAsset("branch_list.json").parse(Array<Selectable>::class)
     }

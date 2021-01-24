@@ -4,9 +4,11 @@ import android.graphics.Bitmap
 import kotlinx.android.synthetic.main.register.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
+import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
+import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.shared.Shared
@@ -34,6 +36,13 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             if (isComplete) return@observe
             registerFrame?.setImageBitmap(it?.first)
         }
+        registerVM.statusIdentify.observe {
+            if(it){
+                navigate(MainDirections.actionGlobalHomeFragment())
+            }else{
+                toast("register face fail")
+            }
+        }
     }
 
     /**
@@ -55,7 +64,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerStatusFace.text = "Chờ chút nhé..."
             registerFrameBg.show()
             registerFrame.setImageBitmap(image)
-            navigate(MainDirections.actionGlobalHomeFragment())
+            registerVM.identifyFace(image.toBytes())
         }
     }
 
