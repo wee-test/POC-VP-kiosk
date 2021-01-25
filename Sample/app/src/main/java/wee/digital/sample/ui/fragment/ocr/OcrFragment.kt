@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.ocr
 
 import android.graphics.Bitmap
+import android.util.Base64
 import android.view.View
 import kotlinx.android.synthetic.main.ocr.*
 import wee.dev.weeocr.WeeOCR
@@ -14,9 +15,11 @@ import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
-import wee.digital.library.util.Utils
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.model.MessageData
+import wee.digital.sample.model.PhotoCardInfo
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.animOcrCaptured
@@ -49,31 +52,13 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     }
 
     override fun onLiveDataObserve() {
-        ocrVM.statusVerifyCard.observe {
-            if (!it) {
-                toast("fail verifyCard")
-                return@observe
-            }
-            when (Shared.typeCardOcr.value) {
-                Configs.TYPE_NID -> {
-                    ocrVM.extractNidFront(frameFont!!.toBytes())
-                    ocrVM.extractNidBack(frameBack!!.toBytes())
-                }
-                Configs.TYPE_NID_12 -> {
-                    ocrVM.extractNid12Front(frameFont!!.toBytes())
-                    ocrVM.extractNid12Back(frameBack!!.toBytes())
-                }
-                Configs.TYPE_CCCD -> {
-                    ocrVM.extractCccdFront(frameFont!!.toBytes())
-                    ocrVM.extractCccdBack(frameBack!!.toBytes())
-                }
-            }
-        }
         ocrVM.statusExtractFront.observe {
-            navigate(MainDirections.actionGlobalOcrConfirmFragment())
+            toast("status extract front")
+            navigate(MainDirections.actionGlobalRegisterFragment())
         }
         ocrVM.statusExtractBack.observe {
-            navigate(MainDirections.actionGlobalOcrConfirmFragment())
+            toast("status extract back")
+            navigate(MainDirections.actionGlobalRegisterFragment())
         }
     }
 
@@ -90,7 +75,26 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrActionNext -> {
                 if (frameComplete) return
                 frameComplete = true
-                ocrVM.verifyIdCard(frameFont!!.toBytes(), Shared.faceCapture.value!!.toBytes())
+                Shared.frameCardData.postValue(
+                        PhotoCardInfo(
+                                Base64.encodeToString(frameFont.toBytes(), Base64.NO_WRAP),
+                                Base64.encodeToString(frameBack.toBytes(), Base64.NO_WRAP)
+                        )
+                )
+                when (Shared.typeCardOcr.value) {
+                    Configs.TYPE_NID -> {
+                        ocrVM.extractNidFront(frameFont!!.toBytes())
+                        ocrVM.extractNidBack(frameBack!!.toBytes())
+                    }
+                    Configs.TYPE_NID_12 -> {
+                        ocrVM.extractNid12Front(frameFont!!.toBytes())
+                        ocrVM.extractNid12Back(frameBack!!.toBytes())
+                    }
+                    Configs.TYPE_CCCD -> {
+                        ocrVM.extractCccdFront(frameFont!!.toBytes())
+                        ocrVM.extractCccdBack(frameBack!!.toBytes())
+                    }
+                }
             }
         }
     }

@@ -4,12 +4,14 @@ import android.graphics.Bitmap
 import kotlinx.android.synthetic.main.verify_face.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
+import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.model.MessageData
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.fragment.adv.AdvVM
@@ -34,12 +36,22 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             if (isComplete) return@observe
             faceFrame?.setImageBitmap(it?.first)
         }
-        faceVM.statusVerify.observe {
-            if(it){
-                navigate(MainDirections.actionGlobalHomeFragment())
-            }else{
-                toast("fail verify face")
+        faceVM.statusIdentify.observe {
+            if (it == null || it.responseCode?.code ?: -1 != 0L) {
+                Shared.messageFail.postValue(
+                        MessageData("Xác thực khuôn mặt thất bại", "Bạn vui lòng thực hiện lại")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
             }
+            if (it.customerListString.isNullOrEmpty()) {
+                navigate(MainDirections.actionGlobalDocumentFragment())
+            } else {
+                faceVM.getInfoCustomer(it.customerListString)
+            }
+        }
+        faceVM.statusInfoCustomer.observe {
+            navigate(MainDirections.actionGlobalCustomerExistFragment())
         }
     }
 
@@ -62,6 +74,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             faceLabelStatusFace.text = "Chờ chút nhé..."
             faceFrameBg.show()
             faceFrame.setImageBitmap(image)
+            faceVM.identifyFace(image.toBytes())
         }
     }
 

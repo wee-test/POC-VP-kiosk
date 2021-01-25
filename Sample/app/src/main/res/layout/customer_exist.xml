@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg">
+
+    <wee.digital.sample.widget.HeaderView
+        android:id="@+id/customerToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/customerTitle"
+        style="@style/TextView.Title"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="Xác nhận thông tin"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customerToolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/customerInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin2"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/gray_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customerTitle">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/customerInfoGuide1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/customerInfoImageFace"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginVertical="@dimen/margin"
+            android:src="@color/colorBlack"
+            app:civ_border_color="@color/colorWhite"
+            app:civ_border_width="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/customerInfoGuide1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/customerInfoLabelName"
+            style="@style/TextView.Large"
+            android:layout_width="0dp"
+            android:fontFamily="@font/svn_gilroy_bold"
+            android:text="Nguyễn Hoàng Yến"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/customerInfoGuide1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextView.Small"
+            android:layout_width="0dp"
+            android:text="Regular member"
+            android:textColor="@color/green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/customerInfoGuide1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_210sdp"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="@dimen/margin2"
+        android:padding="@dimen/margin"
+        android:background="@drawable/bg_rounded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customerInfo">
+
+        <include layout="@layout/review_info"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/customerAction"
+        android:text="Kết thúc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/margin2"
+        android:background="@drawable/bg_gradient_rounded"
+        style="@style/Button.Primary"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.selectable.*
 import wee.digital.library.extension.string
-import wee.digital.library.util.Utils.getHeightScreen
+import wee.digital.sample.shared.Utils.getHeightScreen
 import wee.digital.sample.R
 import wee.digital.sample.ui.main.MainDialog
 

@@ -11,6 +11,7 @@ import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.model.MessageData
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
@@ -36,12 +37,18 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             if (isComplete) return@observe
             registerFrame?.setImageBitmap(it?.first)
         }
-        registerVM.statusIdentify.observe {
-            if(it){
-                navigate(MainDirections.actionGlobalHomeFragment())
-            }else{
-                toast("register face fail")
+        registerVM.statusVerifyCard.observe {
+            if (!it) {
+                Shared.messageFail.postValue(
+                        MessageData(
+                                "Đăng ký không thành công",
+                                "dữ liệu giấy tờ và khuôn mặt của bạn không trùng khớp"
+                        )
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
             }
+            navigate(MainDirections.actionGlobalCardFragment())
         }
     }
 
@@ -64,7 +71,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerStatusFace.text = "Chờ chút nhé..."
             registerFrameBg.show()
             registerFrame.setImageBitmap(image)
-            registerVM.identifyFace(image.toBytes())
+            registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
         }
     }
 

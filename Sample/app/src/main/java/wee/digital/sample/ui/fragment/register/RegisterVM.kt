@@ -1,43 +1,44 @@
 package wee.digital.sample.ui.fragment.register
 
-import android.annotation.SuppressLint
 import android.util.Base64
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import vplib.ResponseFaceIdentity
+import vplib.ResponseFaceVerifyToIDCard
 import wee.digital.sample.app.lib
-import wee.digital.sample.model.IdentifyFaceReq
+import wee.digital.sample.model.VerifyIdCardReq
 import wee.digital.sample.ui.base.BaseViewModel
-import wee.digital.sample.ui.base.EventLiveData
 
 class RegisterVM : BaseViewModel(){
 
-    val statusIdentify = EventLiveData<Boolean>()
+    val statusVerifyCard = MutableLiveData<Boolean>()
 
-    @SuppressLint("CheckResult")
-    fun identifyFace(face: ByteArray) {
+    fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
         Single.fromCallable {
-            val body = IdentifyFaceReq(faceImage = Base64.encodeToString(face, Base64.NO_WRAP))
-            lib?.kioskService!!.faceIdentity(Gson().toJson(body).toByteArray())
+            val body = VerifyIdCardReq(
+                    cardImage = cardImage,
+                    faceImage = Base64.encodeToString(faceImage, Base64.NO_WRAP)
+            )
+            lib?.kioskService!!.faceVerifyToIDCard(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseFaceIdentity> {
+                .subscribe(object : SingleObserver<ResponseFaceVerifyToIDCard> {
 
                     override fun onSubscribe(d: Disposable) {}
 
-                    override fun onSuccess(resp: ResponseFaceIdentity) {
-                        if(resp.responseCode.code != 0L){
-                            statusIdentify.postValue(false)
-                            return
+                    override fun onSuccess(t: ResponseFaceVerifyToIDCard) {
+                        if (t.responseCode.code == 0L) {
+                            statusVerifyCard.postValue(true)
+                        } else {
+                            statusVerifyCard.postValue(false)
                         }
-                        statusIdentify.postValue(true)
                     }
 
                     override fun onError(e: Throwable) {
-                        statusIdentify.postValue(false)
+                        statusVerifyCard.postValue(false)
                     }
 
                 })

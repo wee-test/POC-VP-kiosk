@@ -48,7 +48,7 @@
         android:layout_marginBottom="@dimen/margin"
         android:background="@drawable/bg_gradient_rounded"
         android:drawableEnd="@null"
-        android:text="Thử lại"
+        android:text="Về trang chủ"
         app:layout_constraintBottom_toTopOf="@+id/failActionSupport"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

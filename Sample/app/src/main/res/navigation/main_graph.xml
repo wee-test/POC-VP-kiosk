@@ -161,4 +161,12 @@
     <action
         android:id="@+id/action_global_ratingFragment"
         app:destination="@id/ratingFragment" />
+    <fragment
+        android:id="@+id/customerExistFragment"
+        android:name="wee.digital.sample.ui.fragment.member.CustomerExistFragment"
+        android:label="CustomerExistFragment"
+        tools:layout="@layout/customer_exist"/>
+    <action
+        android:id="@+id/action_global_customerExistFragment"
+        app:destination="@id/customerExistFragment" />
 </navigation>

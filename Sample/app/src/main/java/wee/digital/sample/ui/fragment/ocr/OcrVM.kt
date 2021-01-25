@@ -13,42 +13,13 @@ import wee.digital.sample.app.lib
 import wee.digital.sample.model.ExtractCardReq
 import wee.digital.sample.model.VerifyIdCardReq
 import wee.digital.sample.ui.base.BaseViewModel
+import wee.digital.sample.widget.TextInputView
 
 class OcrVM : BaseViewModel() {
-
-    val statusVerifyCard = MutableLiveData<Boolean>()
 
     val statusExtractFront = MutableLiveData<Boolean>()
 
     val statusExtractBack = MutableLiveData<Boolean>()
-
-    fun verifyIdCard(cardImage: ByteArray, faceImage: ByteArray) {
-        Single.fromCallable {
-            val body = VerifyIdCardReq(
-                    cardImage = Base64.encodeToString(cardImage, Base64.NO_WRAP),
-                    faceImage = Base64.encodeToString(faceImage, Base64.NO_WRAP)
-            )
-            lib?.kioskService!!.faceVerifyToIDCard(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseFaceVerifyToIDCard> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseFaceVerifyToIDCard) {
-                        if (t.responseCode.code == 0L) {
-                            statusVerifyCard.postValue(true)
-                        } else {
-                            statusVerifyCard.postValue(false)
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        statusVerifyCard.postValue(false)
-                    }
-
-                })
-    }
 
     @SuppressLint("CheckResult")
     fun extractNidFront(image: ByteArray) {
