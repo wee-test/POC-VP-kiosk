@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.document.*
 import kotlinx.android.synthetic.main.document_select.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.repository.model.SocketData
 import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
@@ -32,14 +33,17 @@ class DocumentFragment : MainFragment() {
     override fun onViewClick(v: View?) {
         when(v){
             documentRootNid -> {
+                Socket.action.sendData(SocketReq(Configs.TYPE_NID, SocketData(type = Configs.TYPE_NID)))
                 Shared.typeCardOcr.postValue(Configs.TYPE_NID)
                 navigate(MainDirections.actionGlobalOcrFragment())
             }
             documentRootNid12 -> {
+                Socket.action.sendData(SocketReq(Configs.TYPE_NID, SocketData(type = Configs.TYPE_NID_12)))
                 Shared.typeCardOcr.postValue(Configs.TYPE_NID_12)
                 navigate(MainDirections.actionGlobalOcrFragment())
             }
             documentRootCccd -> {
+                Socket.action.sendData(SocketReq(Configs.TYPE_NID, SocketData(type = Configs.TYPE_CCCD)))
                 Shared.typeCardOcr.postValue(Configs.TYPE_CCCD)
                 navigate(MainDirections.actionGlobalOcrFragment())
             }

@@ -8,6 +8,7 @@ import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
+import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.MessageData
@@ -37,13 +38,13 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerFrame?.setImageBitmap(it?.first)
         }
         registerVM.statusVerifyCard.observe {
-            if(it == null || it?.responseCode?.code ?: -1 != 0L){
-                Shared.messageFail.postValue(
-                        MessageData(
-                                "Đăng ký không thành công",
-                                "dữ liệu giấy tờ và khuôn mặt của bạn không trùng khớp"
-                        )
+            toast("${it.isMatched}")
+            if(it == null || it?.responseCode?.code ?: -1 != 0L || !it.isMatched){
+                val messFail = MessageData(
+                        "Đăng ký không thành công",
+                        "dữ liệu giấy tờ và khuôn mặt của bạn không trùng khớp"
                 )
+                Shared.messageFail.postValue(messFail)
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }

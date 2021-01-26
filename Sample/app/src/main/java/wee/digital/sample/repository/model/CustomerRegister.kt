@@ -72,7 +72,10 @@ data class IdentifyCardInfo(
         var expiredDate: String = "",
 
         @SerializedName("nationality")
-        var nationality: String = ""
+        var nationality: String = "",
+
+        @SerializedName("phoneNumber")
+        var phone: String = ""
 )
 
 data class PhotoCardInfo(
@@ -112,4 +115,18 @@ data class HomeInfo(
 
         @SerializedName("apartmentNumber")
         var apartmentNumber: String = ""
+)
+
+data class BranchInfo(
+        @SerializedName("id")
+        var id: String = "",
+
+        @SerializedName("code")
+        var code: String = "",
+
+        @SerializedName("name")
+        var name: String = "",
+
+        @SerializedName("address")
+        var address: String = ""
 )

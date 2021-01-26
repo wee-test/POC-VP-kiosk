@@ -119,8 +119,9 @@ class OcrConfirmFragment : MainFragment() {
                 permanentAddress = address,
                 issuedDate = issueDate,
                 issuedPlace = issuePlace,
+                phone = ocrInputPhone.text.toString(),
                 expiredDate = "",
-                nationality = ""
+                nationality = "",
         )
         Shared.ocrConfirmData.postValue(data)
         return true

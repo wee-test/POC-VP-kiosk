@@ -16,7 +16,6 @@ class HomeFragment : MainFragment() {
     }
 
     override fun onViewCreated() {
-        homeLabelName.text = getString(R.string.home_name, "Nguyen Van A")
         addClickListener(homeActionLogout, homeTabSelectAuto, homeTabSelectSupport)
     }
 
