@@ -128,10 +128,11 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     }
 
     private fun createOcr() {
-        WeeOCR.CAMERA_SATURATION_STEP = "1"
-        WeeOCR.THRESH_CROP = 127.0
-        WeeOCR.BLUR_MIN_VALUE = 10 //Default: 270
+        WeeOCR.CAMERA_SATURATION_STEP = "0"
+        WeeOCR.THRESH_CROP = 64.0
+        WeeOCR.BLUR_MIN_VALUE = 270
         WeeOCR.CAMERA_ZOOM = "18"
+        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity())
