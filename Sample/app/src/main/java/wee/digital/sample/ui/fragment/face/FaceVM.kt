@@ -25,6 +25,7 @@ class FaceVM : BaseViewModel() {
 
     val statusInfoCustomer = EventLiveData<ResponseGetCustomerInfo>()
 
+    @SuppressLint("CheckResult")
     fun verifyFace(face: ByteArray, customerId: String) {
         Single.fromCallable {
             val body = VerifyFaceReq(
@@ -34,22 +35,14 @@ class FaceVM : BaseViewModel() {
             lib?.kioskService!!.faceVerify(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseFaceVerify> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(resp: ResponseFaceVerify) {
-                        if (resp.responseCode.code == 0L) {
-                            statusVerify.postValue(true)
-                        } else {
-                            statusVerify.postValue(false)
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
+                .subscribe({
+                    if (it.responseCode.code == 0L) {
+                        statusVerify.postValue(true)
+                    } else {
                         statusVerify.postValue(false)
                     }
-
+                }, {
+                    statusVerify.postValue(false)
                 })
     }
 
@@ -60,21 +53,14 @@ class FaceVM : BaseViewModel() {
             lib?.kioskService!!.faceIdentity(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseFaceIdentity> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(resp: ResponseFaceIdentity) {
-                        statusIdentify.postValue(resp)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        statusIdentify.postValue(null)
-                    }
-
+                .subscribe({
+                    statusIdentify.postValue(it)
+                }, {
+                    statusIdentify.postValue(null)
                 })
     }
 
+    @SuppressLint("CheckResult")
     fun getInfoCustomer(customerId: String) {
         Single.fromCallable {
             val body = CustomerInfoReq(
@@ -83,18 +69,10 @@ class FaceVM : BaseViewModel() {
             lib?.kioskService!!.getCustomerInfo(Gson().toJson(body).toByteArray())
         }.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseGetCustomerInfo> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseGetCustomerInfo) {
-                        statusInfoCustomer.postValue(t)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        statusInfoCustomer.postValue(null)
-                    }
-
+                .subscribe({
+                    statusInfoCustomer.postValue(it)
+                },{
+                    statusInfoCustomer.postValue(null)
                 })
     }
 

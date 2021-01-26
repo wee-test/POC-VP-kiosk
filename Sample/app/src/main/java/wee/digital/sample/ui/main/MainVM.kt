@@ -1,5 +1,6 @@
 package wee.digital.sample.ui.main
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
@@ -33,24 +34,17 @@ open class MainVM : ViewModel() {
 
     val webLiveData = MutableLiveData<WebArg>()
 
+    @SuppressLint("CheckResult")
     fun loginKiosk() {
+        val body = LoginKioskReq(Configs.KIOSK_CODE)
         Single.fromCallable {
-            val body = LoginKioskReq(Configs.KIOSK_CODE)
             lib?.kioskService!!.login(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseLogin>{
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseLogin) {
-                        statusLoginKiosk.postValue(t)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        statusLoginKiosk.postValue(null)
-                    }
-
+                .subscribe({
+                    statusLoginKiosk.postValue(it)
+                }, {
+                    statusLoginKiosk.postValue(null)
                 })
     }
 

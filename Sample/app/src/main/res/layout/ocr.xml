@@ -149,4 +149,14 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
+    <ProgressBar
+        android:id="@+id/ocrLoading"
+        android:visibility="gone"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ocrActionNext"
+        app:layout_constraintEnd_toEndOf="@+id/ocrActionNext"
+        app:layout_constraintStart_toStartOf="@+id/ocrActionNext"
+        app:layout_constraintTop_toTopOf="@+id/ocrActionNext"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

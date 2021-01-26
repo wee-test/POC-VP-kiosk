@@ -13,11 +13,14 @@ import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
 import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
+import wee.digital.library.extension.post
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.repository.model.BackCardResp
+import wee.digital.sample.repository.model.FrontCardResp
 import wee.digital.sample.repository.model.MessageData
 import wee.digital.sample.repository.model.PhotoCardInfo
 import wee.digital.sample.shared.Configs
@@ -61,7 +64,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 return@observe
             }
             Shared.ocrCardFront.postValue(it)
-            checkNavigate()
+            checkNavigate(dataFront = it)
         }
         ocrVM.statusExtractBack.observe {
             if(it.code != 0L){
@@ -72,13 +75,16 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
-            checkNavigate()
+            Shared.ocrCardBack.postValue(it)
+            checkNavigate(dataBack = it)
         }
     }
 
-    private fun checkNavigate(){
-        if(Shared.ocrCardFront.value != null && Shared.ocrCardBack.value != null){
+    private fun checkNavigate(dataFront: FrontCardResp? = Shared.ocrCardFront.value, dataBack: BackCardResp? = Shared.ocrCardBack.value) {
+        if (dataFront != null && dataBack != null) {
             navigate(MainDirections.actionGlobalOcrConfirmFragment())
+        }else{
+            toast("fail data ocr")
         }
     }
 
@@ -95,6 +101,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrActionNext -> {
                 if (frameComplete) return
                 frameComplete = true
+                ocrActionNext.gone()
+                ocrLoading.show()
                 Shared.frameCardData.postValue(
                         PhotoCardInfo(
                                 Base64.encodeToString(frameFont.toBytes(), Base64.NO_WRAP),
@@ -160,10 +168,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun cropFrame(frame: ByteArray) {
         if (processing) return
         processing = true
-        weeOcr?.cropObject(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
+        weeOcr?.cropObjectAlign(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
             if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
                 processing = false
-                return@cropObject
+                return@cropObjectAlign
             }
             if (type != typeCard) resetAllFrame()
             typeCard = type
@@ -219,6 +227,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrResetFont.gone()
             ocrFrameBack.setImageBitmap(null)
             ocrResetBack.gone()
+            ocrLoading.gone()
         }
     }
 
@@ -230,6 +239,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrFrameFront.setImageBitmap(null)
             ocrResetFont.gone()
             ocrActionNext.gone()
+            ocrLoading.gone()
         }
     }
 
@@ -241,6 +251,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrFrameBack.setImageBitmap(null)
             ocrResetBack.gone()
             ocrActionNext.gone()
+            ocrLoading.gone()
         }
     }
 

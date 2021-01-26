@@ -30,21 +30,23 @@ class OcrVM : BaseViewModel() {
             lib?.kioskService!!.extractCMNDFrontInfo(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseExtractCMNDFront> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseExtractCMNDFront) {
-//                        statusExtractFront.postValue(t)
-                        print("")
+                .subscribe({
+                    if(it.responseCode.code != 0L){
+                        statusExtractFront.postValue(FrontCardResp(code = -1))
+                    }else{
+                        val resp = FrontCardResp(
+                                code = 0,
+                                image = it.frontInfo.image,
+                                address = it.frontInfo.address,
+                                number = it.frontInfo.number,
+                                birthday = it.frontInfo.birthday,
+                                fullName = it.frontInfo.fullName,
+                                homeTown = it.frontInfo.homeTown
+                        )
+                        statusExtractFront.postValue(resp)
                     }
-
-
-                    override fun onError(e: Throwable) {
-                        print("")
-                        /*statusExtractFront.postValue(null)*/
-                    }
-
+                },{
+                    statusExtractFront.postValue(FrontCardResp(code = -1))
                 })
     }
 
@@ -57,21 +59,20 @@ class OcrVM : BaseViewModel() {
             lib?.kioskService!!.extractCMNDBackInfo(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseExtractCMNDBack> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseExtractCMNDBack) {
-                        /*statusExtractBack.postValue(t)*/
-                        print("")
+                .subscribe({
+                    if(it.responseCode.code != 0L){
+                        statusExtractBack.postValue(BackCardResp(code = -1))
+                    }else{
+                        val resp = BackCardResp(
+                                code = it.responseCode.code,
+                                image = it.backInfo.image,
+                                issueDate = it.backInfo.issueDate,
+                                issueBy = it.backInfo.issueBy,
+                        )
+                        statusExtractBack.postValue(resp)
                     }
-
-
-                    override fun onError(e: Throwable) {
-                        /*statusExtractBack.postValue(false)*/
-                        print("")
-                    }
-
+                },{
+                    statusExtractBack.postValue(BackCardResp(code = -1))
                 })
     }
 
@@ -84,19 +85,10 @@ class OcrVM : BaseViewModel() {
             lib?.kioskService!!.extractCMND12FrontInfo(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseExtractCMND12Front> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseExtractCMND12Front) {
-                        /*statusExtractFront.postValue(true)*/
-                    }
-
-
-                    override fun onError(e: Throwable) {
-                        /*statusExtractFront.postValue(null)*/
-                    }
-
+                .subscribe({
+                    print("")
+                },{
+                    print("")
                 })
     }
 
@@ -109,19 +101,10 @@ class OcrVM : BaseViewModel() {
             lib?.kioskService!!.extractCMND12BackInfo(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseExtractCMND12Back> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseExtractCMND12Back) {
-                        /*statusExtractBack.postValue(t)*/
-                    }
-
-
-                    override fun onError(e: Throwable) {
-                        /*statusExtractBack.postValue(null)*/
-                    }
-
+                .subscribe({
+                    print("")
+                },{
+                    print("")
                 })
     }
 
@@ -134,18 +117,10 @@ class OcrVM : BaseViewModel() {
             lib?.kioskService!!.extractCCCDFrontInfo(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseExtractCCCDFront> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseExtractCCCDFront) {
-                        /*statusExtractFront.postValue(t)*/
-                    }
-
-                    override fun onError(e: Throwable) {
-                        /*statusExtractFront.postValue(null)*/
-                    }
-
+                .subscribe({
+                    print("")
+                },{
+                    print("")
                 })
     }
 
@@ -158,19 +133,10 @@ class OcrVM : BaseViewModel() {
             lib?.kioskService!!.extractCCCDBackInfo(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseExtractCCCDBack> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseExtractCCCDBack) {
-                        /*statusExtractBack.postValue(t)*/
-                    }
-
-
-                    override fun onError(e: Throwable) {
-                        /*statusExtractBack.postValue(null)*/
-                    }
-
+                .subscribe({
+                    print("")
+                },{
+                    print("")
                 })
     }
 

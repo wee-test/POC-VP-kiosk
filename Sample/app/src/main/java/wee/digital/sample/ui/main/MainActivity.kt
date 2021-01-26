@@ -34,7 +34,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainVM.loginKiosk()
     }
 
     override fun navController(): NavController {
@@ -83,6 +82,7 @@ class MainActivity : BaseActivity() {
         permissionRequest(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) {
             if (lib != null) return@permissionRequest
             lib = vplib.Vplib.newLib(1, "$externalCacheDir")
+            mainVM.loginKiosk()
         }
     }
 

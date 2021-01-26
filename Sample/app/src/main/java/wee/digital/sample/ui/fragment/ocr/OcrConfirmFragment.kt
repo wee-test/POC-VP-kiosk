@@ -31,12 +31,25 @@ class OcrConfirmFragment : MainFragment() {
         when (v) {
             ocrConfirmActionNext -> {
                 if (!checkValidData()) return
-                navigate(MainDirections.actionGlobalCardFragment())
+                navigate(MainDirections.actionGlobalRegisterFragment())
             }
         }
     }
 
-    override fun onLiveDataObserve() {}
+    override fun onLiveDataObserve() {
+        Shared.ocrCardFront.observe {
+            ocrInputFullName.text = it.fullName
+            ocrInputNumber.text = it.number
+            ocrInputBirth.text = it.birthday.replace(" ", "/")
+            ocrInputGender.text = it.sex
+            ocrInputHometown.text = it.homeTown
+            ocrInputAddress.text = it.address
+        }
+        Shared.ocrCardBack.observe {
+            ocrInputIssueDate.text = it.issueDate
+            ocrInputIssuePlace.text = it.issueBy
+        }
+    }
 
 
     private fun checkValidData(): Boolean {
