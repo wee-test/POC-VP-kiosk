@@ -4,12 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/_210sdp">
 
-    <include layout="@layout/review_form_directly"
+    <include
+        android:id="@+id/reviewForm1"
+        layout="@layout/review_form_directly"
         android:visibility="gone"/>
 
-    <include layout="@layout/review_form_home"
+    <include
+        android:id="@+id/reviewForm2"
+        layout="@layout/review_form_home"
         android:visibility="gone"/>
 
-    <include layout="@layout/review_form_branch"/>
+    <include
+        android:id="@+id/reviewForm3"
+        layout="@layout/review_form_branch"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

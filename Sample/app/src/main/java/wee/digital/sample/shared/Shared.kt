@@ -8,6 +8,7 @@ import wee.digital.library.extension.parse
 import wee.digital.library.extension.readAsset
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
+import wee.digital.sample.ui.fragment.card.CardItem
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 
 object Shared {
@@ -33,6 +34,8 @@ object Shared {
     val ocrCardFront = MutableLiveData<FrontCardResp>()
 
     val ocrCardBack = MutableLiveData<BackCardResp>()
+
+    val cardSelected = MutableLiveData<CardItem>()
 
     val branchList by lazy {
         readAsset("branch_list.json").parse(Array<Selectable>::class)

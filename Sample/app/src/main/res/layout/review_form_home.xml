@@ -67,11 +67,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin"
         android:src="@drawable/ic_location"
-        android:text="0767006210"
-        android:title="Tân Bình"
+        android:text="Ho chi minh"
+        android:title="Tỉnh thành"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/formHomeGuide"
-        app:layout_constraintTop_toBottomOf="@+id/formHomeName"/>
+        app:layout_constraintTop_toBottomOf="@+id/formHomeName" />
 
     <wee.digital.sample.widget.TextVerticalView
         android:id="@+id/formHomeDistrict"

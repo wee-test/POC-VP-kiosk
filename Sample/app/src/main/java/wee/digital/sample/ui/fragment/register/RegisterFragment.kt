@@ -37,7 +37,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerFrame?.setImageBitmap(it?.first)
         }
         registerVM.statusVerifyCard.observe {
-            if (!it) {
+            if(it == null || it?.responseCode?.code ?: -1 != 0L){
                 Shared.messageFail.postValue(
                         MessageData(
                                 "Đăng ký không thành công",

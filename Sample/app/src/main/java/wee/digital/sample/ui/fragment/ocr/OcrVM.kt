@@ -14,12 +14,13 @@ import wee.digital.sample.repository.model.BackCardResp
 import wee.digital.sample.repository.model.ExtractCardReq
 import wee.digital.sample.repository.model.FrontCardResp
 import wee.digital.sample.ui.base.BaseViewModel
+import wee.digital.sample.ui.base.EventLiveData
 
 class OcrVM : BaseViewModel() {
 
-    val statusExtractFront = MutableLiveData<FrontCardResp>()
+    val statusExtractFront = EventLiveData<FrontCardResp>()
 
-    val statusExtractBack = MutableLiveData<BackCardResp>()
+    val statusExtractBack = EventLiveData<BackCardResp>()
 
     @SuppressLint("CheckResult")
     fun extractNidFront(image: ByteArray) {
