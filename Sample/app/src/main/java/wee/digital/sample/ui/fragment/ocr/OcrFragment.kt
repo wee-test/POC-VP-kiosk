@@ -131,6 +131,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         WeeOCR.THRESH_CROP = 64.0
         WeeOCR.BLUR_MIN_VALUE = 270
         WeeOCR.CAMERA_ZOOM = "18"
+        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity())
