@@ -44,7 +44,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
                 return@observe
             }
             if (it.customerListString.isNullOrEmpty()) {
-                navigate(MainDirections.actionGlobalDocumentFragment())
+                navigate(MainDirections.actionGlobalHomeFragment())
             } else {
                 faceVM.getInfoCustomer(it.customerListString)
             }

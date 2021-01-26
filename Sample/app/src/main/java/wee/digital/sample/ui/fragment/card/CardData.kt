@@ -3,15 +3,16 @@ package wee.digital.sample.ui.fragment.card
 import wee.digital.sample.R
 
 data class CardItem(
+        var type :String = "",
         var name : String = "",
         var image : Int
 )
 
 val listCard1 = listOf(
-        CardItem("VPBank Platium Cashback", R.mipmap.card1),
-        CardItem("VPBank StepUp Mastercard", R.mipmap.card2)
+        CardItem("PLATINUM_CASHBACK","VPBank Platium Cashback", R.mipmap.card1),
+        CardItem("AUTOLINK","VPBank StepUp Mastercard", R.mipmap.card2)
 )
 
 val listCard2 = listOf(
-        CardItem("VPBank Shopee Platinum", R.mipmap.card3)
+        CardItem("SHOPEE_PLATINUM","VPBank Shopee Platinum", R.mipmap.card3)
 )

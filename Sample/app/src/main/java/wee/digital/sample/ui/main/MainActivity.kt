@@ -9,6 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import okhttp3.WebSocket
 import wee.dev.weewebrtc.WeeCaller
+import wee.digital.library.extension.post
 import wee.digital.library.extension.toast
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
@@ -67,11 +68,11 @@ class MainActivity : BaseActivity() {
     private fun connectSocket() {
         Socket.action.connectWebSocketMonitor(object : MySocket.WebSocketMonitorListener {
             override fun onMessage(message: String) {
-                print("")
+
             }
 
             override fun onError(webSocket: WebSocket, t: Throwable) {
-                print("")
+                post(500) { connectSocket() }
             }
         })
     }

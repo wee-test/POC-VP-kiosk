@@ -40,13 +40,13 @@ class OcrConfirmFragment : MainFragment() {
         Shared.ocrCardFront.observe {
             ocrInputFullName.text = it.fullName
             ocrInputNumber.text = it.number
-            ocrInputBirth.text = it.birthday.replace(" ", "/")
+            ocrInputBirth.text = it.birthday.replace("-", "/")
             ocrInputGender.text = it.sex
             ocrInputHometown.text = it.homeTown
             ocrInputAddress.text = it.address
         }
         Shared.ocrCardBack.observe {
-            ocrInputIssueDate.text = it.issueDate
+            ocrInputIssueDate.text = it.issueDate.replace(" ", "/")
             ocrInputIssuePlace.text = it.issueBy
         }
     }
@@ -71,7 +71,7 @@ class OcrConfirmFragment : MainFragment() {
             return false
         }
         val issuePlace = ocrInputIssuePlace.text.toString()
-        if (issuePlace.isEmpty() || issuePlace.length < 10) {
+        if (issuePlace.isEmpty()) {
             ocrInputIssuePlace.error = "nơi cấp phải từ 10 đến 50 ký tự"
             return false
         }

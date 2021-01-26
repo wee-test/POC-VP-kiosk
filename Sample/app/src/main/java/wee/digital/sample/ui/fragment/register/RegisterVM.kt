@@ -7,6 +7,7 @@ import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import vplib.ResponseCode
 import vplib.ResponseCustomerRegister
 import vplib.ResponseFaceVerifyToIDCard
 import wee.digital.sample.app.lib
@@ -18,7 +19,7 @@ import wee.digital.sample.ui.base.EventLiveData
 
 class RegisterVM : BaseViewModel(){
 
-    val statusVerifyCard = EventLiveData<Boolean>()
+    val statusVerifyCard = EventLiveData<ResponseFaceVerifyToIDCard>()
 
     val statusRegisterCard = EventLiveData<ResponseCustomerRegister>()
 
@@ -36,15 +37,11 @@ class RegisterVM : BaseViewModel(){
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseFaceVerifyToIDCard) {
-                        if (t.responseCode.code == 0L) {
-                            statusVerifyCard.postValue(true)
-                        } else {
-                            statusVerifyCard.postValue(false)
-                        }
+                        statusVerifyCard.postValue(t)
                     }
 
                     override fun onError(e: Throwable) {
-                        statusVerifyCard.postValue(false)
+                        statusVerifyCard.postValue(null)
                     }
 
                 })

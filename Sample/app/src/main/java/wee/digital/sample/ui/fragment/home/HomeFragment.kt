@@ -35,7 +35,7 @@ class HomeFragment : MainFragment() {
                 navigate(MainDirections.actionGlobalDocumentFragment())
             }
             homeTabSelectSupport -> {
-                navigate(MainDirections.actionGlobalCallFragment())
+//                navigate(MainDirections.actionGlobalCallFragment())
             }
         }
     }

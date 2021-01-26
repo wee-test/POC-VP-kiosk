@@ -59,6 +59,7 @@
         android:layout_marginTop="@dimen/margin"
         android:background="@drawable/bg_line"
         android:drawableEnd="@null"
+        android:visibility="gone"
         android:text="Gọi cho hỗ trợ viên"
         android:textColor="@color/green"
         android:layout_marginBottom="@dimen/margin4"
