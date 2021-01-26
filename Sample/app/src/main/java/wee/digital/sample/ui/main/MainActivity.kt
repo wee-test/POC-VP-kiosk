@@ -34,40 +34,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        weeCaller.init()
-        weeCaller.initUserData("909090") { userData, mess ->
-            toast("${userData?.Name} - ${userData?.ReceiverID} - $mess")
-            /*weeCaller.sendCall("20351104",null,mainVideoCallView,object : WeeWebRTC.WebRTCListener{
-                override fun onClosed() {
-                    toast("onClosed")
-                }
-
-                override fun onConnected() {
-                    toast("onConnected")
-                }
-
-                override fun onError(mess: String) {
-                    toast("onError: $mess")
-                }
-
-                override fun onMessage(mess: String) {
-                    toast("onMessage: $mess")
-                }
-
-                override fun onReceiverCall(id: String) {
-                    toast("onReceiverCall: $id")
-                }
-
-                override fun onSendCall(id: String) {
-                    toast("onSendCall: $id")
-                }
-
-                override fun onStart() {
-                    toast("onStart")
-                }
-
-            })*/
-        }
         mainVM.loginKiosk()
     }
 

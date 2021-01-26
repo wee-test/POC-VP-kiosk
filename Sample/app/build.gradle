@@ -54,6 +54,7 @@ android {
 
     productFlavors {
         all {
+
         }
         dev {
             resValue "string", "app_name", "Sample Dev"
@@ -106,6 +107,8 @@ dependencies {
 
     implementation project(":vplib")
 
+    implementation project(':WeeWebRTC')
+
     implementation fileTree(include: ["*.jar", "*aar"], dir: "libs")
     implementation deps.kotlin.stdlib
     implementation deps.android.appcompat
@@ -135,7 +138,7 @@ dependencies {
 
     // LIFECYCLE
     implementation deps.lifecycle.extensions
-    implementation project(path: ':WeeWebRTC')
+
     kapt deps.lifecycle.compiler
 
     // MULTI DIMENSIONS
