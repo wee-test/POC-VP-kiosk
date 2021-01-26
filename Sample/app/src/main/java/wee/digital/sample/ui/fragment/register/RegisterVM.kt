@@ -1,5 +1,6 @@
 package wee.digital.sample.ui.fragment.register
 
+import android.annotation.SuppressLint
 import android.util.Base64
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -9,10 +10,12 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import vplib.ResponseCode
 import vplib.ResponseCustomerRegister
+import vplib.ResponseCustomerServiceReview
 import vplib.ResponseFaceVerifyToIDCard
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.CustomerInfoRegister
 import wee.digital.sample.repository.model.CustomerRegisterReq
+import wee.digital.sample.repository.model.ServiceReviewReq
 import wee.digital.sample.repository.model.VerifyIdCardReq
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
@@ -23,6 +26,9 @@ class RegisterVM : BaseViewModel(){
 
     val statusRegisterCard = EventLiveData<ResponseCustomerRegister>()
 
+    val statusCustomerService = EventLiveData<ResponseCustomerServiceReview>()
+
+    @SuppressLint("CheckResult")
     fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
         Single.fromCallable {
             val body = VerifyIdCardReq(
@@ -32,38 +38,36 @@ class RegisterVM : BaseViewModel(){
             lib?.kioskService!!.faceVerifyToIDCard(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseFaceVerifyToIDCard> {
-
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseFaceVerifyToIDCard) {
-                        statusVerifyCard.postValue(t)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        statusVerifyCard.postValue(null)
-                    }
-
+                .subscribe({
+                    statusVerifyCard.postValue(it)
+                }, {
+                    statusVerifyCard.postValue(null)
                 })
     }
 
+    @SuppressLint("CheckResult")
     fun registerCard(body : CustomerRegisterReq){
         Single.fromCallable {
             lib?.kioskService!!.customerCardRegister(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(object : SingleObserver<ResponseCustomerRegister>{
+                .subscribe({
+                    statusRegisterCard.postValue(it)
+                }, {
+                    statusRegisterCard.postValue(null)
+                })
+    }
 
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onSuccess(t: ResponseCustomerRegister) {
-                        statusRegisterCard.postValue(t)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        statusRegisterCard.postValue(null)
-                    }
-
+    @SuppressLint("CheckResult")
+    fun serviceReview(body : ServiceReviewReq){
+        Single.fromCallable {
+            lib?.kioskService!!.customerServiceReview(Gson().toJson(body).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    statusCustomerService.postValue(it)
+                },{
+                    statusCustomerService.postValue(null)
                 })
     }
 

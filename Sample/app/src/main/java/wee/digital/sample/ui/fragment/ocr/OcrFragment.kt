@@ -19,10 +19,8 @@ import wee.digital.library.extension.toast
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
-import wee.digital.sample.repository.model.BackCardResp
-import wee.digital.sample.repository.model.FrontCardResp
-import wee.digital.sample.repository.model.MessageData
-import wee.digital.sample.repository.model.PhotoCardInfo
+import wee.digital.sample.repository.model.*
+import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.animOcrCaptured
@@ -82,10 +80,18 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     private fun checkNavigate(dataFront: FrontCardResp? = Shared.ocrCardFront.value, dataBack: BackCardResp? = Shared.ocrCardBack.value) {
         if (dataFront != null && dataBack != null) {
+            sendSocket()
             navigate(MainDirections.actionGlobalOcrConfirmFragment())
         }else{
             toast("fail data ocr")
         }
+    }
+
+    private fun sendSocket(){
+        val resp = Shared.socketReqData.value
+        resp?.cmd = Configs.FORM_STEP_2
+        resp?.data?.photo = Shared.frameCardData.value
+        Socket.action.sendData(resp)
     }
 
     override fun onViewClick(v: View?) {

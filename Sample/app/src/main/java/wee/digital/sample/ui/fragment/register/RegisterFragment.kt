@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.register
 
 import android.graphics.Bitmap
+import android.util.Base64
 import kotlinx.android.synthetic.main.register.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
@@ -8,9 +9,12 @@ import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
+import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.MessageData
+import wee.digital.sample.repository.socket.Socket
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
@@ -37,18 +41,26 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerFrame?.setImageBitmap(it?.first)
         }
         registerVM.statusVerifyCard.observe {
-            if(it == null || it?.responseCode?.code ?: -1 != 0L){
-                Shared.messageFail.postValue(
-                        MessageData(
-                                "Đăng ký không thành công",
-                                "dữ liệu giấy tờ và khuôn mặt của bạn không trùng khớp"
-                        )
+            toast("${it.isMatched}")
+            if(it == null || it?.responseCode?.code ?: -1 != 0L || !it.isMatched){
+                val messFail = MessageData(
+                        "Đăng ký không thành công",
+                        "dữ liệu giấy tờ và khuôn mặt của bạn không trùng khớp"
                 )
+                Shared.messageFail.postValue(messFail)
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
+            sendSocket()
             navigate(MainDirections.actionGlobalCardFragment())
         }
+    }
+
+    private fun sendSocket(){
+        val resp = Shared.socketReqData.value
+        resp?.cmd = Configs.FORM_STEP_4
+        resp?.data?.faceImage = Base64.encodeToString(Shared.faceCapture.value.toBytes(), Base64.NO_WRAP)
+        Socket.action.sendData(resp)
     }
 
     /**

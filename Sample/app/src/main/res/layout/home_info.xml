@@ -32,7 +32,7 @@
         style="@style/TextView.Large"
         android:layout_width="0dp"
         android:layout_marginVertical="@dimen/margin"
-        android:text="@string/home_name"
+        android:text="Xin chào, \nAnh, Chị"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/homeGuide1"

@@ -2,6 +2,7 @@ package wee.digital.sample.shared
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
+import vplib.ResponseFaceIdentity
 import vplib.ResponseGetCustomerInfo
 import vplib.ResponseLogin
 import wee.digital.library.extension.parse
@@ -16,6 +17,8 @@ object Shared {
     val listAdv = listOf(R.mipmap.adv1, R.mipmap.adv2)
 
     val kioskInfo = MutableLiveData<ResponseLogin>()
+
+    val customerInfoVerify = MutableLiveData<ResponseFaceIdentity>()
 
     val customerInfoExist = MutableLiveData<ResponseGetCustomerInfo>()
 
@@ -36,6 +39,8 @@ object Shared {
     val ocrCardBack = MutableLiveData<BackCardResp>()
 
     val cardSelected = MutableLiveData<CardItem>()
+
+    val socketReqData = MutableLiveData<SocketReq>()
 
     val branchList by lazy {
         readAsset("branch_list.json").parse(Array<Selectable>::class)

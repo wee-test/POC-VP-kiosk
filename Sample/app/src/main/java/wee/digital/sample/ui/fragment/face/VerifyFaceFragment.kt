@@ -2,12 +2,14 @@ package wee.digital.sample.ui.fragment.face
 
 import android.graphics.Bitmap
 import kotlinx.android.synthetic.main.verify_face.*
+import wee.dev.weewebrtc.utils.extension.toObject
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
 import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
+import wee.digital.library.extension.str
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.MessageData
@@ -44,16 +46,17 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
                 return@observe
             }
             if (it.customerListString.isNullOrEmpty()) {
+                Shared.customerInfoVerify.postValue(it)
                 navigate(MainDirections.actionGlobalHomeFragment())
             } else {
-                faceVM.getInfoCustomer(it.customerListString)
+                faceVM.getInfoCustomer(it.customerListString.toObject().str("customerId").toString())
             }
         }
         faceVM.statusInfoCustomer.observe {
             if (it.responseCode.code != 0L) {
                 Shared.messageFail.postValue(
-                        MessageData("Dữ liệu khách hàng không tồn tại",
-                                "Bạn vui lòng đăng ký hoặc thử lại")
+                        MessageData("Hệ thống bị lỗi",
+                                "Bạn vui lòng thử lại trong ít phút")
                 )
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
