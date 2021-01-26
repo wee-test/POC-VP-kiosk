@@ -24,18 +24,23 @@ class CardFragment : MainFragment() {
         adapter1.set(listCard1)
         adapter1.bindHorizontal(cardRecyclerView1)
         adapter1.onItemClick = {model, _ ->
-            Shared.cardSelected.postValue(model)
-            Socket.action.sendData(SocketReq(Configs.FORM_STEP_5, SocketData(cardType = model.type)))
+            sendSocket(model)
             navigate(MainDirections.actionGlobalCardReceiveFragment())
         }
 
         adapter2.set(listCard2)
         adapter2.bindHorizontal(cardRecyclerView2)
         adapter2.onItemClick = {model, _ ->
-            Shared.cardSelected.postValue(model)
-            Socket.action.sendData(SocketReq(Configs.FORM_STEP_5, SocketData(cardType = model.type)))
+            sendSocket(model)
             navigate(MainDirections.actionGlobalCardReceiveFragment())
         }
+    }
+
+    private fun sendSocket(data : CardItem){
+        val req = Shared.socketReqData.value
+        req?.cmd = Configs.FORM_STEP_5
+        req?.data?.cardType = data.type
+        Socket.action.sendData(req)
     }
 
     override fun onLiveDataObserve() {

@@ -1,8 +1,8 @@
 package wee.digital.sample.repository.model
 
 data class SocketReq(
-        val cmd: String = "",
-        val data: SocketData? = null
+        var cmd: String = "",
+        var data: SocketData? = null
 )
 
 data class SocketData(
@@ -24,5 +24,7 @@ data class SocketData(
         var branchInfo: BranchInfo? = null,
         var homeInfo: HomeInfo? = null,
         var isConfirmed: Boolean = false,
-        var reviewType: Int = 0
+        var reviewType: Int = 0,
+        var phoneNumber : String = "",
+        var email : String = ""
 )

@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.register
 
 import android.graphics.Bitmap
+import android.util.Base64
 import kotlinx.android.synthetic.main.register.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
@@ -12,6 +13,8 @@ import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.MessageData
+import wee.digital.sample.repository.socket.Socket
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
@@ -48,8 +51,16 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
+            sendSocket()
             navigate(MainDirections.actionGlobalCardFragment())
         }
+    }
+
+    private fun sendSocket(){
+        val resp = Shared.socketReqData.value
+        resp?.cmd = Configs.FORM_STEP_4
+        resp?.data?.faceImage = Base64.encodeToString(Shared.faceCapture.value.toBytes(), Base64.NO_WRAP)
+        Socket.action.sendData(resp)
     }
 
     /**

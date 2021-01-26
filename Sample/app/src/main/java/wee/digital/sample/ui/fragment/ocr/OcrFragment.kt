@@ -80,11 +80,18 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     private fun checkNavigate(dataFront: FrontCardResp? = Shared.ocrCardFront.value, dataBack: BackCardResp? = Shared.ocrCardBack.value) {
         if (dataFront != null && dataBack != null) {
-            Socket.action.sendData(SocketReq(Configs.FORM_STEP_2, SocketData(photo = Shared.frameCardData.value)))
+            sendSocket()
             navigate(MainDirections.actionGlobalOcrConfirmFragment())
         }else{
             toast("fail data ocr")
         }
+    }
+
+    private fun sendSocket(){
+        val resp = Shared.socketReqData.value
+        resp?.cmd = Configs.FORM_STEP_2
+        resp?.data?.photo = Shared.frameCardData.value
+        Socket.action.sendData(resp)
     }
 
     override fun onViewClick(v: View?) {

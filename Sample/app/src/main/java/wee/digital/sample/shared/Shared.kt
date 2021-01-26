@@ -40,6 +40,8 @@ object Shared {
 
     val cardSelected = MutableLiveData<CardItem>()
 
+    val socketReqData = MutableLiveData<SocketReq>()
+
     val branchList by lazy {
         readAsset("branch_list.json").parse(Array<Selectable>::class)
     }

@@ -40,7 +40,8 @@ class Socket {
     }
 
     @SuppressLint("CheckResult")
-    fun sendData(data : SocketReq){
+    fun sendData(data : SocketReq?){
+        data ?: return
         Single.fromCallable {
             val str = Gson().toJson(data)
             webSocketControlMonitorV2?.sendData(str)

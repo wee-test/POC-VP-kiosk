@@ -5,10 +5,13 @@ import kotlinx.android.synthetic.main.ocr_confirm_content.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.IdentifyCardInfo
+import wee.digital.sample.repository.socket.Socket.Companion.action
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
+import java.net.Socket
 
 
 class OcrConfirmFragment : MainFragment() {
@@ -31,6 +34,7 @@ class OcrConfirmFragment : MainFragment() {
         when (v) {
             ocrConfirmActionNext -> {
                 if (!checkValidData()) return
+                sendSocket()
                 navigate(MainDirections.actionGlobalRegisterFragment())
             }
         }
@@ -125,6 +129,26 @@ class OcrConfirmFragment : MainFragment() {
         )
         Shared.ocrConfirmData.postValue(data)
         return true
+    }
+
+    private fun sendSocket() {
+        val resp = Shared.socketReqData.value
+        resp?.cmd = Configs.FORM_STEP_3
+        resp?.data?.fullName = ocrInputFullName.text.toString()
+        resp?.data?.idCardNumber = ocrInputNumber.text.toString()
+        resp?.data?.issuedDate = ocrInputIssueDate.text.toString()
+        resp?.data?.issuedPlace = ocrInputIssuePlace.text.toString()
+        resp?.data?.dateOfBirth = ocrInputBirth.text.toString()
+        resp?.data?.gender = when (ocrInputGender.text) {
+            "Nam" -> 1
+            "Nữ" -> 2
+            else -> 3
+        }
+        resp?.data?.hometown = ocrInputHometown.text.toString()
+        resp?.data?.permanentAddress = ocrInputAddress.text.toString()
+        resp?.data?.phoneNumber = ocrInputPhone.text.toString()
+        resp?.data?.email = ocrInputEmail.text.toString()
+        action.sendData(resp)
     }
 
 }
