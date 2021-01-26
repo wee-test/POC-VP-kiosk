@@ -4,6 +4,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.customer_exist.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainFragment
 
 class CustomerExistFragment : MainFragment() {
@@ -12,6 +13,11 @@ class CustomerExistFragment : MainFragment() {
 
     override fun onViewCreated() {
         addClickListener(customerAction)
+        bindData()
+    }
+
+    private fun bindData() {
+
     }
 
     override fun onLiveDataObserve() {

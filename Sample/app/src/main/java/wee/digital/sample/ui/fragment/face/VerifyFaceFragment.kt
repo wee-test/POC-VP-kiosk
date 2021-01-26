@@ -8,13 +8,11 @@ import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
-import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
-import wee.digital.sample.model.MessageData
+import wee.digital.sample.repository.model.MessageData
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
-import wee.digital.sample.ui.fragment.adv.AdvVM
 import wee.digital.sample.ui.main.MainFragment
 
 class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
@@ -28,6 +26,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
     override fun layoutResource(): Int = R.layout.verify_face
 
     override fun onViewCreated() {
+        isComplete = false
         mFaceDetectJob.observe(viewLifecycleOwner)
     }
 
@@ -51,6 +50,15 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             }
         }
         faceVM.statusInfoCustomer.observe {
+            if (it.responseCode.code != 0L) {
+                Shared.messageFail.postValue(
+                        MessageData("Dữ liệu khách hàng không tồn tại",
+                                "Bạn vui lòng đăng ký hoặc thử lại")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
+            }
+            Shared.customerInfoExist.postValue(it)
             navigate(MainDirections.actionGlobalCustomerExistFragment())
         }
     }

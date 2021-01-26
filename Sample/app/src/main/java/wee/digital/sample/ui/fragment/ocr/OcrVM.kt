@@ -10,16 +10,16 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import vplib.*
 import wee.digital.sample.app.lib
-import wee.digital.sample.model.ExtractCardReq
-import wee.digital.sample.model.VerifyIdCardReq
+import wee.digital.sample.repository.model.BackCardResp
+import wee.digital.sample.repository.model.ExtractCardReq
+import wee.digital.sample.repository.model.FrontCardResp
 import wee.digital.sample.ui.base.BaseViewModel
-import wee.digital.sample.widget.TextInputView
 
 class OcrVM : BaseViewModel() {
 
-    val statusExtractFront = MutableLiveData<Boolean>()
+    val statusExtractFront = MutableLiveData<FrontCardResp>()
 
-    val statusExtractBack = MutableLiveData<Boolean>()
+    val statusExtractBack = MutableLiveData<BackCardResp>()
 
     @SuppressLint("CheckResult")
     fun extractNidFront(image: ByteArray) {
@@ -35,16 +35,14 @@ class OcrVM : BaseViewModel() {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseExtractCMNDFront) {
-                        if (t.responseCode.code == 0L) {
-                            statusExtractFront.postValue(true)
-                        } else {
-                            statusExtractFront.postValue(false)
-                        }
+//                        statusExtractFront.postValue(t)
+                        print("")
                     }
 
 
                     override fun onError(e: Throwable) {
-                        statusExtractFront.postValue(false)
+                        print("")
+                        /*statusExtractFront.postValue(null)*/
                     }
 
                 })
@@ -64,16 +62,14 @@ class OcrVM : BaseViewModel() {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseExtractCMNDBack) {
-                        if (t.responseCode.code == 0L) {
-                            statusExtractBack.postValue(true)
-                        } else {
-                            statusExtractBack.postValue(false)
-                        }
+                        /*statusExtractBack.postValue(t)*/
+                        print("")
                     }
 
 
                     override fun onError(e: Throwable) {
-                        statusExtractBack.postValue(false)
+                        /*statusExtractBack.postValue(false)*/
+                        print("")
                     }
 
                 })
@@ -93,16 +89,12 @@ class OcrVM : BaseViewModel() {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseExtractCMND12Front) {
-                        if (t.responseCode.code == 0L) {
-                            statusExtractFront.postValue(true)
-                        } else {
-                            statusExtractFront.postValue(false)
-                        }
+                        /*statusExtractFront.postValue(true)*/
                     }
 
 
                     override fun onError(e: Throwable) {
-                        statusExtractFront.postValue(false)
+                        /*statusExtractFront.postValue(null)*/
                     }
 
                 })
@@ -122,16 +114,12 @@ class OcrVM : BaseViewModel() {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseExtractCMND12Back) {
-                        if (t.responseCode.code == 0L) {
-                            statusExtractBack.postValue(true)
-                        } else {
-                            statusExtractBack.postValue(false)
-                        }
+                        /*statusExtractBack.postValue(t)*/
                     }
 
 
                     override fun onError(e: Throwable) {
-                        statusExtractBack.postValue(false)
+                        /*statusExtractBack.postValue(null)*/
                     }
 
                 })
@@ -151,15 +139,11 @@ class OcrVM : BaseViewModel() {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseExtractCCCDFront) {
-                        if (t.responseCode.code == 0L) {
-                            statusExtractFront.postValue(true)
-                        } else {
-                            statusExtractFront.postValue(false)
-                        }
+                        /*statusExtractFront.postValue(t)*/
                     }
 
                     override fun onError(e: Throwable) {
-                        statusExtractFront.postValue(false)
+                        /*statusExtractFront.postValue(null)*/
                     }
 
                 })
@@ -179,16 +163,12 @@ class OcrVM : BaseViewModel() {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseExtractCCCDBack) {
-                        if (t.responseCode.code == 0L) {
-                            statusExtractBack.postValue(true)
-                        } else {
-                            statusExtractBack.postValue(false)
-                        }
+                        /*statusExtractBack.postValue(t)*/
                     }
 
 
                     override fun onError(e: Throwable) {
-                        statusExtractBack.postValue(false)
+                        /*statusExtractBack.postValue(null)*/
                     }
 
                 })

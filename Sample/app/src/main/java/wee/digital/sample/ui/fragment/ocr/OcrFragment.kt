@@ -18,8 +18,8 @@ import wee.digital.library.extension.toast
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
-import wee.digital.sample.model.MessageData
-import wee.digital.sample.model.PhotoCardInfo
+import wee.digital.sample.repository.model.MessageData
+import wee.digital.sample.repository.model.PhotoCardInfo
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.animOcrCaptured
@@ -53,12 +53,32 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     override fun onLiveDataObserve() {
         ocrVM.statusExtractFront.observe {
-            toast("status extract front")
-            navigate(MainDirections.actionGlobalRegisterFragment())
+            if(it.code != 0L){
+                Shared.messageFail.postValue(
+                        MessageData("Không thể đọc được dữ liệu", "không thể đọc giấy tờ, bạn vui lòng thử lại")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
+            }
+            Shared.ocrCardFront.postValue(it)
+            checkNavigate()
         }
         ocrVM.statusExtractBack.observe {
-            toast("status extract back")
-            navigate(MainDirections.actionGlobalRegisterFragment())
+            if(it.code != 0L){
+                Shared.messageFail.postValue(
+                        MessageData("Không thể đọc được dữ liệu",
+                                "không thể đọc giấy tờ, bạn vui lòng thử lại")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
+            }
+            checkNavigate()
+        }
+    }
+
+    private fun checkNavigate(){
+        if(Shared.ocrCardFront.value != null && Shared.ocrCardBack.value != null){
+            navigate(MainDirections.actionGlobalOcrConfirmFragment())
         }
     }
 
@@ -104,6 +124,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         WeeOCR.THRESH_CROP = 127.0
         WeeOCR.BLUR_MIN_VALUE = 10 //Default: 270
         WeeOCR.CAMERA_ZOOM = "18"
+        Shared.ocrCardFront.postValue(null)
+        Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity())
     }
 

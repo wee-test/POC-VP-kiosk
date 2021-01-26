@@ -1,13 +1,12 @@
 package wee.digital.sample.ui.fragment.card
 
 import android.view.View
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.card_receive_method.*
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
-import wee.digital.sample.model.HomeInfo
-import wee.digital.sample.model.MethodOfReceiving
+import wee.digital.sample.repository.model.HomeInfo
+import wee.digital.sample.repository.model.MethodOfReceiving
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.main.MainFragment
@@ -37,12 +36,12 @@ class CardReceiveFragment : MainFragment() {
     override fun onLiveDataObserve() {}
 
     private fun checkValidData(): Boolean {
-        if (!receiveRadioDirectly.isChecked || !receiveRadioHome.isChecked || !receiveRadioBranch.isChecked) {
+        if (!receiveRadioDirectly.isChecked && !receiveRadioHome.isChecked && !receiveRadioBranch.isChecked) {
             toast("Vui lòng chọn hình thức nhận thẻ")
             return false
         }
         if (receiveRadioDirectly.isChecked) {
-            val body = MethodOfReceiving(type = 0)
+            val body = MethodOfReceiving(type = 1)
             Shared.methodReceiveCard.postValue(body)
             return true
         }
@@ -85,7 +84,7 @@ class CardReceiveFragment : MainFragment() {
                 wards = receiveInputWard.text.toString(),
                 apartmentNumber = receiveInputAddress.text.toString()
         )
-        val data = MethodOfReceiving(type = 1, homeInfo = home)
+        val data = MethodOfReceiving(type = 2, homeInfo = home)
         Shared.methodReceiveCard.postValue(data)
         return true
     }

@@ -1,13 +1,10 @@
 package wee.digital.sample.ui.fragment.ocr
 
 import android.view.View
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.ocr_confirm_content.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
-import wee.digital.sample.model.IdentifyCardInfo
-import wee.digital.sample.model.PhotoCardInfo
-import wee.digital.sample.shared.Configs
+import wee.digital.sample.repository.model.IdentifyCardInfo
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.viewModel
@@ -96,7 +93,7 @@ class OcrConfirmFragment : MainFragment() {
         val gender = when (ocrInputGender.text) {
             "Nam" -> 1
             "Nữ" -> 2
-            else -> 0
+            else -> 3
         }
         val data = IdentifyCardInfo(
                 type = Shared.typeCardOcr.value ?: "",

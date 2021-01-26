@@ -33,9 +33,9 @@ class RatingFragment : MainFragment() {
     override fun onLiveDataObserve() {}
 
     override fun onViewClick(v: View?) {
-        when(v){
+        when (v) {
             frgRatingActionNext -> {
-                navigate(MainDirections.actionGlobalAdvFragment()){setLaunchSingleTop()}
+                navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
             }
         }
     }

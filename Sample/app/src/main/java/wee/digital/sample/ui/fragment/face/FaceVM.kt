@@ -10,11 +10,10 @@ import io.reactivex.schedulers.Schedulers
 import vplib.ResponseFaceIdentity
 import vplib.ResponseFaceVerify
 import vplib.ResponseGetCustomerInfo
-import wee.digital.library.extension.toast
 import wee.digital.sample.app.lib
-import wee.digital.sample.model.CustomerInfoReq
-import wee.digital.sample.model.IdentifyFaceReq
-import wee.digital.sample.model.VerifyFaceReq
+import wee.digital.sample.repository.model.CustomerInfoReq
+import wee.digital.sample.repository.model.IdentifyFaceReq
+import wee.digital.sample.repository.model.VerifyFaceReq
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
 
@@ -24,7 +23,7 @@ class FaceVM : BaseViewModel() {
 
     val statusVerify = EventLiveData<Boolean>()
 
-    val statusInfoCustomer = EventLiveData<Boolean>()
+    val statusInfoCustomer = EventLiveData<ResponseGetCustomerInfo>()
 
     fun verifyFace(face: ByteArray, customerId: String) {
         Single.fromCallable {
@@ -89,15 +88,11 @@ class FaceVM : BaseViewModel() {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: ResponseGetCustomerInfo) {
-                        if(t.responseCode.code == 0L){
-                            statusInfoCustomer.postValue(true)
-                        }else{
-                            statusInfoCustomer.postValue(false)
-                        }
+                        statusInfoCustomer.postValue(t)
                     }
 
                     override fun onError(e: Throwable) {
-                        statusInfoCustomer.postValue(false)
+                        statusInfoCustomer.postValue(null)
                     }
 
                 })

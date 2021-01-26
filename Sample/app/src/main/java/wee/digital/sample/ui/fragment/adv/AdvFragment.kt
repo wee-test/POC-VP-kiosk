@@ -1,5 +1,6 @@
 package wee.digital.sample.ui.fragment.adv
 
+import android.view.View
 import kotlinx.android.synthetic.main.adv.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -14,13 +15,17 @@ class AdvFragment : MainFragment() {
 
     override fun onViewCreated() {
         advVM.getListAdv()
-        advActionStart.setOnClickListener {
-            navigate(MainDirections.actionGlobalVerifyFaceFragment())
-        }
+        addClickListener(advActionStart)
     }
 
     override fun onLiveDataObserve() {
         advVM.advLiveData.observe { advSlide.listItem = it }
+    }
+
+    override fun onViewClick(v: View?) {
+        when(v){
+            advActionStart ->  navigate(MainDirections.actionGlobalVerifyFaceFragment())
+        }
     }
 
 }
