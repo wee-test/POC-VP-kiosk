@@ -52,7 +52,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
                 return@observe
             }
             sendSocket()
-            Shared.faceId.postValue(it.faceID)
+            Shared.faceId.postValue(it.validateResult.faceID)
             navigate(MainDirections.actionGlobalCardFragment())
         }
     }

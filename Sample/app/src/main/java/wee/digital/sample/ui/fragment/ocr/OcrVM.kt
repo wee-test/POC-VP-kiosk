@@ -36,7 +36,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractFront.postValue(FrontCardResp(code = -1))
                     }else{
                         val resp = FrontCardResp(
-                                code = 0,
+                                code = it.responseCode.code,
                                 image = it.frontInfo.image,
                                 address = it.frontInfo.address,
                                 number = it.frontInfo.number,
@@ -87,23 +87,28 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    val resp = FrontCardResp(
-                            image = it.frontInfo.image,
-                            address = it.frontInfo.address,
-                            number = it.frontInfo.address,
-                            fullName = it.frontInfo.fullName,
-                            birthday = it.frontInfo.birthday,
-                            homeTown = it.frontInfo.homeTown,
-                            expiryDate = it.frontInfo.expiryDate,
-                            nationality = it.frontInfo.nationality,
-                            sex = it.frontInfo.sex,
-                            correctAddress = it.frontInfo.correctAddress,
-                            correctHomeTown = it.frontInfo.correctHomeTown,
-                            correctName = it.frontInfo.correctName
-                    )
-                    statusExtractFront.postValue(resp)
+                    if(it.responseCode.code != 0L){
+                        statusExtractFront.postValue(FrontCardResp(code = -1))
+                    }else{
+                        val resp = FrontCardResp(
+                                code = it.responseCode.code,
+                                image = it.frontInfo.image,
+                                address = it.frontInfo.address,
+                                number = it.frontInfo.address,
+                                fullName = it.frontInfo.fullName,
+                                birthday = it.frontInfo.birthday,
+                                homeTown = it.frontInfo.homeTown,
+                                expiryDate = it.frontInfo.expiryDate,
+                                nationality = it.frontInfo.nationality,
+                                sex = it.frontInfo.sex,
+                                correctAddress = it.frontInfo.correctAddress,
+                                correctHomeTown = it.frontInfo.correctHomeTown,
+                                correctName = it.frontInfo.correctName
+                        )
+                        statusExtractFront.postValue(resp)
+                    }
                 }, {
-                    statusExtractFront.postValue(null)
+                    statusExtractFront.postValue(FrontCardResp(code = -1))
                 })
     }
 
@@ -117,13 +122,18 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    val resp = BackCardResp(
-                            image = it.backInfo.image,
-                            issueDate = it.backInfo.issueDate
-                    )
-                    statusExtractBack.postValue(resp)
+                    if(it.responseCode.code != 0L){
+                        statusExtractBack.postValue(BackCardResp(code = -1))
+                    }else{
+                        val resp = BackCardResp(
+                                code = it.responseCode.code,
+                                image = it.backInfo.image,
+                                issueDate = it.backInfo.issueDate
+                        )
+                        statusExtractBack.postValue(resp)
+                    }
                 }, {
-                    statusExtractBack.postValue(null)
+                    statusExtractBack.postValue(BackCardResp(code = -1))
                 })
     }
 
@@ -137,19 +147,24 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    val resp = FrontCardResp(
-                            image = it.frontInfo.image,
-                            address = it.frontInfo.address,
-                            fullName = it.frontInfo.fullName,
-                            number = it.frontInfo.number,
-                            birthday = it.frontInfo.birthday,
-                            expiryDate = it.frontInfo.expiryDate,
-                            sex = it.frontInfo.sex,
-                            homeTown = it.frontInfo.homeTown
-                    )
-                    statusExtractFront.postValue(resp)
+                    if(it.responseCode.code != 0L){
+                        statusExtractFront.postValue(FrontCardResp(code = -1))
+                    }else{
+                        val resp = FrontCardResp(
+                                code = it.responseCode.code,
+                                image = it.frontInfo.image,
+                                address = it.frontInfo.address,
+                                fullName = it.frontInfo.fullName,
+                                number = it.frontInfo.number,
+                                birthday = it.frontInfo.birthday,
+                                expiryDate = it.frontInfo.expiryDate,
+                                sex = it.frontInfo.sex,
+                                homeTown = it.frontInfo.homeTown
+                        )
+                        statusExtractFront.postValue(resp)
+                    }
                 }, {
-                    statusExtractFront.postValue(null)
+                    statusExtractFront.postValue(FrontCardResp(code = -1))
                 })
     }
 
@@ -163,13 +178,18 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    val resp = BackCardResp(
-                            image = it.backInfo.image,
-                            issueDate = it.backInfo.issueDate
-                    )
-                    statusExtractBack.postValue(resp)
+                    if(it.responseCode.code != 0L){
+                        statusExtractBack.postValue(BackCardResp(code = -1))
+                    }else{
+                        val resp = BackCardResp(
+                                code = it.responseCode.code,
+                                image = it.backInfo.image,
+                                issueDate = it.backInfo.issueDate
+                        )
+                        statusExtractBack.postValue(resp)
+                    }
                 }, {
-                    statusExtractBack.postValue(null)
+                    statusExtractBack.postValue(BackCardResp(code = -1))
                 })
     }
 

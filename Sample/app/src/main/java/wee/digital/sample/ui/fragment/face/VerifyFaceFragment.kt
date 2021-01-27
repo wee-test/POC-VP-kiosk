@@ -1,15 +1,13 @@
 package wee.digital.sample.ui.fragment.face
 
 import android.graphics.Bitmap
+import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.verify_face.*
 import wee.dev.weewebrtc.utils.extension.toObject
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
 import wee.digital.camera.toBytes
-import wee.digital.library.extension.gone
-import wee.digital.library.extension.load
-import wee.digital.library.extension.show
-import wee.digital.library.extension.str
+import wee.digital.library.extension.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.MessageData
@@ -45,11 +43,12 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
-            if (it.customerListString.isNullOrEmpty()) {
+            val arrCustomer = it.customerListString.parse(JsonArray::class) ?: JsonArray()
+            if (arrCustomer.isEmpty()) {
                 Shared.customerInfoVerify.postValue(it)
                 navigate(MainDirections.actionGlobalHomeFragment())
             } else {
-                faceVM.getInfoCustomer(it.customerListString.toObject().str("customerId").toString())
+                faceVM.getInfoCustomer(arrCustomer[0].toObject()?.get("customerId")?.asString ?: "")
             }
         }
         faceVM.statusInfoCustomer.observe {

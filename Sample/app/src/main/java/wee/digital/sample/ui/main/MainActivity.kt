@@ -39,9 +39,9 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         weeCaller.init()
-        /*weeCaller.initUserData("909090") { userData, mess ->
+       /* weeCaller.initUserData("909090") { userData, mess ->
             toast("${userData?.Name} - ${userData?.ReceiverID} - $mess")
-            weeCaller.sendCall("600a9a60575540fcbc32035f", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+            weeCaller.sendCall("15596967", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
                 override fun onCallLog(callLog: CallLog) {
                     toast(callLog.StatusCall)
                 }
