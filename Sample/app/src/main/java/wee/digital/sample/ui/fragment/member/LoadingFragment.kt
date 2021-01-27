@@ -69,14 +69,11 @@ class LoadingFragment : MainFragment() {
                 videoCallId = Shared.sessionVideo.value?.result?.videoCallID.toString(),
                 methodOfReceiving = receiver
         )
-        loadingZolo.text = Gson().toJson(body)
         registerVM.registerCard(body)
     }
 
     override fun onLiveDataObserve() {
         registerVM.statusRegisterCard.observe {
-            loadingZolo.text = "${loadingZolo.text}\n$it"
-            return@observe
             if(it == null || it?.responseCode?.code ?: -1 != 0L){
                 Shared.messageFail.postValue(
                         MessageData("Đăng ký mở thẻ thất bại",
@@ -85,6 +82,7 @@ class LoadingFragment : MainFragment() {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
+            Shared.customerInfoRegisterSuccess.postValue(it)
             sendSocket()
             navigate(MainDirections.actionGlobalRatingFragment())
         }

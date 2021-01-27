@@ -7,7 +7,7 @@ class RatingItem(
         var reactIcon: Int? = R.drawable.ic_rating_love,
         var reactContent: String? = string(R.string.great),
         var isSelected : Boolean = true,
-        var type : Int = 0
+        var type : Int = 1
 ) {
     companion object {
         val defaultList = arrayListOf(

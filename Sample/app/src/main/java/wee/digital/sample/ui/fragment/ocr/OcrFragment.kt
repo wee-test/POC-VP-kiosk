@@ -2,6 +2,7 @@ package wee.digital.sample.ui.fragment.ocr
 
 import android.graphics.Bitmap
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.ocr.*
 import wee.dev.weeocr.WeeOCR
@@ -134,9 +135,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     }
 
     private fun createOcr() {
+        WeeOCR.CAMERA_ID = 1
         WeeOCR.CAMERA_SATURATION_STEP = "0"
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 130
+        WeeOCR.BLUR_MIN_VALUE = 100
         WeeOCR.CAMERA_ZOOM = "18"
         WeeOCR.DELAY_SCAN = 10
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
@@ -177,13 +179,16 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         if (processing) return
         processing = true
         weeOcr?.cropObjectAlign(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
-            if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
-                processing = false
-                return@cropObjectAlign
+            activity?.runOnUiThread {
+                if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
+                    processing = false
+                    return@runOnUiThread
+                }
+                if (type != typeCard) resetAllFrame()
+                typeCard = type
+                Log.e("typeScan", "type : $type - typeScan : $typeCard")
+                bindFrame(cropped, typeFrontBack)
             }
-            if (type != typeCard) resetAllFrame()
-            typeCard = type
-            activity?.runOnUiThread { bindFrame(cropped, typeFrontBack) }
         }
     }
 
