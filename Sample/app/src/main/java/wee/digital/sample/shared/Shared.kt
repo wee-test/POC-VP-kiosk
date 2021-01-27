@@ -2,14 +2,12 @@ package wee.digital.sample.shared
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
-import vplib.ResponseFaceIdentity
-import vplib.ResponseGetCustomerInfo
-import vplib.ResponseLogin
-import vplib.ResponseVideoCallCreateSession
+import vplib.*
 import wee.digital.library.extension.parse
 import wee.digital.library.extension.readAsset
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
+import wee.digital.sample.repository.model.MethodOfReceiving
 import wee.digital.sample.ui.fragment.card.CardItem
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 
@@ -24,6 +22,8 @@ object Shared {
     val customerInfoVerify = MutableLiveData<ResponseFaceIdentity>()
 
     val customerInfoExist = MutableLiveData<ResponseGetCustomerInfo>()
+
+    val customerInfoRegisterSuccess = MutableLiveData<ResponseCustomerRegister>()
 
     val faceId = MutableLiveData<String>()
 

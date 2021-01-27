@@ -47,9 +47,10 @@ class RatingFragment : MainFragment() {
     override fun onViewClick(v: View?) {
         when (v) {
             frgRatingActionNext -> {
+                val customerRegister = Shared.customerInfoRegisterSuccess.value
                 val body = ServiceReviewReq(
-                        customerId = "",
-                        transId = "",
+                        customerId = customerRegister?.result?.customerID.toString(),
+                        transId = customerRegister?.result?.transID.toString(),
                         reviewType = ratingModel.type
                 )
                 ratingVM.serviceReview(body)
