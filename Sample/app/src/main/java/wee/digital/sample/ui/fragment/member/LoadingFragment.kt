@@ -1,5 +1,7 @@
 package wee.digital.sample.ui.fragment.member
 
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.loading.*
 import kotlinx.android.synthetic.main.view_header.*
 import wee.dev.weewebrtc.utils.extension.toObject
 import wee.digital.library.extension.gone
@@ -8,6 +10,8 @@ import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
+import wee.digital.sample.repository.socket.Socket
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.activityVM
 import wee.digital.sample.ui.fragment.register.RegisterVM
@@ -32,11 +36,11 @@ class LoadingFragment : MainFragment() {
                 hometown = card.hometown,
                 issuedDate = card.issuedDate,
                 issuedPlace = card.issuedPlace,
-                expiredDate = card.expiredDate,
+                expiredDate = "29/10/2025"/*card.expiredDate*/,
+                permanentAddress = card.permanentAddress,
                 nationality = "Việt Nam"
         )
         val infoCustomer = CustomerInfoRegister(
-                customerID = "",
                 customerType = 1,
                 identityCardInfo = cardInfo,
                 phoneNumber = card.phone,
@@ -45,31 +49,52 @@ class LoadingFragment : MainFragment() {
 
         val receiverMethod = Shared.methodReceiveCard.value ?: MethodOfReceiving()
         val infoHome = HomeInfo(
-                fullName = receiverMethod.homeInfo?.fullName ?: "",
-                phoneNumber = receiverMethod.homeInfo?.phoneNumber ?: "",
-                province = receiverMethod.homeInfo?.province ?: "",
+                fullName = /*receiverMethod.homeInfo?.fullName ?:*/ "Nguyen Van A",
+                phoneNumber = /*receiverMethod.homeInfo?.phoneNumber ?:*/ "0865971677",
+                province = /*receiverMethod.homeInfo?.province ?:*/ "Thanh Pho Ho Chi Minh",
                 district = "Quan Go Vap",
                 wards = "bach dang",
                 apartmentNumber = "b20"
         )
         val receiver = MethodOfReceiving(
                 type = 1,
-                branchCode = "12",
+                branchCode = "BR001",
                 homeInfo = infoHome
         )
         val body = CustomerRegisterReq(
+                faceId = Shared.faceId.value ?: "",
                 customerInfo = infoCustomer,
-                cardType = Shared.cardSelected.value?.type ?: "",
+                cardType = Shared.cardSelected.value?.type ?: "PLATINUM_CASHBACK",
                 ekycType = 1,
+                videoCallId = Shared.sessionVideo.value?.result?.videoCallID.toString(),
                 methodOfReceiving = receiver
         )
+        loadingZolo.text = Gson().toJson(body)
         registerVM.registerCard(body)
     }
 
     override fun onLiveDataObserve() {
         registerVM.statusRegisterCard.observe {
-            toast("$it")
+            loadingZolo.text = "${loadingZolo.text}\n$it"
+            return@observe
+            if(it == null || it?.responseCode?.code ?: -1 != 0L){
+                Shared.messageFail.postValue(
+                        MessageData("Đăng ký mở thẻ thất bại",
+                                "Có Clỗi xảy ra trong quá trình mở thẻ, bạn vui lòng thử lại")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
+            }
+            sendSocket()
+            navigate(MainDirections.actionGlobalRatingFragment())
         }
+    }
+
+    private fun sendSocket(){
+        val req = Shared.socketReqData.value
+        req?.cmd = Configs.FORM_STEP_7
+        req?.data?.isConfirmed = true
+        Socket.action.sendData(req)
     }
 
 }

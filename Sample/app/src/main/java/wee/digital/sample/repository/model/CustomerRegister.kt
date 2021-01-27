@@ -7,6 +7,9 @@ data class CustomerRegisterReq(
         @SerializedName("kioskID")
         var kioskId: String = Configs.KIOSK_ID,
 
+        @SerializedName("faceId")
+        var faceId: String = "",
+
         @SerializedName("customerInfo")
         var customerInfo: CustomerInfoRegister? = null,
 
@@ -16,13 +19,14 @@ data class CustomerRegisterReq(
         @SerializedName("ekycType")
         var ekycType: Int = 0,
 
+        @SerializedName("videoCallId")
+        var videoCallId: String = "",
+
         @SerializedName("methodOfReceiving")
         var methodOfReceiving: MethodOfReceiving? = null
 )
 
 data class CustomerInfoRegister(
-        @SerializedName("customerID")
-        var customerID: String = "",
 
         @SerializedName("customerType")
         var customerType: Int = 0,
@@ -44,7 +48,7 @@ data class IdentifyCardInfo(
         @SerializedName("photo")
         var photo: PhotoCardInfo? = null,
 
-        @SerializedName("number")
+        @SerializedName("idCardNumber")
         var number: String = "",
 
         @SerializedName("fullName")

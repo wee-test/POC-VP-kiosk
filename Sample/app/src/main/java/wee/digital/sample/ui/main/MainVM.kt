@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import vplib.ResponseLogin
+import vplib.ResponseVideoCallCreateSession
+import wee.digital.library.extension.put
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.LoginKioskReq
 import wee.digital.sample.shared.Configs
@@ -21,6 +24,8 @@ import wee.digital.sample.ui.fragment.dialog.web.WebArg
 open class MainVM : ViewModel() {
 
     val statusLoginKiosk = EventLiveData<ResponseLogin>()
+
+    val statusCreateNewSession = EventLiveData<ResponseVideoCallCreateSession>()
 
     val dialogTag = mutableListOf<String>()
 
@@ -45,6 +50,20 @@ open class MainVM : ViewModel() {
                     statusLoginKiosk.postValue(it)
                 }, {
                     statusLoginKiosk.postValue(null)
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    fun createNewSession(kioskId : String){
+        Single.fromCallable {
+            val body = JsonObject().put("kioskId", kioskId)
+            lib?.kioskService!!.videoCallCreateSession(Gson().toJson(body).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    statusCreateNewSession.postValue(it)
+                },{
+                    statusCreateNewSession.postValue(null)
                 })
     }
 

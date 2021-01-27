@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import vplib.ResponseFaceIdentity
 import vplib.ResponseGetCustomerInfo
 import vplib.ResponseLogin
+import vplib.ResponseVideoCallCreateSession
 import wee.digital.library.extension.parse
 import wee.digital.library.extension.readAsset
 import wee.digital.sample.R
@@ -18,9 +19,13 @@ object Shared {
 
     val kioskInfo = MutableLiveData<ResponseLogin>()
 
+    val sessionVideo = MutableLiveData<ResponseVideoCallCreateSession>()
+
     val customerInfoVerify = MutableLiveData<ResponseFaceIdentity>()
 
     val customerInfoExist = MutableLiveData<ResponseGetCustomerInfo>()
+
+    val faceId = MutableLiveData<String>()
 
     val faceCapture = MutableLiveData<Bitmap>()
 

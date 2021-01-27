@@ -26,8 +26,6 @@ class RegisterVM : BaseViewModel(){
 
     val statusRegisterCard = EventLiveData<ResponseCustomerRegister>()
 
-    val statusCustomerService = EventLiveData<ResponseCustomerServiceReview>()
-
     @SuppressLint("CheckResult")
     fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
         Single.fromCallable {
@@ -55,19 +53,6 @@ class RegisterVM : BaseViewModel(){
                     statusRegisterCard.postValue(it)
                 }, {
                     statusRegisterCard.postValue(null)
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun serviceReview(body : ServiceReviewReq){
-        Single.fromCallable {
-            lib?.kioskService!!.customerServiceReview(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    statusCustomerService.postValue(it)
-                },{
-                    statusCustomerService.postValue(null)
                 })
     }
 

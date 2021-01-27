@@ -136,8 +136,9 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun createOcr() {
         WeeOCR.CAMERA_SATURATION_STEP = "0"
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 270
+        WeeOCR.BLUR_MIN_VALUE = 130
         WeeOCR.CAMERA_ZOOM = "18"
+        WeeOCR.DELAY_SCAN = 10
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
@@ -175,10 +176,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun cropFrame(frame: ByteArray) {
         if (processing) return
         processing = true
-        weeOcr?.cropObjectAlign(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
+        weeOcr?.cropObject(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
             if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
                 processing = false
-                return@cropObjectAlign
+                return@cropObject
             }
             if (type != typeCard) resetAllFrame()
             typeCard = type

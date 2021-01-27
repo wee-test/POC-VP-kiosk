@@ -87,9 +87,23 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    print("")
-                },{
-                    print("")
+                    val resp = FrontCardResp(
+                            image = it.frontInfo.image,
+                            address = it.frontInfo.address,
+                            number = it.frontInfo.address,
+                            fullName = it.frontInfo.fullName,
+                            birthday = it.frontInfo.birthday,
+                            homeTown = it.frontInfo.homeTown,
+                            expiryDate = it.frontInfo.expiryDate,
+                            nationality = it.frontInfo.nationality,
+                            sex = it.frontInfo.sex,
+                            correctAddress = it.frontInfo.correctAddress,
+                            correctHomeTown = it.frontInfo.correctHomeTown,
+                            correctName = it.frontInfo.correctName
+                    )
+                    statusExtractFront.postValue(resp)
+                }, {
+                    statusExtractFront.postValue(null)
                 })
     }
 
@@ -103,9 +117,13 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    print("")
-                },{
-                    print("")
+                    val resp = BackCardResp(
+                            image = it.backInfo.image,
+                            issueDate = it.backInfo.issueDate
+                    )
+                    statusExtractBack.postValue(resp)
+                }, {
+                    statusExtractBack.postValue(null)
                 })
     }
 
@@ -119,9 +137,19 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    print("")
-                },{
-                    print("")
+                    val resp = FrontCardResp(
+                            image = it.frontInfo.image,
+                            address = it.frontInfo.address,
+                            fullName = it.frontInfo.fullName,
+                            number = it.frontInfo.number,
+                            birthday = it.frontInfo.birthday,
+                            expiryDate = it.frontInfo.expiryDate,
+                            sex = it.frontInfo.sex,
+                            homeTown = it.frontInfo.homeTown
+                    )
+                    statusExtractFront.postValue(resp)
+                }, {
+                    statusExtractFront.postValue(null)
                 })
     }
 
@@ -135,9 +163,13 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    print("")
-                },{
-                    print("")
+                    val resp = BackCardResp(
+                            image = it.backInfo.image,
+                            issueDate = it.backInfo.issueDate
+                    )
+                    statusExtractBack.postValue(resp)
+                }, {
+                    statusExtractBack.postValue(null)
                 })
     }
 
