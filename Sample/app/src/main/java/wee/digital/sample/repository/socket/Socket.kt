@@ -15,12 +15,12 @@ class Socket {
 
     var webSocketControlMonitorV2: MySocket? = null
 
-    fun connectWebSocketMonitor(webSocketMonitorListener: MySocket.WebSocketMonitorListener) {
+    fun connectWebSocketMonitor(kioskId: String, tellersId: String, webSocketMonitorListener: MySocket.WebSocketMonitorListener) {
         if (webSocketControlMonitorV2 == null) {
             Log.d("connectWebSocketMonitor", "Open Connect WebSocketMonitor")
             webSocketControlMonitorV2 = MySocket()
             webSocketControlMonitorV2?.addWebSocketListener(webSocketMonitorListener)
-            webSocketControlMonitorV2?.openConnect()
+            webSocketControlMonitorV2?.openConnect(kioskId, tellersId)
             return
         }
 
@@ -29,7 +29,7 @@ class Socket {
             override fun onClosed() {
                 Log.d("connectWebSocketMonitor", "closeWebSocketMonitor")
                 webSocketControlMonitorV2 = null
-                connectWebSocketMonitor(webSocketMonitorListener)
+                connectWebSocketMonitor(kioskId, tellersId, webSocketMonitorListener)
             }
 
         })
@@ -42,10 +42,8 @@ class Socket {
     @SuppressLint("CheckResult")
     fun sendData(data : SocketReq?){
         data ?: return
-        Single.fromCallable {
-            val str = Gson().toJson(data)
-            webSocketControlMonitorV2?.sendData(str)
-        }.observeOn(Schedulers.io())
+        val str = Gson().toJson(data)
+        webSocketControlMonitorV2?.sendData(str)
     }
 
 }

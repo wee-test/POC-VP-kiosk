@@ -7,7 +7,7 @@ object Configs {
 
     var KIOSK_ID = ""
 
-    const val SOCKET_URL = "http://weezi.biz:7080"
+    const val SOCKET_URL = "ws://weezi.biz:7080"
 
     const val TYPE_NID = "CMND"
 

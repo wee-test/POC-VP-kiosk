@@ -8,6 +8,7 @@ import wee.digital.library.extension.readAsset
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
 import wee.digital.sample.repository.model.MethodOfReceiving
+import wee.digital.sample.ui.base.EventLiveData
 import wee.digital.sample.ui.fragment.card.CardItem
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 
@@ -45,7 +46,16 @@ object Shared {
 
     val cardSelected = MutableLiveData<CardItem>()
 
+
+    /**
+     * giao dich vien
+     */
+
     val socketReqData = MutableLiveData<SocketReq>()
+
+    val socketStatusConnect = EventLiveData<ResponseTellerContact>()
+
+    val videoCall = EventLiveData<Boolean>()
 
     val branchList by lazy {
         readAsset("branch_list.json").parse(Array<Selectable>::class)

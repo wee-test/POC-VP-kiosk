@@ -49,9 +49,9 @@ class LoadingFragment : MainFragment() {
 
         val receiverMethod = Shared.methodReceiveCard.value ?: MethodOfReceiving()
         val infoHome = HomeInfo(
-                fullName = /*receiverMethod.homeInfo?.fullName ?:*/ "Nguyen Van A",
-                phoneNumber = /*receiverMethod.homeInfo?.phoneNumber ?:*/ "0865971677",
-                province = /*receiverMethod.homeInfo?.province ?:*/ "Thanh Pho Ho Chi Minh",
+                fullName = receiverMethod.homeInfo?.fullName ?: "",
+                phoneNumber = receiverMethod.homeInfo?.phoneNumber ?: "" ,
+                province = receiverMethod.homeInfo?.province ?: "",
                 district = "Quan Go Vap",
                 wards = "bach dang",
                 apartmentNumber = "b20"
@@ -79,19 +79,20 @@ class LoadingFragment : MainFragment() {
                         MessageData("Đăng ký mở thẻ thất bại",
                                 "Có Clỗi xảy ra trong quá trình mở thẻ, bạn vui lòng thử lại")
                 )
+                sendSocket(false)
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
             Shared.customerInfoRegisterSuccess.postValue(it)
-            sendSocket()
+            sendSocket(true)
             navigate(MainDirections.actionGlobalRatingFragment())
         }
     }
 
-    private fun sendSocket(){
+    private fun sendSocket(bool : Boolean){
         val req = Shared.socketReqData.value
         req?.cmd = Configs.FORM_STEP_7
-        req?.data?.isConfirmed = true
+        req?.data?.isConfirmed = bool
         Socket.action.sendData(req)
     }
 

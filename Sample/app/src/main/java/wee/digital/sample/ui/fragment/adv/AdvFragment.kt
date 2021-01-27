@@ -2,6 +2,8 @@ package wee.digital.sample.ui.fragment.adv
 
 import android.view.View
 import kotlinx.android.synthetic.main.adv.*
+import wee.digital.library.extension.post
+import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.SocketData
@@ -19,8 +21,10 @@ class AdvFragment : MainFragment() {
 
     override fun onViewCreated() {
         advVM.getListAdv()
+        Shared.socketStatusConnect.postValue(null)
         Shared.socketReqData.postValue(null)
         addClickListener(advActionStart)
+
     }
 
     override fun onLiveDataObserve() {
@@ -28,9 +32,8 @@ class AdvFragment : MainFragment() {
     }
 
     override fun onViewClick(v: View?) {
-        when(v){
-            advActionStart ->  {
-                Shared.socketReqData.postValue(SocketReq(cmd = Configs.FORM_STEP_1, data = SocketData()))
+        when (v) {
+            advActionStart -> {
                 navigate(MainDirections.actionGlobalVerifyFaceFragment())
             }
         }

@@ -11,6 +11,7 @@ import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import vplib.ResponseLogin
+import vplib.ResponseTellerContact
 import vplib.ResponseVideoCallCreateSession
 import wee.digital.library.extension.put
 import wee.digital.sample.app.lib
@@ -62,7 +63,7 @@ open class MainVM : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     statusCreateNewSession.postValue(it)
-                },{
+                }, {
                     statusCreateNewSession.postValue(null)
                 })
     }

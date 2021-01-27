@@ -8,6 +8,7 @@ import wee.digital.sample.R
 import wee.digital.sample.repository.model.ServiceReviewReq
 import wee.digital.sample.repository.model.SocketData
 import wee.digital.sample.repository.socket.Socket
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.fragment.face.FaceVM
@@ -62,6 +63,7 @@ class RatingFragment : MainFragment() {
 
     private fun sendSocket(){
         val req = Shared.socketReqData.value
+        req?.cmd = Configs.FORM_STEP_8
         req?.data?.reviewType = ratingModel.type
         Socket.action.sendData(req)
     }

@@ -12,8 +12,8 @@ import okhttp3.WebSocket
 import wee.dev.weewebrtc.WeeCaller
 import wee.dev.weewebrtc.`interface`.CallListener
 import wee.dev.weewebrtc.repository.model.CallLog
-import wee.digital.library.extension.post
-import wee.digital.library.extension.toast
+import wee.digital.library.extension.*
+import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.socket.MySocket
@@ -28,7 +28,9 @@ class MainActivity : BaseActivity() {
 
     private val mainVM: MainVM by lazy { activityVM(MainVM::class) }
 
-    private var disposable : Disposable? = null
+    private var tellerId: String = ""
+
+    private var disposable: Disposable? = null
 
     private val weeCaller = WeeCaller(this)
 
@@ -39,43 +41,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         weeCaller.init()
-       /* weeCaller.initUserData("909090") { userData, mess ->
-            toast("${userData?.Name} - ${userData?.ReceiverID} - $mess")
-            weeCaller.sendCall("15596967", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
-                override fun onCallLog(callLog: CallLog) {
-                    toast(callLog.StatusCall)
-                }
-
-                override fun onClosed() {
-                    toast("onClosed")
-                }
-
-                override fun onConnected() {
-                    toast("onConnected")
-                }
-
-                override fun onError(mess: String) {
-                    toast("onError: $mess")
-                }
-
-                override fun onMessage(mess: String) {
-                    toast("onMessage: $mess")
-                }
-
-                override fun onReceiverCall(id: String) {
-                    toast("onReceiverCall: $id")
-                }
-
-                override fun onSendCall(id: String) {
-                    toast("onSendCall: $id")
-                }
-
-                override fun onStart() {
-                    toast("onStart")
-                }
-
-            })
-        }*/
     }
 
     override fun navController(): NavController {
@@ -105,6 +70,56 @@ class MainActivity : BaseActivity() {
                 post(1000) { mainVM.createNewSession(Configs.KIOSK_ID) }
             }
         }
+        Shared.socketStatusConnect.observe {
+            if (it == null) {
+                Socket.action.closeWebSocketMonitor()
+            } else {
+                val tellersId = it.listTellersIDString?.toArray()?.get(0)?.asString ?: ""
+                connectSocket(Configs.KIOSK_ID, tellersId)
+            }
+        }
+        Shared.videoCall.observe {
+            if (!it) return@observe
+            weeCaller.initUserData("909090") { userData, mess ->
+                weeCaller.sendCall("46222641", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+                    override fun onCallLog(callLog: CallLog) {
+                        toast(callLog.StatusCall)
+                    }
+
+                    override fun onClosed() {
+                        runOnUiThread { remoteVideoCallView.gone() }
+                    }
+
+                    override fun onConnected() {
+                        runOnUiThread {
+                            remoteVideoCallView.show()
+                            navigate(MainDirections.actionGlobalDocumentFragment())
+                        }
+                    }
+
+                    override fun onError(mess: String) {
+                        runOnUiThread { remoteVideoCallView.gone() }
+                    }
+
+                    override fun onMessage(mess: String) {
+                        toast("onMessage: $mess")
+                    }
+
+                    override fun onReceiverCall(id: String) {
+                        toast("onReceiverCall: $id")
+                    }
+
+                    override fun onSendCall(id: String) {
+                        toast("onSendCall: $id")
+                    }
+
+                    override fun onStart() {
+                        toast("onStart")
+                    }
+
+                })
+            }
+        }
     }
 
     private fun onShowDialog(directions: NavDirections?) {
@@ -114,21 +129,20 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun connectSocket() {
-        Socket.action.connectWebSocketMonitor(object : MySocket.WebSocketMonitorListener {
+    private fun connectSocket(kioskId: String, tellersId: String) {
+        Socket.action.connectWebSocketMonitor(kioskId, tellersId, object : MySocket.WebSocketMonitorListener {
             override fun onMessage(message: String) {
 
             }
 
             override fun onError(webSocket: WebSocket, t: Throwable) {
-                post(500) { connectSocket() }
+                post(400) { connectSocket(Configs.KIOSK_ID, tellerId) }
             }
         })
     }
 
     override fun onResume() {
         super.onResume()
-        connectSocket()
         permissionRequest(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) {
             if (lib != null) return@permissionRequest
             lib = vplib.Vplib.newLib(1, "$externalCacheDir")
@@ -139,7 +153,6 @@ class MainActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
         disposable?.dispose()
-        Socket.action.closeWebSocketMonitor()
     }
 
 }

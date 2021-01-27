@@ -81,9 +81,9 @@ class MySocket : WebSocketListener(){
     fun sendData(data: String) {
         if (isOpen) {
             mWS!!.send(data)
-            Log.d("sendData", "Sent - $data")
+            Log.d(TAG, "Sent - $data")
         } else {
-            Log.d("sendData", "WebSocket not Open")
+            Log.d(TAG, "WebSocket not Open")
         }
     }
 
@@ -97,9 +97,9 @@ class MySocket : WebSocketListener(){
         }
     }
 
-    fun openConnect() {
+    fun openConnect(kioskId :String, tellersId :String) {
         if (isOpen) return
-        val url = "${Configs.SOCKET_URL}/kiosk/form-stream/connect"
+        val url = "${Configs.SOCKET_URL}/kiosk/form-stream/connect?kioskId=$kioskId&tellersId=$tellersId"
         mTimeIn = System.currentTimeMillis()
         Log.d("Open Connect", "Connecting")
         mURLConnecting = url
