@@ -7,8 +7,11 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.WebSocket
 import wee.dev.weewebrtc.WeeCaller
+import wee.dev.weewebrtc.`interface`.CallListener
+import wee.dev.weewebrtc.repository.model.CallLog
 import wee.digital.library.extension.post
 import wee.digital.library.extension.toast
 import wee.digital.sample.R
@@ -35,6 +38,44 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        weeCaller.init()
+        weeCaller.initUserData("909090") { userData, mess ->
+            //toast("${userData?.Name} - ${userData?.ReceiverID} - $mess")
+            weeCaller.sendCall("600a9a60575540fcbc32035f", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+                override fun onCallLog(callLog: CallLog) {
+                    toast(callLog.StatusCall)
+                }
+
+                override fun onClosed() {
+                    toast("onClosed")
+                }
+
+                override fun onConnected() {
+                    toast("onConnected")
+                }
+
+                override fun onError(mess: String) {
+                    toast("onError: $mess")
+                }
+
+                override fun onMessage(mess: String) {
+                    toast("onMessage: $mess")
+                }
+
+                override fun onReceiverCall(id: String) {
+                    toast("onReceiverCall: $id")
+                }
+
+                override fun onSendCall(id: String) {
+                    toast("onSendCall: $id")
+                }
+
+                override fun onStart() {
+                    toast("onStart")
+                }
+
+            })
+        }
     }
 
     override fun navController(): NavController {

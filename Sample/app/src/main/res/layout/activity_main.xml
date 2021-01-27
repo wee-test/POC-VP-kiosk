@@ -28,5 +28,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/remoteVideoCallView"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainVideoCallView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
