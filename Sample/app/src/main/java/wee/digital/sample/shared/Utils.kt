@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.util.DisplayMetrics
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
+import java.lang.Exception
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -90,6 +91,16 @@ object Utils {
                 .replaceFirst("TP", "")
                 .replaceFirst("THÀNH PHỐ", "")
                 .replace(" ", "")
+    }
+
+    fun getIssueDatePassport(exDate : String) : String{
+        return try{
+            val listEx = exDate.split("/")
+            val newYear = listEx.last().toInt() - 10
+            "${listEx[0]}/${listEx[1]}/$newYear"
+        }catch (e : Exception){
+            ""
+        }
     }
 
 }

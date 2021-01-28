@@ -174,7 +174,7 @@ dependencies {
     implementation deps.recognition
     implementation deps.detection
     implementation deps.automl
-    implementation deps.tesseract4android
+    //implementation deps.tesseract4android
     implementation deps.scanning
     implementation deps.ocr
     implementation deps.model

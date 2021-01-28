@@ -25,6 +25,7 @@ class CardFragment : MainFragment() {
         adapter1.bindHorizontal(cardRecyclerView1)
         adapter1.onItemClick = {model, _ ->
             sendSocket(model)
+            Shared.cardSelected.postValue(model)
             navigate(MainDirections.actionGlobalCardReceiveFragment())
         }
 
@@ -32,6 +33,7 @@ class CardFragment : MainFragment() {
         adapter2.bindHorizontal(cardRecyclerView2)
         adapter2.onItemClick = {model, _ ->
             sendSocket(model)
+            Shared.cardSelected.postValue(model)
             navigate(MainDirections.actionGlobalCardReceiveFragment())
         }
     }

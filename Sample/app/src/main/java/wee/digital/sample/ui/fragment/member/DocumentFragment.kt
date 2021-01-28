@@ -52,11 +52,9 @@ class DocumentFragment : MainFragment() {
                 navigate(MainDirections.actionGlobalOcrFragment())
             }
             documentRootPassport -> {
-                toast("dang dev")
-                return
                 sendSocket(Configs.TYPE_PASSPORT)
 
-                Shared.typeCardOcr.postValue(Configs.TYPE_CCCD)
+                Shared.typeCardOcr.postValue(Configs.TYPE_PASSPORT)
                 navigate(MainDirections.actionGlobalPassportFragment())
             }
         }

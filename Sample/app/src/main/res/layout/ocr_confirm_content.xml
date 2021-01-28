@@ -52,13 +52,24 @@
         app:layout_constraintTop_toBottomOf="@+id/ocrInputNumber" />
 
     <wee.digital.sample.widget.TextInputView
+        android:id="@+id/ocrInputExDate"
+        style="@style/InputView"
+        android:hint="Ngày hết hạn"
+        android:inputType="number"
+        android:src="@drawable/ic_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputIssueDate" />
+
+    <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputIssuePlace"
         style="@style/InputView"
         android:hint="Nơi cấp"
         android:src="@drawable/ic_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrInputIssueDate" />
+        app:layout_constraintTop_toBottomOf="@+id/ocrInputExDate" />
 
     <wee.digital.sample.widget.TextInputView
         android:id="@+id/ocrInputBirth"

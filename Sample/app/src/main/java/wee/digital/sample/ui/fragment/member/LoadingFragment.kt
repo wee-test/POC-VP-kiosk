@@ -6,6 +6,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_header.*
+import wee.digital.camera.toBytes
+import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.gone
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -32,9 +34,17 @@ class LoadingFragment : MainFragment() {
 
     private fun getDataRegister(){
         val card = Shared.ocrConfirmData.value ?: IdentifyCardInfo()
+        val frameCard = if(Shared.typeCardOcr.value == Configs.TYPE_PASSPORT){
+            PhotoCardInfo(
+                    cardFront = Shared.passportData.value?.frame.toBytes().toStringBase64(),
+                    cardBack = Shared.passportData.value?.frame.toBytes().toStringBase64()
+            )
+        }else{
+            Shared.frameCardData.value
+        }
         val cardInfo = IdentifyCardInfo(
                 type = Shared.typeCardOcr.value ?: "",
-                photo = Shared.frameCardData.value,
+                photo = frameCard,
                 number = card.number,
                 fullName = card.fullName,
                 dateOfBirth = card.dateOfBirth,
@@ -42,7 +52,7 @@ class LoadingFragment : MainFragment() {
                 hometown = card.hometown,
                 issuedDate = card.issuedDate,
                 issuedPlace = card.issuedPlace,
-                expiredDate = "29/10/2025"/*card.expiredDate*/,
+                expiredDate = card.expiredDate,
                 permanentAddress = card.permanentAddress,
                 nationality = "Việt Nam"
         )

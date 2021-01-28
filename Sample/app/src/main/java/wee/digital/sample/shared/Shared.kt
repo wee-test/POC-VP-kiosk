@@ -3,6 +3,7 @@ package wee.digital.sample.shared
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import vplib.*
+import wee.dev.weeocr.repository.model.PassportData
 import wee.digital.library.extension.parse
 import wee.digital.library.extension.readAsset
 import wee.digital.sample.repository.model.*
@@ -41,9 +42,9 @@ object Shared {
 
     val ocrCardBack = MutableLiveData<BackCardResp>()
 
+    val passportData = MutableLiveData<PassportData>()
+
     val cardSelected = MutableLiveData<CardItem>()
-
-
     /**
      * giao dich vien
      */

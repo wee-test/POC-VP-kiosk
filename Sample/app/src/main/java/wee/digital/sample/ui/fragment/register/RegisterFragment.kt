@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.register.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
 import wee.digital.camera.toBytes
+import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
@@ -85,7 +86,11 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerStatusFace.text = "Chờ chút nhé..."
             registerFrameBg.show()
             registerFrame.setImageBitmap(image)
-            registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
+            if(Shared.typeCardOcr.value == Configs.TYPE_PASSPORT){
+                registerVM.verifyIdCard(Shared.passportData.value?.frame.toBytes().toStringBase64(), image.toBytes())
+            }else{
+                registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
+            }
         }
     }
 

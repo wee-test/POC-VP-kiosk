@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.ocr_confirm_content.*
 import wee.digital.library.extension.addViewClickListener
+import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -71,17 +72,42 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
     }
 
     override fun onLiveDataObserve() {
-        Shared.ocrCardFront.observe {
-            ocrInputFullName.text = it.fullName
-            ocrInputNumber.text = it.number
-            ocrInputBirth.text = it.birthday.replace("-", "/")
-            ocrInputGender.text = it.sex
-            ocrInputHometown.text = it.homeTown
-            ocrInputAddress.text = it.address
+        if(Shared.typeCardOcr.value == Configs.TYPE_NID){
+            ocrInputExDate.gone()
+        }else{
+            ocrInputExDate.show()
         }
-        Shared.ocrCardBack.observe {
-            ocrInputIssueDate.text = it.issueDate.replace(" ", "/")
-            ocrInputIssuePlace.text = it.issueBy
+        if(Shared.typeCardOcr.value == Configs.TYPE_PASSPORT){
+            Shared.passportData.observe {
+                ocrInputFullName.text = "${it.firstName} ${it.lassName}"
+                ocrInputNumber.text = it.idNumber
+                ocrInputIssueDate.text = Utils.getIssueDatePassport(it.exDate)
+                ocrInputExDate.text = it.exDate
+                ocrInputIssuePlace.hint = "Loại"
+                ocrInputIssuePlace.text = it.type
+                ocrInputBirth.text = it.birthDay
+                ocrInputGender.text = when(it.gender){
+                    "M" -> "Nam"
+                    "F" -> "Nữ"
+                    else -> "Nam"
+                }
+                ocrInputHometown.hint = "Quốc gia"
+                ocrInputHometown.text = it.nationCode
+            }
+        }else{
+            Shared.ocrCardFront.observe {
+                ocrInputFullName.text = it.fullName
+                ocrInputNumber.text = it.number
+                ocrInputBirth.text = it.birthday.replace("-", "/")
+                ocrInputGender.text = it.sex
+                ocrInputExDate.text = it.expiryDate
+                ocrInputHometown.text = it.homeTown
+                ocrInputAddress.text = it.address
+            }
+            Shared.ocrCardBack.observe {
+                ocrInputIssueDate.text = it.issueDate.replace(" ", "/")
+                ocrInputIssuePlace.text = it.issueBy
+            }
         }
     }
 
@@ -101,6 +127,12 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         val listIssueData = issueDate.split("/")
         if (issueDate.isEmpty() || listIssueData.size < 3) {
             ocrInputIssueDate.error = "vui lòng nhập ngày cấp"
+            return false
+        }
+        val exDate = ocrInputExDate.text.toString()
+        val listExData = exDate.split("/")
+        if (exDate.isEmpty() || listExData.size < 3) {
+            ocrInputExDate.error = "vui lòng nhập ngày cấp"
             return false
         }
         val issuePlace = ocrInputIssuePlace.text.toString()
@@ -152,8 +184,8 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                 permanentAddress = address,
                 issuedDate = issueDate,
                 issuedPlace = issuePlace,
+                expiredDate = exDate,
                 phone = ocrInputPhone.text.toString(),
-                expiredDate = Shared.ocrCardFront.value?.expiryDate.toString(),
                 nationality = Shared.ocrCardFront.value?.nationality ?: "Việt Nam",
         )
         Shared.ocrConfirmData.postValue(data)
