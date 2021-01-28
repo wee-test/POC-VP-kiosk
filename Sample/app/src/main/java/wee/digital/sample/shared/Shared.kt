@@ -55,8 +55,6 @@ object Shared {
 
     val socketStatusConnect = EventLiveData<ResponseTellerContact>()
 
-    val videoCall = EventLiveData<Boolean>()
-
     val branchList by lazy {
         readAsset("branch_list.json").parse(Array<Selectable>::class)
     }

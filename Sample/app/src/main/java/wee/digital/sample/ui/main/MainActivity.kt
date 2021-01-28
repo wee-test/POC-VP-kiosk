@@ -76,49 +76,51 @@ class MainActivity : BaseActivity() {
             } else {
                 val tellersId = it.listTellersIDString?.toArray()?.get(0)?.asString ?: ""
                 connectSocket(Configs.KIOSK_ID, tellersId)
+                callVideo(tellersId)
             }
         }
-        Shared.videoCall.observe {
-            if (!it) return@observe
-            weeCaller.initUserData("909090") { userData, mess ->
-                weeCaller.sendCall("46222641", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
-                    override fun onCallLog(callLog: CallLog) {
-                        toast(callLog.StatusCall)
-                    }
+    }
 
-                    override fun onClosed() {
-                        runOnUiThread { remoteVideoCallView.gone() }
-                    }
+    private fun callVideo(tellersId : String){
+//        weeCaller.callHangUp()
+        weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
+            weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+                override fun onCallLog(callLog: CallLog) {
+                    toast(callLog.StatusCall)
+                }
 
-                    override fun onConnected() {
-                        runOnUiThread {
-                            remoteVideoCallView.show()
-                            navigate(MainDirections.actionGlobalDocumentFragment())
-                        }
-                    }
+                override fun onClosed() {
+                    runOnUiThread { remoteVideoCallView.gone() }
+                }
 
-                    override fun onError(mess: String) {
-                        runOnUiThread { remoteVideoCallView.gone() }
+                override fun onConnected() {
+                    runOnUiThread {
+                        remoteVideoCallView.show()
+                        navigate(MainDirections.actionGlobalDocumentFragment())
                     }
+                }
 
-                    override fun onMessage(mess: String) {
-                        toast("onMessage: $mess")
-                    }
+                override fun onError(mess: String) {
+                    runOnUiThread { remoteVideoCallView.gone() }
+                }
 
-                    override fun onReceiverCall(id: String) {
-                        toast("onReceiverCall: $id")
-                    }
+                override fun onMessage(mess: String) {
+                    toast("onMessage: $mess")
+                }
 
-                    override fun onSendCall(id: String) {
-                        toast("onSendCall: $id")
-                    }
+                override fun onReceiverCall(id: String) {
+                    toast("onReceiverCall: $id")
+                }
 
-                    override fun onStart() {
-                        toast("onStart")
-                    }
+                override fun onSendCall(id: String) {
+                    toast("onSendCall: $id")
+                }
 
-                })
-            }
+                override fun onStart() {
+                    toast("onStart")
+                }
+
+            })
         }
     }
 

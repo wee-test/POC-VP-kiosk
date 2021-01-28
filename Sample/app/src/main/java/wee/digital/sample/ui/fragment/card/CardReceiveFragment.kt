@@ -128,7 +128,7 @@ class CardReceiveFragment : MainFragment() {
                         id = "1",
                         code = "12",
                         name = "Ho Chi Minh",
-                        address = "B20 Bach Dang, Phuong 6, Quan Go vap, TPHCM"
+                        address = "B20 Bach Dang, Phuong 2, Quan Tan Binh, TPHCM"
                 )
                 req?.data?.homeInfo = null
                 req?.data?.branchInfo = branch
