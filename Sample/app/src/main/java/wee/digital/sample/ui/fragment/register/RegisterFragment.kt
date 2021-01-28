@@ -47,19 +47,21 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
                         "Đăng ký không thành công",
                         "dữ liệu giấy tờ và khuôn mặt của bạn không trùng khớp"
                 )
+                sendSocket(false)
                 Shared.messageFail.postValue(messFail)
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
-            sendSocket()
+            sendSocket(true)
             Shared.faceId.postValue(it.validateResult.faceID)
             navigate(MainDirections.actionGlobalCardFragment())
         }
     }
 
-    private fun sendSocket(){
+    private fun sendSocket(isMatch: Boolean) {
         val resp = Shared.socketReqData.value
         resp?.cmd = Configs.FORM_STEP_4
+        resp?.data?.idCardMatched = isMatch
         resp?.data?.faceImage = Base64.encodeToString(Shared.faceCapture.value.toBytes(), Base64.NO_WRAP)
         Socket.action.sendData(resp)
     }
