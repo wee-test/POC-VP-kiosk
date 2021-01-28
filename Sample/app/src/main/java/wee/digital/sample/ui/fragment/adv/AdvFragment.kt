@@ -23,6 +23,7 @@ class AdvFragment : MainFragment() {
         advVM.getListAdv()
         Shared.socketStatusConnect.postValue(null)
         Shared.socketReqData.postValue(null)
+        Shared.callVideo.postValue("")
         addClickListener(advActionStart)
 
     }

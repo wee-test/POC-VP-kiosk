@@ -3,6 +3,7 @@ package wee.digital.sample.ui.fragment.card
 import android.view.View
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.card_receive_method.*
+import wee.digital.library.extension.addViewClickListener
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -14,6 +15,7 @@ import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.widget.TextInputView
 
 class CardReceiveFragment : MainFragment() {
 
@@ -23,9 +25,35 @@ class CardReceiveFragment : MainFragment() {
 
     override fun onViewCreated() {
         addClickListener(cardReceiveActionNext)
-        receiveInputProvince.buildSelectable(mainVM, Shared.provinceList)
-        receiveInputDistrict.buildSelectable(mainVM, Shared.provinceList)
-        receiveInputWard.buildSelectable(mainVM, Shared.provinceList)
+        initPopup()
+    }
+
+    private fun initPopup(){
+        receiveInputProvince.showIconDrop()
+        receiveInputDistrict.showIconDrop()
+        receiveInputWard.showIconDrop()
+        receiveInputProvince.addViewClickListener{
+            receiveInputProvince.buildSelectable(mainVM, Shared.provinceList, object : TextInputView.TextInputListener{
+                override fun onChange() {
+                    receiveInputDistrict.text = ""
+                    receiveInputWard.text = ""
+                }
+            })
+        }
+        receiveInputDistrict.addViewClickListener{
+            val code = Utils.getProvinceFromName(receiveInputProvince.text)
+            val list = Utils.geListDistrictFromProvinceCode(code.CLASSIFICATIONVALUEID)
+            receiveInputDistrict.buildSelectable(mainVM, list, object : TextInputView.TextInputListener{
+                override fun onChange() {
+                    receiveInputWard.text = ""
+                }
+            })
+        }
+        receiveInputWard.addViewClickListener{
+            val code = Utils.getDistrictFromName(receiveInputDistrict.text)
+            val list = Utils.geListWardFromDistrictCode(code.CLASSIFICATIONVALUEID)
+            receiveInputWard.buildSelectable(mainVM, list)
+        }
     }
 
     override fun onViewClick(v: View?) {
@@ -108,9 +136,11 @@ class CardReceiveFragment : MainFragment() {
         req?.cmd = Configs.FORM_STEP_6
         when (typeReceiver) {
             1 -> {
+                req?.data?.methodOfReceivingType = 1
                 Socket.action.sendData(req)
             }
             2 -> {
+                req?.data?.methodOfReceivingType = 2
                 val home = HomeInfo(
                         fullName = receiveInputFullName.text.toString(),
                         phoneNumber = receiveInputPhone.text.toString(),
@@ -124,11 +154,12 @@ class CardReceiveFragment : MainFragment() {
                 Socket.action.sendData(req)
             }
             3 -> {
+                req?.data?.methodOfReceivingType = 3
                 val branch = BranchInfo(
                         id = "1",
                         code = "12",
-                        name = "Ho Chi Minh",
-                        address = "B20 Bach Dang, Phuong 2, Quan Tan Binh, TPHCM"
+                        name = receiveTextViewBranchName.text.toString(),
+                        address = cardReceiveAddress.title.toString()
                 )
                 req?.data?.homeInfo = null
                 req?.data?.branchInfo = branch

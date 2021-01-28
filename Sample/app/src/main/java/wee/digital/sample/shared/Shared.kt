@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import vplib.*
 import wee.digital.library.extension.parse
 import wee.digital.library.extension.readAsset
-import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
 import wee.digital.sample.repository.model.MethodOfReceiving
 import wee.digital.sample.ui.base.EventLiveData
@@ -13,8 +12,6 @@ import wee.digital.sample.ui.fragment.card.CardItem
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 
 object Shared {
-
-    val listAdv = listOf(R.mipmap.adv1, R.mipmap.adv2)
 
     val kioskInfo = MutableLiveData<ResponseLogin>()
 
@@ -55,16 +52,26 @@ object Shared {
 
     val socketStatusConnect = EventLiveData<ResponseTellerContact>()
 
-    val branchList by lazy {
-        readAsset("branch_list.json").parse(Array<Selectable>::class)
-    }
+    val callVideo = EventLiveData<String>()
+
+    /**
+     * list json
+     */
 
     val provinceList by lazy {
-        readAsset("province_list.json").parse(Array<Selectable>::class)
+        readAsset("json/province.json").parse(Array<Selectable>::class)
+    }
+
+    val districtList by lazy {
+        readAsset("json/district.json").parse(Array<Selectable>::class)
+    }
+
+    val wardList by lazy {
+        readAsset("json/ward.json").parse(Array<Selectable>::class)
     }
 
     val genderList by lazy {
-        readAsset("gender.json").parse(Array<Selectable>::class)
+        readAsset("json/gender.json").parse(Array<Selectable>::class)
     }
 
 }

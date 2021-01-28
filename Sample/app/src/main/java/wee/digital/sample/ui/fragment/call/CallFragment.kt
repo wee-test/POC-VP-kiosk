@@ -1,7 +1,9 @@
 package wee.digital.sample.ui.fragment.call
 
 import android.view.View
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.call.*
+import wee.digital.library.extension.post
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -20,7 +22,7 @@ class CallFragment : MainFragment() {
     override fun layoutResource(): Int = R.layout.call
 
     override fun onViewCreated() {
-        callVM.getContacts()
+        post(700) { callVM.getContacts() }
         addClickListener(callActionCancel)
     }
 
@@ -42,7 +44,8 @@ class CallFragment : MainFragment() {
     override fun onViewClick(v: View?) {
         when (v) {
             callActionCancel -> {
-                navigate(MainDirections.actionGlobalCallFragment())
+                Shared.callVideo.postValue("")
+                navigate(MainDirections.actionGlobalAdvFragment())
             }
         }
     }

@@ -22,7 +22,7 @@ abstract class ViewClickListener(val duration: Long = 100) : View.OnClickListene
 
 }
 
-fun View.addViewClickListener(duration: Long = 500L, block: (View?) -> Unit) {
+fun View.addViewClickListener(duration: Long = 700L, block: (View?) -> Unit) {
     setOnClickListener(object : ViewClickListener(duration) {
         override fun onClicks(v: View?) {
             block(v)

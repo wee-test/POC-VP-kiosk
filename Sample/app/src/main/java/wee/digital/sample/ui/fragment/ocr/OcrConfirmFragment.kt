@@ -2,6 +2,8 @@ package wee.digital.sample.ui.fragment.ocr
 
 import android.view.View
 import kotlinx.android.synthetic.main.ocr_confirm_content.*
+import wee.digital.library.extension.addViewClickListener
+import wee.digital.library.extension.show
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.IdentifyCardInfo
@@ -23,11 +25,17 @@ class OcrConfirmFragment : MainFragment() {
     }
 
     override fun onViewCreated() {
+        addClickListener(ocrConfirmActionNext)
+        ocrInputIssuePlace.showIconDrop()
+        ocrInputGender.showIconDrop()
+        ocrInputIssuePlace.addViewClickListener{
+            ocrInputIssuePlace.buildSelectable(mainVM, Shared.provinceList)
+        }
+        ocrInputGender.addViewClickListener{
+            ocrInputGender.buildSelectable(mainVM, Shared.genderList)
+        }
         ocrInputBirth.addDateWatcher()
         ocrInputIssueDate.addDateWatcher()
-        ocrInputIssuePlace.buildSelectable(mainVM, Shared.provinceList)
-        ocrInputGender.buildSelectable(mainVM, Shared.genderList)
-        addClickListener(ocrConfirmActionNext)
     }
 
     override fun onViewClick(v: View?) {
@@ -76,7 +84,7 @@ class OcrConfirmFragment : MainFragment() {
         }
         val issuePlace = ocrInputIssuePlace.text.toString()
         if (issuePlace.isEmpty()) {
-            ocrInputIssuePlace.error = "nơi cấp phải từ 10 đến 50 ký tự"
+            ocrInputIssuePlace.error = "Vui lòng nhập nguyên quán nơi cấp"
             return false
         }
         val birth = ocrInputBirth.text.toString()
@@ -90,13 +98,13 @@ class OcrConfirmFragment : MainFragment() {
             return false
         }
         val hometown = ocrInputHometown.text.toString()
-        if (hometown.isEmpty() || hometown.length < 10) {
-            ocrInputHometown.error = "Nguyên quán phải từ 10 đến 50 ký tự"
+        if (hometown.isEmpty()) {
+            ocrInputHometown.error = "Vui lòng nhập nguyên quán"
             return false
         }
         val address = ocrInputAddress.text.toString()
         if (address.isEmpty() || address.length < 10) {
-            ocrInputAddress.error = "Địa chỉ thường chú phải từ 10 đến 50 ký tự"
+            ocrInputAddress.error = "Vui lòng nhập địa chỉ thường chú"
             return false
         }
         if (Utils.checkPhoneInvalid(ocrInputPhone.text.toString())) {
@@ -124,8 +132,8 @@ class OcrConfirmFragment : MainFragment() {
                 issuedDate = issueDate,
                 issuedPlace = issuePlace,
                 phone = ocrInputPhone.text.toString(),
-                expiredDate = "",
-                nationality = "",
+                expiredDate = Shared.ocrCardFront.value?.expiryDate.toString(),
+                nationality = Shared.ocrCardFront.value?.nationality ?: "Việt Nam",
         )
         Shared.ocrConfirmData.postValue(data)
         return true

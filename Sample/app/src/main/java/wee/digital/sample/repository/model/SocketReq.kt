@@ -26,5 +26,6 @@ data class SocketData(
         var isConfirmed: Boolean = false,
         var reviewType: Int = 0,
         var phoneNumber : String = "",
-        var email : String = ""
+        var email : String = "",
+        var methodOfReceivingType : Int = 1
 )

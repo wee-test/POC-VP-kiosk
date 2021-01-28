@@ -298,15 +298,19 @@ class TextInputView : AppCustomView,
         inputEditText.addDateWatcher()
     }
 
+    fun showIconDrop(){
+        inputImageViewDropdown.setImageResource(R.drawable.drw_text_input_dropdown)
+    }
+
     var selectable: Selectable? = null
 
     fun <T : Selectable> buildSelectable(
             mainVM: MainVM,
             data: List<T>?,
+            listener : TextInputListener? = null,
             adaptive: SelectableAdapter<T>.() -> Unit = {}
     ) {
-
-        data ?: return
+        if(data.isNullOrEmpty()) return
 
         if (!data.isNullOrEmpty()){
             inputImageViewDropdown.setImageResource(R.drawable.drw_text_input_dropdown)
@@ -320,7 +324,8 @@ class TextInputView : AppCustomView,
                 it.onDismiss = {
                     when (this) {
                         is TextInputView -> {
-                            text = selectable?.text
+                            if(text != selectable?.NAME) listener?.onChange()
+                            text = selectable?.NAME
                         }
                     }
                 }
@@ -333,12 +338,14 @@ class TextInputView : AppCustomView,
             mainVM.selectableTitle.value = hint
             mainVM.dialogLiveData.value = Main.selectable
         }
-        addViewClickListener {
             when (this) {
                 is TextInputView -> onFocusChange(null, true)
             }
             showDialog()
-        }
+    }
+
+    interface TextInputListener{
+        fun onChange()
     }
 
 }

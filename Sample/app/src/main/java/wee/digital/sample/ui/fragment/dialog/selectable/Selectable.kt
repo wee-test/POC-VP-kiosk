@@ -1,22 +1,19 @@
 package wee.digital.sample.ui.fragment.dialog.selectable
 
-import wee.digital.library.extension.string
-
 open class Selectable {
-    var id: Int
-    var text: String
-    var icon: Int?
-
-    constructor(id: Int, text: String, icon: Int? = null) {
-        this.id = id
-        this.text = text
-        this.icon = icon
-    }
-
-    constructor(id: Int, text: Int, icon: Int? = null) : this(id, string(text), icon)
+    val CLASSIFICATIONVALUEID: String = ""
+    val PARENTCLASSIFICATIONVALUEID: String = ""
+    val CLASSIFICATIONCODE: String = ""
+    val NAME: String = ""
+    val NAME_EN: String = ""
+    val PARENTCLASSIFICATIONCODE: String = ""
+    val UPPER_1: String = ""
+    val UPPER_2: String = ""
+    val SCHEMECODE: String = ""
+    val icon : Int = 0
 
     override fun toString(): String {
-        return text
+        return NAME
     }
 }
 

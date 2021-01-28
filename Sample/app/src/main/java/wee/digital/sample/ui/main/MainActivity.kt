@@ -67,7 +67,9 @@ class MainActivity : BaseActivity() {
             if (it?.responseCode?.code == 0L) {
                 Shared.sessionVideo.postValue(it)
             } else {
-                post(1000) { mainVM.createNewSession(Configs.KIOSK_ID) }
+                disposable = Observable.timer(3, TimeUnit.SECONDS).subscribe {
+                    mainVM.createNewSession(Configs.KIOSK_ID)
+                }
             }
         }
         Shared.socketStatusConnect.observe {
@@ -76,13 +78,19 @@ class MainActivity : BaseActivity() {
             } else {
                 val tellersId = it.listTellersIDString?.toArray()?.get(0)?.asString ?: ""
                 connectSocket(Configs.KIOSK_ID, tellersId)
-                callVideo(tellersId)
+                Shared.callVideo.postValue(tellersId)
+            }
+        }
+        Shared.callVideo.observe {
+            if (it.isNullOrEmpty()) {
+                weeCaller.callHangUp()
+            } else {
+                callVideo(it)
             }
         }
     }
 
     private fun callVideo(tellersId : String){
-//        weeCaller.callHangUp()
         weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
             weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
                 override fun onCallLog(callLog: CallLog) {
