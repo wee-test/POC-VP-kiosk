@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/passportRoot"
+    android:background="@color/gray_bg"
+    style="@style/MatchParent">
+
+    <wee.digital.sample.widget.HeaderView
+        android:id="@+id/passportToolbar"
+        android:src="@drawable/ic_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/passportTitle"
+        style="@style/TextView.Title"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:text="Quét Hộ Chiếu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportToolbar" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/passportLabelSideFont"
+        style="@style/TextView.Small"
+        android:text="Mặt trước"
+        android:textColor="@color/black20"
+        app:layout_constraintBottom_toBottomOf="@+id/passportFrameFront"
+        app:layout_constraintEnd_toEndOf="@+id/passportFrameFront"
+        app:layout_constraintStart_toStartOf="@+id/passportFrameFront"
+        app:layout_constraintTop_toTopOf="@+id/passportFrameFront" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/passportFrameFront"
+        style="@style/OCR.ImageCapture"
+        android:layout_marginTop="@dimen/margin3"
+        android:padding="@dimen/_3sdp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportTitle" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/passportResetFont"
+        style="@style/OCR.ImageTrash"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/passportFrameFront"
+        app:layout_constraintTop_toTopOf="@+id/passportFrameFront"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrLabelSideBack"
+        style="@style/TextView.Small"
+        android:text="Mặt sau"
+        android:textColor="@color/black20"
+        app:layout_constraintBottom_toBottomOf="@+id/passportFrameFront"
+        app:layout_constraintEnd_toEndOf="@+id/passportFrameFront"
+        app:layout_constraintStart_toStartOf="@+id/passportFrameFront"
+        app:layout_constraintTop_toTopOf="@+id/passportFrameFront" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/passportRootCamera"
+        style="@style/OCR.Camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportFrameFront">
+
+        <wee.dev.weeocr.camera.PreviewFullScreen
+            android:id="@+id/passportPreview"
+            style="@style/MatchParent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <wee.dev.weeocr.camera.GraphicOverlay
+                android:id="@+id/passportGraphicOverlay"
+                style="@style/MatchParent" />
+
+            <View
+                android:id="@+id/passportBgCamera"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@mipmap/bg_camera" />
+
+        </wee.dev.weeocr.camera.PreviewFullScreen>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/passportFrameAnim"
+        style="@style/OCR.ImageResult"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/passportRootCamera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/passportRootCamera" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ocrLabelNote"
+        style="@style/TextView.Medium"
+        android:layout_marginHorizontal="@dimen/margin3"
+        android:layout_marginTop="@dimen/margin2"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:gravity="center"
+        android:text="Bạn vui lòng đưa passport\nvào hộp tối bên dưới"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportRootCamera" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

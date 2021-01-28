@@ -1,5 +1,7 @@
 package wee.digital.sample.shared
 
+import java.text.SimpleDateFormat
+
 
 object Configs {
 
@@ -14,6 +16,16 @@ object Configs {
     const val TYPE_NID_12 = "CMND12"
 
     const val TYPE_CCCD = "CCCD"
+
+    const val TYPE_PASSPORT = "PASSPORT"
+
+    const val DEFAULT_ARG_KEY: String = "default"
+
+    val DEFAULT_DATE_FMT = SimpleDateFormat("dd/MM/yyyy")
+
+    val DEFAULT_DATE_TIME_FMT = SimpleDateFormat("HH:mm dd/MM/yyyy")
+
+    val API_DATE_FMT = SimpleDateFormat("yyyy-MM-dd")
 
     const val FORM_STEP_1 = "FORM-STEP-1"
     const val FORM_STEP_2 = "FORM-STEP-2"

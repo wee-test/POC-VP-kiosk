@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import wee.digital.sample.shared.Configs.DEFAULT_ARG_KEY
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -105,4 +107,19 @@ open class EventLiveData<T> : MediatorLiveData<T>() {
         }
     }
 
+}
+
+fun <T> Fragment.navResult(key: String = DEFAULT_ARG_KEY): T? {
+    return findNavController().currentBackStackEntry?.savedStateHandle?.get<T>(key)
+}
+
+fun <T> Fragment.navResultLiveData(key: String = DEFAULT_ARG_KEY): MutableLiveData<T>? {
+    return findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<T>(key)
+}
+
+fun <T> Fragment.setNavResult(key: String?, result: T) {
+    findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            key
+                    ?: DEFAULT_ARG_KEY, result
+    )
 }

@@ -7,7 +7,9 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
@@ -23,16 +25,21 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.widget_text_input.view.*
 import wee.digital.library.extension.*
 import wee.digital.library.widget.AppCustomView
+import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.ui.fragment.dialog.date.DateArg
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
 import wee.digital.sample.ui.main.Main
+import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.ui.main.MainVM
 
 class TextInputView : AppCustomView,
         SimpleMotionTransitionListener,
         OnFocusChangeListener,
         SimpleTextWatcher {
+
+    private var listener : TextInputListener? = null
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
@@ -214,6 +221,7 @@ class TextInputView : AppCustomView,
      * [SimpleTextWatcher] implements
      */
     override fun afterTextChanged(s: Editable?) {
+        listener?.onChange()
         when {
             isSilent -> {
                 return
@@ -298,6 +306,19 @@ class TextInputView : AppCustomView,
         inputEditText.addDateWatcher()
     }
 
+    fun buildDatePicker(fragment: MainFragment, block: DateArg.() -> Unit = {}) {
+        val arg = DateArg(
+                key = this.id.toString(),
+                selectedDate = this.text,
+                onDateSelected = {
+                    text = it
+                }
+        )
+        arg.block()
+        fragment.mainVM.dateLiveData.value = arg
+        fragment.navigate(MainDirections.actionGlobalDateFragment())
+    }
+
     fun showIconDrop(){
         inputImageViewDropdown.setImageResource(R.drawable.drw_text_input_dropdown)
     }
@@ -344,8 +365,13 @@ class TextInputView : AppCustomView,
             showDialog()
     }
 
+    fun initListener(l : TextInputListener?){
+        listener = l
+    }
+
     interface TextInputListener{
-        fun onChange()
+        fun onChange() {}
+        fun textChange() {}
     }
 
 }

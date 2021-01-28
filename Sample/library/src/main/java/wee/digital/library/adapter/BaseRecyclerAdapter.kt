@@ -153,6 +153,8 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
 
     open var lastBindIndex: Int = -1
 
+    open val lastPosition: Int get() = if (listItem.isEmpty()) -1 else (listItem.size - 1)
+
     open val dataIsEmpty: Boolean get() = listItem.isEmpty()
 
     open val dataNotEmpty: Boolean get() = listItem.isNotEmpty()

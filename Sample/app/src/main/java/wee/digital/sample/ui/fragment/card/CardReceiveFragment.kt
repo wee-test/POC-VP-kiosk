@@ -1,7 +1,8 @@
 package wee.digital.sample.ui.fragment.card
 
 import android.view.View
-import com.google.gson.annotations.SerializedName
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.card_receive_method.*
 import wee.digital.library.extension.addViewClickListener
 import wee.digital.library.extension.toast
@@ -16,8 +17,11 @@ import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.widget.TextInputView
+import java.util.concurrent.TimeUnit
 
-class CardReceiveFragment : MainFragment() {
+class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
+
+    private var disposableSendSocket: Disposable? = null
 
     override fun layoutResource(): Int {
         return R.layout.card_receive_method
@@ -25,15 +29,16 @@ class CardReceiveFragment : MainFragment() {
 
     override fun onViewCreated() {
         addClickListener(cardReceiveActionNext)
-        initPopup()
+        initUI()
+        receiveRadioDirectly.isChecked
     }
 
-    private fun initPopup(){
+    private fun initUI() {
         receiveInputProvince.showIconDrop()
         receiveInputDistrict.showIconDrop()
         receiveInputWard.showIconDrop()
-        receiveInputProvince.addViewClickListener{
-            receiveInputProvince.buildSelectable(mainVM, Shared.provinceList, object : TextInputView.TextInputListener{
+        receiveInputProvince.addViewClickListener {
+            receiveInputProvince.buildSelectable(mainVM, Shared.provinceList, object : TextInputView.TextInputListener {
                 override fun onChange() {
                     receiveInputDistrict.text = ""
                     receiveInputWard.text = ""
@@ -43,17 +48,24 @@ class CardReceiveFragment : MainFragment() {
         receiveInputDistrict.addViewClickListener{
             val code = Utils.getProvinceFromName(receiveInputProvince.text)
             val list = Utils.geListDistrictFromProvinceCode(code.CLASSIFICATIONVALUEID)
-            receiveInputDistrict.buildSelectable(mainVM, list, object : TextInputView.TextInputListener{
+            receiveInputDistrict.buildSelectable(mainVM, list, object : TextInputView.TextInputListener {
                 override fun onChange() {
                     receiveInputWard.text = ""
                 }
             })
         }
-        receiveInputWard.addViewClickListener{
+        receiveInputWard.addViewClickListener {
             val code = Utils.getDistrictFromName(receiveInputDistrict.text)
             val list = Utils.geListWardFromDistrictCode(code.CLASSIFICATIONVALUEID)
             receiveInputWard.buildSelectable(mainVM, list)
         }
+
+        receiveInputFullName.initListener(this)
+        receiveInputPhone.initListener(this)
+        receiveInputProvince.initListener(this)
+        receiveInputDistrict.initListener(this)
+        receiveInputWard.initListener(this)
+        receiveInputAddress.initListener(this)
     }
 
     override fun onViewClick(v: View?) {
@@ -166,6 +178,12 @@ class CardReceiveFragment : MainFragment() {
                 Socket.action.sendData(req)
             }
         }
+    }
+
+    override fun onChange() {
+        disposableSendSocket?.dispose()
+        disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
+                .subscribe { sendSocket(2) }
     }
 
 }

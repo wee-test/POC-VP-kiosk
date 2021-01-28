@@ -19,10 +19,13 @@ import wee.digital.sample.repository.model.LoginKioskReq
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.ui.base.EventLiveData
 import wee.digital.sample.ui.fragment.dialog.alert.Alert
+import wee.digital.sample.ui.fragment.dialog.date.DateArg
 import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
 import wee.digital.sample.ui.fragment.dialog.web.WebArg
 
 open class MainVM : ViewModel() {
+
+    val dateLiveData = MutableLiveData<DateArg>()
 
     val statusLoginKiosk = EventLiveData<ResponseLogin>()
 

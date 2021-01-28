@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.document.*
 import kotlinx.android.synthetic.main.document_select.*
+import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.SocketData
@@ -49,6 +50,14 @@ class DocumentFragment : MainFragment() {
 
                 Shared.typeCardOcr.postValue(Configs.TYPE_CCCD)
                 navigate(MainDirections.actionGlobalOcrFragment())
+            }
+            documentRootPassport -> {
+                toast("dang dev")
+                return
+                sendSocket(Configs.TYPE_PASSPORT)
+
+                Shared.typeCardOcr.postValue(Configs.TYPE_CCCD)
+                navigate(MainDirections.actionGlobalPassportFragment())
             }
         }
     }
