@@ -12,6 +12,7 @@ import okhttp3.WebSocket
 import wee.dev.weewebrtc.WeeCaller
 import wee.dev.weewebrtc.`interface`.CallListener
 import wee.dev.weewebrtc.repository.model.CallLog
+import wee.dev.weewebrtc.repository.model.RecordData
 import wee.digital.library.extension.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
@@ -118,6 +119,10 @@ class MainActivity : BaseActivity() {
 
                 override fun onReceiverCall(id: String) {
                     toast("onReceiverCall: $id")
+                }
+
+                override fun onRecordedFile(recordData: RecordData) {
+                    toast("onRecordedFile")
                 }
 
                 override fun onSendCall(id: String) {

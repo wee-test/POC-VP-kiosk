@@ -132,7 +132,7 @@
                     android:id="@+id/receiveTextViewBranchName"
                     style="@style/TextView.Bold"
                     android:textSize="@dimen/_12ssp"
-                    android:text="Chi nhánh Tân Bình"
+                    android:text="VPBank Láng Hạ"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -143,7 +143,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/ic_phone_gray"
                     android:tint="@color/black40"
-                    android:title="046 274 8478"
+                    android:title="0243 928 8869"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveTextViewBranchName" />
 
@@ -153,7 +153,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/ic_location_gray"
                     android:tint="@color/black40"
-                    android:title="B20 Bạch Đằng, Phường 2, Tân Bình, \nHồ Chí Minh"
+                    android:title="Tòa nhà VP Bank, 89 Láng Hạ, P. Đống Đa, Hà Nội"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/receiveTextViewBranchPhone" />
 

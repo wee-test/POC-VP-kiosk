@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialogView"
+    style="@style/MatchParent"
+    android:paddingHorizontal="60px"
+    android:paddingBottom="60px"
+    android:background="@color/colorTransparent"
+    tools:background="@color/colorDarkGray">
+
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dateRootHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/colorWhite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/headerViewTitle"
+                style="@style/TextView.Medium"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/svn_gilroy_semi_bold"
+                android:text="Value"
+                android:layout_marginHorizontal="@dimen/margin"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/headerViewIcon"
+                app:layout_constraintTop_toTopOf="@+id/headerViewIcon"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/headerViewIcon"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:padding="@dimen/margin"
+                android:layout_marginHorizontal="@dimen/margin2"
+                android:src="@drawable/ic_cancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <View
+                android:id="@+id/headerViewLine"
+                android:background="@color/gray100"
+                android:layout_marginTop="@dimen/margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headerViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dateRecyclerViewDay"
+            style="@style/RecyclerView"
+            android:layout_width="@dimen/_64sdp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dateRecyclerViewMonth"
+            app:layout_constraintEnd_toStartOf="@+id/dateRecyclerViewMonth"
+            app:layout_constraintTop_toBottomOf= Of="@+id/dateRecyclerViewMonth"
+            tools:itemCount="3"
+            tools:listitem="@layout/date_item" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dateRecyclerViewMonth"
+            style="@style/RecyclerView"
+            android:layout_width="@dimen/_64sdp"
+            android:layout_height="@dimen/_108sdp"
+            android:layout_marginTop="@dimen/marginY2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateHeader"
+            tools:itemCount="3"
+            tools:listitem="@layout/date_item" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dateRecyclerViewYear"
+            style="@style/RecyclerView"
+            android:layout_width="@dimen/_64sdp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dateRecyclerViewMonth"
+            app:layout_constraintStart_toEndOf="@+id/dateRecyclerViewMonth"
+            app:layout_constraintTop_toTopOf="@+id/dateRecyclerViewMonth"
+            tools:itemCount="3"
+            tools:listitem="@layout/date_item" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dateActionConfirm"
+            style="@style/Button.Primary"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginVertical="@dimen/margin"
+            android:text="Confirm"
+            android:padding="@dimen/marginY2"
+            android:background="@drawable/bg_gradient_rounded"
+            android:layout_marginHorizontal="@dimen/margin2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateRecyclerViewMonth"/>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/defaultMargin.2"
+            android:layout_marginBottom="@dimen/defaultMarginX2"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/dateActionConfirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateHeader">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@mipmap/bg_undate"
+                android:layout_weight="1"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="@mipmap/bg_date"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <View
+                android:background="@mipmap/bg_undate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

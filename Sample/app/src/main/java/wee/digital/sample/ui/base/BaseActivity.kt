@@ -82,6 +82,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
      */
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
+            hideSystemUI()
             val v = currentFocus
             if (v is EditText) {
                 val outRect = Rect()

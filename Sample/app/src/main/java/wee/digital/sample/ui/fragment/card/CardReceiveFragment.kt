@@ -156,10 +156,10 @@ class CardReceiveFragment : MainFragment() {
             3 -> {
                 req?.data?.methodOfReceivingType = 3
                 val branch = BranchInfo(
-                        id = "1",
-                        code = "12",
-                        name = receiveTextViewBranchName.text.toString(),
-                        address = cardReceiveAddress.title.toString()
+                        id = Shared.kioskInfo.value?.result?.kioskBranch?.id,
+                        code = "024.39288869",
+                        name = "VPBank Láng Hạ",
+                        address = "Tòa nhà VP Bank, 89 Láng Hạ, P. Đống Đa, Hà Nội"
                 )
                 req?.data?.homeInfo = null
                 req?.data?.branchInfo = branch
