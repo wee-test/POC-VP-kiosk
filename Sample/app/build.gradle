@@ -182,6 +182,7 @@ dependencies {
     implementation deps.okhttpocr
     implementation deps.urlconnection
     implementation deps.interceptor
+    implementation 'com.rmtheis:tess-two:9.1.0'
     //implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
     //WebRTC
