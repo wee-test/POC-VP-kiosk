@@ -17,6 +17,8 @@ object Configs {
 
     const val TYPE_CCCD = "CCCD"
 
+    const val TYPE_PASSPORT = "PASSPORT"
+
     const val DEFAULT_ARG_KEY: String = "default"
 
     val DEFAULT_DATE_FMT = SimpleDateFormat("dd/MM/yyyy")
