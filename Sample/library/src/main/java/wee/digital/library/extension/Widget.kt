@@ -26,6 +26,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
 import wee.digital.library.Library
 import java.text.Normalizer
+import java.util.*
 
 
 /**
@@ -246,3 +247,12 @@ fun toast(message: String?) {
     }
 }
 
+
+fun TextView.color(@ColorRes colorRes: Int) {
+    setTextColor(ContextCompat.getColor(context, colorRes))
+}
+
+fun maxDate50(): String{
+    val year = Calendar.getInstance()[Calendar.YEAR] + 50
+    return "31/12/$year"
+}

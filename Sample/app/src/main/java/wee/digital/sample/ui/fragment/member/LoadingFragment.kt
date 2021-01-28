@@ -1,5 +1,10 @@
 package wee.digital.sample.ui.fragment.member
 
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_header.*
 import wee.digital.library.extension.gone
 import wee.digital.sample.MainDirections
@@ -11,15 +16,21 @@ import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.activityVM
 import wee.digital.sample.ui.fragment.register.RegisterVM
 import wee.digital.sample.ui.main.MainFragment
+import java.util.concurrent.TimeUnit
 
 class LoadingFragment : MainFragment() {
 
     private val registerVM: RegisterVM by lazy { activityVM(RegisterVM::class) }
 
+    private var disposableLoading : Disposable? = null
+
     override fun layoutResource(): Int = R.layout.loading
 
     override fun onViewCreated() {
         headerAction.gone()
+    }
+
+    private fun getDataRegister(){
         val card = Shared.ocrConfirmData.value ?: IdentifyCardInfo()
         val cardInfo = IdentifyCardInfo(
                 type = Shared.typeCardOcr.value ?: "",
@@ -89,6 +100,20 @@ class LoadingFragment : MainFragment() {
         req?.cmd = Configs.FORM_STEP_7
         req?.data?.isConfirmed = bool
         Socket.action.sendData(req)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        disposableLoading = Observable.timer(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    getDataRegister()
+                }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposableLoading?.dispose()
     }
 
 }

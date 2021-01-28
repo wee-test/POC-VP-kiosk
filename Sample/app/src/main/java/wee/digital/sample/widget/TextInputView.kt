@@ -23,10 +23,13 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.widget_text_input.view.*
 import wee.digital.library.extension.*
 import wee.digital.library.widget.AppCustomView
+import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.ui.fragment.dialog.date.DateArg
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
 import wee.digital.sample.ui.main.Main
+import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.ui.main.MainVM
 
 class TextInputView : AppCustomView,
@@ -296,6 +299,19 @@ class TextInputView : AppCustomView,
 
     fun addDateWatcher() {
         inputEditText.addDateWatcher()
+    }
+
+    fun buildDatePicker(fragment: MainFragment, block: DateArg.() -> Unit = {}) {
+        val arg = DateArg(
+                key = this.id.toString(),
+                selectedDate = this.text,
+                onDateSelected = {
+                    text = it
+                }
+        )
+        arg.block()
+        fragment.mainVM.dateLiveData.value = arg
+        fragment.navigate(MainDirections.actionGlobalDateFragment())
     }
 
     fun showIconDrop(){

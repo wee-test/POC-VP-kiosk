@@ -34,8 +34,12 @@ class OcrConfirmFragment : MainFragment() {
         ocrInputGender.addViewClickListener{
             ocrInputGender.buildSelectable(mainVM, Shared.genderList)
         }
-        ocrInputBirth.addDateWatcher()
-        ocrInputIssueDate.addDateWatcher()
+        ocrInputBirth.addViewClickListener{
+            ocrInputBirth.buildDatePicker(this)
+        }
+        ocrInputIssueDate.addViewClickListener{
+            ocrInputIssueDate.buildDatePicker(this)
+        }
     }
 
     override fun onViewClick(v: View?) {

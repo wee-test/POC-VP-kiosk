@@ -169,4 +169,11 @@
     <action
         android:id="@+id/action_global_customerExistFragment"
         app:destination="@id/customerExistFragment" />
+    <dialog
+        android:id="@+id/dateFragment"
+        android:name="wee.digital.sample.ui.fragment.dialog.date.DateFragment"
+        android:label="DateFragment" />
+    <action
+        android:id="@+id/action_global_dateFragment"
+        app:destination="@id/dateFragment" />
 </navigation>
