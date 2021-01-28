@@ -48,7 +48,7 @@ class FaceDetector {
                     if (box == null) {
                         statusListener?.onFaceLeaved()
                     } else {
-                        val boxSize = result?.listBox()?.size ?: 0
+                        /*val boxSize = result?.listBox()?.size ?: 0
                         if (optionListener.onCheckManyFaces(boxSize)) {
                             //statusListener?.onFaceLeaved()
                             statusListener?.onManyFaces()
@@ -59,7 +59,13 @@ class FaceDetector {
                             }
                             currentFace = box
                             onFaceDetect(box, colorBitmap, depthBitmap)
+                        }*/
+                        statusListener?.onFacePerformed()
+                        if (!faceChangeProcess(box)) {
+                            statusListener?.onFaceChanged()
                         }
+                        currentFace = box
+                        onFaceDetect(box, colorBitmap, depthBitmap)
                     }
 
                 }
