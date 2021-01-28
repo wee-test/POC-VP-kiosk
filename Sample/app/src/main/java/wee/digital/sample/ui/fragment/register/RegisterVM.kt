@@ -8,15 +8,9 @@ import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import vplib.ResponseCode
-import vplib.ResponseCustomerRegister
-import vplib.ResponseCustomerServiceReview
-import vplib.ResponseFaceVerifyToIDCard
+import vplib.*
 import wee.digital.sample.app.lib
-import wee.digital.sample.repository.model.CustomerInfoRegister
-import wee.digital.sample.repository.model.CustomerRegisterReq
-import wee.digital.sample.repository.model.ServiceReviewReq
-import wee.digital.sample.repository.model.VerifyIdCardReq
+import wee.digital.sample.repository.model.*
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
 
@@ -25,6 +19,8 @@ class RegisterVM : BaseViewModel(){
     val statusVerifyCard = EventLiveData<ResponseFaceVerifyToIDCard>()
 
     val statusRegisterCard = EventLiveData<ResponseCustomerRegister>()
+
+    val statusUpdateInfo = EventLiveData<ResponseVideoCallUpdateInfo>()
 
     @SuppressLint("CheckResult")
     fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
@@ -53,6 +49,19 @@ class RegisterVM : BaseViewModel(){
                     statusRegisterCard.postValue(it)
                 }, {
                     statusRegisterCard.postValue(null)
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateInfo(data: UpdateInfoReq) {
+        Single.fromCallable {
+            lib?.kioskService!!.videoCallUpdateInfo(Gson().toJson(data).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    statusUpdateInfo.postValue(it)
+                }, {
+                    statusUpdateInfo.postValue(null)
                 })
     }
 

@@ -123,7 +123,7 @@ data class HomeInfo(
 
 data class BranchInfo(
         @SerializedName("id")
-        var id: String = "",
+        var id: String? = "",
 
         @SerializedName("code")
         var code: String = "",

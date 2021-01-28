@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dateTextView"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    style="@style/TextView"
+    android:fontFamily="@font/svn_gilroy_medium"
+    android:textSize="@dimen/_12ssp"
+    android:layout_height="@dimen/_36sdp"
+    android:gravity="center"
+    tools:text="12" />

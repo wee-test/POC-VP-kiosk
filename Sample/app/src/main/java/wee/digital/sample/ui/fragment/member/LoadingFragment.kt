@@ -1,12 +1,7 @@
 package wee.digital.sample.ui.fragment.member
 
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.loading.*
 import kotlinx.android.synthetic.main.view_header.*
-import wee.dev.weewebrtc.utils.extension.toObject
 import wee.digital.library.extension.gone
-import wee.digital.library.extension.str
-import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
@@ -50,15 +45,15 @@ class LoadingFragment : MainFragment() {
         val receiverMethod = Shared.methodReceiveCard.value ?: MethodOfReceiving()
         val infoHome = HomeInfo(
                 fullName = receiverMethod.homeInfo?.fullName ?: "",
-                phoneNumber = receiverMethod.homeInfo?.phoneNumber ?: "" ,
+                phoneNumber = receiverMethod.homeInfo?.phoneNumber ?: "",
                 province = receiverMethod.homeInfo?.province ?: "",
-                district = "Quan Go Vap",
-                wards = "bach dang",
-                apartmentNumber = "b20"
+                district = receiverMethod.homeInfo?.district ?: "",
+                wards = receiverMethod.homeInfo?.wards ?: "",
+                apartmentNumber = receiverMethod.homeInfo?.apartmentNumber ?: ""
         )
         val receiver = MethodOfReceiving(
                 type = 1,
-                branchCode = "BR001",
+                branchCode = Shared.kioskInfo.value?.result?.kioskCode.toString(),
                 homeInfo = infoHome
         )
         val body = CustomerRegisterReq(

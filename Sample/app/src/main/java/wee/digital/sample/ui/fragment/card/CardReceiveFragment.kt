@@ -72,7 +72,11 @@ class CardReceiveFragment : MainFragment() {
         }
     }
 
-    override fun onLiveDataObserve() {}
+    override fun onLiveDataObserve() {
+        Shared.kioskInfo.observe {
+            receiveTextViewBranchName.text = it.result.kioskName
+        }
+    }
 
     private fun checkValidData(): Boolean {
         if (!receiveRadioDirectly.isChecked && !receiveRadioHome.isChecked && !receiveRadioBranch.isChecked) {
@@ -155,10 +159,11 @@ class CardReceiveFragment : MainFragment() {
             }
             3 -> {
                 req?.data?.methodOfReceivingType = 3
+                val kioskInfo = Shared.kioskInfo.value
                 val branch = BranchInfo(
-                        id = "1",
-                        code = "12",
-                        name = receiveTextViewBranchName.text.toString(),
+                        id = kioskInfo?.result?.kioskID,
+                        code = kioskInfo?.result?.kioskCode ?: "",
+                        name =  kioskInfo?.result?.kioskName ?: "",
                         address = cardReceiveAddress.title.toString()
                 )
                 req?.data?.homeInfo = null
