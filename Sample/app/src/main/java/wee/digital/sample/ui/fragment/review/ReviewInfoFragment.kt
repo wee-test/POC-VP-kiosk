@@ -17,7 +17,7 @@ class ReviewInfoFragment : MainFragment() {
         Shared.ocrConfirmData.observe {
             reviewInfoDateBirth.text = it.dateOfBirth
             reviewInfoGender.text = when(it.gender){
-                1 -> "Name"
+                1 -> "Nam"
                 2 -> "Nữ"
                 else -> "Khác"
             }

@@ -131,7 +131,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         }
         val exDate = ocrInputExDate.text.toString()
         val listExData = exDate.split("/")
-        if (exDate.isEmpty() || listExData.size < 3) {
+        if ((exDate.isEmpty() || listExData.size < 3) && Shared.typeCardOcr.value != Configs.TYPE_NID) {
             ocrInputExDate.error = "vui lòng nhập ngày cấp"
             return false
         }
