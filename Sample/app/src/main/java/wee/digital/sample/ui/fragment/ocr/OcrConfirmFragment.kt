@@ -1,6 +1,8 @@
 package wee.digital.sample.ui.fragment.ocr
 
 import android.view.View
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.ocr_confirm_content.*
 import wee.digital.library.extension.addViewClickListener
 import wee.digital.library.extension.show
@@ -13,12 +15,14 @@ import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.widget.TextInputView
 import java.net.Socket
+import java.util.concurrent.TimeUnit
 
 
-class OcrConfirmFragment : MainFragment() {
+class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
 
-    private val ocrVM: OcrVM by lazy { viewModel(OcrVM::class) }
+    private var disposableSendSocket : Disposable? = null
 
     override fun layoutResource(): Int {
         return R.layout.ocr_confirm
@@ -40,6 +44,20 @@ class OcrConfirmFragment : MainFragment() {
         ocrInputIssueDate.addViewClickListener{
             ocrInputIssueDate.buildDatePicker(this)
         }
+        initListenerInput()
+    }
+
+    private fun initListenerInput() {
+        ocrInputFullName.initListener(this)
+        ocrInputNumber.initListener(this)
+        ocrInputIssueDate.initListener(this)
+        ocrInputIssuePlace.initListener(this)
+        ocrInputBirth.initListener(this)
+        ocrInputGender.initListener(this)
+        ocrInputHometown.initListener(this)
+        ocrInputAddress.initListener(this)
+        ocrInputPhone.initListener(this)
+        ocrInputEmail.initListener(this)
     }
 
     override fun onViewClick(v: View?) {
@@ -66,7 +84,6 @@ class OcrConfirmFragment : MainFragment() {
             ocrInputIssuePlace.text = it.issueBy
         }
     }
-
 
     private fun checkValidData(): Boolean {
         val name = ocrInputFullName.text.toString()
@@ -161,6 +178,15 @@ class OcrConfirmFragment : MainFragment() {
         resp?.data?.phoneNumber = ocrInputPhone.text.toString()
         resp?.data?.email = ocrInputEmail.text.toString()
         action.sendData(resp)
+    }
+
+    /**
+     * implement text change
+     */
+    override fun onChange() {
+        disposableSendSocket?.dispose()
+        disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
+                .subscribe { sendSocket() }
     }
 
 }

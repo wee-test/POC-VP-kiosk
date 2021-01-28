@@ -7,7 +7,9 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
@@ -36,6 +38,8 @@ class TextInputView : AppCustomView,
         SimpleMotionTransitionListener,
         OnFocusChangeListener,
         SimpleTextWatcher {
+
+    private var listener : TextInputListener? = null
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
@@ -217,6 +221,7 @@ class TextInputView : AppCustomView,
      * [SimpleTextWatcher] implements
      */
     override fun afterTextChanged(s: Editable?) {
+        listener?.onChange()
         when {
             isSilent -> {
                 return
@@ -360,8 +365,13 @@ class TextInputView : AppCustomView,
             showDialog()
     }
 
+    fun initListener(l : TextInputListener?){
+        listener = l
+    }
+
     interface TextInputListener{
-        fun onChange()
+        fun onChange() {}
+        fun textChange() {}
     }
 
 }
