@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/card2FrontRootFront"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/card2FrontRootFront"
     android:layout_width="1014px"
     android:layout_height="642px"
     android:visibility="invisible"
     tools:visibility="visible"
+    android:background="@color/colorWhite"
     app:layout_constraintBottom_toBottomOf="@+id/cardBlueGuide"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"

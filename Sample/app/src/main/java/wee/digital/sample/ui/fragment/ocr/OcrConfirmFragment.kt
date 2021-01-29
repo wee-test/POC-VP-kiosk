@@ -45,6 +45,9 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         ocrInputIssueDate.addViewClickListener{
             ocrInputIssueDate.buildDatePicker(this)
         }
+        ocrInputExDate.addViewClickListener{
+            ocrInputExDate.buildDatePicker(this)
+        }
         initListenerInput()
     }
 
@@ -218,7 +221,12 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
     override fun onChange() {
         disposableSendSocket?.dispose()
         disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
-                .subscribe { sendSocket() }
+                .subscribe { /*sendSocket()*/ }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposableSendSocket?.dispose()
     }
 
 }

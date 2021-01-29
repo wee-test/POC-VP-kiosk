@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import vplib.*
 import wee.dev.weeocr.repository.model.PassportData
+import wee.dev.weewebrtc.repository.model.CallLog
 import wee.digital.library.extension.parse
 import wee.digital.library.extension.readAsset
 import wee.digital.sample.repository.model.*
@@ -54,6 +55,8 @@ object Shared {
     val socketStatusConnect = EventLiveData<ResponseTellerContact>()
 
     val callVideo = EventLiveData<String>()
+
+    var dataCallLog : CallLog? = null
 
     /**
      * list json

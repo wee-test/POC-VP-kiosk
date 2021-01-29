@@ -25,7 +25,7 @@
         style="@style/Button.Primary"
         android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/bg_gradient_rounded"
-        android:text="Next"
+        android:text="in the choi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

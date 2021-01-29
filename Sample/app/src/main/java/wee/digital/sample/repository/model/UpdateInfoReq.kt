@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 import wee.digital.sample.shared.Configs
 
 data class UpdateInfoReq(
-        @SerializedName("kisokId")
-        var kisokId : String = Configs.KIOSK_ID,
+        @SerializedName("kioskId")
+        var kioskId : String = Configs.KIOSK_ID,
 
         @SerializedName("videoId")
         var videoId : String = "",
@@ -27,4 +27,7 @@ data class UpdateInfoReq(
 
         @SerializedName("waitingTime")
         var waitingTime : Int = 0,
+
+        @SerializedName("processingTime")
+        var processingTime : Int = 0
 )

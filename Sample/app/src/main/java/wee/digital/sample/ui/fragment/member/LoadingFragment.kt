@@ -1,10 +1,8 @@
 package wee.digital.sample.ui.fragment.member
 
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_header.*
 import wee.digital.camera.toBytes
 import wee.digital.camera.toStringBase64
@@ -93,7 +91,7 @@ class LoadingFragment : MainFragment() {
             if(it == null || it?.responseCode?.code ?: -1 != 0L){
                 Shared.messageFail.postValue(
                         MessageData("Đăng ký mở thẻ thất bại",
-                                "Có Clỗi xảy ra trong quá trình mở thẻ, bạn vui lòng thử lại")
+                                "Có lỗi xảy ra trong quá trình mở thẻ, bạn vui lòng thử lại")
                 )
                 sendSocket(false)
                 navigate(MainDirections.actionGlobalFailFragment())

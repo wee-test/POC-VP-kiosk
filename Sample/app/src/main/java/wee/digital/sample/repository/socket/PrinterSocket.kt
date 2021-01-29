@@ -18,7 +18,9 @@ class PrinterSocket {
     fun send(data: String) {
         ws?.send(data)
     }
-
+    fun send(data: ByteString) {
+        ws?.send(data)
+    }
     fun close() {
         ws?.close(1000, "Close")
     }

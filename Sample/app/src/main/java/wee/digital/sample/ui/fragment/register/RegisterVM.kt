@@ -20,8 +20,6 @@ class RegisterVM : BaseViewModel(){
 
     val statusRegisterCard = EventLiveData<ResponseCustomerRegister>()
 
-    val statusUpdateInfo = EventLiveData<ResponseVideoCallUpdateInfo>()
-
     @SuppressLint("CheckResult")
     fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
         Single.fromCallable {
@@ -49,19 +47,6 @@ class RegisterVM : BaseViewModel(){
                     statusRegisterCard.postValue(it)
                 }, {
                     statusRegisterCard.postValue(null)
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun updateInfo(data: UpdateInfoReq) {
-        Single.fromCallable {
-            lib?.kioskService!!.videoCallUpdateInfo(Gson().toJson(data).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    statusUpdateInfo.postValue(it)
-                }, {
-                    statusUpdateInfo.postValue(null)
                 })
     }
 
