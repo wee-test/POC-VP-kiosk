@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchParent"
     android:id="@+id/mainViewContent"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
     <include layout="@layout/main_card1_front" />
-    <include layout="@layout/main_card1_back"/>
     <include layout="@layout/main_card2_front"/>
-    <include layout="@layout/main_card2_back"/>
+
+<!--    <include layout="@layout/main_card1_back"/>-->
+<!--    <include layout="@layout/main_card2_back"/>-->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFragmentHost"
@@ -41,5 +43,14 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainVideoCallView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mainTextViewPrinter"
+        style="@style/TextView"
+        android:textSize="@dimen/_6ssp"
+        tools:text="printer socket close"
+        android:layout_margin="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

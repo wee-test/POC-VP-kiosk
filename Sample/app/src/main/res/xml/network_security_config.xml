@@ -4,5 +4,6 @@
         <domain includeSubdomains="true">weezi.biz</domain>
         <domain includeSubdomains="true">www.wee.vn</domain>
         <domain includeSubdomains="true">124.158.11.189</domain>
+        <domain includeSubdomains="true">10.10.0.145</domain>
     </domain-config>
 </network-security-config>
