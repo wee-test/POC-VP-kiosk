@@ -3,8 +3,6 @@ package wee.digital.sample.repository.socket
 import android.annotation.SuppressLint
 import android.util.Log
 import com.google.gson.Gson
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import wee.digital.sample.repository.model.SocketReq
 
 class Socket {
