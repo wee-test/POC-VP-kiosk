@@ -27,6 +27,8 @@ object Configs {
 
     val API_DATE_FMT = SimpleDateFormat("yyyy-MM-dd")
 
+    var isMute = false
+
     const val FORM_STEP_1 = "FORM-STEP-1"
     const val FORM_STEP_2 = "FORM-STEP-2"
     const val FORM_STEP_3 = "FORM-STEP-3"
