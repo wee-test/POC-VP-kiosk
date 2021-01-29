@@ -27,4 +27,5 @@
     <color name="black100">#191919</color>
     <color name="green10">#E6F0EA</color>
     <color name="colorDarkGray">#858585</color>
+    <color name="solid">#ECECEC</color>
 </resources>

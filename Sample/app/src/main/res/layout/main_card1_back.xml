@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/card1BackRootBack"
+    android:layout_width="1014px"
+    android:layout_height="642px"
+    android:background="@mipmap/print_blue"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/cardBlueGuide"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/card1BackGuide"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card1BackService"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:textColor="@color/colorWhite"
+        android:text="24-Hour customer service call: 19001230"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin"
+        style="@style/TextView.Small"/>
+
+    <View
+        android:id="@+id/card1BackLine"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginHorizontal="@dimen/marginY2"
+        app:layout_constraintTop_toBottomOf="@+id/card1BackService"
+        android:layout_height="@dimen/_25sdp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/card1BackLineWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin2"
+        app:layout_constraintTop_toBottomOf="@+id/card1BackLine"
+        android:src="@mipmap/print_line_back"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/cardBlueBackTitle"
+        app:layout_constraintStart_toStartOf="@+id/card1BackGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card1BackLineWhite"
+        android:layout_width="0dp"
+        android:text="Authorized signature"
+        android:layout_marginTop="@dimen/margin"
+        android:textColor="@color/colorWhite"
+        style="@style/TextView.Medium"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card1BackContent"
+        app:layout_constraintStart_toStartOf="@+id/card1BackGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardBlueBackTitle"
+        android:layout_width="0dp"
+        android:layout_marginEnd="@dimen/margin2"
+        android:text="This card is the property of Facepay. If found, please return to Facepay. The use of this card is governed by the terms and conditions set by Facepay."
+        android:layout_marginTop="@dimen/marginY2"
+        android:textColor="@color/solid"
+        style="@style/TextView.Small"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card1BackLabelFacepay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:text="www.facepay.vn"
+        android:layout_marginEnd="@dimen/margin2"
+        android:layout_marginBottom="@dimen/margin"
+        android:textColor="@color/colorWhite"
+        style="@style/TextView.Small"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

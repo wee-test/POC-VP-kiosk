@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/card2FrontRootFront"
+    android:layout_width="1014px"
+    android:layout_height="642px"
+    android:visibility="invisible"
+    tools:visibility="visible"
+    app:layout_constraintBottom_toBottomOf="@+id/cardBlueGuide"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/card2FrontFacePay"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="wrap_content"
+        android:tint="@color/black"
+        android:layout_marginStart="@dimen/margin2"
+        android:layout_marginTop="@dimen/marginY2"
+        android:src="@mipmap/facepay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/card2FrontNapas"
+        android:layout_width="@dimen/_70sdp"
+        android:tint="@color/black"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginY2"
+        android:layout_marginEnd="@dimen/margin2"
+        android:src="@mipmap/napas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card2FrontNumberCard"
+        android:text="3435 4262 7310 2720"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:fontFamily="@font/svn_gilroy_semi_bold"
+        style="@style/TextView.Title"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_25ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/TextView.Large"
+        android:layout_marginStart="@dimen/margin2"
+        android:layout_marginBottom="@dimen/marginY2"
+        android:fontFamily="@font/svn_gilroy_regular"
+        android:text="Card Holder Name"
+        app:layout_constraintBottom_toTopOf="@+id/card2FrontLabelName"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card2FrontLabelName"
+        style="@style/TextView.Large"
+        android:layout_marginStart="@dimen/margin2"
+        android:layout_marginBottom="@dimen/margin3"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="Nguyen Van A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/TextView.Large"
+        android:layout_marginEnd="@dimen/margin2"
+        android:layout_marginBottom="@dimen/marginY2"
+        android:fontFamily="@font/svn_gilroy_regular"
+        android:text="Expiry Date"
+        app:layout_constraintBottom_toTopOf="@+id/card2FrontLabelName"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card2FrontLabelExDate"
+        style="@style/TextView.Large"
+        android:layout_marginEnd="@dimen/margin2"
+        android:layout_marginBottom="@dimen/margin3"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="02/30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

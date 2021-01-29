@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card2BackRootBack"
+    android:layout_width="1014px"
+    android:layout_height="642px"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/cardBlueGuide">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/card2BackGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card2BackService"
+        style="@style/TextView.Small"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin"
+        android:text="24-Hour customer service call: 19001230"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/card2BackLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginHorizontal="@dimen/marginY2"
+        android:layout_marginTop="@dimen/margin"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card2BackService" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/card2BackLineWhite"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin2"
+        android:src="@mipmap/print_line_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card2BackLine" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card2BackTitle"
+        style="@style/TextView.Medium"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/margin"
+        android:text="Authorized signature"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/card2BackGuide"
+        app:layout_constraintTop_toBottomOf="@+id/card2BackLineWhite" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card2BackContent"
+        style="@style/TextView.Small"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/marginY2"
+        android:layout_marginEnd="@dimen/margin2"
+        android:text="This card is the property of Facepay. If found, please return to Facepay. The use of this card is governed by the terms and conditions set by Facepay."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/card2BackGuide"
+        app:layout_constraintTop_toBottomOf="@+id/card2BackTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/card2BackLabelFacepay"
+        style="@style/TextView.Small"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="@dimen/margin2"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="www.facepay.vn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
