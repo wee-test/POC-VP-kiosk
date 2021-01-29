@@ -56,7 +56,10 @@ class Voice {
 
     var onSpeakCompleted: () -> Unit = {}
 
-    private var voice = JsonObject()
+    private var voice = JsonObject().apply {
+        put("languageCode", "vi-VN")
+        put("name", "vi-VN-Wavenet-A")
+    }
 
     private val config = JsonObject().apply {
         put("audioEncoding", "MP3")
