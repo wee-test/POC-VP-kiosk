@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -9,21 +10,30 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_card1_front.*
 import kotlinx.android.synthetic.main.main_card2_front.*
+import okhttp3.Response
 import okhttp3.WebSocket
+import okhttp3.WebSocketListener
+import okio.ByteString.Companion.toByteString
 import wee.dev.weewebrtc.WeeCaller
 import wee.dev.weewebrtc.`interface`.CallListener
 import wee.dev.weewebrtc.repository.model.CallLog
 import wee.dev.weewebrtc.repository.model.RecordData
+import wee.digital.camera.toBytes
 import wee.digital.library.extension.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
+import wee.digital.sample.repository.model.MessageData
+import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.MySocket
+import wee.digital.sample.repository.socket.PrinterSocket
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
+import java.nio.ByteBuffer
+import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity() {
@@ -34,6 +44,8 @@ class MainActivity : BaseActivity() {
 
     private var disposable: Disposable? = null
 
+    private val printerSocket = PrinterSocket()
+
     private val weeCaller = WeeCaller(this)
 
     override fun layoutResource(): Int {
@@ -42,7 +54,8 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initVideoCall()
+        weeCaller.init()
+        printerSocket.addListener(MyWebSocketListenr())
     }
 
     override fun navController(): NavController {
@@ -79,6 +92,15 @@ class MainActivity : BaseActivity() {
                 Socket.action.closeWebSocketMonitor()
             } else {
                 val tellersId = it.listTellersIDString?.toArray()?.get(0)?.asString ?: ""
+                Log.e("callVideoData", "${Configs.KIOSK_ID} - $tellersId")
+                if (tellersId == "null") {
+                    Shared.messageFail.postValue(
+                            MessageData("Không thể thực hiện cuộc gọi vào lúc này",
+                                    "bạn vui lòng thử lại")
+                    )
+                    navigate(MainDirections.actionGlobalFailFragment())
+                    return@observe
+                }
                 connectSocket(Configs.KIOSK_ID, tellersId)
                 Shared.callVideo.postValue(tellersId)
             }
@@ -92,55 +114,55 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun initVideoCall(){
-        weeCaller.init()
-        weeCaller.initUserData(Configs.KIOSK_ID) { _, _ ->
-
-        }
-    }
-
-    private fun callVideo(tellersId : String){
-        weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
-            override fun onCallLog(callLog: CallLog) {
-                toast(callLog.StatusCall)
-            }
-
-            override fun onClosed() {
-                runOnUiThread { remoteVideoCallView.gone() }
-            }
-
-            override fun onConnected() {
-                runOnUiThread {
-                    remoteVideoCallView.show()
-                    navigate(MainDirections.actionGlobalDocumentFragment())
+    private fun callVideo(tellersId: String) {
+        weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
+            weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+                override fun onCallLog(callLog: CallLog) {
+                    toast(callLog.StatusCall)
+                    Shared.dataCallLog = callLog
                 }
-            }
 
-            override fun onError(mess: String) {
-                runOnUiThread { remoteVideoCallView.gone() }
-            }
+                override fun onClosed() {
+                    runOnUiThread { remoteVideoCallView.gone() }
+                }
 
-            override fun onMessage(mess: String) {
-                toast("onMessage: $mess")
-            }
+                override fun onConnected() {
+                    runOnUiThread {
+                        remoteVideoCallView.show()
+                        navigate(MainDirections.actionGlobalDocumentFragment())
+                    }
+                }
 
-            override fun onReceiverCall(id: String) {
-                toast("onReceiverCall: $id")
-            }
+                override fun onError(mess: String) {
+                    runOnUiThread { remoteVideoCallView.gone() }
+                }
 
-            override fun onRecordedFile(recordData: RecordData) {
-                toast("onRecordedFile: $recordData")
-            }
+                override fun onMessage(mess: String) {
+                    toast("onMessage: $mess")
+                }
 
-            override fun onSendCall(id: String) {
-                toast("onSendCall: $id")
-            }
+                override fun onReceiverCall(id: String) {
+                    toast("onReceiverCall: $id")
+                }
 
-            override fun onStart() {
-                toast("onStart")
-            }
+                override fun onRecordedFile(recordData: RecordData) {
+                    toast("onRecordedFile")
+                    /*if(recordData.repair()){
+                        recordData.repairedData
+                        recordData.sizeDataStr
+                    }*/
+                }
 
-        })
+                override fun onSendCall(id: String) {
+                    toast("onSendCall: $id")
+                }
+
+                override fun onStart() {
+                    toast("onStart")
+                }
+
+            })
+        }
     }
 
     private fun onShowDialog(directions: NavDirections?) {
@@ -162,16 +184,20 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    private fun bindDataCard1(number : String,  name : String, exDate : String){
+    fun bindDataCard1(number: String, name: String, exDate: String) {
         card1FrontNumberCard.text = number
         card1FrontLabelName.text = name
         card1FrontLabelExDate.text = exDate
     }
 
-    private fun bindDataCard2(number : String, name : String, exDate : String){
+    fun bindCardBlackWhiteFront(number: String, name: String, exDate: String) {
         card2FrontNumberCard.text = number
         card2FrontLabelName.text = name
         card2FrontLabelExDate.text = exDate
+        val bitmap = card2FrontRootFront.getBitmap()
+        val bytes = bitmap.toBytes()
+        val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
+        printerSocket.send(byteString)
     }
 
     override fun onResume() {
@@ -186,6 +212,16 @@ class MainActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
         disposable?.dispose()
+    }
+
+    private inner class MyWebSocketListenr : WebSocketListener() {
+        override fun onOpen(webSocket: WebSocket, response: Response) {
+            toast("printer socket closed")
+        }
+
+        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+            toast("printer socket closed")
+        }
     }
 
 }

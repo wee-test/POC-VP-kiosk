@@ -30,7 +30,7 @@ interface BaseView {
     val log: Logger
 
     fun addClickListener(vararg views: View?) {
-        val listener = object : ViewClickListener(300L) {
+        val listener = object : ViewClickListener(800L) {
             override fun onClicks(v: View?) {
                 fragmentActivity.hideKeyboard()
                 onViewClick(v)

@@ -1,7 +1,10 @@
 package wee.digital.sample.ui.fragment.rating
 
+import android.annotation.SuppressLint
 import android.view.View
 import kotlinx.android.synthetic.main.rating_fragment.*
+import wee.dev.weewebrtc.WeeCaller
+import wee.digital.library.extension.toArray
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.ServiceReviewReq
@@ -12,6 +15,7 @@ import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
+import java.text.SimpleDateFormat
 
 class RatingFragment : MainFragment() {
 
@@ -43,7 +47,12 @@ class RatingFragment : MainFragment() {
         }
     }
 
-    override fun onLiveDataObserve() {}
+    override fun onLiveDataObserve() {
+        Shared.customerInfoRegisterSuccess.observe {
+            fragRatingCustomerId.text = it.result.customerID
+            frgRatingCustomerCode.text = it.result.transID
+        }
+    }
 
     override fun onViewClick(v: View?) {
         when (v) {
@@ -54,6 +63,7 @@ class RatingFragment : MainFragment() {
                         transId = customerRegister?.result?.transID.toString(),
                         reviewType = ratingModel.type
                 )
+                updateInfo()
                 ratingVM.serviceReview(body)
                 sendSocket()
                 Voice.ins?.request(VoiceData.THANKS_RATE){
@@ -64,6 +74,35 @@ class RatingFragment : MainFragment() {
 
             }
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun updateInfo(){
+        if (Shared.dataCallLog == null) return
+        val tellerData = Shared.socketStatusConnect.value?.listTellersIDString
+        val tellersId = tellerData?.toArray()?.get(0)?.asString ?: ""
+        val dataCall = Shared.dataCallLog
+        val timeWaiting = ((dataCall?.ConnectedTimeIn!! - dataCall.TimeCallIn) / 1000).toInt()
+        val timeReceived = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(dataCall.TimeCallIn)
+        val processTime = (dataCall.ConnectedTimeOut - dataCall.ConnectedTimeIn) / 1000
+        val status = when (dataCall.StatusCall) {
+            WeeCaller.CALL_STATUS_CONNECTED -> 1
+            WeeCaller.CALL_STATUS_REJECT -> 2
+            WeeCaller.CALL_STATUS_MISSING -> 3
+            else -> 3
+        }
+        val body = UpdateInfoReq(
+                kioskId = Configs.KIOSK_ID,
+                videoId = Shared.sessionVideo.value?.result?.videoCallID ?: "",
+                customerId = "${Shared.customerInfoRegisterSuccess.value?.result?.customerID}",
+                transType = 1,
+                counterId = tellersId,
+                videoCallStatus = status,
+                timeReceived = timeReceived,
+                waitingTime = timeWaiting,
+                processingTime = processTime.toInt()
+        )
+        mainVM.updateInfo(body)
     }
 
     private fun sendSocket(){

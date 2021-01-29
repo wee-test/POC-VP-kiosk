@@ -13,9 +13,11 @@ import io.reactivex.schedulers.Schedulers
 import vplib.ResponseLogin
 import vplib.ResponseTellerContact
 import vplib.ResponseVideoCallCreateSession
+import vplib.ResponseVideoCallUpdateInfo
 import wee.digital.library.extension.put
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.LoginKioskReq
+import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.ui.base.EventLiveData
 import wee.digital.sample.ui.fragment.dialog.alert.Alert
@@ -43,6 +45,8 @@ open class MainVM : ViewModel() {
 
     val webLiveData = MutableLiveData<WebArg>()
 
+    val statusUpdateInfo = EventLiveData<ResponseVideoCallUpdateInfo>()
+
     @SuppressLint("CheckResult")
     fun loginKiosk() {
         val body = LoginKioskReq(Configs.KIOSK_CODE)
@@ -68,6 +72,19 @@ open class MainVM : ViewModel() {
                     statusCreateNewSession.postValue(it)
                 }, {
                     statusCreateNewSession.postValue(null)
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateInfo(data: UpdateInfoReq) {
+        Single.fromCallable {
+            lib?.kioskService!!.videoCallUpdateInfo(Gson().toJson(data).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    statusUpdateInfo.postValue(it)
+                }, {
+                    statusUpdateInfo.postValue(null)
                 })
     }
 

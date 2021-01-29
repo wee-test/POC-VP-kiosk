@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 class PrinterSocket {
 
-    var url = "ws://localhost:5000/android"
+    var url = "ws://10.10.0.145:57976/android"
 
     val log = Logger(this::class)
 
@@ -18,7 +18,9 @@ class PrinterSocket {
     fun send(data: String) {
         ws?.send(data)
     }
-
+    fun send(data: ByteString) {
+        ws?.send(data)
+    }
     fun close() {
         ws?.close(1000, "Close")
     }

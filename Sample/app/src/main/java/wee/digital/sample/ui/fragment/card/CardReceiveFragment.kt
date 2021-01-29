@@ -186,7 +186,7 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
     override fun onChange() {
         disposableSendSocket?.dispose()
         disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
-                .subscribe { sendSocket(2) }
+                .subscribe { /*sendSocket(2)*/ }
     }
 
 }
