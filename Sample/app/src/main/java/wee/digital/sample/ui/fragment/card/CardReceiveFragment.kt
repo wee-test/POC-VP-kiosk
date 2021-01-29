@@ -15,7 +15,9 @@ import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 import wee.digital.sample.widget.TextInputView
 import java.util.concurrent.TimeUnit
 
@@ -31,6 +33,7 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
         addClickListener(cardReceiveActionNext)
         initUI()
         receiveRadioDirectly.isChecked
+        Voice.ins?.request(VoiceData.RECEIVER_METHOD)
     }
 
     private fun initUI() {

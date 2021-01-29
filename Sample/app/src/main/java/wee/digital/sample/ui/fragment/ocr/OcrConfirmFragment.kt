@@ -14,8 +14,10 @@ import wee.digital.sample.repository.socket.Socket.Companion.action
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 import wee.digital.sample.widget.TextInputView
 import java.net.Socket
 import java.util.concurrent.TimeUnit
@@ -23,7 +25,9 @@ import java.util.concurrent.TimeUnit
 
 class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
 
-    private var disposableSendSocket : Disposable? = null
+    private var disposableSendSocket: Disposable? = null
+
+    var errorMessage = ""
 
     override fun layoutResource(): Int {
         return R.layout.ocr_confirm
@@ -33,19 +37,20 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         addClickListener(ocrConfirmActionNext)
         ocrInputIssuePlace.showIconDrop()
         ocrInputGender.showIconDrop()
-        ocrInputIssuePlace.addViewClickListener{
+        ocrInputIssuePlace.addViewClickListener {
             ocrInputIssuePlace.buildSelectable(mainVM, Shared.provinceList)
         }
-        ocrInputGender.addViewClickListener{
+        ocrInputGender.addViewClickListener {
             ocrInputGender.buildSelectable(mainVM, Shared.genderList)
         }
-        ocrInputBirth.addViewClickListener{
+        ocrInputBirth.addViewClickListener {
             ocrInputBirth.buildDatePicker(this)
         }
-        ocrInputIssueDate.addViewClickListener{
+        ocrInputIssueDate.addViewClickListener {
             ocrInputIssueDate.buildDatePicker(this)
         }
         initListenerInput()
+        Voice.ins?.request(VoiceData.OCR_OKE)
     }
 
     private fun initListenerInput() {
@@ -64,7 +69,12 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
     override fun onViewClick(v: View?) {
         when (v) {
             ocrConfirmActionNext -> {
-                if (!checkValidData()) return
+                if (!checkValidData()) {
+                    if(errorMessage.isNotEmpty()) {
+                        Voice.ins?.request(errorMessage)
+                    }
+                    return
+                }
                 sendSocket()
                 navigate(MainDirections.actionGlobalRegisterFragment())
             }
@@ -72,12 +82,12 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
     }
 
     override fun onLiveDataObserve() {
-        if(Shared.typeCardOcr.value == Configs.TYPE_NID){
+        if (Shared.typeCardOcr.value == Configs.TYPE_NID) {
             ocrInputExDate.gone()
-        }else{
+        } else {
             ocrInputExDate.show()
         }
-        if(Shared.typeCardOcr.value == Configs.TYPE_PASSPORT){
+        if (Shared.typeCardOcr.value == Configs.TYPE_PASSPORT) {
             Shared.passportData.observe {
                 ocrInputFullName.text = "${it.firstName} ${it.lassName}"
                 ocrInputNumber.text = it.idNumber
@@ -86,7 +96,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                 ocrInputIssuePlace.hint = "Loại"
                 ocrInputIssuePlace.text = it.type
                 ocrInputBirth.text = it.birthDay
-                ocrInputGender.text = when(it.gender){
+                ocrInputGender.text = when (it.gender) {
                     "M" -> "Nam"
                     "F" -> "Nữ"
                     else -> "Nam"
@@ -94,7 +104,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                 ocrInputHometown.hint = "Quốc gia"
                 ocrInputHometown.text = it.nationCode
             }
-        }else{
+        } else {
             Shared.ocrCardFront.observe {
                 ocrInputFullName.text = it.fullName
                 ocrInputNumber.text = it.number
@@ -115,57 +125,68 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         val name = ocrInputFullName.text.toString()
         val nameSplit = name.split("")
         if (name.isEmpty() || name.length < 3 || nameSplit.size < 2) {
-            ocrInputFullName.error = "Họ và tên không hợp lệ"
+            errorMessage = "Họ và tên không hợp lệ"
+            ocrInputFullName.error = errorMessage
             return false
         }
         val numberCard = ocrInputNumber.text.toString()
         if (numberCard.isEmpty() || numberCard.length != Utils.lengthNumberCard(Shared.typeCardOcr.value)) {
-            ocrInputNumber.error = "số giấy tờ không đúng"
+            errorMessage = "số giấy tờ không đúng"
+            ocrInputNumber.error = errorMessage
             return false
         }
         val issueDate = ocrInputIssueDate.text.toString()
         val listIssueData = issueDate.split("/")
         if (issueDate.isEmpty() || listIssueData.size < 3) {
-            ocrInputIssueDate.error = "vui lòng nhập ngày cấp"
+            errorMessage = "vui lòng nhập ngày cấp"
+            ocrInputIssueDate.error = errorMessage
             return false
         }
         val exDate = ocrInputExDate.text.toString()
         val listExData = exDate.split("/")
         if ((exDate.isEmpty() || listExData.size < 3) && Shared.typeCardOcr.value != Configs.TYPE_NID) {
-            ocrInputExDate.error = "vui lòng nhập ngày cấp"
+            errorMessage = "vui lòng nhập ngày cấp"
+            ocrInputExDate.error = errorMessage
             return false
         }
         val issuePlace = ocrInputIssuePlace.text.toString()
         if (issuePlace.isEmpty()) {
-            ocrInputIssuePlace.error = "Vui lòng nhập nguyên quán nơi cấp"
+            errorMessage = "Vui lòng nhập nguyên quán nơi cấp"
+            ocrInputIssuePlace.error = errorMessage
             return false
         }
         val birth = ocrInputBirth.text.toString()
         val listBirth = birth.split("/")
         if (birth.isNullOrEmpty() || listBirth.size < 3) {
-            ocrInputBirth.error = "Vui lòng chọn ngày sinh"
+            errorMessage = "Vui lòng chọn ngày sinh"
+            ocrInputBirth.error = errorMessage
             return false
         }
         if (ocrInputGender.text.toString().isEmpty()) {
-            ocrInputGender.error = "Vui lòng chọn giới tính"
+            errorMessage = "Vui lòng chọn giới tính"
+            ocrInputGender.error = errorMessage
             return false
         }
         val hometown = ocrInputHometown.text.toString()
         if (hometown.isEmpty()) {
-            ocrInputHometown.error = "Vui lòng nhập nguyên quán"
+            errorMessage = "Vui lòng nhập nguyên quán"
+            ocrInputHometown.error = errorMessage
             return false
         }
         val address = ocrInputAddress.text.toString()
         if (address.isEmpty() || address.length < 10) {
-            ocrInputAddress.error = "Vui lòng nhập địa chỉ thường chú"
+            errorMessage = "Vui lòng nhập địa chỉ thường chú"
+            ocrInputAddress.error = errorMessage
             return false
         }
         if (Utils.checkPhoneInvalid(ocrInputPhone.text.toString())) {
-            ocrInputPhone.error = "Số điện thoại không đúng"
+            errorMessage = "Số điện thoại không đúng"
+            ocrInputPhone.error = errorMessage
             return false
         }
         if (ocrInputEmail.text.isNullOrEmpty()) {
-            ocrInputEmail.error = "Email không hợp lệ"
+            errorMessage = "Email không hợp lệ"
+            ocrInputEmail.error = errorMessage
             return false
         }
         val gender = when (ocrInputGender.text) {
@@ -173,6 +194,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
             "Nữ" -> 2
             else -> 3
         }
+        errorMessage = ""
         val data = IdentifyCardInfo(
                 type = Shared.typeCardOcr.value ?: "",
                 photo = Shared.frameCardData.value,

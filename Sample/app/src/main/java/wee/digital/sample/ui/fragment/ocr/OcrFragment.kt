@@ -24,9 +24,11 @@ import wee.digital.sample.repository.model.*
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class OcrFragment : MainFragment(), FrameStreamListener {
 
@@ -46,18 +48,25 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     private var frameComplete: Boolean = false
 
+    private var isStart = false
+
     override fun layoutResource(): Int = R.layout.ocr
 
     override fun onViewCreated() {
         createOcr()
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
+        Voice.ins?.request(VoiceData.PUSH_ID_CARD)
+        Voice.ins?.onSpeakCompleted = {
+            isStart = true
+        }
     }
 
     override fun onLiveDataObserve() {
         ocrVM.statusExtractFront.observe {
             if(it.code != 0L){
                 Shared.messageFail.postValue(
-                        MessageData("Không thể đọc được dữ liệu", "không thể đọc giấy tờ, bạn vui lòng thử lại")
+                        MessageData("Không thể đọc được dữ liệu",
+                                "không thể đọc giấy tờ, bạn vui lòng thử lại")
                 )
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
@@ -171,6 +180,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     }
 
     override fun onFrame(byteArray: ByteArray) {
+        if(!isStart) return
         if (frameFont != null && frameBack != null) return
         cropFrame(byteArray)
     }
@@ -201,6 +211,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 }
                 frameFont = cropped
                 ocrResetFont.show()
+                if(frameBack==null)  Voice.ins?.request(VoiceData.CARD_1_OKE)
                 ocrRoot.animOcrCaptured(cropped, orcFrameAnim, ocrFrameFront, ocrRootCamera) {
                     checkShowAction()
                     processing = false
@@ -213,6 +224,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 }
                 frameBack = cropped
                 ocrResetBack.show()
+                if(frameFont==null)  Voice.ins?.request(VoiceData.CARD_1_OKE)
                 ocrRoot.animOcrCaptured(cropped, orcFrameAnim, ocrFrameBack, ocrRootCamera) {
                     checkShowAction()
                     processing = false
@@ -225,7 +237,12 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun checkShowAction() {
         frameFont ?: return
         frameBack ?: return
-        ocrActionNext.show()
+        Voice.ins?.request(VoiceData.CARD_2_OKE){
+            activity?.runOnUiThread {
+                ocrActionNext.show()
+            }
+        }
+
     }
 
     private fun resetAllFrame() {

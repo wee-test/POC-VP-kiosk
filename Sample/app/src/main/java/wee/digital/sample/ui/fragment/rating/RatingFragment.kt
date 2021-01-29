@@ -1,19 +1,17 @@
 package wee.digital.sample.ui.fragment.rating
 
 import android.view.View
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.rating_fragment.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.ServiceReviewReq
-import wee.digital.sample.repository.model.SocketData
-import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
-import wee.digital.sample.ui.fragment.face.FaceVM
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class RatingFragment : MainFragment() {
 
@@ -30,6 +28,7 @@ class RatingFragment : MainFragment() {
     override fun onViewCreated() {
         bindRatingList()
         addClickListener(frgRatingActionNext)
+        Voice.ins?.request(VoiceData.SUCCESS_SCREEN)
     }
 
     private fun bindRatingList() {
@@ -57,7 +56,12 @@ class RatingFragment : MainFragment() {
                 )
                 ratingVM.serviceReview(body)
                 sendSocket()
-                navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
+                Voice.ins?.request(VoiceData.THANKS_RATE){
+                    activity?.runOnUiThread {
+                        navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
+                    }
+                }
+
             }
         }
     }

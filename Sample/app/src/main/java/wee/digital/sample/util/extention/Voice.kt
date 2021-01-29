@@ -64,7 +64,8 @@ class Voice {
         put("speakingRate", "1")
     }
 
-    fun request(text: String) {
+    fun request(text: String, onCompleted: ()->Unit = {}) {
+        onSpeakCompleted = onCompleted
         if (Configs.isMute) {
             onSpeaking()
             onSpeakCompleted()
@@ -129,7 +130,6 @@ class Voice {
         onSpeakCompleted = {}*/
         try {
             mediaPlayer?.release()
-            mediaPlayer?.stop()
         } catch (e: IllegalStateException) {
         }
     }

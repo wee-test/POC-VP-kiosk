@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import wee.digital.library.util.Logger
+import wee.digital.sample.util.extention.Voice
 
 abstract class BaseFragment : Fragment(), BaseView {
 
@@ -29,6 +30,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     override fun onPause() {
         super.onPause()
         view?.clearAnimation()
+        Voice.ins?.release()
     }
 
     /**

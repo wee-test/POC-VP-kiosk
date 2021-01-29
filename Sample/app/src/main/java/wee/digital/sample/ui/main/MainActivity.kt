@@ -1,7 +1,6 @@
 package wee.digital.sample.ui.main
 
 import android.os.Bundle
-import android.os.SharedMemory
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -43,7 +42,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        weeCaller.init()
+        initVideoCall()
     }
 
     override fun navController(): NavController {
@@ -93,50 +92,55 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun callVideo(tellersId : String){
-        weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
-            weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
-                override fun onCallLog(callLog: CallLog) {
-                    toast(callLog.StatusCall)
-                }
+    private fun initVideoCall(){
+        weeCaller.init()
+        weeCaller.initUserData(Configs.KIOSK_ID) { _, _ ->
 
-                override fun onClosed() {
-                    runOnUiThread { remoteVideoCallView.gone() }
-                }
-
-                override fun onConnected() {
-                    runOnUiThread {
-                        remoteVideoCallView.show()
-                        navigate(MainDirections.actionGlobalDocumentFragment())
-                    }
-                }
-
-                override fun onError(mess: String) {
-                    runOnUiThread { remoteVideoCallView.gone() }
-                }
-
-                override fun onMessage(mess: String) {
-                    toast("onMessage: $mess")
-                }
-
-                override fun onReceiverCall(id: String) {
-                    toast("onReceiverCall: $id")
-                }
-
-                override fun onRecordedFile(recordData: RecordData) {
-                    toast("onRecordedFile")
-                }
-
-                override fun onSendCall(id: String) {
-                    toast("onSendCall: $id")
-                }
-
-                override fun onStart() {
-                    toast("onStart")
-                }
-
-            })
         }
+    }
+
+    private fun callVideo(tellersId : String){
+        weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+            override fun onCallLog(callLog: CallLog) {
+                toast(callLog.StatusCall)
+            }
+
+            override fun onClosed() {
+                runOnUiThread { remoteVideoCallView.gone() }
+            }
+
+            override fun onConnected() {
+                runOnUiThread {
+                    remoteVideoCallView.show()
+                    navigate(MainDirections.actionGlobalDocumentFragment())
+                }
+            }
+
+            override fun onError(mess: String) {
+                runOnUiThread { remoteVideoCallView.gone() }
+            }
+
+            override fun onMessage(mess: String) {
+                toast("onMessage: $mess")
+            }
+
+            override fun onReceiverCall(id: String) {
+                toast("onReceiverCall: $id")
+            }
+
+            override fun onRecordedFile(recordData: RecordData) {
+                toast("onRecordedFile: $recordData")
+            }
+
+            override fun onSendCall(id: String) {
+                toast("onSendCall: $id")
+            }
+
+            override fun onStart() {
+                toast("onStart")
+            }
+
+        })
     }
 
     private fun onShowDialog(directions: NavDirections?) {
