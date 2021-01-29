@@ -13,9 +13,11 @@ import wee.digital.sample.repository.model.*
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.activityVM
 import wee.digital.sample.ui.fragment.register.RegisterVM
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 import java.util.concurrent.TimeUnit
 
 class LoadingFragment : MainFragment() {
@@ -83,7 +85,9 @@ class LoadingFragment : MainFragment() {
                 videoCallId = Shared.sessionVideo.value?.result?.videoCallID.toString(),
                 methodOfReceiving = receiver
         )
-        registerVM.registerCard(body)
+        Voice.ins?.request(VoiceData.PROCESSING_SCREEN){
+            registerVM.registerCard(body)
+        }
     }
 
     override fun onLiveDataObserve() {

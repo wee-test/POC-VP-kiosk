@@ -6,6 +6,7 @@ import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class FailFragment : MainFragment() {
 
@@ -19,6 +20,7 @@ class FailFragment : MainFragment() {
         Shared.messageFail.observe {
             failTitle.text = it.title
             failContent.text = it.message
+            Voice.ins?.request(it.message)
         }
     }
 

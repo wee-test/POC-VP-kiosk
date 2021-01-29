@@ -8,7 +8,9 @@ import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class CardFragment : MainFragment() {
 
@@ -36,6 +38,7 @@ class CardFragment : MainFragment() {
             Shared.cardSelected.postValue(model)
             navigate(MainDirections.actionGlobalCardReceiveFragment())
         }
+        Voice.ins?.request(VoiceData.SELECT_CARD)
     }
 
     private fun sendSocket(data : CardItem){

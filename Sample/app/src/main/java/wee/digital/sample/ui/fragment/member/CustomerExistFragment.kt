@@ -6,7 +6,9 @@ import kotlinx.android.synthetic.main.review_info.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class CustomerExistFragment : MainFragment() {
 
@@ -37,6 +39,7 @@ class CustomerExistFragment : MainFragment() {
             reviewInfoDateExpiration.text = it.customerInfo.identityCardInfo.expiredDate
             reviewInfoIssued.text = it.customerInfo.identityCardInfo.issuedPlace
             reviewInfoDomicile.text = it.customerInfo.identityCardInfo.hometown
+            Voice.ins?.request("${VoiceData.HI_USER}${it.customerInfo.identityCardInfo.fullName}")
         }
     }
 

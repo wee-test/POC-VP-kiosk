@@ -56,7 +56,10 @@ class Voice {
 
     var onSpeakCompleted: () -> Unit = {}
 
-    private var voice = JsonObject()
+    private var voice = JsonObject().apply {
+        put("languageCode", "vi-VN")
+        put("name", "vi-VN-Wavenet-A")
+    }
 
     private val config = JsonObject().apply {
         put("audioEncoding", "MP3")
@@ -64,7 +67,8 @@ class Voice {
         put("speakingRate", "1")
     }
 
-    fun request(text: String) {
+    fun request(text: String, onCompleted: ()->Unit = {}) {
+        onSpeakCompleted = onCompleted
         if (Configs.isMute) {
             onSpeaking()
             onSpeakCompleted()
@@ -129,7 +133,6 @@ class Voice {
         onSpeakCompleted = {}*/
         try {
             mediaPlayer?.release()
-            mediaPlayer?.stop()
         } catch (e: IllegalStateException) {
         }
     }

@@ -17,8 +17,10 @@ import wee.digital.sample.repository.model.MessageData
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
@@ -34,6 +36,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onViewCreated() {
         mFaceDetectJob.observe(viewLifecycleOwner)
+        Voice.ins?.request(VoiceData.FACE_REGISTER)
     }
 
     override fun onLiveDataObserve() {
@@ -46,7 +49,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             if(it == null || it?.responseCode?.code ?: -1 != 0L || !it.isMatched){
                 val messFail = MessageData(
                         "Đăng ký không thành công",
-                        "dữ liệu giấy tờ và khuôn mặt của bạn không trùng khớp"
+                        VoiceData.FACE_NOT_MATCHED
                 )
                 sendSocket(false)
                 Shared.messageFail.postValue(messFail)

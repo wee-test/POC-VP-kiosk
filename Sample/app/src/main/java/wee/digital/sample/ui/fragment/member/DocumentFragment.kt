@@ -15,7 +15,9 @@ import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 import java.util.concurrent.TimeUnit
 
 class DocumentFragment : MainFragment() {
@@ -25,7 +27,7 @@ class DocumentFragment : MainFragment() {
     override fun layoutResource(): Int = R.layout.document
 
     override fun onViewCreated() {
-
+        Voice.ins?.request(VoiceData.SELECT_ID_CARD)
     }
 
     override fun onLiveDataObserve() {

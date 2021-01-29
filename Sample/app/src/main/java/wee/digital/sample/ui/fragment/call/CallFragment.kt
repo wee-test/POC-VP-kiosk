@@ -12,8 +12,10 @@ import wee.digital.sample.repository.model.SocketData
 import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class CallFragment : MainFragment() {
 
@@ -24,6 +26,7 @@ class CallFragment : MainFragment() {
     override fun onViewCreated() {
         post(700) { callVM.getContacts() }
         addClickListener(callActionCancel)
+        Voice.ins?.request(VoiceData.CALLING_SCREEN)
     }
 
     override fun onLiveDataObserve() {

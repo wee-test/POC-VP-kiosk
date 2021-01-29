@@ -2,21 +2,19 @@ package wee.digital.sample.ui.fragment.rating
 
 import android.annotation.SuppressLint
 import android.view.View
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.rating_fragment.*
 import wee.dev.weewebrtc.WeeCaller
 import wee.digital.library.extension.toArray
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.ServiceReviewReq
-import wee.digital.sample.repository.model.SocketData
-import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
-import wee.digital.sample.ui.fragment.face.FaceVM
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 import java.text.SimpleDateFormat
 
 class RatingFragment : MainFragment() {
@@ -34,6 +32,7 @@ class RatingFragment : MainFragment() {
     override fun onViewCreated() {
         bindRatingList()
         addClickListener(frgRatingActionNext)
+        Voice.ins?.request(VoiceData.SUCCESS_SCREEN)
     }
 
     private fun bindRatingList() {
@@ -67,7 +66,12 @@ class RatingFragment : MainFragment() {
                 updateInfo()
                 ratingVM.serviceReview(body)
                 sendSocket()
-                navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
+                Voice.ins?.request(VoiceData.THANKS_RATE){
+                    activity?.runOnUiThread {
+                        navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
+                    }
+                }
+
             }
         }
     }

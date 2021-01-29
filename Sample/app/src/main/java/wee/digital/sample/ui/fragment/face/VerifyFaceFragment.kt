@@ -12,8 +12,10 @@ import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.MessageData
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
@@ -28,6 +30,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
     override fun onViewCreated() {
         isComplete = false
         mFaceDetectJob.observe(viewLifecycleOwner)
+        Voice.ins?.request(VoiceData.FACE_ENROLL)
     }
 
     override fun onLiveDataObserve() {

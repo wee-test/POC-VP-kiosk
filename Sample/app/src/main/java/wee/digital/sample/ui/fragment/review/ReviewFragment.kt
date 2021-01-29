@@ -6,7 +6,9 @@ import kotlinx.android.synthetic.main.review.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.main.MainFragment
+import wee.digital.sample.util.extention.Voice
 
 class ReviewFragment : MainFragment() {
 
@@ -16,6 +18,7 @@ class ReviewFragment : MainFragment() {
         reviewTab.setUpViewPager(this, ReviewInfoFragment(), ReviewCardFragment(), ReviewFormFragment(), reviewPager)
         (reviewPager.getChildAt(0) as RecyclerView).overScrollMode = View.OVER_SCROLL_NEVER
         addClickListener(reviewActionAccept)
+        Voice.ins?.request(VoiceData.CONFIRM_INFO)
     }
 
     override fun onViewClick(v: View?) {
