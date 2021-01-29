@@ -8,6 +8,8 @@ import androidx.navigation.findNavController
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_card1_front.*
+import kotlinx.android.synthetic.main.main_card2_front.*
 import okhttp3.WebSocket
 import wee.dev.weewebrtc.WeeCaller
 import wee.dev.weewebrtc.`interface`.CallListener
@@ -154,6 +156,18 @@ class MainActivity : BaseActivity() {
                 post(400) { connectSocket(Configs.KIOSK_ID, tellerId) }
             }
         })
+    }
+
+    private fun bindDataCard1(number : String,  name : String, exDate : String){
+        card1FrontNumberCard.text = number
+        card1FrontLabelName.text = name
+        card1FrontLabelExDate.text = exDate
+    }
+
+    private fun bindDataCard2(number : String, name : String, exDate : String){
+        card2FrontNumberCard.text = number
+        card2FrontLabelName.text = name
+        card2FrontLabelExDate.text = exDate
     }
 
     override fun onResume() {

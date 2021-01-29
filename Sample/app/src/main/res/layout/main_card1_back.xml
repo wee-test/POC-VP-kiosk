@@ -2,13 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/card1BackRootBack"
     android:layout_width="1014px"
     android:layout_height="642px"
+    android:visibility="invisible"
+    tools:visibility="visible"
     android:background="@mipmap/print_blue"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="@+id/cardBlueGuide"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/card1BackGuide"
