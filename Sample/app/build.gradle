@@ -204,6 +204,9 @@ dependencies {
     androidTestImplementation deps.test.navigation
     androidTestImplementation deps.test.fragment
     androidTestImplementation 'org.mockito:mockito-android:2.7.22'
+
+    //COMPRESS
+    implementation 'id.zelory:compressor:3.0.0'
 }
 
 apply plugin: "com.google.gms.google-services"

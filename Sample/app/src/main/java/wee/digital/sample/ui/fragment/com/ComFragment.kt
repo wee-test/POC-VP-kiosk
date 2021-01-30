@@ -20,9 +20,7 @@ class ComFragment : MainFragment() {
 
     override fun onViewCreated() {
         setupRecycler()
-        comViewNext.setOnClickListener {
-            (context as MainActivity).bindCardBlackWhiteFront("1234 5678 9012 1234", "Nguyen Van A", "03/09")
-        }
+        addClickListener(comViewConnect,comViewClose,comViewNext)
     }
 
     private fun setupRecycler() {
@@ -36,6 +34,14 @@ class ComFragment : MainFragment() {
 
     override fun onLiveDataObserve() {}
 
+    override fun onViewClick(v: View?) {
+        val mainActivity = activity as? MainActivity ?:return
+        when(v){
+            comViewConnect-> mainActivity.printerSocket.open()
+            comViewClose-> mainActivity.printerSocket.close()
+            comViewNext-> mainActivity.bindCardColorFront("1234 4567 8910 1112", "CON NẮM NGUYÊN MẬP", "03/30")
+        }
+    }
     inner class ComAdapter : BaseRecyclerAdapter<ComItem>() {
 
         override fun layoutResource(model: ComItem, position: Int): Int = R.layout.com_item
