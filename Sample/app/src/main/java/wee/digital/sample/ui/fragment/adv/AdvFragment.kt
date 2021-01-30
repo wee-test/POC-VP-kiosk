@@ -24,8 +24,8 @@ class AdvFragment : MainFragment() {
         Shared.socketStatusConnect.postValue(null)
         Shared.socketReqData.postValue(null)
         Shared.callVideo.postValue("")
+        Configs.isMute = false
         addClickListener(advActionStart)
-
     }
 
     override fun onLiveDataObserve() {

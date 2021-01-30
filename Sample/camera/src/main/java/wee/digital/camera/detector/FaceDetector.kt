@@ -12,7 +12,7 @@ class FaceDetector {
     companion object {
         const val MIN_DISTANCE = 100
         const val MIN_SIZE = 180
-        const val MIN_SCORE = 0.9f
+        const val MIN_SCORE = 0.8f
     }
 
     private val maskFilter = ModelFilter("face/mask/manifest.json")

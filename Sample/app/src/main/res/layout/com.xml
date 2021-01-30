@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchParent"
@@ -13,21 +12,48 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/_8sdp"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@+id/comViewNext"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="9"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/com_item"
         tools:spanCount="3" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/comViewNext"
-        style="@style/Button.Primary"
-        android:layout_margin="@dimen/_16sdp"
-        android:background="@drawable/bg_gradient_rounded"
-        android:text="in the choi"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/_8sdp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comViewConnect"
+            style="@style/Button.Primary"
+            android:layout_weight="1"
+            android:layout_margin="0dp"
+            android:layout_width="0dp"
+            android:background="@drawable/bg_gradient_rounded"
+            android:text="connect" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comViewClose"
+            style="@style/Button.Primary"
+            android:layout_width="0dp"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_gradient_rounded"
+            android:text="close" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comViewNext"
+            style="@style/Button.Primary"
+            android:layout_margin="0dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_gradient_rounded"
+            android:text="print" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

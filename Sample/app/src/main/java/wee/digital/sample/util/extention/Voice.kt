@@ -76,7 +76,7 @@ class Voice {
         }
         if (isSpeech) return
         isSpeech = true
-        val name = text.hashCode().toString()+"_${voice["name"].asString}"
+        val name = text.hashCode().toString()+"_vi"
         val temp = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path+"/VPKiosk/Voice")
         if(!temp.exists()) temp.mkdirs()
         var tempMp3:File?=null

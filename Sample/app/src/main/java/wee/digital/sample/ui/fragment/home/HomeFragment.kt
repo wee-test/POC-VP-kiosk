@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.home_info.*
 import kotlinx.android.synthetic.main.home_select.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.main.MainFragment
@@ -37,6 +38,7 @@ class HomeFragment : MainFragment() {
                 navigate(MainDirections.actionGlobalDocumentFragment())
             }
             homeTabSelectSupport -> {
+                Configs.isMute = true
                 navigate(MainDirections.actionGlobalCallFragment())
             }
         }

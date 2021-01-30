@@ -26,7 +26,6 @@ class PrinterSocket {
     }
 
     fun open() {
-        ws?: return
         log.d("connecting to $url")
         val client = OkHttpClient
                 .Builder()
@@ -52,28 +51,40 @@ class PrinterSocket {
     private inner class ListenerHandler : WebSocketListener(){
         override fun onOpen(webSocket: WebSocket, response: Response) {
             ws = webSocket
-            listeners.forEach { it.onOpen(webSocket, response) }
+            listeners.forEach {
+                it.onOpen(webSocket, response)
+            }
         }
 
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-            listeners.forEach { it.onFailure(webSocket, t,response) }
+            listeners.forEach {
+                it.onFailure(webSocket, t,response)
+            }
         }
 
         override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
             ws = null
-            listeners.forEach { it.onClosing(webSocket, code,reason) }
+            listeners.forEach {
+                it.onClosing(webSocket, code,reason)
+            }
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
-            listeners.forEach { it.onMessage(webSocket, text) }
+            listeners.forEach {
+                it.onMessage(webSocket, text)
+            }
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-            listeners.forEach { it.onMessage(webSocket, bytes) }
+            listeners.forEach {
+                it.onMessage(webSocket, bytes)
+            }
         }
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            listeners.forEach { it.onClosed(webSocket, code, reason) }
+            listeners.forEach {
+                it.onClosed(webSocket, code, reason)
+            }
         }
 
 

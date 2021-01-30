@@ -1,20 +1,30 @@
 package wee.digital.sample.ui.main
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_card1_front.*
 import kotlinx.android.synthetic.main.main_card2_front.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
 import wee.dev.weewebrtc.WeeCaller
+import wee.dev.weewebrtc.WeeCaller.Companion.context
 import wee.dev.weewebrtc.`interface`.CallListener
 import wee.dev.weewebrtc.repository.model.CallLog
 import wee.dev.weewebrtc.repository.model.RecordData
@@ -32,6 +42,7 @@ import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
+import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
@@ -44,7 +55,7 @@ class MainActivity : BaseActivity() {
 
     private var disposable: Disposable? = null
 
-    private val printerSocket = PrinterSocket()
+     val printerSocket = PrinterSocket()
 
     private val weeCaller = WeeCaller(this)
 
@@ -56,6 +67,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         weeCaller.init()
         printerSocket.addListener(MyWebSocketListenr())
+
     }
 
     override fun navController(): NavController {
@@ -116,7 +128,7 @@ class MainActivity : BaseActivity() {
 
     private fun callVideo(tellersId: String) {
         weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
-            weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+            weeCaller.sendCall("46222641", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
                 override fun onCallLog(callLog: CallLog) {
                     toast(callLog.StatusCall)
                     Shared.dataCallLog = callLog
@@ -184,16 +196,25 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    fun bindDataCard1(number: String, name: String, exDate: String) {
+    fun bindCardColorFront(number: String, name: String, exDate: String) {
         card1FrontNumberCard.text = number
         card1FrontLabelName.text = name
         card1FrontLabelExDate.text = exDate
+        val bitmap = card1FrontRootFront.getBitmap()
+        val bytes = bitmap.toBytes()
+        val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
+        printerSocket.send(byteString)
     }
 
     fun bindCardBlackWhiteFront(number: String, name: String, exDate: String) {
         card2FrontNumberCard.text = number
         card2FrontLabelName.text = name
         card2FrontLabelExDate.text = exDate
+
+
+        //compress
+        //val stream = ByteArrayOutputStream()
+        //bitmap?.compress(Bitmap.CompressFormat.JPEG,80,stream)
         val bitmap = card2FrontRootFront.getBitmap()
         val bytes = bitmap.toBytes()
         val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
@@ -214,13 +235,22 @@ class MainActivity : BaseActivity() {
         disposable?.dispose()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        printerSocket.close()
+    }
+
     private inner class MyWebSocketListenr : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
-            toast("printer socket closed")
+            mainThread {
+                mainTextViewPrinter.text = "open"
+            }
         }
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            toast("printer socket closed")
+            mainThread {
+                mainTextViewPrinter.text = "close"
+            }
         }
     }
 

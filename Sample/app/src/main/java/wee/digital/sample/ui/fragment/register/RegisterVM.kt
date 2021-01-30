@@ -2,6 +2,7 @@ package wee.digital.sample.ui.fragment.register
 
 import android.annotation.SuppressLint
 import android.util.Base64
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import io.reactivex.Single
@@ -19,6 +20,8 @@ class RegisterVM : BaseViewModel(){
     val statusVerifyCard = EventLiveData<ResponseFaceVerifyToIDCard>()
 
     val statusRegisterCard = EventLiveData<ResponseCustomerRegister>()
+
+    val statusUpdateInfo = EventLiveData<ResponseVideoCallUpdateInfo>()
 
     @SuppressLint("CheckResult")
     fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
@@ -47,6 +50,22 @@ class RegisterVM : BaseViewModel(){
                     statusRegisterCard.postValue(it)
                 }, {
                     statusRegisterCard.postValue(null)
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateInfo(data: UpdateInfoReq) {
+        Single.fromCallable {
+            Log.e("updateInfo", "call api")
+            lib?.kioskService!!.videoCallUpdateInfo(Gson().toJson(data).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.e("updateInfo", "$it")
+                    statusUpdateInfo.postValue(it)
+                }, {
+                    Log.e("updateInfo", "$it")
+                    statusUpdateInfo.postValue(null)
                 })
     }
 
