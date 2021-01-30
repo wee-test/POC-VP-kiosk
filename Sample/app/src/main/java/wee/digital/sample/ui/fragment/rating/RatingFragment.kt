@@ -8,6 +8,7 @@ import wee.digital.library.extension.toArray
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.ServiceReviewReq
+import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
@@ -78,7 +79,7 @@ class RatingFragment : MainFragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun updateInfo(){
-        if (Shared.dataCallLog == null) return
+        /*if (Shared.dataCallLog == null) return
         val tellerData = Shared.socketStatusConnect.value?.listTellersIDString
         val tellersId = tellerData?.toArray()?.get(0)?.asString ?: ""
         val dataCall = Shared.dataCallLog
@@ -102,7 +103,7 @@ class RatingFragment : MainFragment() {
                 waitingTime = timeWaiting,
                 processingTime = processTime.toInt()
         )
-        mainVM.updateInfo(body)
+        mainVM.updateInfo(body)*/
     }
 
     private fun sendSocket(){

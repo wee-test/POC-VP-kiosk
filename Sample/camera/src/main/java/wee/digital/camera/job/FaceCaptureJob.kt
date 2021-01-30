@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.detector.FaceDetector
+import wee.digital.camera.detector.FaceDetector.Companion.MIN_SCORE
 import wee.digital.camera.uiThread
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -70,7 +71,8 @@ class FaceCaptureJob(private val listener: Listener) :
      */
     override fun onFaceScore(score: Float): Boolean {
         Log.e("CheckFace", "onFaceScore $score")
-        return score > 0.9
+        return score > MIN_SCORE
+
     }
 
     override fun onDepthLabel(label: String, confidence: Float): Boolean {

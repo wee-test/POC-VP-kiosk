@@ -7,7 +7,7 @@ data class UpdateInfoReq(
         @SerializedName("kioskId")
         var kioskId : String = Configs.KIOSK_ID,
 
-        @SerializedName("videoId")
+        @SerializedName("videoCallId")
         var videoId : String = "",
 
         @SerializedName("customerId")
@@ -29,5 +29,8 @@ data class UpdateInfoReq(
         var waitingTime : Int = 0,
 
         @SerializedName("processingTime")
-        var processingTime : Int = 0
+        var processingTime : Int = 0,
+
+        @SerializedName("createAt")
+        var createAt : String = ""
 )

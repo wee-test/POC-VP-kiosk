@@ -189,7 +189,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun cropFrame(frame: ByteArray) {
         if (processing) return
         processing = true
-        weeOcr?.cropObjectAlign(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
+        weeOcr?.cropObject(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
             activity?.runOnUiThread {
                 if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
                     processing = false

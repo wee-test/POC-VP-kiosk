@@ -116,7 +116,7 @@ class MainActivity : BaseActivity() {
 
     private fun callVideo(tellersId: String) {
         weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
-            weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+            weeCaller.sendCall("46222641", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
                 override fun onCallLog(callLog: CallLog) {
                     toast(callLog.StatusCall)
                     Shared.dataCallLog = callLog

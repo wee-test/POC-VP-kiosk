@@ -46,10 +46,10 @@ object Shared {
     val passportData = MutableLiveData<PassportData>()
 
     val cardSelected = MutableLiveData<CardItem>()
+
     /**
      * giao dich vien
      */
-
     val socketReqData = MutableLiveData<SocketReq>()
 
     val socketStatusConnect = EventLiveData<ResponseTellerContact>()
