@@ -2,6 +2,7 @@ package wee.digital.sample.ui.fragment.ocr
 
 import android.annotation.SuppressLint
 import android.util.Base64
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import io.reactivex.Single
@@ -32,6 +33,7 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("extractNidFront", "$it")
                     if(it.responseCode.code != 0L){
                         statusExtractFront.postValue(FrontCardResp(code = -1))
                     }else{
@@ -47,6 +49,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractFront.postValue(resp)
                     }
                 },{
+                    Log.e("extractNidFront", "$it")
                     statusExtractFront.postValue(FrontCardResp(code = -1))
                 })
     }
@@ -61,6 +64,7 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("extractNidBack", "$it")
                     if(it.responseCode.code != 0L){
                         statusExtractBack.postValue(BackCardResp(code = -1))
                     }else{
@@ -73,6 +77,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractBack.postValue(resp)
                     }
                 },{
+                    Log.e("extractNidBack", "${it.message}")
                     statusExtractBack.postValue(BackCardResp(code = -1))
                 })
     }
@@ -87,6 +92,7 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("extractNid12Front", "$it")
                     if(it.responseCode.code != 0L){
                         statusExtractFront.postValue(FrontCardResp(code = -1))
                     }else{
@@ -108,6 +114,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractFront.postValue(resp)
                     }
                 }, {
+                    Log.e("extractNid12Front", "${it.message}")
                     statusExtractFront.postValue(FrontCardResp(code = -1))
                 })
     }
@@ -147,6 +154,7 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("extractCccdFront", "$it")
                     if(it.responseCode.code != 0L){
                         statusExtractFront.postValue(FrontCardResp(code = -1))
                     }else{
@@ -164,6 +172,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractFront.postValue(resp)
                     }
                 }, {
+                    Log.e("extractCccdFront", "${it.message}")
                     statusExtractFront.postValue(FrontCardResp(code = -1))
                 })
     }
@@ -178,6 +187,7 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("extractCccdBack", "$it")
                     if(it.responseCode.code != 0L){
                         statusExtractBack.postValue(BackCardResp(code = -1))
                     }else{
@@ -189,6 +199,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractBack.postValue(resp)
                     }
                 }, {
+                    Log.e("extractCccdBack", "${it.message}")
                     statusExtractBack.postValue(BackCardResp(code = -1))
                 })
     }

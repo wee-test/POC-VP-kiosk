@@ -46,7 +46,6 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerFrame?.setImageBitmap(it?.first)
         }
         registerVM.statusVerifyCard.observe {
-            toast("${it.isMatched}")
             if(it == null || it?.responseCode?.code ?: -1 != 0L || !it.isMatched){
                 val messFail = MessageData(
                         "Đăng ký không thành công",

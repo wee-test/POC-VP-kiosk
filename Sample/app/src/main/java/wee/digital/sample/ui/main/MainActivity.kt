@@ -164,11 +164,8 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
                 }
 
                 override fun onRecordedFile(recordData: RecordData) {
-                    toast("onRecordedFile")
-                    /*if(recordData.repair()){
-                        recordData.repairedData
-                        recordData.sizeDataStr
-                    }*/
+                    Log.e("onRecordedFile", "recordVideo")
+                    mainVM.recordVideo(recordData)
                 }
 
                 override fun onSendCall(id: String) {

@@ -32,8 +32,10 @@ class RegisterVM : BaseViewModel(){
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("verifyIdCard", "$it")
                     statusVerifyCard.postValue(it)
                 }, {
+                    Log.e("verifyIdCard", "${it.message}")
                     statusVerifyCard.postValue(null)
                 })
     }
@@ -41,12 +43,15 @@ class RegisterVM : BaseViewModel(){
     @SuppressLint("CheckResult")
     fun registerCard(body : CustomerRegisterReq){
         Single.fromCallable {
+            Log.e("registerCard", "$body")
             lib?.kioskService!!.customerCardRegister(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("registerCard", "$it")
                     statusRegisterCard.postValue(it)
                 }, {
+                    Log.e("registerCard", "${it.message}")
                     statusRegisterCard.postValue(null)
                 })
     }

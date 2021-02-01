@@ -2,6 +2,7 @@ package wee.digital.sample.ui.fragment.face
 
 import android.annotation.SuppressLint
 import android.util.Base64
+import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -36,12 +37,14 @@ class FaceVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("verifyFace", "$it")
                     if (it.responseCode.code == 0L) {
                         statusVerify.postValue(true)
                     } else {
                         statusVerify.postValue(false)
                     }
                 }, {
+                    Log.e("verifyFace", "${it.message}")
                     statusVerify.postValue(false)
                 })
     }
@@ -54,8 +57,10 @@ class FaceVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("identifyFace", "$it")
                     statusIdentify.postValue(it)
                 }, {
+                    Log.e("identifyFace", "${it.message}")
                     statusIdentify.postValue(null)
                 })
     }
@@ -70,8 +75,10 @@ class FaceVM : BaseViewModel() {
         }.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("getInfoCustomer", "$it")
                     statusInfoCustomer.postValue(it)
                 },{
+                    Log.e("getInfoCustomer", "${it.message}")
                     statusInfoCustomer.postValue(null)
                 })
     }

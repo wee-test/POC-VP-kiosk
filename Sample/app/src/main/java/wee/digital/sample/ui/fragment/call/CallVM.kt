@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.call
 
 import android.annotation.SuppressLint
+import android.util.Log
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import vplib.ResponseTellerContact
@@ -20,8 +21,10 @@ class CallVM : BaseViewModel(){
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("getContacts", "$it")
                     statusContacts.postValue(it)
                 }, {
+                    Log.e("getContacts", "${it.message}")
                     statusContacts.postValue(null)
                 })
     }

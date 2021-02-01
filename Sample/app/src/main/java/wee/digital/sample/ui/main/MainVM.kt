@@ -16,12 +16,16 @@ import vplib.ResponseLogin
 import vplib.ResponseTellerContact
 import vplib.ResponseVideoCallCreateSession
 import vplib.ResponseVideoCallUpdateInfo
+import wee.dev.weewebrtc.repository.model.RecordData
+import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.put
 import wee.digital.library.extension.toast
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.LoginKioskReq
+import wee.digital.sample.repository.model.RecordSendData
 import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.shared.Configs
+import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.EventLiveData
 import wee.digital.sample.ui.fragment.dialog.alert.Alert
 import wee.digital.sample.ui.fragment.dialog.date.DateArg
@@ -72,8 +76,10 @@ open class MainVM : ViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("createNewSession", "$it")
                     statusCreateNewSession.postValue(it)
                 }, {
+                    Log.e("createNewSession", "${it.message}")
                     statusCreateNewSession.postValue(null)
                 })
     }
@@ -85,13 +91,28 @@ open class MainVM : ViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    toast("${it.responseCode.code}")
                     Log.e("updateInfo", "$it")
                     statusUpdateInfo.postValue(it)
                 }, {
-                    toast("${it.message}")
                     Log.e("updateInfo", "$it")
                     statusUpdateInfo.postValue(null)
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    fun recordVideo(data: RecordData) {
+        Single.fromCallable { data.repair() }
+                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    if (it) {
+                        val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
+                        val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData.toStringBase64())
+                        val a = lib?.kioskService!!.videoCallRecord(Gson().toJson(body).toByteArray())
+                        Log.e("recordVideo", "$a")
+                    }
+                }, {
+                    Log.e("recordVideo", "${it.message}")
                 })
     }
 

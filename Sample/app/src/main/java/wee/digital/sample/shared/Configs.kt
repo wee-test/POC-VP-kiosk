@@ -1,5 +1,6 @@
 package wee.digital.sample.shared
 
+import wee.dev.weeocr.WeeOCR
 import java.text.SimpleDateFormat
 
 
@@ -38,5 +39,16 @@ object Configs {
     const val FORM_STEP_7 = "FORM-STEP-7"
     const val FORM_STEP_8 = "FORM-STEP-8"
     const val END_STEP = "END-STEP"
+
+    fun configWeeOcr(){
+        WeeOCR.CAMERA_ID = 1
+        WeeOCR.CAMERA_SATURATION_STEP = "0"
+        WeeOCR.THRESH_CROP = 64.0
+        WeeOCR.BLUR_MIN_VALUE = 100
+        WeeOCR.CAMERA_ZOOM = "18"
+        WeeOCR.DELAY_SCAN = 7
+        WeeOCR.BLUR_MIN_VALUE = 100
+        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
+    }
 
 }
