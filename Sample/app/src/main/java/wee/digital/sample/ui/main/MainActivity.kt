@@ -242,6 +242,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
     override fun onDestroy() {
         super.onDestroy()
         printerSocket.close()
+        socketServer?.stop()
     }
 
     private inner class MyWebSocketListenr : WebSocketListener() {

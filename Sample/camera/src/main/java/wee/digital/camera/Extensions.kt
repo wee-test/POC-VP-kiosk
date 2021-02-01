@@ -233,14 +233,15 @@ private fun getFaceDegreeY(
         pointMouthLeft: Point,
         pointMouthRight: Point
 ): Double {
+    val noseY = pointNose.y - (pointNose.y*0.05).roundToInt()
     val pointCenterEye = getCenterPoint(pointEyeLeft, pointEyeRight)
     val pointCenterMouth = getCenterPoint(pointMouthLeft, pointMouthRight)
     val pointCenterY = getCenterPoint(pointCenterEye, pointCenterMouth)
     val rY = distancePoint(pointCenterEye, pointCenterY)
-    val disOMY = distancePoint(Point(pointCenterY.x, pointNose.y), pointCenterY)
+    val disOMY = distancePoint(Point(pointCenterY.x, noseY), pointCenterY)
     val angleDataY = disOMY / rY
     val angleY = acos(angleDataY.toDouble())
-    return if (pointNose.y < pointCenterY.y) (90 - angleY * (180 / Math.PI).toFloat()) else -(90 - angleY * (180 / Math.PI).toFloat())
+    return if (noseY < pointCenterY.y) (90 - angleY * (180 / Math.PI).toFloat()) else -(90 - angleY * (180 / Math.PI).toFloat())
 }
 
 private fun getFaceDegreeX(

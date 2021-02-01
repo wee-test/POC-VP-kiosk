@@ -69,7 +69,7 @@ open class MainVM : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun createNewSession(kioskId : String){
+    fun createNewSession(kioskId: String) {
         Single.fromCallable {
             val body = JsonObject().put("kioskId", kioskId)
             lib?.kioskService!!.videoCallCreateSession(Gson().toJson(body).toByteArray())
@@ -102,45 +102,46 @@ open class MainVM : ViewModel() {
     @SuppressLint("CheckResult")
     fun recordVideo(data: RecordData) {
         Single.fromCallable { data.repair() }
-                .observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    if (it) {
-                        /*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
-                        val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
-                        val dataB = Gson().toJson(body).toByteArray()
-                        Log.e("recordVideo","Size Data: ${dataB.size}")
-                        val a = lib?.kioskService!!.videoCallRecord(dataB)
-                        Log.e("recordVideo", "$a")*/
-                        sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID ?: "",data.sizeDataStr, data.repairedData!!)
-                    }
-                }, {
-                    Log.e("recordVideo", "${it.message}")
-                })
+            .observeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (it) {
+                    /*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
+                    val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
+                    val dataB = Gson().toJson(body).toByteArray()
+                    Log.e("recordVideo","Size Data: ${dataB.size}")
+                    val a = lib?.kioskService!!.videoCallRecord(dataB)
+                    Log.e("recordVideo", "$a")*/
+                    sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID
+                            ?: "", data.sizeDataStr, data.repairedData!!)
+                }
+            }, {
+                Log.e("recordVideo", "${it.message}")
+            })
     }
 
-    private fun sendVideoRecord(videoId: String, sizeDataStr: String, data: ByteArray){
-        val regUrl= "http://weezi.biz:7080/kiosk/videoCall/record"
+    private fun sendVideoRecord(videoId: String, sizeDataStr: String, data: ByteArray) {
+        val regUrl = "http://weezi.biz:7080/kiosk/videoCall/record"
         try {
-            val reg = regUrl.httpPost().timeout(30000)
-            Log.e("recordVideo","Size: ${data.size}")
+
+            Log.e("recordVideo", "Size: ${data.size}")
             val timeIn = System.currentTimeMillis()
-            reg.header(Pair("Content-Type", "application/json"),
-                    Pair("videoCallId",videoId),
-                    Pair("Ekycid",sizeDataStr)
+            regUrl.httpPost().timeout(30000).header(Pair("Content-Type", "application/json"),
+                    Pair("videoCallId", videoId),
+                    Pair("Ekycid", sizeDataStr)
             ).body(data).responseString { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
-                        Log.e("recordVideo","Send Fail [${System.currentTimeMillis() - timeIn}]: ${result.error}")
+                        Log.e("recordVideo", "Send Fail [${System.currentTimeMillis() - timeIn}]: ${result.error}")
                     }
                     is Result.Success -> {
-                        Log.e("recordVideo","Send Success [${System.currentTimeMillis() - timeIn}]: ${result.value}")
+                        Log.e("recordVideo", "Send Success [${System.currentTimeMillis() - timeIn}]: ${result.value}")
                     }
                 }
             }
-        } catch (t: Throwable){
+        } catch (t: Throwable) {
             t.printStackTrace()
-            Log.e("recordVideo","Failed: ${t.message}")
+            Log.e("recordVideo", "Failed: ${t.message}")
         }
     }
 
