@@ -46,6 +46,7 @@ class CardFragment : MainFragment() {
         req?.cmd = Configs.FORM_STEP_5
         req?.data?.cardType = data.type
         Socket.action.sendData(req)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
     override fun onLiveDataObserve() {

@@ -10,6 +10,7 @@ import wee.digital.library.extension.show
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.IdentifyCardInfo
+import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.socket.Socket.Companion.action
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
@@ -78,7 +79,8 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                     }
                     return
                 }
-                sendSocket(Configs.FORM_STEP_3)
+                sendSocket()
+                action.sendData(SocketReq(cmd = Configs.END_STEP))
                 navigate(MainDirections.actionGlobalRegisterFragment())
             }
         }
@@ -217,7 +219,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         return true
     }
 
-    private fun sendSocket(actionDone : String = Configs.FORM_STEP_2) {
+    private fun sendSocket() {
         val resp = Shared.socketReqData.value
         resp?.cmd = Configs.FORM_STEP_3
         resp?.data?.fullName = ocrInputFullName.text.toString()

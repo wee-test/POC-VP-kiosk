@@ -115,6 +115,7 @@ class LoadingFragment : MainFragment() {
         req?.cmd = Configs.FORM_STEP_7
         req?.data?.isConfirmed = bool
         Socket.action.sendData(req)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
     override fun onResume() {

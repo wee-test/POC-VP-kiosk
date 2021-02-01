@@ -101,6 +101,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         resp?.cmd = Configs.FORM_STEP_2
         resp?.data?.photo = Shared.frameCardData.value
         Socket.action.sendData(resp)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
     override fun onViewClick(v: View?) {

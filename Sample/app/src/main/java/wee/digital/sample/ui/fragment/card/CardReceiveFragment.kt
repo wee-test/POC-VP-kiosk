@@ -11,6 +11,7 @@ import wee.digital.sample.R
 import wee.digital.sample.repository.model.BranchInfo
 import wee.digital.sample.repository.model.HomeInfo
 import wee.digital.sample.repository.model.MethodOfReceiving
+import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
@@ -81,7 +82,8 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
                     receiveRadioBranch.isChecked -> 3
                     else -> 1
                 }
-                sendSocket(codeReceiver, Configs.FORM_STEP_6)
+                sendSocket(codeReceiver)
+                Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
                 navigate(MainDirections.actionGlobalReviewFragment())
             }
         }
@@ -146,7 +148,7 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
         return true
     }
 
-    private fun sendSocket(typeReceiver: Int, actionDone : String = Configs.FORM_STEP_5) {
+    private fun sendSocket(typeReceiver: Int) {
         val req = Shared.socketReqData.value
         req?.cmd = Configs.FORM_STEP_6
         when (typeReceiver) {
@@ -187,6 +189,11 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
         disposableSendSocket?.dispose()
         disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
                 .subscribe { sendSocket(2) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposableSendSocket?.dispose()
     }
 
 }

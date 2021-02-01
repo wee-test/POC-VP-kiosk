@@ -9,6 +9,7 @@ import wee.digital.library.extension.toArray
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.ServiceReviewReq
+import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
@@ -35,7 +36,6 @@ class RatingFragment : MainFragment() {
         bindRatingList()
         addClickListener(frgRatingActionNext)
         Voice.ins?.request(VoiceData.SUCCESS_SCREEN)
-        updateInfo()
     }
 
     private fun bindRatingList() {
@@ -66,6 +66,7 @@ class RatingFragment : MainFragment() {
                         transId = customerRegister?.result?.transID.toString(),
                         reviewType = ratingModel.type
                 )
+                updateInfo()
                 ratingVM.serviceReview(body)
                 sendSocket()
                 Voice.ins?.request(VoiceData.THANKS_RATE){
@@ -73,7 +74,6 @@ class RatingFragment : MainFragment() {
                         navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
                     }
                 }
-
             }
         }
     }
@@ -115,6 +115,7 @@ class RatingFragment : MainFragment() {
         req?.cmd = Configs.FORM_STEP_8
         req?.data?.reviewType = ratingModel.type
         Socket.action.sendData(req)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
 }

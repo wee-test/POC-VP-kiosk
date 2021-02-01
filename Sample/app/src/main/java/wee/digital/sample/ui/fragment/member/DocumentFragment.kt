@@ -75,6 +75,7 @@ class DocumentFragment : MainFragment() {
         resp?.cmd = Configs.FORM_STEP_1
         resp?.data?.type = type
         Socket.action.sendData(resp)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
     override fun onResume() {
