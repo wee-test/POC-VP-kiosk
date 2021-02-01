@@ -101,7 +101,7 @@ class LoadingFragment : MainFragment() {
                                 "Có lỗi xảy ra trong quá trình mở thẻ, bạn vui lòng thử lại")
                 )
                 sendSocket(false)
-                navigate(MainDirections.actionGlobalRatingFragment())
+                navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
             Shared.customerInfoRegisterSuccess.postValue(it)

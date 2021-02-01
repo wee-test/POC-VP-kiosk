@@ -37,6 +37,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onViewCreated() {
         mFaceDetectJob.observe(viewLifecycleOwner)
+        RealSense.imagesLiveData.postValue(null)
         Voice.ins?.request(VoiceData.FACE_REGISTER)
     }
 
@@ -116,7 +117,6 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onPause() {
         super.onPause()
-        RealSense.imagesLiveData.postValue(null)
         RealSense.stop()
     }
 

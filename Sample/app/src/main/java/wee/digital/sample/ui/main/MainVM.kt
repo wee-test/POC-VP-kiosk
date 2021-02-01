@@ -40,8 +40,6 @@ open class MainVM : ViewModel() {
 
     val statusCreateNewSession = EventLiveData<ResponseVideoCallCreateSession>()
 
-    val dialogTag = mutableListOf<String>()
-
     val dialogLiveData = EventLiveData<NavDirections>()
 
     val selectableLiveData = MutableLiveData<SelectableAdapter<*>>()
@@ -107,8 +105,10 @@ open class MainVM : ViewModel() {
                 .subscribe({
                     if (it) {
                         val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
-                        val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData.toStringBase64())
-                        val a = lib?.kioskService!!.videoCallRecord(Gson().toJson(body).toByteArray())
+                        val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
+                        val dataB = Gson().toJson(body).toByteArray()
+                        Log.e("recordVideo","Size Data: ${dataB.size}")
+                        val a = lib?.kioskService!!.videoCallRecord(dataB)
                         Log.e("recordVideo", "$a")
                     }
                 }, {

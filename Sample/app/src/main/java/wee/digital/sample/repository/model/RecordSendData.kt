@@ -10,5 +10,5 @@ class RecordSendData (
         var Ekycid : String = "",
 
         @SerializedName("body")
-        var body : String = ""
+        var body : ByteArray? = null
 )

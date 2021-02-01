@@ -29,6 +29,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onViewCreated() {
         isComplete = false
+        RealSense.imagesLiveData.postValue(null)
         mFaceDetectJob.observe(viewLifecycleOwner)
         Voice.ins?.request(VoiceData.FACE_ENROLL)
     }
@@ -109,7 +110,6 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onPause() {
         super.onPause()
-        RealSense.imagesLiveData.postValue(null)
         RealSense.stop()
     }
 
