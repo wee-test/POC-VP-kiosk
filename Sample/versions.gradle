@@ -136,7 +136,7 @@ test.navigation = "androidx.navigation:navigation-testing:$versions.navigation"
 test.fragment = "androidx.fragment:fragment-testing:$versions.fragment"
 deps.test = test
 
-// UTILS
+// UTIL
 deps.okhttp = "com.squareup.okhttp3:okhttp:3.12.0"
 deps.okhttp_log = "com.squareup.okhttp3:logging-interceptor:4.9.0"
 deps.permissions = "com.github.tbruyelle:rxpermissions:0.10.2"

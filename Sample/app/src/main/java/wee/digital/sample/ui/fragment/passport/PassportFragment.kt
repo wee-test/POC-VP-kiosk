@@ -1,14 +1,20 @@
 package wee.digital.sample.ui.fragment.passport
 
+import android.graphics.Bitmap
 import android.graphics.Camera
 import kotlinx.android.synthetic.main.passport.*
 import wee.dev.weeocr.WeeOCR
 import wee.dev.weeocr.camera.CameraConfig
 import wee.dev.weeocr.camera.CameraSource
 import wee.dev.weeocr.camera.FrameStreamListener
+import wee.digital.camera.toBytes
+import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.repository.model.PhotoCardInfo
+import wee.digital.sample.repository.model.SocketReq
+import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainFragment
@@ -76,12 +82,21 @@ class PassportFragment : MainFragment(), FrameStreamListener {
         processing = true
         weeOcr?.checkPassport(byteArray, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) {
             if (it.frame != null) {
+                sendSocket(it.frame)
                 Shared.passportData.postValue(it)
-                navigate(MainDirections.actionGlobalOcrConfirmFragment())
+                navigate(MainDirections.actionGlobalPassportInfoFragment())
                 return@checkPassport
             }
             processing = false
         }
+    }
+
+    private fun sendSocket(bitmap: Bitmap?) {
+        val resp = Shared.socketReqData.value
+        resp?.cmd = Configs.FORM_STEP_2
+        resp?.data?.photo = PhotoCardInfo(cardFront = bitmap.toBytes().toStringBase64(), cardBack = bitmap.toBytes().toStringBase64())
+        Socket.action.sendData(resp)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
 }

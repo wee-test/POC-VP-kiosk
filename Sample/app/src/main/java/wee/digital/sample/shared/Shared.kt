@@ -82,7 +82,11 @@ object Shared {
         readAsset("json/gender.json").parse(Array<Selectable>::class)
     }
 
-    fun resetData(){
+    val nationalList by lazy {
+        readAsset("json/national.json").parse(Array<NationalData>::class)
+    }
+
+    fun resetData() {
         customerInfoVerify.postValue(null)
         customerInfoExist.postValue(null)
         customerInfoRegisterSuccess.postValue(null)

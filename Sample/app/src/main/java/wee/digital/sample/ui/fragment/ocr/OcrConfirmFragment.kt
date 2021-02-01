@@ -57,14 +57,6 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         Voice.ins?.request(VoiceData.OCR_OKE)
     }
 
-    private fun uiPassport(){
-
-    }
-
-    private fun uiCard(type : String){
-
-    }
-
     private fun initListenerInput() {
         ocrInputFullName.initListener(this)
         ocrInputNumber.initListener(this)
@@ -137,7 +129,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
 
     private fun checkValidData(): Boolean {
         val name = ocrInputFullName.text.toString()
-        val nameSplit = name.split("")
+        val nameSplit = name.split(" ")
         if (name.isEmpty() || name.length < 3 || nameSplit.size < 2) {
             errorMessage = "Họ và tên không hợp lệ"
             ocrInputFullName.error = errorMessage
