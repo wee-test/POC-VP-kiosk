@@ -68,6 +68,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         ocrInputAddress.initListener(this)
         ocrInputPhone.initListener(this)
         ocrInputEmail.initListener(this)
+        ocrInputExDate.initListener(this)
     }
 
     override fun onViewClick(v: View?) {
@@ -128,7 +129,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
 
     private fun checkValidData(): Boolean {
         val name = ocrInputFullName.text.toString()
-        val nameSplit = name.split("")
+        val nameSplit = name.split(" ")
         if (name.isEmpty() || name.length < 3 || nameSplit.size < 2) {
             errorMessage = "Họ và tên không hợp lệ"
             ocrInputFullName.error = errorMessage

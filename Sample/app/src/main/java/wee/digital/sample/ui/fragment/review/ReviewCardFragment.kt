@@ -18,7 +18,8 @@ class ReviewCardFragment : MainFragment() {
             reviewCardNameCard.text = it.name
             reviewCardholder.text = Shared.ocrConfirmData.value?.fullName
         }
-        Shared.ocrCardFront.observe {
+        Shared.ocrConfirmData.observe {
+            it ?: return@observe
             reviewCardholder.text = it.fullName
         }
     }

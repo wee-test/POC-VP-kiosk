@@ -9,7 +9,6 @@ data class SocketData(
         var type: String = "",
         var photo: PhotoCardInfo? = null,
         var idCardNumber: String = "",
-        var passportNumber: String = "",
         var fullName: String = "",
         var dateOfBirth: String = "",
         var gender: Int = 0,
@@ -28,5 +27,8 @@ data class SocketData(
         var phoneNumber : String = "",
         var email : String = "",
         var methodOfReceivingType : Int = 1,
-        var idCardMatched : Boolean = false
+        var idCardMatched : Boolean = false,
+        var passportNumber : String = "",
+        var passportType : String = "",
+        var passportCode : String = ""
 )

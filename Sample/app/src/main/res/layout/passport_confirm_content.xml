@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchWidth"
+    android:background="@color/colorBackgroundGray"
+    android:paddingHorizontal="@dimen/_24sdp"
+    android:paddingTop="@dimen/margin">
+
+     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/passportContentTitle"
+        style="@style/TextView.Title"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:fontFamily="@font/svn_gilroy_bold"
+        android:text="Xác nhận thông tin \nđăng ký"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputFullName"
+        style="@style/InputView"
+        android:hint="Họ và tên đầy đủ"
+        android:layout_marginTop="@dimen/margin"
+        android:src="@drawable/ic_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passportContentTitle" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputNumberNid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Số chứng minh nhân dân"
+        android:inputType="number"
+        android:src="@drawable/ic_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputFullName" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputInputNationality"
+        style="@style/InputView"
+        android:hint="Quốc tịch"
+        android:src="@drawable/ic_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputNumberNid" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputNumberPassport"
+        style="@style/InputView"
+        android:hint="Số hộ chiếu"
+        android:inputType="number"
+        android:src="@drawable/ic_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputInputNationality" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputExDate"
+        style="@style/InputView"
+        android:hint="Ngày hết hạn"
+        android:src="@drawable/ic_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputNumberPassport" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputBirths"
+        style="@style/InputView"
+        app:layout_constraintHorizontal_weight="2"
+        android:hint="Ngày tháng năm sinh"
+        android:inputType="number"
+        android:src="@drawable/ic_date"
+        app:layout_constraintEnd_toStartOf="@+id/passportInputGender"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputExDate" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputGender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1.5"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:hint="Giới tính"
+        android:src="@drawable/ic_gender"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/passportInputBirths"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputExDate" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputType"
+        style="@style/InputView"
+        android:hint="Loại"
+        android:src="@drawable/ic_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputGender" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputCode"
+        style="@style/InputView"
+        android:hint="Code"
+        android:src="@drawable/ic_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputType" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputPhone"
+        style="@style/InputView"
+        android:hint="Số điện thoại"
+        android:inputType="number"
+        android:maxLength="10"
+        android:src="@drawable/ic_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputCode" />
+
+    <wee.digital.sample.widget.TextInputView
+        android:id="@+id/passportInputEmail"
+        style="@style/InputView"
+        android:hint="Email"
+        android:src="@drawable/ic_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputPhone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/passportConfirmActionNext"
+        android:background="@drawable/bg_gradient_rounded"
+        android:text="Xác nhận"
+        android:layout_marginVertical="@dimen/margin2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passportInputEmail"
+        style="@style/Button.Primary"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,10 @@ class LoadingFragment : MainFragment() {
                 hometown = card.hometown,
                 issuedDate = card.issuedDate,
                 issuedPlace = card.issuedPlace,
-                expiredDate = if(card.expiredDate.isNullOrEmpty()) "02/01/2025" else card.expiredDate,
+                passportNumber = card.passportNumber,
+                passportType = card.passportType,
+                passportCode = card.passportCode,
+                expiredDate = if (card.expiredDate.isEmpty()) "02/01/2025" else card.expiredDate,
                 permanentAddress = card.permanentAddress,
                 nationality = "Việt Nam"
         )

@@ -35,6 +35,7 @@ class RatingFragment : MainFragment() {
     override fun onViewCreated() {
         bindRatingList()
         addClickListener(frgRatingActionNext)
+        sendSocket()
         Voice.ins?.request(VoiceData.SUCCESS_SCREEN)
     }
 
@@ -47,6 +48,7 @@ class RatingFragment : MainFragment() {
             RatingItem.defaultList[position].isSelected = true
             adapter.bind(recyclerViewReact, 4)
             adapter.notifyDataSetChanged()
+            sendSocket()
         }
     }
 
@@ -69,8 +71,8 @@ class RatingFragment : MainFragment() {
                 )
                 updateInfo()
                 ratingVM.serviceReview(body)
-                sendSocket()
-                Voice.ins?.request(VoiceData.THANKS_RATE){
+                Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
+                Voice.ins?.request(VoiceData.THANKS_RATE) {
                     activity?.runOnUiThread {
                         navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
                     }
@@ -116,7 +118,6 @@ class RatingFragment : MainFragment() {
         req?.cmd = Configs.FORM_STEP_8
         req?.data?.reviewType = ratingModel.type
         Socket.action.sendData(req)
-        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
 }

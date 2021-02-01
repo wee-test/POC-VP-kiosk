@@ -79,7 +79,16 @@ data class IdentifyCardInfo(
         var nationality: String = "",
 
         @SerializedName("phoneNumber")
-        var phone: String = ""
+        var phone: String = "",
+
+        @SerializedName("passportNumber")
+        var passportNumber: String = "",
+
+        @SerializedName("passportCode")
+        var passportCode: String = "",
+
+        @SerializedName("passportType")
+        var passportType: String = ""
 )
 
 data class PhotoCardInfo(

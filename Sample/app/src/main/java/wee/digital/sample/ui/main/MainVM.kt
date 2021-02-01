@@ -40,8 +40,6 @@ open class MainVM : ViewModel() {
 
     val statusLoginKiosk = EventLiveData<ResponseLogin>()
 
-    val statusCreateNewSession = EventLiveData<ResponseVideoCallCreateSession>()
-
     val dialogLiveData = EventLiveData<NavDirections>()
 
     val selectableLiveData = MutableLiveData<SelectableAdapter<*>>()
@@ -65,22 +63,6 @@ open class MainVM : ViewModel() {
                     statusLoginKiosk.postValue(it)
                 }, {
                     statusLoginKiosk.postValue(null)
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun createNewSession(kioskId: String) {
-        Single.fromCallable {
-            val body = JsonObject().put("kioskId", kioskId)
-            lib?.kioskService!!.videoCallCreateSession(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.e("createNewSession", "$it")
-                    statusCreateNewSession.postValue(it)
-                }, {
-                    Log.e("createNewSession", "${it.message}")
-                    statusCreateNewSession.postValue(null)
                 })
     }
 

@@ -203,7 +203,7 @@ object RealSense {
             D415 -> {
                 DEPTH_WIDTH = 1280
                 DEPTH_HEIGHT = 720
-                FRAME_RATE = 15
+                FRAME_RATE = 30
             }
             SR300, SR305 -> {
                 DEPTH_WIDTH = 640
@@ -213,7 +213,7 @@ object RealSense {
             else -> {
                 DEPTH_WIDTH = 1280
                 DEPTH_HEIGHT = 720
-                FRAME_RATE = 15
+                FRAME_RATE = 30
             }
         }
     }

@@ -28,7 +28,7 @@ object Utils {
         return when (type) {
             Configs.TYPE_NID -> 9
             Configs.TYPE_NID_12 -> 12
-            Configs.TYPE_CCCD -> 12
+            Configs.TYPE_CCCD -> 9
             else -> 9
         }
     }
@@ -93,14 +93,22 @@ object Utils {
                 .replace(" ", "")
     }
 
-    fun getIssueDatePassport(exDate : String) : String{
-        return try{
+    fun getIssueDatePassport(exDate: String): String {
+        return try {
             val listEx = exDate.split("/")
             val newYear = listEx.last().toInt() - 10
             "${listEx[0]}/${listEx[1]}/$newYear"
-        }catch (e : Exception){
+        } catch (e: Exception) {
             ""
         }
+    }
+
+    fun getNameNational(code: String?): String {
+        code ?: return ""
+        Shared.nationalList?.forEach {
+            if (it.Code == code) return it.Name
+        }
+        return ""
     }
 
 }
