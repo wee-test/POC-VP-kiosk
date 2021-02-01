@@ -35,6 +35,7 @@ class RatingFragment : MainFragment() {
     override fun onViewCreated() {
         bindRatingList()
         addClickListener(frgRatingActionNext)
+        sendSocket()
         Voice.ins?.request(VoiceData.SUCCESS_SCREEN)
     }
 

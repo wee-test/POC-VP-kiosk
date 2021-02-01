@@ -183,4 +183,12 @@
     <action
         android:id="@+id/action_global_passportFragment"
         app:destination="@id/passportFragment" />
+    <fragment
+        android:id="@+id/passportInfoFragment"
+        android:name="wee.digital.sample.ui.fragment.passport.PassportConfirmFragment"
+        android:label="passport_info"
+        tools:layout="@layout/passport_confirm" />
+    <action
+        android:id="@+id/action_global_passportInfoFragment"
+        app:destination="@id/passportInfoFragment" />
 </navigation>

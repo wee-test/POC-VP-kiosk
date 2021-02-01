@@ -88,16 +88,6 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
             } else {
                 Configs.KIOSK_ID = it.result.kioskID
                 Shared.kioskInfo.postValue(it)
-                mainVM.createNewSession(it.result.kioskID)
-            }
-        }
-        mainVM.statusCreateNewSession.observe {
-            if (it?.responseCode?.code == 0L) {
-                Shared.sessionVideo.postValue(it)
-            } else {
-                disposable = Observable.timer(3, TimeUnit.SECONDS).subscribe {
-                    mainVM.createNewSession(Configs.KIOSK_ID)
-                }
             }
         }
         Shared.socketStatusConnect.observe {
@@ -125,7 +115,6 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
                 callVideo(it)
             }
         }
-
         Shared.wsMessage.observe { mess ->
             socketServer?.sendStreamData(mess)
         }

@@ -57,6 +57,14 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         Voice.ins?.request(VoiceData.OCR_OKE)
     }
 
+    private fun uiPassport(){
+
+    }
+
+    private fun uiCard(type : String){
+
+    }
+
     private fun initListenerInput() {
         ocrInputFullName.initListener(this)
         ocrInputNumber.initListener(this)
@@ -68,6 +76,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         ocrInputAddress.initListener(this)
         ocrInputPhone.initListener(this)
         ocrInputEmail.initListener(this)
+        ocrInputExDate.initListener(this)
     }
 
     override fun onViewClick(v: View?) {
