@@ -55,8 +55,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     override fun onViewCreated() {
         createOcr()
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
-        Voice.ins?.request(VoiceData.PUSH_ID_CARD)
-        Voice.ins?.onSpeakCompleted = {
+        Voice.ins?.request(VoiceData.PUSH_ID_CARD){
             isStart = true
         }
     }
@@ -102,6 +101,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         resp?.cmd = Configs.FORM_STEP_2
         resp?.data?.photo = Shared.frameCardData.value
         Socket.action.sendData(resp)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
     override fun onViewClick(v: View?) {
@@ -145,11 +145,11 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     private fun createOcr() {
         WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = "0"
+        WeeOCR.CAMERA_SATURATION_STEP = "-2"
         WeeOCR.THRESH_CROP = 64.0
         WeeOCR.BLUR_MIN_VALUE = 100
         WeeOCR.CAMERA_ZOOM = "18"
-        WeeOCR.DELAY_SCAN = 10
+        WeeOCR.DELAY_SCAN = 7
         WeeOCR.BLUR_MIN_VALUE = 1
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
         Shared.ocrCardFront.postValue(null)
@@ -189,7 +189,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun cropFrame(frame: ByteArray) {
         if (processing) return
         processing = true
-        weeOcr?.cropObject(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
+        weeOcr?.cropObjectRect(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
             activity?.runOnUiThread {
                 if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
                     processing = false
@@ -243,7 +243,6 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 ocrActionNext.show()
             }
         }
-
     }
 
     private fun resetAllFrame() {

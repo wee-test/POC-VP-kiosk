@@ -11,6 +11,7 @@ import wee.digital.sample.R
 import wee.digital.sample.repository.model.BranchInfo
 import wee.digital.sample.repository.model.HomeInfo
 import wee.digital.sample.repository.model.MethodOfReceiving
+import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
@@ -82,6 +83,7 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
                     else -> 1
                 }
                 sendSocket(codeReceiver)
+                Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
                 navigate(MainDirections.actionGlobalReviewFragment())
             }
         }
@@ -186,7 +188,12 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
     override fun onChange() {
         disposableSendSocket?.dispose()
         disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
-                .subscribe { /*sendSocket(2)*/ }
+                .subscribe { sendSocket(2) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposableSendSocket?.dispose()
     }
 
 }

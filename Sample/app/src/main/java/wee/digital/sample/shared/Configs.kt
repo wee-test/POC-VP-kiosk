@@ -37,5 +37,6 @@ object Configs {
     const val FORM_STEP_6 = "FORM-STEP-6"
     const val FORM_STEP_7 = "FORM-STEP-7"
     const val FORM_STEP_8 = "FORM-STEP-8"
+    const val END_STEP = "END-STEP"
 
 }

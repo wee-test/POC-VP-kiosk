@@ -2,7 +2,7 @@ package wee.digital.sample.repository.model
 
 data class SocketReq(
         var cmd: String = "",
-        var data: SocketData? = null
+        var data: SocketData? = SocketData()
 )
 
 data class SocketData(

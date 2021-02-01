@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.rating
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.rating_fragment.*
 import wee.dev.weewebrtc.WeeCaller
@@ -8,6 +9,7 @@ import wee.digital.library.extension.toArray
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.ServiceReviewReq
+import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
@@ -72,14 +74,13 @@ class RatingFragment : MainFragment() {
                         navigate(MainDirections.actionGlobalAdvFragment()) { setLaunchSingleTop() }
                     }
                 }
-
             }
         }
     }
 
     @SuppressLint("SimpleDateFormat")
     private fun updateInfo(){
-        /*if (Shared.dataCallLog == null) return
+        if (Shared.dataCallLog == null) return
         val tellerData = Shared.socketStatusConnect.value?.listTellersIDString
         val tellersId = tellerData?.toArray()?.get(0)?.asString ?: ""
         val dataCall = Shared.dataCallLog
@@ -92,18 +93,21 @@ class RatingFragment : MainFragment() {
             WeeCaller.CALL_STATUS_MISSING -> 3
             else -> 3
         }
+        val customerId = Shared.customerInfoRegisterSuccess.value?.result?.customerID
         val body = UpdateInfoReq(
                 kioskId = Configs.KIOSK_ID,
                 videoId = Shared.sessionVideo.value?.result?.videoCallID ?: "",
-                customerId = "${Shared.customerInfoRegisterSuccess.value?.result?.customerID}",
+                customerId = if(customerId.isNullOrEmpty()) "" else customerId,
                 transType = 1,
                 counterId = tellersId,
                 videoCallStatus = status,
                 timeReceived = timeReceived,
                 waitingTime = timeWaiting,
-                processingTime = processTime.toInt()
+                processingTime = 1,
+                createAt = System.currentTimeMillis().toString()
         )
-        mainVM.updateInfo(body)*/
+        Log.e("updateInfo", "$body")
+        mainVM.updateInfo(body)
     }
 
     private fun sendSocket(){
@@ -111,6 +115,7 @@ class RatingFragment : MainFragment() {
         req?.cmd = Configs.FORM_STEP_8
         req?.data?.reviewType = ratingModel.type
         Socket.action.sendData(req)
+        Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
     }
 
 }

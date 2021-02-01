@@ -10,6 +10,7 @@ import wee.digital.library.extension.show
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.IdentifyCardInfo
+import wee.digital.sample.repository.model.SocketReq
 import wee.digital.sample.repository.socket.Socket.Companion.action
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
@@ -79,6 +80,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                     return
                 }
                 sendSocket()
+                action.sendData(SocketReq(cmd = Configs.END_STEP))
                 navigate(MainDirections.actionGlobalRegisterFragment())
             }
         }
@@ -225,6 +227,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         resp?.data?.issuedDate = ocrInputIssueDate.text.toString()
         resp?.data?.issuedPlace = ocrInputIssuePlace.text.toString()
         resp?.data?.dateOfBirth = ocrInputBirth.text.toString()
+        resp?.data?.expiredDate = if (ocrInputExDate.text.toString() == "null") "" else ocrInputExDate.text.toString()
         resp?.data?.gender = when (ocrInputGender.text) {
             "Nam" -> 1
             "Nữ" -> 2
@@ -243,7 +246,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
     override fun onChange() {
         disposableSendSocket?.dispose()
         disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
-                .subscribe { /*sendSocket()*/ }
+                .subscribe { sendSocket() }
     }
 
     override fun onPause() {

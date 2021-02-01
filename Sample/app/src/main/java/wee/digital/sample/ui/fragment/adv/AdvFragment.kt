@@ -24,6 +24,7 @@ class AdvFragment : MainFragment() {
         Shared.socketStatusConnect.postValue(null)
         Shared.socketReqData.postValue(null)
         Shared.callVideo.postValue("")
+        Shared.dataCallLog = null
         Configs.isMute = false
         addClickListener(advActionStart)
     }

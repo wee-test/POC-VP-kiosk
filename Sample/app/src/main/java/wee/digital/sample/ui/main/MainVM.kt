@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.main
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
@@ -16,6 +17,7 @@ import vplib.ResponseTellerContact
 import vplib.ResponseVideoCallCreateSession
 import vplib.ResponseVideoCallUpdateInfo
 import wee.digital.library.extension.put
+import wee.digital.library.extension.toast
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.LoginKioskReq
 import wee.digital.sample.repository.model.UpdateInfoReq
@@ -83,8 +85,12 @@ open class MainVM : ViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    toast("${it.responseCode.code}")
+                    Log.e("updateInfo", "$it")
                     statusUpdateInfo.postValue(it)
                 }, {
+                    toast("${it.message}")
+                    Log.e("updateInfo", "$it")
                     statusUpdateInfo.postValue(null)
                 })
     }
