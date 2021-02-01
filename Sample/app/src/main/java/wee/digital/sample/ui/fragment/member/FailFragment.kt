@@ -37,11 +37,10 @@ class FailFragment : MainFragment() {
             WeeCaller.CALL_STATUS_MISSING -> 3
             else -> 3
         }
-        val customerId = Shared.customerInfoRegisterSuccess.value?.result?.customerID
         val body = UpdateInfoReq(
                 kioskId = Configs.KIOSK_ID,
                 videoId = Shared.sessionVideo.value?.result?.videoCallID ?: "",
-                customerId = if(customerId.isNullOrEmpty()) "" else customerId,
+                customerId = "",
                 transType = 1,
                 counterId = tellersId,
                 videoCallStatus = status,
