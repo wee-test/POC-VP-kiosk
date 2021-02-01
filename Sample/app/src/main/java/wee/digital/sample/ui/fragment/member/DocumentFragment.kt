@@ -32,37 +32,9 @@ class DocumentFragment : MainFragment() {
 
     private var disposable: Disposable? = null
 
-    private val ocrVM: RegisterVM by lazy { viewModel(RegisterVM::class) }
-
     override fun layoutResource(): Int = R.layout.document
 
     override fun onViewCreated() {
-        val tellerData = Shared.socketStatusConnect.value?.listTellersIDString
-        val tellersId = tellerData?.toArray()?.get(0)?.asString ?: ""
-        val dataCall = Shared.dataCallLog
-        val timeWaiting = ((dataCall?.ConnectedTimeIn!! - dataCall.TimeCallIn) / 1000).toInt()
-        val timeReceived = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(dataCall.TimeCallIn)
-        val processTime = (dataCall.ConnectedTimeOut - dataCall.ConnectedTimeIn) / 1000
-        val status = when (dataCall.StatusCall) {
-            WeeCaller.CALL_STATUS_CONNECTED -> 1
-            WeeCaller.CALL_STATUS_REJECT -> 2
-            WeeCaller.CALL_STATUS_MISSING -> 3
-            else -> 3
-        }
-        val body = UpdateInfoReq(
-                kioskId = Configs.KIOSK_ID,
-                videoId = Shared.sessionVideo.value?.result?.videoCallID ?: "",
-                customerId = "dsadsadsad",
-                transType = 1,
-                counterId = tellersId,
-                videoCallStatus = status,
-                timeReceived = timeReceived,
-                waitingTime = timeWaiting,
-                processingTime = if(processTime.toInt() < 0) 0 else processTime.toInt(),
-                createAt = System.currentTimeMillis().toString()
-        )
-        Log.e("updateInfo", "$body")
-        ocrVM.updateInfo(body)
         Voice.ins?.request(VoiceData.SELECT_ID_CARD)
     }
 

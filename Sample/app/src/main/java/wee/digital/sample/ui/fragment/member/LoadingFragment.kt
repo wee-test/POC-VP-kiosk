@@ -1,5 +1,6 @@
 package wee.digital.sample.ui.fragment.member
 
+import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -87,11 +88,13 @@ class LoadingFragment : MainFragment() {
         )
         Voice.ins?.request(VoiceData.PROCESSING_SCREEN){
             registerVM.registerCard(body)
+            Log.e("registerCard", "$body")
         }
     }
 
     override fun onLiveDataObserve() {
         registerVM.statusRegisterCard.observe {
+            Log.e("registerCard", "$it")
             if(it == null || it?.responseCode?.code ?: -1 != 0L){
                 Shared.messageFail.postValue(
                         MessageData("Đăng ký mở thẻ thất bại",

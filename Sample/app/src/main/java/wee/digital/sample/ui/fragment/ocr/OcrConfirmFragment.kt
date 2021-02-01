@@ -78,7 +78,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                     }
                     return
                 }
-                sendSocket()
+                sendSocket(Configs.FORM_STEP_3)
                 navigate(MainDirections.actionGlobalRegisterFragment())
             }
         }
@@ -217,7 +217,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         return true
     }
 
-    private fun sendSocket() {
+    private fun sendSocket(actionDone : String = Configs.FORM_STEP_2) {
         val resp = Shared.socketReqData.value
         resp?.cmd = Configs.FORM_STEP_3
         resp?.data?.fullName = ocrInputFullName.text.toString()
@@ -225,6 +225,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         resp?.data?.issuedDate = ocrInputIssueDate.text.toString()
         resp?.data?.issuedPlace = ocrInputIssuePlace.text.toString()
         resp?.data?.dateOfBirth = ocrInputBirth.text.toString()
+        resp?.data?.expiredDate = if (ocrInputExDate.text.toString() == "null") "" else ocrInputExDate.text.toString()
         resp?.data?.gender = when (ocrInputGender.text) {
             "Nam" -> 1
             "Nữ" -> 2
@@ -243,7 +244,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
     override fun onChange() {
         disposableSendSocket?.dispose()
         disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
-                .subscribe { /*sendSocket()*/ }
+                .subscribe { sendSocket() }
     }
 
     override fun onPause() {

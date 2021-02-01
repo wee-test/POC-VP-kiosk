@@ -81,7 +81,7 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
                     receiveRadioBranch.isChecked -> 3
                     else -> 1
                 }
-                sendSocket(codeReceiver)
+                sendSocket(codeReceiver, Configs.FORM_STEP_6)
                 navigate(MainDirections.actionGlobalReviewFragment())
             }
         }
@@ -146,7 +146,7 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
         return true
     }
 
-    private fun sendSocket(typeReceiver: Int) {
+    private fun sendSocket(typeReceiver: Int, actionDone : String = Configs.FORM_STEP_5) {
         val req = Shared.socketReqData.value
         req?.cmd = Configs.FORM_STEP_6
         when (typeReceiver) {
@@ -186,7 +186,7 @@ class CardReceiveFragment : MainFragment(), TextInputView.TextInputListener {
     override fun onChange() {
         disposableSendSocket?.dispose()
         disposableSendSocket = Observable.timer(3, TimeUnit.SECONDS)
-                .subscribe { /*sendSocket(2)*/ }
+                .subscribe { sendSocket(2) }
     }
 
 }

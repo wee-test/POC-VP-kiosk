@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.rating
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.rating_fragment.*
 import wee.dev.weewebrtc.WeeCaller
@@ -34,6 +35,7 @@ class RatingFragment : MainFragment() {
         bindRatingList()
         addClickListener(frgRatingActionNext)
         Voice.ins?.request(VoiceData.SUCCESS_SCREEN)
+        updateInfo()
     }
 
     private fun bindRatingList() {
@@ -64,7 +66,6 @@ class RatingFragment : MainFragment() {
                         transId = customerRegister?.result?.transID.toString(),
                         reviewType = ratingModel.type
                 )
-                updateInfo()
                 ratingVM.serviceReview(body)
                 sendSocket()
                 Voice.ins?.request(VoiceData.THANKS_RATE){
@@ -79,7 +80,7 @@ class RatingFragment : MainFragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun updateInfo(){
-        /*if (Shared.dataCallLog == null) return
+        if (Shared.dataCallLog == null) return
         val tellerData = Shared.socketStatusConnect.value?.listTellersIDString
         val tellersId = tellerData?.toArray()?.get(0)?.asString ?: ""
         val dataCall = Shared.dataCallLog
@@ -92,18 +93,21 @@ class RatingFragment : MainFragment() {
             WeeCaller.CALL_STATUS_MISSING -> 3
             else -> 3
         }
+        val customerId = Shared.customerInfoRegisterSuccess.value?.result?.customerID
         val body = UpdateInfoReq(
                 kioskId = Configs.KIOSK_ID,
                 videoId = Shared.sessionVideo.value?.result?.videoCallID ?: "",
-                customerId = "${Shared.customerInfoRegisterSuccess.value?.result?.customerID}",
+                customerId = if(customerId.isNullOrEmpty()) "" else customerId,
                 transType = 1,
                 counterId = tellersId,
                 videoCallStatus = status,
                 timeReceived = timeReceived,
                 waitingTime = timeWaiting,
-                processingTime = processTime.toInt()
+                processingTime = 1,
+                createAt = System.currentTimeMillis().toString()
         )
-        mainVM.updateInfo(body)*/
+        Log.e("updateInfo", "$body")
+        mainVM.updateInfo(body)
     }
 
     private fun sendSocket(){

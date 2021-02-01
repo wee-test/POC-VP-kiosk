@@ -1,30 +1,20 @@
 package wee.digital.sample.ui.main
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
-import id.zelory.compressor.constraint.quality
-import id.zelory.compressor.constraint.resolution
-import id.zelory.compressor.constraint.size
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_card1_front.*
 import kotlinx.android.synthetic.main.main_card2_front.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
 import wee.dev.weewebrtc.WeeCaller
-import wee.dev.weewebrtc.WeeCaller.Companion.context
 import wee.dev.weewebrtc.`interface`.CallListener
 import wee.dev.weewebrtc.repository.model.CallLog
 import wee.dev.weewebrtc.repository.model.RecordData
@@ -34,7 +24,6 @@ import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.MessageData
-import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.MySocket
 import wee.digital.sample.repository.socket.PrinterSocket
 import wee.digital.sample.repository.socket.Socket
@@ -42,9 +31,7 @@ import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
-import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
-import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity() {
@@ -128,7 +115,7 @@ class MainActivity : BaseActivity() {
 
     private fun callVideo(tellersId: String) {
         weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
-            weeCaller.sendCall("46222641", mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+            weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
                 override fun onCallLog(callLog: CallLog) {
                     toast(callLog.StatusCall)
                     Shared.dataCallLog = callLog
