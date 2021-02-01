@@ -1,30 +1,22 @@
 package wee.digital.sample.ui.main
 
-import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
-import id.zelory.compressor.constraint.quality
-import id.zelory.compressor.constraint.resolution
-import id.zelory.compressor.constraint.size
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_card1_front.*
 import kotlinx.android.synthetic.main.main_card2_front.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.Response
-import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
+import org.java_websocket.WebSocket
+import org.java_websocket.handshake.ClientHandshake
 import wee.dev.weewebrtc.WeeCaller
-import wee.dev.weewebrtc.WeeCaller.Companion.context
 import wee.dev.weewebrtc.`interface`.CallListener
 import wee.dev.weewebrtc.repository.model.CallLog
 import wee.dev.weewebrtc.repository.model.RecordData
@@ -34,20 +26,23 @@ import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.MessageData
-import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.socket.MySocket
 import wee.digital.sample.repository.socket.PrinterSocket
 import wee.digital.sample.repository.socket.Socket
+import wee.digital.sample.server.SocketServer
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
-import java.io.ByteArrayOutputStream
+import java.net.Inet4Address
+import java.net.InetSocketAddress
+import java.net.NetworkInterface
+import java.net.SocketException
 import java.nio.ByteBuffer
-import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), SocketServer.Listener {
 
     private val mainVM: MainVM by lazy { activityVM(MainVM::class) }
 
@@ -55,7 +50,13 @@ class MainActivity : BaseActivity() {
 
     private var disposable: Disposable? = null
 
-     val printerSocket = PrinterSocket()
+    private var isStartedServer = false
+
+    private var socketServer: SocketServer? = null
+
+    private val WS_PORT = 8888
+
+    val printerSocket = PrinterSocket()
 
     private val weeCaller = WeeCaller(this)
 
@@ -124,6 +125,11 @@ class MainActivity : BaseActivity() {
                 callVideo(it)
             }
         }
+
+        Shared.wsMessage.observe { mess ->
+            socketServer?.sendStreamData(mess)
+        }
+
     }
 
     private fun callVideo(tellersId: String) {
@@ -190,7 +196,7 @@ class MainActivity : BaseActivity() {
 
             }
 
-            override fun onError(webSocket: WebSocket, t: Throwable) {
+            override fun onError(webSocket: okhttp3.WebSocket, t: Throwable) {
                 post(400) { connectSocket(Configs.KIOSK_ID, tellerId) }
             }
         })
@@ -228,6 +234,7 @@ class MainActivity : BaseActivity() {
             lib = vplib.Vplib.newLib(1, "$externalCacheDir")
             mainVM.loginKiosk()
         }
+        startWebSocket()
     }
 
     override fun onPause() {
@@ -241,17 +248,119 @@ class MainActivity : BaseActivity() {
     }
 
     private inner class MyWebSocketListenr : WebSocketListener() {
-        override fun onOpen(webSocket: WebSocket, response: Response) {
+        override fun onOpen(webSocket: okhttp3.WebSocket, response: Response) {
             mainThread {
                 mainTextViewPrinter.text = "open"
             }
         }
 
-        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+        override fun onClosed(webSocket: okhttp3.WebSocket, code: Int, reason: String) {
             mainThread {
                 mainTextViewPrinter.text = "close"
             }
         }
+    }
+
+    private fun startWebSocket() {
+        getIpAddressStartServer { ip, err ->
+            runOnUiThread {
+                if (ip.isNotEmpty()) {
+                    startWebSocketServer(ip)
+                } else {
+                    isStartedServer = false
+                    Handler(mainLooper).postDelayed({
+                        startWebSocket()
+                    }, 5000)
+                }
+
+            }
+
+        }
+    }
+
+    private fun getIpAddressStartServer(block: (ipAddress: String, err: String) -> Unit) {
+        thread(start = true) {
+            try {
+                val en = NetworkInterface.getNetworkInterfaces()
+                val listIP = arrayListOf<String>()
+                while (en.hasMoreElements()) {
+                    val intFace = en.nextElement()
+                    val enumIpAdd = intFace.inetAddresses
+                    while (enumIpAdd.hasMoreElements()) {
+                        val iNetAddress = enumIpAdd.nextElement()
+                        if (!iNetAddress.isLoopbackAddress && iNetAddress is Inet4Address) {
+                            val ipAddress = iNetAddress.getHostAddress().toString()
+                            Log.e("IPAddress", "$ipAddress - $iNetAddress - $enumIpAdd - $$intFace")
+                            listIP.add(ipAddress)
+                        }
+                    }
+                }
+                val ip = listIP.firstOrNull() ?: ""
+                block(ip, "")
+                return@thread
+            } catch (ex: SocketException) {
+                Log.e("Socket exception", ex.toString())
+                block("", "${ex.message}")
+                return@thread
+            }
+        }
+
+    }
+
+    private fun startWebSocketServer(ipAddress: String) {
+        try {
+            if (isStartedServer) return
+            Log.e("WebSocketServer", "startWebSocketServer $ipAddress:$WS_PORT")
+            val iNetSocket = if (ipAddress.isNotEmpty()) {
+                InetSocketAddress(ipAddress, WS_PORT)
+            } else {
+                InetSocketAddress(WS_PORT)
+            }
+            if (socketServer != null) {
+                socketServer?.stop().apply {
+                    socketServer = null
+                }
+            }
+            socketServer = SocketServer(iNetSocket)
+            socketServer?.isReuseAddr = true
+            socketServer?.start()
+            socketServer?.setListener(this)
+            isStartedServer = true
+            toast("Server: $ipAddress:$WS_PORT")
+            Shared.wsServer.postValue("$ipAddress:$WS_PORT")
+        } catch (e: java.lang.Exception) {
+            Log.e("WebSocketServer", "${e.message}")
+            isStartedServer = false
+            toast("Error: ${e.printStackTrace()}")
+            Shared.wsServer.postValue(null)
+        }
+
+    }
+
+    private fun stopWebSocketServer() {
+        socketServer?.stop()
+        socketServer = null
+        isStartedServer = false
+    }
+
+    override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
+
+    }
+
+    override fun onClose(conn: WebSocket, code: Int, reason: String, remote: Boolean) {
+
+    }
+
+    override fun onMessage(conn: WebSocket, message: String) {
+
+    }
+
+    override fun onError(conn: WebSocket?, ex: Exception) {
+
+    }
+
+    override fun onStarted() {
+
     }
 
 }

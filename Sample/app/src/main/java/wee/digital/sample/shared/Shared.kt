@@ -47,6 +47,10 @@ object Shared {
 
     val cardSelected = MutableLiveData<CardItem>()
 
+    val wsServer = MutableLiveData<String>()
+
+    val wsMessage = MutableLiveData<String> ()
+
     /**
      * giao dich vien
      */
