@@ -53,7 +53,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     override fun layoutResource(): Int = R.layout.ocr
 
     override fun onViewCreated() {
-        createOcr()
+        Configs.configWeeOcr()
+        Shared.ocrCardFront.postValue(null)
+        Shared.ocrCardBack.postValue(null)
+        weeOcr = WeeOCR(requireActivity())
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
         Voice.ins?.request(VoiceData.PUSH_ID_CARD){
             isStart = true
@@ -91,8 +94,6 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         if (dataFront != null && dataBack != null) {
             sendSocket()
             navigate(MainDirections.actionGlobalOcrConfirmFragment())
-        }else{
-            toast("fail data ocr")
         }
     }
 
@@ -141,20 +142,6 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 }
             }
         }
-    }
-
-    private fun createOcr() {
-        WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = "-2"
-        WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 100
-        WeeOCR.CAMERA_ZOOM = "18"
-        WeeOCR.DELAY_SCAN = 7
-        WeeOCR.BLUR_MIN_VALUE = 1
-        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
-        Shared.ocrCardFront.postValue(null)
-        Shared.ocrCardBack.postValue(null)
-        weeOcr = WeeOCR(requireActivity())
     }
 
     private fun startCamera() {

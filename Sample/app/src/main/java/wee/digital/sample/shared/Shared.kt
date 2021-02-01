@@ -82,4 +82,26 @@ object Shared {
         readAsset("json/gender.json").parse(Array<Selectable>::class)
     }
 
+    fun resetData(){
+        customerInfoVerify.postValue(null)
+        customerInfoExist.postValue(null)
+        customerInfoRegisterSuccess.postValue(null)
+        faceId.postValue(null)
+        faceCapture.postValue(null)
+        typeCardOcr.postValue(null)
+        messageFail.postValue(null)
+        frameCardData.postValue(null)
+        ocrConfirmData.postValue(null)
+        methodReceiveCard.postValue(null)
+        ocrCardFront.postValue(null)
+        ocrCardBack.postValue(null)
+        passportData.postValue(null)
+        cardSelected.postValue(null)
+        socketStatusConnect.postValue(null)
+        socketReqData.postValue(null)
+        callVideo.postValue("")
+        Configs.isMute = false
+        dataCallLog = null
+    }
+
 }

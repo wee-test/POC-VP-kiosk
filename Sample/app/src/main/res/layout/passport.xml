@@ -32,6 +32,7 @@
         android:id="@+id/passportLabelSideFont"
         style="@style/TextView.Small"
         android:text="Mặt trước"
+        android:visibility="invisible"
         android:textColor="@color/black20"
         app:layout_constraintBottom_toBottomOf="@+id/passportFrameFront"
         app:layout_constraintEnd_toEndOf="@+id/passportFrameFront"
@@ -44,6 +45,7 @@
         android:layout_marginTop="@dimen/margin3"
         android:padding="@dimen/_3sdp"
         android:scaleType="fitCenter"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,19 +54,8 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/passportResetFont"
         style="@style/OCR.ImageTrash"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/passportFrameFront"
-        app:layout_constraintTop_toTopOf="@+id/passportFrameFront"
-        tools:visibility="visible" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/ocrLabelSideBack"
-        style="@style/TextView.Small"
-        android:text="Mặt sau"
-        android:textColor="@color/black20"
-        app:layout_constraintBottom_toBottomOf="@+id/passportFrameFront"
-        app:layout_constraintEnd_toEndOf="@+id/passportFrameFront"
-        app:layout_constraintStart_toStartOf="@+id/passportFrameFront"
         app:layout_constraintTop_toTopOf="@+id/passportFrameFront" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

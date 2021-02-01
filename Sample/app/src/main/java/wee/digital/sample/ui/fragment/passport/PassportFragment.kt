@@ -9,6 +9,7 @@ import wee.dev.weeocr.camera.FrameStreamListener
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainFragment
 
@@ -27,13 +28,7 @@ class PassportFragment : MainFragment(), FrameStreamListener {
     override fun onViewCreated() {
         complete = false
         processing = false
-        WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = "0"
-        WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 100
-        WeeOCR.CAMERA_ZOOM = "18"
-        WeeOCR.DELAY_SCAN = 10
-        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
+        Configs.configWeeOcr()
         weeOcr = WeeOCR(requireActivity())
     }
 

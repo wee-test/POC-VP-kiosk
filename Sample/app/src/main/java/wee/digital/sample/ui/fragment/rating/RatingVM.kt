@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.rating
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -17,12 +18,15 @@ class RatingVM: BaseViewModel() {
     @SuppressLint("CheckResult")
     fun serviceReview(body : ServiceReviewReq){
         Single.fromCallable {
+            Log.e("serviceReview", "$body")
             lib?.kioskService!!.customerServiceReview(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("serviceReview", "$it")
                     statusCustomerService.postValue(it)
                 },{
+                    Log.e("serviceReview", "${it.message}")
                     statusCustomerService.postValue(null)
                 })
     }
