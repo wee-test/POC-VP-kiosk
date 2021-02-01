@@ -16,6 +16,7 @@ import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
+import wee.digital.sample.ui.main.MainActivity
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
 import java.text.SimpleDateFormat
@@ -84,12 +85,13 @@ class RatingFragment : MainFragment() {
     @SuppressLint("SimpleDateFormat")
     private fun updateInfo(){
         if (Shared.dataCallLog == null) return
+        MainActivity.weeCaller?.callHangUp()
         val tellerData = Shared.socketStatusConnect.value?.listTellersIDString
         val tellersId = tellerData?.toArray()?.get(0)?.asString ?: ""
         val dataCall = Shared.dataCallLog
         val timeWaiting = ((dataCall?.ConnectedTimeIn!! - dataCall.TimeCallIn) / 1000).toInt()
         val timeReceived = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(dataCall.TimeCallIn)
-        val processTime = (dataCall.ConnectedTimeOut - dataCall.ConnectedTimeIn) / 1000
+        val processTime = ((dataCall.ConnectedTimeOut - dataCall.ConnectedTimeIn) / 1000).toInt()
         val status = when (dataCall.StatusCall) {
             WeeCaller.CALL_STATUS_CONNECTED -> 1
             WeeCaller.CALL_STATUS_REJECT -> 2
@@ -106,7 +108,7 @@ class RatingFragment : MainFragment() {
                 videoCallStatus = status,
                 timeReceived = timeReceived,
                 waitingTime = timeWaiting,
-                processingTime = 1,
+                processingTime = if(processTime < 0) 1 else processTime,
                 createAt = System.currentTimeMillis().toString()
         )
         Log.e("updateInfo", "$body")

@@ -110,7 +110,8 @@ open class MainVM : ViewModel() {
             val timeIn = System.currentTimeMillis()
             regUrl.httpPost().timeout(30000).header(Pair("Content-Type", "application/json"),
                     Pair("videoCallId", videoId),
-                    Pair("Ekycid", sizeDataStr)
+                    Pair("Ekycid", videoId),
+                    Pair("seg",sizeDataStr)
             ).body(data).responseString { _, _, result ->
                 when (result) {
                     is Result.Failure -> {

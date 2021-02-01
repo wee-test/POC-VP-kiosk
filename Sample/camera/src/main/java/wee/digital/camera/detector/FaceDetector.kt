@@ -220,7 +220,7 @@ class FaceDetector {
         }
 
         fun onFaceBlurred(faceCropped: Bitmap, minBlur: Double = MIN_BLUR): Boolean {
-            return OpenCVUtils.checkIfImageIsBlurred(faceCropped, minBlur)
+            return OpenCVUtils.checkIfImageIsBlurred(faceCropped,30.0)
         }
 
         fun onCheckManyFaces(faceSize: Int): Boolean {

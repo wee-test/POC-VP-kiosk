@@ -162,6 +162,11 @@ object OpenCVUtils {
 
         val result = standardDeviation.get(0, 0)[0].pow(2.0)
         Log.e("blurry result", "" + result)
+        imageBitmapMat.release()
+        grayscaleBitmapMat.release()
+        postLaplacianMat.release()
+        mean.release()
+        standardDeviation.release()
         return result < minValueBlur
     }
 

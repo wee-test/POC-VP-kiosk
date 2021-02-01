@@ -28,7 +28,7 @@ object Utils {
         return when (type) {
             Configs.TYPE_NID -> 9
             Configs.TYPE_NID_12 -> 12
-            Configs.TYPE_CCCD -> 9
+            Configs.TYPE_CCCD -> 12
             else -> 9
         }
     }

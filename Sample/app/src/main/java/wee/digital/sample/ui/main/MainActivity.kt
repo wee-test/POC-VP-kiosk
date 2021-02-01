@@ -58,7 +58,9 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
     val printerSocket = PrinterSocket()
 
-    private val weeCaller = WeeCaller(this)
+    companion object{
+       var weeCaller: WeeCaller? = null
+    }
 
     override fun layoutResource(): Int {
         return R.layout.activity_main
@@ -66,7 +68,8 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        weeCaller.init()
+        weeCaller = WeeCaller(this)
+        weeCaller?.init()
         printerSocket.addListener(MyWebSocketListenr())
 
     }
@@ -110,7 +113,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         }
         Shared.callVideo.observe {
             if (it.isNullOrEmpty()) {
-                weeCaller.callHangUp()
+                weeCaller?.callHangUp()
             } else {
                 callVideo(it)
             }
@@ -122,8 +125,8 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
     }
 
     private fun callVideo(tellersId: String) {
-        weeCaller.initUserData(Configs.KIOSK_ID) { userData, mess ->
-            weeCaller.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
+        weeCaller?.initUserData(Configs.KIOSK_ID) { userData, mess ->
+            weeCaller?.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
                 override fun onCallLog(callLog: CallLog) {
                     toast(callLog.StatusCall)
                     Shared.dataCallLog = callLog

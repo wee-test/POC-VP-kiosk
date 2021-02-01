@@ -36,6 +36,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
     }
 
     override fun onViewCreated() {
+        isComplete = false
         mFaceDetectJob.observe(viewLifecycleOwner)
         RealSense.imagesLiveData.postValue(null)
         Voice.ins?.request(VoiceData.FACE_REGISTER)

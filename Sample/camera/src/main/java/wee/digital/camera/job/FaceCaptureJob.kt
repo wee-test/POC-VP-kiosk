@@ -20,9 +20,9 @@ class FaceCaptureJob(private val listener: Listener) :
         FaceDetector.StatusListener {
 
     companion object {
-        const val MIN_SIZE = 170
-        const val MAX_SIZE = 580
-        const val MIN_BLUR = 200.0
+        const val MIN_SIZE = 180
+        const val MAX_SIZE = 680
+        const val MIN_BLUR = 30.0
     }
 
     private var hasDetect: Boolean = false
