@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
+import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Single
@@ -104,16 +106,42 @@ open class MainVM : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     if (it) {
-                        val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
+                        /*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
                         val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
                         val dataB = Gson().toJson(body).toByteArray()
                         Log.e("recordVideo","Size Data: ${dataB.size}")
                         val a = lib?.kioskService!!.videoCallRecord(dataB)
-                        Log.e("recordVideo", "$a")
+                        Log.e("recordVideo", "$a")*/
+                        sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID ?: "",data.sizeDataStr, data.repairedData!!)
                     }
                 }, {
                     Log.e("recordVideo", "${it.message}")
                 })
+    }
+
+    private fun sendVideoRecord(videoId: String, sizeDataStr: String, data: ByteArray){
+        val regUrl= "http://weezi.biz:7080/kiosk/videoCall/record"
+        try {
+            val reg = regUrl.httpPost().timeout(30000)
+            Log.e("recordVideo","Size: ${data.size}")
+            val timeIn = System.currentTimeMillis()
+            reg.header(Pair("Content-Type", "application/json"),
+                    Pair("videoCallId",videoId),
+                    Pair("Ekycid",sizeDataStr)
+            ).body(data).responseString { _, _, result ->
+                when (result) {
+                    is Result.Failure -> {
+                        Log.e("recordVideo","Send Fail [${System.currentTimeMillis() - timeIn}]: ${result.error}")
+                    }
+                    is Result.Success -> {
+                        Log.e("recordVideo","Send Success [${System.currentTimeMillis() - timeIn}]: ${result.value}")
+                    }
+                }
+            }
+        } catch (t: Throwable){
+            t.printStackTrace()
+            Log.e("recordVideo","Failed: ${t.message}")
+        }
     }
 
 }

@@ -165,7 +165,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
                 override fun onRecordedFile(recordData: RecordData) {
                     Log.e("onRecordedFile", "recordVideo")
-                    /*mainVM.recordVideo(recordData)*/
+                    mainVM.recordVideo(recordData)
                 }
 
                 override fun onSendCall(id: String) {

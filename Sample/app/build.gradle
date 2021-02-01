@@ -209,6 +209,8 @@ dependencies {
     implementation 'id.zelory:compressor:3.0.0'
 
     implementation "org.java-websocket:Java-WebSocket:1.5.1"
+
+    implementation 'com.github.kittinunf.fuel:fuel:2.2.1'
 }
 
 apply plugin: "com.google.gms.google-services"
