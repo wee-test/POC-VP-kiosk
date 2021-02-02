@@ -3,6 +3,7 @@ package wee.digital.camera.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
+import android.provider.ContactsContract
 import android.util.Log
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
@@ -151,17 +152,16 @@ object OpenCVUtils {
         Utils.bitmapToMat(bitmap, imageBitmapMat)
 
         val grayscaleBitmapMat = Mat()
-        Imgproc.cvtColor(imageBitmapMat, grayscaleBitmapMat, Imgproc.COLOR_RGB2GRAY)
+        cvtColor(imageBitmapMat, grayscaleBitmapMat, COLOR_RGB2GRAY)
 
         val postLaplacianMat = Mat()
-        Imgproc.Laplacian(grayscaleBitmapMat, postLaplacianMat, 3)
-
+        Laplacian(grayscaleBitmapMat, postLaplacianMat, 10)
         val mean = MatOfDouble()
         val standardDeviation = MatOfDouble()
         Core.meanStdDev(postLaplacianMat, mean, standardDeviation)
 
         val result = standardDeviation.get(0, 0)[0].pow(2.0)
-        Log.e("blurry result", "" + result)
+        Log.e("blurryResult", "$result / $minValueBlur")
         imageBitmapMat.release()
         grayscaleBitmapMat.release()
         postLaplacianMat.release()

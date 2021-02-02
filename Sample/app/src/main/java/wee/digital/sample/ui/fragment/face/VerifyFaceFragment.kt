@@ -73,10 +73,12 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
      * [FaceCaptureJob.Listener] implement
      */
     override fun onCaptureTick(second: String?) {
-        if (isComplete) return
-        faceLabelTime.text = second
-        faceFrameBg ?: return
-        if (second != null) faceFrameBg.show() else faceFrameBg.gone()
+        activity?.runOnUiThread {
+            if (isComplete) return@runOnUiThread
+            faceLabelTime.text = second
+            faceFrameBg ?: return@runOnUiThread
+            if (second != null) faceFrameBg.show() else faceFrameBg.gone()
+        }
     }
 
     override fun onPortraitCaptured(image: Bitmap) {

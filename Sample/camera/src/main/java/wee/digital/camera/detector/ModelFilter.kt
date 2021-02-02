@@ -2,6 +2,7 @@ package wee.digital.camera.detector
 
 import android.graphics.Bitmap
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabel
 import com.google.mlkit.vision.label.ImageLabeler
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.automl.AutoMLImageLabelerLocalModel
@@ -42,6 +43,7 @@ class ModelFilter(fileName: String) {
                         isChecking = false
                     }
                     ?.addOnFailureListener {
+                        onResult(null, 100f)
                         isChecking = false
                     }
 
@@ -49,6 +51,7 @@ class ModelFilter(fileName: String) {
             isChecking = false
         }
     }
+
 
     fun destroy() {
         imageLabeler?.close()

@@ -138,6 +138,7 @@ dependencies {
 
     // LIFECYCLE
     implementation deps.lifecycle.extensions
+    implementation project(path: ':engine')
 
     kapt deps.lifecycle.compiler
 

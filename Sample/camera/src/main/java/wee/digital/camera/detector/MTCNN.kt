@@ -421,6 +421,19 @@ class MTCNN internal constructor(private val assetManager: AssetManager) {
 
     }
 
+    fun detectFacesAsync(executors: ExecutorService, bitmap: Bitmap, minFaceSize: Int): Task<Vector<Box>?> {
+        return try {
+            val bitmapCopy = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            Tasks.call(
+                    executors,
+                    Callable<Vector<Box>> { detectFaces(bitmapCopy, minFaceSize) })
+        } catch (e: Exception) {
+            Tasks.call(executors, Callable<Vector<Box>> { detectFaces(null, minFaceSize) })
+        }
+
+
+    }
+
     private fun detectFaces(bitmap: Bitmap?, minFaceSize: Int): Vector<Box>? {
         bitmap ?: return null
 

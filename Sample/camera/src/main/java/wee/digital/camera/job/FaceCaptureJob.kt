@@ -9,8 +9,10 @@ import android.util.Log
 import androidx.lifecycle.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.detector.FaceDetector
+import wee.digital.camera.detector.FaceDetector.Companion.MIN_BLUR
 import wee.digital.camera.detector.FaceDetector.Companion.MIN_SCORE
 import wee.digital.camera.uiThread
+import wee.digital.camera.utils.OpenCVUtils
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -22,7 +24,6 @@ class FaceCaptureJob(private val listener: Listener) :
     companion object {
         const val MIN_SIZE = 180
         const val MAX_SIZE = 680
-        const val MIN_BLUR = 30.0
     }
 
     private var hasDetect: Boolean = false
@@ -72,7 +73,14 @@ class FaceCaptureJob(private val listener: Listener) :
     override fun onFaceScore(score: Float): Boolean {
         Log.e("CheckFace", "onFaceScore $score")
         return score > MIN_SCORE
+    }
 
+    override fun onFaceBlurred(faceCropped: Bitmap): Boolean {
+        /*val isBlur = OpenCVUtils.checkIfImageIsBlurred(faceCropped, MIN_BLUR)
+        if(isBlur){
+            listener.onWarningMessage("Hình ảnh khuôn mặt không đủ điều kiện")
+        }*/
+        return OpenCVUtils.checkIfImageIsBlurred(faceCropped, MIN_BLUR)
     }
 
     override fun onDepthLabel(label: String, confidence: Float): Boolean {
