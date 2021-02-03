@@ -48,12 +48,13 @@ class FaceDetector {
         mtcnn.detectFacesAsync(executors,colorBitmap, MIN_SIZE)
                 .addOnCanceledListener { isDetecting = false }
                 .addOnFailureListener {
-                    statusListener?.onFaceLeaved()
-                    isDetecting = false
-                }
-                .addOnCompleteListener { task ->
                     executors.execute {
-                        val result = task.result
+                        statusListener?.onFaceLeaved()
+                        isDetecting = false
+                    }
+                }
+                .addOnSuccessListener { result ->
+                    executors.execute {
                         val box: Box? = result.largestBox()
                         if (box == null) {
                             statusListener?.onFaceLeaved()

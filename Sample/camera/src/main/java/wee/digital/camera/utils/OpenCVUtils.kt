@@ -3,7 +3,6 @@ package wee.digital.camera.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
-import android.provider.ContactsContract
 import android.util.Log
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
@@ -11,9 +10,9 @@ import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
 import org.opencv.core.*
 import org.opencv.core.Core.inRange
-import org.opencv.imgproc.Imgproc
 import org.opencv.imgproc.Imgproc.*
 import java.util.Collections.sort
+import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -82,6 +81,16 @@ object OpenCVUtils {
             null
         }
 
+    }
+
+    fun angleLine(p: Point): Float {
+        var angle = Math.toDegrees(atan2(p.y, p.x)).toFloat()
+
+        if (angle < 0) {
+            angle += 360f
+        }
+        Log.e("angleLine","$angle")
+        return angle
     }
 
 
@@ -172,10 +181,10 @@ object OpenCVUtils {
 
     fun checkFaceIsBlurred(bitmap: Bitmap?, rect: Rect, minValueBlur: Double): Boolean {
         bitmap ?: return true
-        return try{
+        return try {
             val cropped = Bitmap.createBitmap(bitmap, rect.left, rect.top, rect.width(), rect.height())
             checkIfImageIsBlurred(cropped, minValueBlur)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             false
         }
 

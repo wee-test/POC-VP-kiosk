@@ -23,8 +23,8 @@ class FaceCaptureJob(private val listener: Listener) :
         FaceDetector.StatusListener {
 
     companion object {
-        const val MIN_SIZE = 180
-        const val MAX_SIZE = 680
+        const val MIN_SIZE = 120
+        const val MAX_SIZE = 350
     }
 
     private var hasDetect: Boolean = false
@@ -230,9 +230,7 @@ class FaceCaptureJob(private val listener: Listener) :
         override fun onTick(second: Long) {
             if (isCountdown) {
                 val time = autoStep.getAndDecrement()
-                RecordVideo.isRecordVideo = true
                 listener.onCaptureTick(time.toString())
-                if(time == 7) RecordVideo.arrayBitmap.clear()
             }
             if (autoStep.get() < 0) {
                 cancel()
@@ -247,6 +245,8 @@ class FaceCaptureJob(private val listener: Listener) :
 
         fun onStart() {
             isCountdown = true
+            RecordVideo.arrayBitmap.clear()
+            RecordVideo.isRecordVideo = true
             autoStep.set(7)
             start()
         }
