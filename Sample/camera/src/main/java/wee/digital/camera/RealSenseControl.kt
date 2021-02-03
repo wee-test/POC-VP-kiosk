@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
 import com.intel.realsense.librealsense.*
+import wee.digital.camera.utils.RecordVideo
 
 /**
  * Manufacture: Intel(R) RealSense(TM) Depth Camera SR305
@@ -143,6 +144,7 @@ class RealSenseControl {
             colorBitmap = colorFrame.rgbToBitmapOpenCV()
             depthBitmap = depthFrame.rgbToBitmapOpenCV()
             if (colorBitmap != null && depthBitmap != null) {
+                if(RecordVideo.isRecordVideo) RecordVideo.arrayBitmap.add(colorBitmap!!)
                 RealSense.imagesLiveData.postValue(Pair(colorBitmap!!, depthBitmap!!))
             }
         } catch (e: Throwable) {

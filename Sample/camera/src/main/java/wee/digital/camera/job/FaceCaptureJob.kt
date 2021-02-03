@@ -13,6 +13,7 @@ import wee.digital.camera.detector.FaceDetector.Companion.MIN_BLUR
 import wee.digital.camera.detector.FaceDetector.Companion.MIN_SCORE
 import wee.digital.camera.uiThread
 import wee.digital.camera.utils.OpenCVUtils
+import wee.digital.camera.utils.RecordVideo
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -117,6 +118,7 @@ class FaceCaptureJob(private val listener: Listener) :
     override fun onFaceChanged() {
         captureTimer.onCancel()
         uiThread {
+            pauseRecordVideo()
             listener.onCaptureTick(null)
             listener.onRecordMessage("Quý khách vui lòng đưa gương mặt vào vùng nhận diện")
         }
@@ -134,6 +136,7 @@ class FaceCaptureJob(private val listener: Listener) :
     override fun onFaceLeaved() {
         captureTimer.onCancel()
         uiThread {
+            pauseRecordVideo()
             listener.onCaptureTick(null)
             listener.onRecordMessage("Quý khách vui lòng đưa gương mặt vào vùng nhận diện")
         }
@@ -142,6 +145,7 @@ class FaceCaptureJob(private val listener: Listener) :
     override fun onManyFaces() {
         captureTimer.onCancel()
         uiThread {
+            pauseRecordVideo()
             listener.onCaptureTick(null)
             listener.onWarningMessage("Có nhiều hơn 1 khuôn mặt trong vùng nhận diện")
         }
@@ -195,6 +199,7 @@ class FaceCaptureJob(private val listener: Listener) :
         captureTimer.onCancel()
         uiThread {
             listener.onRecordMessage(message)
+            pauseRecordVideo()
             listener.onCaptureTick(null)
         }
     }
@@ -212,7 +217,7 @@ class FaceCaptureJob(private val listener: Listener) :
         fun onCaptureTimeout()
     }
 
-    inner class CaptureTimer : CountDownTimer(2000, 500) {
+    inner class CaptureTimer : CountDownTimer(4000, 500) {
 
         var isCountdown: Boolean = false
             private set
@@ -224,6 +229,7 @@ class FaceCaptureJob(private val listener: Listener) :
 
         override fun onTick(second: Long) {
             if (isCountdown) {
+                RecordVideo.isRecordVideo = true
                 listener.onCaptureTick(autoStep.getAndDecrement().toString())
             }
             if (autoStep.get() < 1) {
@@ -233,20 +239,27 @@ class FaceCaptureJob(private val listener: Listener) :
 
         override fun onFinish() {
             isCountdown = false
+            pauseRecordVideo()
             listener.onCaptureTick(null)
         }
 
         fun onStart() {
             isCountdown = true
-            autoStep.set(3)
+            autoStep.set(7)
             start()
         }
 
         fun onCancel() {
             cancel()
             isCountdown = false
+            pauseRecordVideo()
             listener.onCaptureTick(null)
         }
+    }
+
+    fun pauseRecordVideo(){
+        RecordVideo.arrayBitmap.clear()
+        RecordVideo.isRecordVideo = false
     }
 
 }

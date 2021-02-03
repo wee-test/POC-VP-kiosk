@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.face
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
@@ -11,6 +12,8 @@ import io.reactivex.schedulers.Schedulers
 import vplib.ResponseFaceIdentity
 import vplib.ResponseFaceVerify
 import vplib.ResponseGetCustomerInfo
+import wee.digital.camera.job.FaceCaptureJob
+import wee.digital.camera.utils.RecordVideo
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.CustomerInfoReq
 import wee.digital.sample.repository.model.IdentifyFaceReq
@@ -81,6 +84,16 @@ class FaceVM : BaseViewModel() {
                     Log.e("getInfoCustomer", "${it.message}")
                     statusInfoCustomer.postValue(null)
                 })
+    }
+
+    fun createVideo(context : Context){
+        val recordVideo = RecordVideo(context)
+        recordVideo.startVideo()
+        recordVideo.createVideo(object : RecordVideo.MyVideoCallBack{
+            override fun onResult(path: String) {
+                Log.e("videoPath", "$path")
+            }
+        })
     }
 
 }

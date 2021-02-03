@@ -112,6 +112,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onPause() {
         super.onPause()
+        faceVM.createVideo(requireContext())
         RealSense.stop()
     }
 

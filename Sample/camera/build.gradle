@@ -44,6 +44,9 @@ dependencies {
     implementation "com.intel.realsense:librealsense:2.41.0@aar"
     implementation 'org.tensorflow:tensorflow-android:1.13.1'
 
+    //video from bitmap
+    implementation 'com.github.israel-fl:bitmap2video:2.0.0'
+
     implementation project(':opencv')
 
     implementation project(':engine')
