@@ -144,9 +144,9 @@ class RealSenseControl {
             colorBitmap = colorFrame.rgbToBitmapOpenCV()
             depthBitmap = depthFrame.rgbToBitmapOpenCV()
             if (colorBitmap != null && depthBitmap != null) {
-                Log.e("realsenseFrame", "frame")
                 if(RecordVideo.isRecordVideo) RecordVideo.arrayBitmap.add(colorBitmap!!)
                 RealSense.imagesLiveData.postValue(Pair(colorBitmap!!, depthBitmap!!))
+                Log.e("realsenseFrame", "frame")
             }
         } catch (e: Throwable) {
             e.printStackTrace()

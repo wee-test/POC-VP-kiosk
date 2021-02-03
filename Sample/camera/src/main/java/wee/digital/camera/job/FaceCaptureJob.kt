@@ -234,7 +234,7 @@ class FaceCaptureJob(private val listener: Listener) :
                 listener.onCaptureTick(time.toString())
                 if(time == 7) RecordVideo.arrayBitmap.clear()
             }
-            if (autoStep.get() < 1) {
+            if (autoStep.get() < 0) {
                 cancel()
             }
         }

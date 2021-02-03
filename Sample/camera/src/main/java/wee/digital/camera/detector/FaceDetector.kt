@@ -59,8 +59,9 @@ class FaceDetector {
                             statusListener?.onFaceLeaved()
                             isDetecting = false
                         } else {
+                            val time = System.currentTimeMillis()
                             val confidence = live.detect(colorBitmap, FaceBox(box.left(),box.top(),box.right(),box.bottom(),0f))
-                            Log.e("LivenessCheck","Score: $confidence")
+                            Log.e("LivenessCheck","Score: $confidence [time check : ${System.currentTimeMillis() - time}]")
                             statusListener?.onFacePerformed()
                             if (!faceChangeProcess(box)) {
                                 statusListener?.onFaceChanged()
