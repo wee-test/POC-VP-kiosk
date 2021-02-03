@@ -109,6 +109,8 @@ dependencies {
 
     implementation project(':WeeWebRTC')
 
+    implementation project(':engine')
+
     implementation fileTree(include: ["*.jar", "*aar"], dir: "libs")
     implementation deps.kotlin.stdlib
     implementation deps.android.appcompat
@@ -138,7 +140,6 @@ dependencies {
 
     // LIFECYCLE
     implementation deps.lifecycle.extensions
-    implementation project(path: ':engine')
 
     kapt deps.lifecycle.compiler
 

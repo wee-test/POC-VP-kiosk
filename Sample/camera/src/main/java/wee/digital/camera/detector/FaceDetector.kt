@@ -3,6 +3,9 @@ package wee.digital.camera.detector
 import android.graphics.Bitmap
 import android.graphics.PointF
 import android.graphics.Rect
+import android.util.Log
+import com.mv.engine.FaceBox
+import com.mv.engine.Live
 import wee.digital.camera.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -34,6 +37,10 @@ class FaceDetector {
 
     var optionListener: OptionListener? = null
 
+    private val live = Live().apply {
+        this.loadModel(RealSense.app.assets)
+    }
+
 
     fun detectFace(colorBitmap: Bitmap, depthBitmap: Bitmap) {
         if (isDetecting) return
@@ -52,6 +59,8 @@ class FaceDetector {
                             statusListener?.onFaceLeaved()
                             isDetecting = false
                         } else {
+                            val confidence = live.detect(colorBitmap, FaceBox(box.left(),box.top(),box.right(),box.bottom(),0f))
+                            Log.e("LivenessCheck","Score: $confidence")
                             statusListener?.onFacePerformed()
                             if (!faceChangeProcess(box)) {
                                 statusListener?.onFaceChanged()
