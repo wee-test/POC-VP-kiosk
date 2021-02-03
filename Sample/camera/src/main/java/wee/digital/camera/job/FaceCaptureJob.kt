@@ -217,7 +217,7 @@ class FaceCaptureJob(private val listener: Listener) :
         fun onCaptureTimeout()
     }
 
-    inner class CaptureTimer : CountDownTimer(4000, 500) {
+    inner class CaptureTimer : CountDownTimer(8000, 1000) {
 
         var isCountdown: Boolean = false
             private set
@@ -229,8 +229,10 @@ class FaceCaptureJob(private val listener: Listener) :
 
         override fun onTick(second: Long) {
             if (isCountdown) {
+                val time = autoStep.getAndDecrement()
                 RecordVideo.isRecordVideo = true
-                listener.onCaptureTick(autoStep.getAndDecrement().toString())
+                listener.onCaptureTick(time.toString())
+                if(time == 7) RecordVideo.arrayBitmap.clear()
             }
             if (autoStep.get() < 1) {
                 cancel()
@@ -258,7 +260,6 @@ class FaceCaptureJob(private val listener: Listener) :
     }
 
     fun pauseRecordVideo(){
-        RecordVideo.arrayBitmap.clear()
         RecordVideo.isRecordVideo = false
     }
 

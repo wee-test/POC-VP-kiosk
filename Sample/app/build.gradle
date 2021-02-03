@@ -53,9 +53,6 @@ android {
     }
 
     productFlavors {
-        all {
-
-        }
         dev {
             resValue "string", "app_name", "Sample Dev"
             applicationIdSuffix ".dev"

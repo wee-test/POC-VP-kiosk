@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import android.widget.Toast
 import com.homesoft.encoder.FrameBuilder
 import com.homesoft.encoder.MuxerConfig
 import java.io.File
@@ -40,9 +41,9 @@ class RecordVideo(context: Context) {
 
             config = MuxerConfig(
                     file = file!!,
-                    framesPerSecond = 25f,
-                    videoWidth = 1280,
-                    videoHeight = 720
+                    framesPerSecond = 15f,
+                    videoWidth = 640,
+                    videoHeight = 480
             )
             frameBuilder = FrameBuilder(ct, config!!, null)
             frameBuilder?.start()
@@ -55,12 +56,12 @@ class RecordVideo(context: Context) {
 
     fun createVideo(listener: MyVideoCallBack?) {
         if (arrayBitmap.isNullOrEmpty()) return
+        Toast.makeText(ct, "${arrayBitmap.size}", Toast.LENGTH_SHORT).show()
         handlerVideo?.post {
             for (i in 0 until arrayBitmap.size) {
                 frameBuilder?.createFrame(arrayBitmap[i])
                 if (i == arrayBitmap.size - 1) {
                     onDoneVideo(listener)
-                    arrayBitmap.clear()
                 }
             }
         }
@@ -83,6 +84,7 @@ class RecordVideo(context: Context) {
                 handlerVideo = null
                 listener?.onResult("$file")
                 file?.exists()
+                arrayBitmap.clear()
             } catch (e: Exception) {
                 listener?.onResult("")
             }

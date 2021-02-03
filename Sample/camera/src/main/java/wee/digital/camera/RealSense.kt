@@ -190,8 +190,8 @@ object RealSense {
     const val TIME_WAIT = 2000
     const val FRAME_MAX_COUNT = 200
     const val FRAME_MAX_SLEEP = -20
-    const val COLOR_WIDTH = 1280
-    const val COLOR_HEIGHT = 720
+    const val COLOR_WIDTH = 640
+    const val COLOR_HEIGHT = 480
     const val COLOR_SIZE = COLOR_WIDTH * COLOR_HEIGHT * 3
     var DEPTH_WIDTH = 1280
     var DEPTH_HEIGHT = 720
@@ -201,9 +201,9 @@ object RealSense {
     private fun filterConfigByDevice() {
         when (device?.productId) {
             D415 -> {
-                DEPTH_WIDTH = 1280
-                DEPTH_HEIGHT = 720
-                FRAME_RATE = 15
+                DEPTH_WIDTH = 640
+                DEPTH_HEIGHT = 480
+                FRAME_RATE = 30
             }
             SR300, SR305 -> {
                 DEPTH_WIDTH = 640

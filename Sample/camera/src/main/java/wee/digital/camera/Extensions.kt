@@ -428,7 +428,7 @@ fun Frame?.rgbToBitmapOpenCV(): Bitmap? {
         mColour.put(0, 0, colourBuff)
         //Core.transpose(mColour, mColour) // Rotate 90
         Core.flip(mColour, mColour, 1) // Mirror
-        val bmpDisplay = Bitmap.createBitmap(mColour.cols(), mColour.rows(), Bitmap.Config.RGB_565)
+        val bmpDisplay = Bitmap.createBitmap(mColour.cols(), mColour.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(mColour, bmpDisplay)
         bmpDisplay
     } catch (e: Throwable) {
