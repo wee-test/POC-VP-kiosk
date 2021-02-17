@@ -12,6 +12,7 @@ import wee.dev.weeocr.camera.FrameStreamListener
 import wee.dev.weeocr.repository.utils.SystemUrl
 import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
+import wee.digital.camera.resize
 import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
@@ -27,12 +28,14 @@ import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
+import wee.digital.sample.ui.fragment.ApiVM
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
 
 class OcrFragment : MainFragment(), FrameStreamListener {
 
     private val ocrVM: OcrVM by lazy { viewModel(OcrVM::class) }
+    private val apiVM: ApiVM by lazy { viewModel(ApiVM::class) }
 
     private var camera: CameraSource? = null
 
@@ -130,14 +133,34 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                     Configs.TYPE_NID -> {
                         ocrVM.extractNidFront(frameFont!!.toBytes())
                         ocrVM.extractNidBack(frameBack!!.toBytes())
+
+                        //API VM
+                        Log.d("ImageFrontSize","${frameFont!!.byteCount} - ${frameFont!!.width} - ${frameFont!!.height}")
+                        Log.d("ImageBackSize","${frameBack!!.byteCount}")
+                        apiVM.scanOCR(type = Configs.ID_CARD_FRONT,sessionId = Utils.getUUIDRandom(),image = frameFont!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
+                        apiVM.scanOCR(type = Configs.ID_CARD_BACK,sessionId = Utils.getUUIDRandom(),image = frameBack!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
+
+                        apiVM.searchCustomer(type = Configs.ID_CARD_FRONT,idCardPhoto = frameFont!!.toBytes())
                     }
                     Configs.TYPE_NID_12 -> {
                         ocrVM.extractNid12Front(frameFont!!.toBytes())
                         ocrVM.extractNid12Back(frameBack!!.toBytes())
+
+                        //API VM
+                        apiVM.scanOCR(type = Configs.ID_CARD_FRONT,sessionId = Utils.getUUIDRandom(),image = frameFont!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
+                        apiVM.scanOCR(type = Configs.ID_CARD_BACK,sessionId = Utils.getUUIDRandom(),image = frameBack!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
+
+                        apiVM.searchCustomer(type = Configs.ID_CARD_FRONT,idCardPhoto = frameFont!!.toBytes())
                     }
                     Configs.TYPE_CCCD -> {
                         ocrVM.extractCccdFront(frameFont!!.toBytes())
                         ocrVM.extractCccdBack(frameBack!!.toBytes())
+
+                        //API VM
+                        apiVM.scanOCR(type = Configs.ID_CARD_FRONT,sessionId = Utils.getUUIDRandom(),image = frameFont!!.toBytes())
+                        apiVM.scanOCR(type = Configs.ID_CARD_BACK,sessionId = Utils.getUUIDRandom(),image = frameBack!!.toBytes())
+
+                        apiVM.searchCustomer(type = Configs.ID_CARD_FRONT,idCardPhoto = frameFont!!.toBytes())
                     }
                 }
             }

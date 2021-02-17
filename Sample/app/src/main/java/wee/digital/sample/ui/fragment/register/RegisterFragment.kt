@@ -20,12 +20,15 @@ import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
+import wee.digital.sample.ui.fragment.ApiVM
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
 
 class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     private val registerVM : RegisterVM by lazy { viewModel(RegisterVM::class) }
+
+    private val apiVM : ApiVM by lazy { viewModel(ApiVM::class) }
 
     private val mFaceDetectJob: FaceCaptureJob = FaceCaptureJob(this)
 
@@ -77,10 +80,12 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
      * [FaceCaptureJob.Listener] implement
      */
     override fun onCaptureTick(second: String?) {
-        if(isComplete) return
-        registerLabelTime.text = second
-        registerFrameBg ?: return
-        if (second != null) registerFrameBg.show() else registerFrameBg.gone()
+        activity?.runOnUiThread {
+            if(isComplete) return@runOnUiThread
+            registerLabelTime.text = second
+            registerFrameBg ?: return@runOnUiThread
+            if (second != null) registerFrameBg.show() else registerFrameBg.gone()
+        }
     }
 
     override fun onPortraitCaptured(image: Bitmap) {
@@ -94,8 +99,14 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerFrame.setImageBitmap(image)
             if(Shared.typeCardOcr.value == Configs.TYPE_PASSPORT){
                 registerVM.verifyIdCard(Shared.passportData.value?.frame.toBytes().toStringBase64(), image.toBytes())
+
+                // API VM
+                apiVM.matchingFrame(Shared.passportData.value?.frame.toBytes().toStringBase64(), image.toBytes())
             }else{
                 registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
+
+                // API VM
+                apiVM.matchingFrame(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
             }
         }
     }

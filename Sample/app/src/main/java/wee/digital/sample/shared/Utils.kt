@@ -111,4 +111,8 @@ object Utils {
         return ""
     }
 
+    fun getUUIDRandom(): String {
+        return UUID.randomUUID().toString()
+    }
+
 }

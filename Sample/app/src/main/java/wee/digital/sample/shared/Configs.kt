@@ -40,14 +40,16 @@ object Configs {
     const val FORM_STEP_8 = "FORM-STEP-8"
     const val END_STEP = "END-STEP"
 
+    const val ID_CARD_FRONT = 1
+    const val ID_CARD_BACK =2
+
     fun configWeeOcr(){
-        WeeOCR.CAMERA_ID = 1
+        //WeeOCR.CAMERA_ID = 1
         WeeOCR.CAMERA_SATURATION_STEP = "0"
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 100
+        WeeOCR.BLUR_MIN_VALUE = 1
         WeeOCR.CAMERA_ZOOM = "18"
         WeeOCR.DELAY_SCAN = 7
-        WeeOCR.BLUR_MIN_VALUE = 100
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
     }
 
