@@ -1,6 +1,7 @@
 package wee.digital.sample.ui.fragment.register
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Base64
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -10,16 +11,23 @@ import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import vplib.*
+import wee.digital.camera.toStringBase64
+import wee.digital.camera.utils.RecordVideo
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.*
+import wee.digital.sample.shared.Configs
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
+import java.io.File
 
 class RegisterVM : BaseViewModel(){
 
     val statusVerifyCard = EventLiveData<ResponseFaceVerifyToIDCard>()
 
     val statusRegisterCard = EventLiveData<ResponseCustomerRegister>()
+
+    val statusMatching = EventLiveData<ResponseVPFaceMatching>()
 
     @SuppressLint("CheckResult")
     fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
@@ -41,6 +49,25 @@ class RegisterVM : BaseViewModel(){
     }
 
     @SuppressLint("CheckResult")
+    fun matchingFrame(idCardPhoto: String, face: ByteArray) {
+        Single.fromCallable {
+            val body = MatchingReq(
+                    kioskId = Configs.KIOSK_ID,
+                    sessionId = Utils.getUUIDRandom(),
+                    idCardPhoto = idCardPhoto,
+                    facePhoto = face.toStringBase64()
+            )
+            lib?.kioskService!!.faceMatchingVP(Gson().toJson(body).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    statusMatching.postValue(it)
+                }, {
+                    statusMatching.postValue(null)
+                })
+    }
+
+    @SuppressLint("CheckResult")
     fun registerCard(body : CustomerRegisterReq){
         Single.fromCallable {
             Log.e("registerCard", "$body")
@@ -53,6 +80,36 @@ class RegisterVM : BaseViewModel(){
                 }, {
                     Log.e("registerCard", "${it.message}")
                     statusRegisterCard.postValue(null)
+                })
+    }
+
+    fun createVideo(context : Context, cardData : String){
+        val recordVideo = RecordVideo(context)
+        recordVideo.startVideo()
+        recordVideo.createVideo(object : RecordVideo.MyVideoCallBack{
+            override fun onResult(path: String) {
+                val video = File(path).readBytes()
+                livenessFace(cardData, video.toStringBase64())
+            }
+        })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun livenessFace(idCardPhoto: String, video: String) {
+        Single.fromCallable {
+            val body = LivenessReq(
+                    kioskId = Configs.KIOSK_ID,
+                    sessionId = Utils.getUUIDRandom(),
+                    idCardPhoto = idCardPhoto,
+                    livenessVideo = video
+            )
+            lib?.kioskService!!.faceLivenessVP(Gson().toJson(body).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d("livenessFace","$it")
+                }, {
+                    Log.d("livenessFace","${it.message}")
                 })
     }
 

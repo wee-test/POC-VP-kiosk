@@ -34,6 +34,7 @@ import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
+import wee.digital.sample.ui.fragment.call.CallVM
 import java.net.Inet4Address
 import java.net.InetSocketAddress
 import java.net.NetworkInterface
@@ -45,6 +46,8 @@ import kotlin.concurrent.thread
 class MainActivity : BaseActivity(), SocketServer.Listener {
 
     private val mainVM: MainVM by lazy { activityVM(MainVM::class) }
+
+    private val callVM: CallVM by lazy { activityVM(CallVM::class) }
 
     private var tellerId: String = ""
 
@@ -88,10 +91,19 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
                     mainVM.loginKiosk()
                 }
             } else {
+                callVM.createNewSession(it.result.kioskID)
                 Configs.KIOSK_ID = it.result.kioskID
                 Shared.kioskInfo.postValue(it)
             }
         }
+        callVM.statusCreateNewSession.observe {
+            if (it?.responseCode?.code == 0L) {
+                Shared.sessionVideo.postValue(it)
+            } else {
+                post(500) { callVM.createNewSession(Configs.KIOSK_ID) }
+            }
+        }
+
         Shared.socketStatusConnect.observe {
             if (it == null) {
                 Socket.action.closeWebSocketMonitor()

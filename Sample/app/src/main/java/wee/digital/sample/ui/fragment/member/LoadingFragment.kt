@@ -86,7 +86,7 @@ class LoadingFragment : MainFragment() {
                 customerInfo = infoCustomer,
                 cardType = Shared.cardSelected.value?.type ?: "PLATINUM_CASHBACK",
                 ekycType = 1,
-                videoCallId = Shared.sessionVideo.value?.result?.videoCallID.toString(),
+                videoCallId = Shared.sessionVideo.value?.result?.videoCallID.toString().replace("null", ""),
                 methodOfReceiving = receiver
         )
         Voice.ins?.request(VoiceData.PROCESSING_SCREEN){

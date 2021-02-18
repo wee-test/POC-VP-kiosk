@@ -21,45 +21,6 @@ class ApiVM : BaseViewModel() {
     val statusExtractBack = EventLiveData<BackCardResp>()
 
     @SuppressLint("CheckResult")
-    fun matchingFrame(idCardPhoto: String, face: ByteArray) {
-        Single.fromCallable {
-            val body = MatchingReq(
-                    kioskId = Configs.KIOSK_ID,
-                    sessionId = Utils.getUUIDRandom(),
-                    idCardPhoto = idCardPhoto,
-                    facePhoto = face.toStringBase64()
-            )
-            lib?.kioskService!!.faceMatchingVP(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.d("matchingFrame","$it")
-                }, {
-                    Log.d("matchingFrame","${it.message}")
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun livenessFace(type: Int, idCardPhoto: String, video: String) {
-        Single.fromCallable {
-            val body = LivenessReq(
-                    kioskId = Configs.KIOSK_ID,
-                    type = type,
-                    sessionId = Utils.getUUIDRandom(),
-                    idCardPhoto = idCardPhoto,
-                    livenessVideo = video
-            )
-            lib?.kioskService!!.faceLivenessVP(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.d("livenessFace","$it")
-                }, {
-                    Log.d("livenessFace","${it.message}")
-                })
-    }
-
-    @SuppressLint("CheckResult")
     fun searchCustomer(type: Int, idCardPhoto: ByteArray) {
         Single.fromCallable {
             val body = SearchReq(

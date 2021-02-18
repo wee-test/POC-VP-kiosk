@@ -28,9 +28,9 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     private val registerVM : RegisterVM by lazy { viewModel(RegisterVM::class) }
 
-    private val apiVM : ApiVM by lazy { viewModel(ApiVM::class) }
-
     private val mFaceDetectJob: FaceCaptureJob = FaceCaptureJob(this)
+
+    private var faceBitmap : Bitmap? = null
 
     private var isComplete = false
 
@@ -61,8 +61,21 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
-            sendSocket(true)
+            registerVM.matchingFrame(Shared.frameCardData.value?.cardFront ?: "", faceBitmap.toBytes())
             Shared.faceId.postValue(it.validateResult.faceID)
+        }
+        registerVM.statusMatching.observe {
+            if(it == null || it.responseCode?.code ?: -1 != 0L){
+                val messFail = MessageData(
+                        "Đăng ký không thành công",
+                        VoiceData.FACE_NOT_MATCHED
+                )
+                sendSocket(false)
+                Shared.messageFail.postValue(messFail)
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
+            }
+            sendSocket(true)
             navigate(MainDirections.actionGlobalCardFragment())
         }
     }
@@ -94,20 +107,11 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
         activity?.runOnUiThread {
             if (isComplete) return@runOnUiThread
             isComplete = true
+            faceBitmap = image
             registerStatusFace.text = "Chờ chút nhé..."
             registerFrameBg.show()
             registerFrame.setImageBitmap(image)
-            if(Shared.typeCardOcr.value == Configs.TYPE_PASSPORT){
-                registerVM.verifyIdCard(Shared.passportData.value?.frame.toBytes().toStringBase64(), image.toBytes())
-
-                // API VM
-                apiVM.matchingFrame(Shared.passportData.value?.frame.toBytes().toStringBase64(), image.toBytes())
-            }else{
-                registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
-
-                // API VM
-                apiVM.matchingFrame(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
-            }
+            registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
         }
     }
 
@@ -129,6 +133,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onPause() {
         super.onPause()
+        registerVM.createVideo(requireContext(), Shared.frameCardData.value?.cardFront ?: "")
         RealSense.stop()
     }
 

@@ -31,6 +31,7 @@ class OcrVM : BaseViewModel() {
                     sessionId = sessionId,
                     image = image.toStringBase64()
             )
+            Log.d("scanOCRFront", body.toString())
             lib?.kioskService!!.vpOCR(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
@@ -115,6 +116,7 @@ class OcrVM : BaseViewModel() {
                     sessionId = sessionId,
                     image = image.toStringBase64()
             )
+            Log.d("scanOCRBack", body.toString())
             lib?.kioskService!!.vpOCR(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
