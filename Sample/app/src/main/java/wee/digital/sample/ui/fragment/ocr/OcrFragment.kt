@@ -4,6 +4,9 @@ import android.graphics.Bitmap
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.ocr.*
 import wee.dev.weeocr.WeeOCR
 import wee.dev.weeocr.camera.CameraConfig
@@ -15,7 +18,6 @@ import wee.dev.weeocr.repository.utils.SystemUrl.NONE
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
 import wee.digital.library.extension.gone
-import wee.digital.library.extension.post
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.sample.shared.Utils
@@ -31,11 +33,13 @@ import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.fragment.ApiVM
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
+import java.util.concurrent.TimeUnit
 
 class OcrFragment : MainFragment(), FrameStreamListener {
 
     private val ocrVM: OcrVM by lazy { viewModel(OcrVM::class) }
     private val apiVM: ApiVM by lazy { viewModel(ApiVM::class) }
+    private var disposableCamera: Disposable? = null
 
     private var camera: CameraSource? = null
 
@@ -297,11 +301,16 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     override fun onResume() {
         super.onResume()
-        startCamera()
+        disposableCamera = Single.timer(700, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    startCamera()
+                }, {})
     }
 
     override fun onPause() {
         super.onPause()
+        disposableCamera?.dispose()
         release()
     }
 
