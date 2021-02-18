@@ -1,206 +1,138 @@
 package wee.digital.sample.ui.fragment.ocr
 
 import android.annotation.SuppressLint
-import android.util.Base64
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import io.reactivex.Single
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import vplib.*
+import vplib.ResponseVPOCR
+import wee.dev.weewebrtc.utils.extension.parse
+import wee.digital.camera.toStringBase64
 import wee.digital.sample.app.lib
-import wee.digital.sample.repository.model.BackCardResp
-import wee.digital.sample.repository.model.ExtractCardReq
-import wee.digital.sample.repository.model.FrontCardResp
+import wee.digital.sample.repository.model.CardRespVP
+import wee.digital.sample.repository.model.CheckingResultResp
+import wee.digital.sample.repository.model.OcrReq
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
 
 class OcrVM : BaseViewModel() {
 
-    val statusExtractFront = EventLiveData<FrontCardResp>()
+    val statusExtractFrontVP = EventLiveData<CardRespVP>()
 
-    val statusExtractBack = EventLiveData<BackCardResp>()
+    val statusExtractBackVP = EventLiveData<CardRespVP>()
 
     @SuppressLint("CheckResult")
-    fun extractNidFront(image: ByteArray) {
+    fun scanOCRFrontVP(type: Int, sessionId: String, image: ByteArray) {
         Single.fromCallable {
-            val body = ExtractCardReq(
-                    cardImage = Base64.encodeToString(image, Base64.NO_WRAP)
+            val body = OcrReq(
+                    kioskId = Configs.KIOSK_ID,
+                    type = type,
+                    sessionId = sessionId,
+                    image = image.toStringBase64()
             )
-            lib?.kioskService!!.extractCMNDFrontInfo(Gson().toJson(body).toByteArray())
+            lib?.kioskService!!.vpOCR(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.e("extractNidFront", "$it")
-                    if(it.responseCode.code != 0L){
-                        statusExtractFront.postValue(FrontCardResp(code = -1))
-                    }else{
-                        val resp = FrontCardResp(
-                                code = it.responseCode.code,
-                                image = it.frontInfo.image,
-                                address = it.frontInfo.address,
-                                number = it.frontInfo.number,
-                                birthday = it.frontInfo.birthday,
-                                fullName = it.frontInfo.fullName,
-                                homeTown = it.frontInfo.homeTown
+                    Log.d("scanOCRFront", "$it")
+                    if (it.responseCode.code != 0L) {
+                        statusExtractFrontVP.postValue(CardRespVP(code = -1))
+                    } else {
+                        val checkingResult = CheckingResultResp(
+                        recapturedResult = it.result.data.checkingResult.recapturedResult,
+                        checkPhotocopiedResult = it.result.data.checkingResult.checkPhotocopiedResult,
+                        editedResult = it.result.data.checkingResult.editedResult,
+                        cornerCutResult = it.result.data.checkingResult.cornerCutResult,
+                        editedProb = it.result.data.checkingResult.editedProb,
+                        recapturedProb = it.result.data.checkingResult.recapturedProb,
+                        checkPhotocopiedProb = it.result.data.checkingResult.checkPhotocopiedProb,
+                        checkTitleResult = it.result.data.checkingResult.checkTitleResult,
+                        checkEmblemResult = it.result.data.checkingResult.checkEmblemResult,
+                        checkEmblemProb = it.result.data.checkingResult.checkEmblemProb,
+                        checkFingerprintResult = it.result.data.checkingResult.checkFingerprintResult,
+                        checkStampResult = it.result.data.checkingResult.checkStampResult,
+                        checkEmbossedStampResult = it.result.data.checkingResult.checkEmbossedStampResult,
+                        checkEmbossedStampProb = it.result.data.checkingResult.checkEmbossedStampProb,
+                        checkBorderResult = it.result.data.checkingResult.checkBorderResult,
+                        checkBorderProb = it.result.data.checkingResult.checkBorderProb
                         )
-                        statusExtractFront.postValue(resp)
-                    }
-                },{
-                    Log.e("extractNidFront", "$it")
-                    statusExtractFront.postValue(FrontCardResp(code = -1))
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun extractNidBack(image: ByteArray) {
-        Single.fromCallable {
-            val body = ExtractCardReq(
-                    cardImage = Base64.encodeToString(image, Base64.NO_WRAP)
-            )
-            lib?.kioskService!!.extractCMNDBackInfo(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.e("extractNidBack", "$it")
-                    if(it.responseCode.code != 0L){
-                        statusExtractBack.postValue(BackCardResp(code = -1))
-                    }else{
-                        val resp = BackCardResp(
-                                code = it.responseCode.code,
-                                image = it.backInfo.image,
-                                issueDate = it.backInfo.issueDate,
-                                issueBy = it.backInfo.issueBy,
+                        val data = CardRespVP(
+                            code  = 0,
+                            id = it.result.data.id,
+                            idProb = it.result.data.idProb,
+                            name = it.result.data.name,
+                            nameProb = it.result.data.nameProb,
+                            dob = it.result.data.dob,
+                            dobProb = it.result.data.dobProb,
+                            sex = it.result.data.sex,
+                            sexProb = it.result.data.sexProb,
+                            nationality = it.result.data.nationality,
+                            nationalityProb = it.result.data.nationalityProb,
+                            home = it.result.data.home,
+                            homeProb = it.result.data.homeProb,
+                            address = it.result.data.address,
+                            addressProb = it.result.data.addressProb,
+                            typeNew = it.result.data.typeNew,
+                            doe = it.result.data.doe,
+                            doeProb = it.result.data.doeProb,
+                            type = it.result.data.typeNew,
+                            ward = it.result.data.ward,
+                            district = it.result.data.district,
+                            province = it.result.data.province,
+                            street = it.result.data.street,
+                            ethnicityProb = it.result.data.ethnicityProb,
+                            religion = it.result.data.religion,
+                            religionProb = it.result.data.religionProb,
+                            features = it.result.data.features,
+                            featuresProb = it.result.data.featuresProb,
+                            issueDate = it.result.data.issueDate,
+                            issueDateProb = it.result.data.issueDateProb,
+                            issueLoc = it.result.data.issueLoc,
+                            issueLocProb = it.result.data.issueLocProb,
+                            passportNumber = it.result.data.passportNumber,
+                            passportNumberProb = it.result.data.passportNumberProb,
+                            idNumber = it.result.data.idNumber,
+                            idNumberProb = it.result.data.idNumberProb,
+                            doi = it.result.data.doi,
+                            doiProb = it.result.data.doiProb,
+                            checkingResult = checkingResult
                         )
-                        statusExtractBack.postValue(resp)
-                    }
-                },{
-                    Log.e("extractNidBack", "${it.message}")
-                    statusExtractBack.postValue(BackCardResp(code = -1))
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun extractNid12Front(image: ByteArray) {
-        Single.fromCallable {
-            val body = ExtractCardReq(
-                    cardImage = Base64.encodeToString(image, Base64.NO_WRAP)
-            )
-            lib?.kioskService!!.extractCMND12FrontInfo(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.e("extractNid12Front", "$it")
-                    if(it.responseCode.code != 0L){
-                        statusExtractFront.postValue(FrontCardResp(code = -1))
-                    }else{
-                        val resp = FrontCardResp(
-                                code = it.responseCode.code,
-                                image = it.frontInfo.image,
-                                address = it.frontInfo.address,
-                                number = it.frontInfo.address,
-                                fullName = it.frontInfo.fullName,
-                                birthday = it.frontInfo.birthday,
-                                homeTown = it.frontInfo.homeTown,
-                                expiryDate = it.frontInfo.expiryDate,
-                                nationality = it.frontInfo.nationality,
-                                sex = it.frontInfo.sex,
-                                correctAddress = it.frontInfo.correctAddress,
-                                correctHomeTown = it.frontInfo.correctHomeTown,
-                                correctName = it.frontInfo.correctName
-                        )
-                        statusExtractFront.postValue(resp)
+                        statusExtractFrontVP.postValue(data)
                     }
                 }, {
-                    Log.e("extractNid12Front", "${it.message}")
-                    statusExtractFront.postValue(FrontCardResp(code = -1))
+                    Log.d("scanOCRFront", "${it.message}")
+                    statusExtractFrontVP.postValue(CardRespVP(code = -1))
                 })
     }
 
     @SuppressLint("CheckResult")
-    fun extractNid12Back(image: ByteArray) {
+    fun scanOCRBackVP(type: Int, sessionId: String, image: ByteArray) {
         Single.fromCallable {
-            val body = ExtractCardReq(
-                    cardImage = Base64.encodeToString(image, Base64.NO_WRAP)
+            val body = OcrReq(
+                    kioskId = Configs.KIOSK_ID,
+                    type = type,
+                    sessionId = sessionId,
+                    image = image.toStringBase64()
             )
-            lib?.kioskService!!.extractCMND12BackInfo(Gson().toJson(body).toByteArray())
+            lib?.kioskService!!.vpOCR(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    if(it.responseCode.code != 0L){
-                        statusExtractBack.postValue(BackCardResp(code = -1))
-                    }else{
-                        val resp = BackCardResp(
-                                code = it.responseCode.code,
-                                image = it.backInfo.image,
-                                issueDate = it.backInfo.issueDate
+                    Log.d("scanOCRBack", "$it")
+                    if (it.responseCode.code != 0L) {
+                        statusExtractBackVP.postValue(CardRespVP(code = -1))
+                    } else {
+                        val data = CardRespVP(
+                                code = 0,
+                                issueDate = it.result.data.issueDate,
+                                issueLoc = it.result.data.issueLoc
                         )
-                        statusExtractBack.postValue(resp)
+                        statusExtractBackVP.postValue(data)
                     }
                 }, {
-                    statusExtractBack.postValue(BackCardResp(code = -1))
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun extractCccdFront(image: ByteArray) {
-        Single.fromCallable {
-            val body = ExtractCardReq(
-                    cardImage = Base64.encodeToString(image, Base64.NO_WRAP)
-            )
-            lib?.kioskService!!.extractCCCDFrontInfo(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.e("extractCccdFront", "$it")
-                    if(it.responseCode.code != 0L){
-                        statusExtractFront.postValue(FrontCardResp(code = -1))
-                    }else{
-                        val resp = FrontCardResp(
-                                code = it.responseCode.code,
-                                image = it.frontInfo.image,
-                                address = it.frontInfo.address,
-                                fullName = it.frontInfo.fullName,
-                                number = it.frontInfo.number,
-                                birthday = it.frontInfo.birthday,
-                                expiryDate = it.frontInfo.expiryDate,
-                                sex = it.frontInfo.sex,
-                                homeTown = it.frontInfo.homeTown
-                        )
-                        statusExtractFront.postValue(resp)
-                    }
-                }, {
-                    Log.e("extractCccdFront", "${it.message}")
-                    statusExtractFront.postValue(FrontCardResp(code = -1))
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun extractCccdBack(image: ByteArray) {
-        Single.fromCallable {
-            val body = ExtractCardReq(
-                    cardImage = Base64.encodeToString(image, Base64.NO_WRAP)
-            )
-            lib?.kioskService!!.extractCCCDBackInfo(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.e("extractCccdBack", "$it")
-                    if(it.responseCode.code != 0L){
-                        statusExtractBack.postValue(BackCardResp(code = -1))
-                    }else{
-                        val resp = BackCardResp(
-                                code = it.responseCode.code,
-                                image = it.backInfo.image,
-                                issueDate = it.backInfo.issueDate
-                        )
-                        statusExtractBack.postValue(resp)
-                    }
-                }, {
-                    Log.e("extractCccdBack", "${it.message}")
-                    statusExtractBack.postValue(BackCardResp(code = -1))
+                    Log.d("scanOCRBack", "$it")
+                    statusExtractBackVP.postValue(CardRespVP(code = -1))
                 })
     }
 

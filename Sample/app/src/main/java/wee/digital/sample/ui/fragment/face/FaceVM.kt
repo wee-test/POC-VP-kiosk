@@ -18,6 +18,7 @@ import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.CustomerInfoReq
 import wee.digital.sample.repository.model.IdentifyFaceReq
 import wee.digital.sample.repository.model.VerifyFaceReq
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
 
@@ -91,7 +92,7 @@ class FaceVM : BaseViewModel() {
         recordVideo.startVideo()
         recordVideo.createVideo(object : RecordVideo.MyVideoCallBack{
             override fun onResult(path: String) {
-                Log.e("videoPath", "$path")
+
             }
         })
     }

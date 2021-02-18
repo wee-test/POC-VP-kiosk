@@ -44,10 +44,10 @@ object Configs {
     const val ID_CARD_BACK =2
 
     fun configWeeOcr(){
-        //WeeOCR.CAMERA_ID = 1
+        WeeOCR.CAMERA_ID = 1
         WeeOCR.CAMERA_SATURATION_STEP = "0"
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 1
+        WeeOCR.BLUR_MIN_VALUE = 100
         WeeOCR.CAMERA_ZOOM = "18"
         WeeOCR.DELAY_SCAN = 7
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0

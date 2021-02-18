@@ -71,7 +71,6 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         weeCaller = WeeCaller(this)
         weeCaller?.init()
         printerSocket.addListener(MyWebSocketListenr())
-
     }
 
     override fun navController(): NavController {

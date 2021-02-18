@@ -93,37 +93,18 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
         } else {
             ocrInputExDate.show()
         }
-        if (Shared.typeCardOcr.value == Configs.TYPE_PASSPORT) {
-            Shared.passportData.observe {
-                ocrInputFullName.text = "${it.firstName} ${it.lassName}"
-                ocrInputNumber.text = it.idNumber
-                ocrInputIssueDate.text = Utils.getIssueDatePassport(it.exDate)
-                ocrInputExDate.text = it.exDate
-                ocrInputIssuePlace.hint = "Loại"
-                ocrInputIssuePlace.text = it.type
-                ocrInputBirth.text = it.birthDay
-                ocrInputGender.text = when (it.gender) {
-                    "M" -> "Nam"
-                    "F" -> "Nữ"
-                    else -> "Nam"
-                }
-                ocrInputHometown.hint = "Quốc gia"
-                ocrInputHometown.text = it.nationCode
-            }
-        } else {
-            Shared.ocrCardFront.observe {
-                ocrInputFullName.text = it.fullName
-                ocrInputNumber.text = it.number
-                ocrInputBirth.text = it.birthday.replace("-", "/")
-                ocrInputGender.text = it.sex
-                ocrInputExDate.text = it.expiryDate
-                ocrInputHometown.text = it.homeTown
-                ocrInputAddress.text = it.address
-            }
-            Shared.ocrCardBack.observe {
-                ocrInputIssueDate.text = it.issueDate.replace(" ", "/")
-                ocrInputIssuePlace.text = it.issueBy
-            }
+        Shared.ocrCardInfoVP.observe {
+            ocrInputFullName.text = it.name
+            ocrInputNumber.text = it.id
+            ocrInputBirth.text = it.dob.replace("-", "/")
+            ocrInputGender.text = if(it.doe == "N/A") "" else it.sex
+            ocrInputExDate.text = if(it.doe == "N/A") "" else it.doe
+            ocrInputHometown.text = it.home
+            ocrInputAddress.text = it.address
+        }
+        Shared.ocrCardInfoVP.observe {
+            ocrInputIssueDate.text = it.issueDate.replace(" ", "/")
+            ocrInputIssuePlace.text = it.issueLoc
         }
     }
 
@@ -214,7 +195,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                 issuedPlace = issuePlace,
                 expiredDate = exDate,
                 phone = ocrInputPhone.text.toString(),
-                nationality = Shared.ocrCardFront.value?.nationality ?: "Việt Nam",
+                nationality = Shared.ocrCardInfoVP.value?.nationality ?: "Việt Nam",
         )
         Shared.ocrConfirmData.postValue(data)
         return true

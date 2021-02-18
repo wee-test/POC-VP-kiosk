@@ -30,7 +30,6 @@ import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
-import wee.digital.sample.ui.fragment.ApiVM
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
 import java.util.concurrent.TimeUnit
@@ -38,7 +37,7 @@ import java.util.concurrent.TimeUnit
 class OcrFragment : MainFragment(), FrameStreamListener {
 
     private val ocrVM: OcrVM by lazy { viewModel(OcrVM::class) }
-    private val apiVM: ApiVM by lazy { viewModel(ApiVM::class) }
+
     private var disposableCamera: Disposable? = null
 
     private var camera: CameraSource? = null
@@ -65,14 +64,12 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity())
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
-        Voice.ins?.request(VoiceData.PUSH_ID_CARD){
-            isStart = true
-        }
+        resetAllFrame()
     }
 
     override fun onLiveDataObserve() {
-        ocrVM.statusExtractFront.observe {
-            if(it.code != 0L){
+        ocrVM.statusExtractFrontVP.observe {
+            if (it.code != 0) {
                 Shared.messageFail.postValue(
                         MessageData("Không thể đọc được dữ liệu",
                                 "không thể đọc giấy tờ, bạn vui lòng thử lại")
@@ -80,11 +77,15 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
-            Shared.ocrCardFront.postValue(it)
-            checkNavigate(dataFront = it)
+            Shared.ocrCardInfoVP.postValue(it)
+            ocrVM.scanOCRBackVP(
+                    type = Configs.ID_CARD_BACK,
+                    sessionId = Utils.getUUIDRandom(),
+                    image = frameBack!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes(),
+            )
         }
-        ocrVM.statusExtractBack.observe {
-            if(it.code != 0L){
+        ocrVM.statusExtractBackVP.observe {
+            if (it.code != 0) {
                 Shared.messageFail.postValue(
                         MessageData("Không thể đọc được dữ liệu",
                                 "không thể đọc giấy tờ, bạn vui lòng thử lại")
@@ -92,19 +93,18 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
-            Shared.ocrCardBack.postValue(it)
-            checkNavigate(dataBack = it)
+            Shared.ocrCardInfoVP.value?.issueDate = it.issueDate
+            Shared.ocrCardInfoVP.value?.issueLoc = it.issueLoc
+            navigateUI()
         }
     }
 
-    private fun checkNavigate(dataFront: FrontCardResp? = Shared.ocrCardFront.value, dataBack: BackCardResp? = Shared.ocrCardBack.value) {
-        if (dataFront != null && dataBack != null) {
-            sendSocket()
-            navigate(MainDirections.actionGlobalOcrConfirmFragment())
-        }
+    private fun navigateUI() {
+        sendSocket()
+        navigate(MainDirections.actionGlobalOcrConfirmFragment())
     }
 
-    private fun sendSocket(){
+    private fun sendSocket() {
         val resp = Shared.socketReqData.value
         resp?.cmd = Configs.FORM_STEP_2
         resp?.data?.photo = Shared.frameCardData.value
@@ -127,46 +127,17 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 frameComplete = true
                 ocrActionNext.gone()
                 ocrLoading.show()
+                Shared.ocrCardInfoVP.postValue(CardRespVP())
                 Shared.frameCardData.postValue(
                         PhotoCardInfo(
                                 Base64.encodeToString(frameFont.toBytes(), Base64.NO_WRAP),
                                 Base64.encodeToString(frameBack.toBytes(), Base64.NO_WRAP)
                         )
                 )
-                when (Shared.typeCardOcr.value) {
-                    Configs.TYPE_NID -> {
-                        ocrVM.extractNidFront(frameFont!!.toBytes())
-                        ocrVM.extractNidBack(frameBack!!.toBytes())
-
-                        //API VM
-                        Log.d("ImageFrontSize","${frameFont!!.byteCount} - ${frameFont!!.width} - ${frameFont!!.height}")
-                        Log.d("ImageBackSize","${frameBack!!.byteCount}")
-                        apiVM.scanOCR(type = Configs.ID_CARD_FRONT,sessionId = Utils.getUUIDRandom(),image = frameFont!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
-                        apiVM.scanOCR(type = Configs.ID_CARD_BACK,sessionId = Utils.getUUIDRandom(),image = frameBack!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
-
-                        apiVM.searchCustomer(type = Configs.ID_CARD_FRONT,idCardPhoto = frameFont!!.toBytes())
-                    }
-                    Configs.TYPE_NID_12 -> {
-                        ocrVM.extractNid12Front(frameFont!!.toBytes())
-                        ocrVM.extractNid12Back(frameBack!!.toBytes())
-
-                        //API VM
-                        apiVM.scanOCR(type = Configs.ID_CARD_FRONT,sessionId = Utils.getUUIDRandom(),image = frameFont!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
-                        apiVM.scanOCR(type = Configs.ID_CARD_BACK,sessionId = Utils.getUUIDRandom(),image = frameBack!!.resize(920,Bitmap.CompressFormat.JPEG).toBytes())
-
-                        apiVM.searchCustomer(type = Configs.ID_CARD_FRONT,idCardPhoto = frameFont!!.toBytes())
-                    }
-                    Configs.TYPE_CCCD -> {
-                        ocrVM.extractCccdFront(frameFont!!.toBytes())
-                        ocrVM.extractCccdBack(frameBack!!.toBytes())
-
-                        //API VM
-                        apiVM.scanOCR(type = Configs.ID_CARD_FRONT,sessionId = Utils.getUUIDRandom(),image = frameFont!!.toBytes())
-                        apiVM.scanOCR(type = Configs.ID_CARD_BACK,sessionId = Utils.getUUIDRandom(),image = frameBack!!.toBytes())
-
-                        apiVM.searchCustomer(type = Configs.ID_CARD_FRONT,idCardPhoto = frameFont!!.toBytes())
-                    }
-                }
+                ocrVM.scanOCRFrontVP(
+                        type = Configs.ID_CARD_FRONT,
+                        sessionId = Utils.getUUIDRandom(),
+                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes())
             }
         }
     }
@@ -305,6 +276,9 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     startCamera()
+                    Voice.ins?.request(VoiceData.PUSH_ID_CARD) {
+                        isStart = true
+                    }
                 }, {})
     }
 

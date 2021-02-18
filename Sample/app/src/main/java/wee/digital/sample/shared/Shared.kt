@@ -43,6 +43,8 @@ object Shared {
 
     val ocrCardBack = MutableLiveData<BackCardResp>()
 
+    val ocrCardInfoVP = MutableLiveData<CardRespVP>()
+
     val passportData = MutableLiveData<PassportData>()
 
     val cardSelected = MutableLiveData<CardItem>()
@@ -104,6 +106,7 @@ object Shared {
         socketStatusConnect.postValue(null)
         socketReqData.postValue(null)
         callVideo.postValue("")
+        ocrCardInfoVP.postValue(null)
         Configs.isMute = false
         dataCallLog = null
     }
