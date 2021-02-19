@@ -41,7 +41,7 @@ class RecordVideo(context: Context) {
 
             config = MuxerConfig(
                     file = file!!,
-                    framesPerSecond = 15f,
+                    framesPerSecond = 13f,
                     videoWidth = 640,
                     videoHeight = 480
             )

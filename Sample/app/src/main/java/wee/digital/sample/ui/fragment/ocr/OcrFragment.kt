@@ -137,7 +137,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 ocrVM.scanOCRFrontVP(
                         type = Configs.ID_CARD_FRONT,
                         sessionId = Utils.getUUIDRandom(),
-                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes())
+                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes()
+                )
             }
         }
     }

@@ -12,7 +12,9 @@ import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.CardRespVP
 import wee.digital.sample.repository.model.CheckingResultResp
 import wee.digital.sample.repository.model.OcrReq
+import wee.digital.sample.repository.model.SearchReq
 import wee.digital.sample.shared.Configs
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
 
@@ -135,6 +137,25 @@ class OcrVM : BaseViewModel() {
                 }, {
                     Log.d("scanOCRBack", "$it")
                     statusExtractBackVP.postValue(CardRespVP(code = -1))
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    fun searchCustomer(type: Int, idCardPhoto: String) {
+        Single.fromCallable {
+            val body = SearchReq(
+                    kioskId = Configs.KIOSK_ID,
+                    type = type,
+                    sessionId = Utils.getUUIDRandom(),
+                    idCardPhoto = idCardPhoto
+            )
+            lib?.kioskService!!.faceSearchVP(Gson().toJson(body).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d("searchCustomer","$it")
+                }, {
+                    Log.d("searchCustomer","${it.message}")
                 })
     }
 

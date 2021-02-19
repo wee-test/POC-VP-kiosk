@@ -47,8 +47,6 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
     private val mainVM: MainVM by lazy { activityVM(MainVM::class) }
 
-    private val callVM: CallVM by lazy { activityVM(CallVM::class) }
-
     private var tellerId: String = ""
 
     private var disposable: Disposable? = null
@@ -91,19 +89,10 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
                     mainVM.loginKiosk()
                 }
             } else {
-                callVM.createNewSession(it.result.kioskID)
                 Configs.KIOSK_ID = it.result.kioskID
                 Shared.kioskInfo.postValue(it)
             }
         }
-        callVM.statusCreateNewSession.observe {
-            if (it?.responseCode?.code == 0L) {
-                Shared.sessionVideo.postValue(it)
-            } else {
-                post(500) { callVM.createNewSession(Configs.KIOSK_ID) }
-            }
-        }
-
         Shared.socketStatusConnect.observe {
             if (it == null) {
                 Socket.action.closeWebSocketMonitor()
@@ -132,7 +121,6 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         Shared.wsMessage.observe { mess ->
             socketServer?.sendStreamData(mess)
         }
-
     }
 
     private fun callVideo(tellersId: String) {

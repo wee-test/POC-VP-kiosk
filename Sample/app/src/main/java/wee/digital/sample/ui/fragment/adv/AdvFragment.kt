@@ -2,15 +2,22 @@ package wee.digital.sample.ui.fragment.adv
 
 import android.view.View
 import kotlinx.android.synthetic.main.adv.*
+import wee.digital.library.extension.gone
+import wee.digital.library.extension.show
+import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
+import wee.digital.sample.ui.fragment.call.CallVM
 import wee.digital.sample.ui.main.MainFragment
 
 class AdvFragment : MainFragment() {
 
-    private val advVM : AdvVM by lazy { viewModel(AdvVM::class) }
+    private val advVM: AdvVM by lazy { viewModel(AdvVM::class) }
+
+    private val callVM: CallVM by lazy { viewModel(CallVM::class) }
 
     override fun layoutResource(): Int = R.layout.adv
 
@@ -18,16 +25,29 @@ class AdvFragment : MainFragment() {
         advVM.getListAdv()
         addClickListener(advActionStart)
         Shared.resetData()
+
     }
 
     override fun onLiveDataObserve() {
         advVM.advLiveData.observe { advSlide.listItem = it }
+        callVM.statusCreateNewSession.observe {
+            if (it == null || it.responseCode.code != 0L) {
+                advActionStart.show()
+                advProgress.gone()
+                toast("Không thể tạo được mã đăng ký, vui lòng thử lại")
+            } else {
+                Shared.sessionVideo.postValue(it)
+                navigate(MainDirections.actionGlobalVerifyFaceFragment())
+            }
+        }
     }
 
     override fun onViewClick(v: View?) {
         when (v) {
             advActionStart -> {
-                navigate(MainDirections.actionGlobalVerifyFaceFragment())
+                advActionStart.gone()
+                advProgress.show()
+                callVM.createNewSession(Configs.KIOSK_ID)
             }
         }
     }

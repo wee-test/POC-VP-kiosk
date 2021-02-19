@@ -21,25 +21,6 @@ class ApiVM : BaseViewModel() {
     val statusExtractBack = EventLiveData<BackCardResp>()
 
     @SuppressLint("CheckResult")
-    fun searchCustomer(type: Int, idCardPhoto: ByteArray) {
-        Single.fromCallable {
-            val body = SearchReq(
-                    kioskId = Configs.KIOSK_ID,
-                    type = type,
-                    sessionId = Utils.getUUIDRandom(),
-                    idCardPhoto = idCardPhoto.toStringBase64()
-            )
-            lib?.kioskService!!.faceSearchVP(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.d("searchCustomer","$it")
-                }, {
-                    Log.d("searchCustomer","${it.message}")
-                })
-    }
-
-    @SuppressLint("CheckResult")
     fun extractNidFront(image: ByteArray) {
         Single.fromCallable {
             val body = ExtractCardReq(
