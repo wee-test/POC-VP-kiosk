@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.intel.realsense.librealsense.DeviceListener
 import com.intel.realsense.librealsense.RsContext
+import org.opencv.core.Mat
 
 object RealSense {
 
@@ -154,8 +155,8 @@ object RealSense {
      */
     private var control: RealSenseControl? = null
 
-    val imagesLiveData: MutableLiveData<Pair<Bitmap, Bitmap>?> by lazy {
-        MutableLiveData<Pair<Bitmap, Bitmap>?>()
+    val imagesLiveData: MutableLiveData<Pair<Bitmap, Mat>?> by lazy {
+        MutableLiveData<Pair<Bitmap, Mat>?>()
     }
 
     var isStarting: Boolean = false

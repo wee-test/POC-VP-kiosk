@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
 import com.intel.realsense.librealsense.*
+import org.opencv.core.Mat
 import wee.digital.camera.utils.RecordVideo
 
 /**
@@ -25,7 +26,7 @@ class RealSenseControl {
     private var pipelineProfile: PipelineProfile? = null
 
     private var colorBitmap: Bitmap? = null
-    private var depthBitmap: Bitmap? = null
+    private var depthBitmap: Mat? = null
 
     private var isDestroy = false
     private var isFrameOK = false
@@ -142,7 +143,7 @@ class RealSenseControl {
     private fun frameProcessing(colorFrame: Frame, depthFrame: Frame) {
         try {
             colorBitmap = colorFrame.rgbToBitmapOpenCV()
-            depthBitmap = depthFrame.rgbToBitmapOpenCV()
+            depthBitmap = depthFrame.rgbToMatOpenCV()
             if (colorBitmap != null && depthBitmap != null) {
                 if(RecordVideo.isRecordVideo) RecordVideo.arrayBitmap.add(colorBitmap!!)
                 RealSense.imagesLiveData.postValue(Pair(colorBitmap!!, depthBitmap!!))

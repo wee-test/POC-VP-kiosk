@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.*
+import org.opencv.core.Mat
 import wee.digital.camera.RealSense
 import wee.digital.camera.detector.FaceDetector
 
@@ -19,7 +20,7 @@ class DebugDetectJob(private var uiListener: UiListener) :
     interface UiListener : FaceDetector.OptionListener, FaceDetector.DataListener,
             FaceDetector.StatusListener
 
-    private val imagesObserver = Observer<Pair<Bitmap, Bitmap>?> {
+    private val imagesObserver = Observer<Pair<Bitmap, Mat>?> {
         it?.apply {
             detector.detectFace(first, second)
         }

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.*
+import org.opencv.core.Mat
 import wee.digital.camera.RealSense
 import wee.digital.camera.detector.FaceDetector
 import wee.digital.camera.detector.FaceDetector.Companion.MIN_BLUR
@@ -39,7 +40,7 @@ class FaceCaptureJob(private val listener: Listener) :
         it.statusListener = this
     }
 
-    private val imagesObserver = Observer<Pair<Bitmap, Bitmap>?> {
+    private val imagesObserver = Observer<Pair<Bitmap, Mat>?> {
         it?.apply {
             if (hasDetect) detector.detectFace(first, second)
         }

@@ -6,6 +6,7 @@ import android.graphics.Rect
 import android.util.Log
 import com.mv.engine.FaceBox
 import com.mv.engine.Live
+import org.opencv.core.Mat
 import wee.digital.camera.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -37,41 +38,40 @@ class FaceDetector {
 
     var optionListener: OptionListener? = null
 
-    private val live = Live().apply {
+    /*private val live = Live().apply {
         this.loadModel(RealSense.app.assets)
-    }
+    }*/
 
-
-    fun detectFace(colorBitmap: Bitmap, depthBitmap: Bitmap) {
+    fun detectFace(colorBitmap: Bitmap, depthBitmap: Mat) {
         if (isDetecting) return
         isDetecting = true
         mtcnn.detectFacesAsync(executors,colorBitmap, MIN_SIZE)
-                .addOnCanceledListener { isDetecting = false }
-                .addOnFailureListener {
-                    executors.execute {
+            .addOnCanceledListener { isDetecting = false }
+            .addOnFailureListener {
+                executors.execute {
+                    statusListener?.onFaceLeaved()
+                    isDetecting = false
+                }
+            }
+            .addOnSuccessListener { result ->
+                executors.execute {
+                    val box: Box? = result.largestBox()
+                    if (box == null) {
                         statusListener?.onFaceLeaved()
                         isDetecting = false
-                    }
-                }
-                .addOnSuccessListener { result ->
-                    executors.execute {
-                        val box: Box? = result.largestBox()
-                        if (box == null) {
-                            statusListener?.onFaceLeaved()
-                            isDetecting = false
-                        } else {
-                            val time = System.currentTimeMillis()
-                            val confidence = live.detect(colorBitmap, FaceBox(box.left(),box.top(),box.right(),box.bottom(),0f))
-                            Log.e("LivenessCheck","Score: $confidence [time check : ${System.currentTimeMillis() - time}]")
-                            statusListener?.onFacePerformed()
-                            if (!faceChangeProcess(box)) {
-                                statusListener?.onFaceChanged()
-                            }
-                            currentFace = box
-                            onFaceDetect(box, colorBitmap, depthBitmap)
+                    } else {
+                        val time = System.currentTimeMillis()
+                        //val confidence = live.detect(colorBitmap, FaceBox(box.left(),box.top(),box.right(),box.bottom(),0f))
+                        //Log.e("LivenessCheck","Score: $confidence [time check : ${System.currentTimeMillis() - time}]")
+                        statusListener?.onFacePerformed()
+                        if (!faceChangeProcess(box)) {
+                            statusListener?.onFaceChanged()
                         }
+                        currentFace = box
+                        onFaceDetect(box, colorBitmap, depthBitmap)
                     }
                 }
+            }
     }
 
     fun destroy() {
@@ -85,7 +85,7 @@ class FaceDetector {
     /**
      * Detect method 1st: use [OptionListener] filter face properties to continue [onMaskDetect]
      */
-    private fun onFaceDetect(box: Box, colorBitmap: Bitmap, depthBitmap: Bitmap) {
+    private fun onFaceDetect(box: Box, colorBitmap: Bitmap, depthBitmap: Mat) {
 
         if (!optionListener!!.onFaceScore(box.score)) {
             isDetecting = false
@@ -116,7 +116,7 @@ class FaceDetector {
      * Detect method 2nd: use [maskFilter] crop face color image
      * and get vision label to continue [onDepthDetect]
      */
-    private fun onMaskDetect(boxRect: Rect, colorBitmap: Bitmap, depthBitmap: Bitmap) {
+    private fun onMaskDetect(boxRect: Rect, colorBitmap: Bitmap, depthBitmap: Mat) {
         val faceBitmap = onBlurFaceDetect(boxRect, colorBitmap)
         if(faceBitmap==null){
             isDetecting = false
@@ -151,8 +151,8 @@ class FaceDetector {
      * Detect method 3rd: use [depthFilter] crop face depth image
      * and get vision label to continue [onGetPortrait]
      */
-    private fun onDepthDetect(boxRect: Rect, colorBitmap: Bitmap, depthBitmap: Bitmap) {
-        val faceDepthBitmap = boxRect.cropFace(depthBitmap)
+    private fun onDepthDetect(boxRect: Rect, colorBitmap: Bitmap, depthBitmap: Mat) {
+        val faceDepthBitmap = depthBitmap.toBitmap(boxRect)
         if(faceDepthBitmap==null){
             isDetecting = false
             return

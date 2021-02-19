@@ -10,8 +10,10 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.widget_camera_view.view.*
+import org.opencv.core.Mat
 import wee.digital.camera.R
 import wee.digital.camera.RealSense
+import wee.digital.camera.toBitmap
 
 class CameraView : ConstraintLayout {
 
@@ -32,10 +34,10 @@ class CameraView : ConstraintLayout {
     }
 
     fun observe(lifecycleOwner: LifecycleOwner) {
-        RealSense.imagesLiveData.observe(lifecycleOwner, Observer<Pair<Bitmap, Bitmap>?> {
+        RealSense.imagesLiveData.observe(lifecycleOwner, Observer<Pair<Bitmap, Mat>?> {
             it?.apply {
                 imageViewColor.setBitmap(first)
-                imageViewDepth.setImageBitmap(second)
+                imageViewDepth.setImageBitmap(second.toBitmap())
             }
         })
     }

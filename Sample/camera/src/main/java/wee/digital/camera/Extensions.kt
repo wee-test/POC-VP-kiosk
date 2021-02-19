@@ -1,6 +1,7 @@
 package wee.digital.camera
 
 import android.graphics.*
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Base64
@@ -8,15 +9,23 @@ import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import com.intel.realsense.librealsense.DepthFrame
 import com.intel.realsense.librealsense.Extension
 import com.intel.realsense.librealsense.Frame
 import com.intel.realsense.librealsense.VideoFrame
 import org.opencv.android.Utils
 import org.opencv.core.Core
+import org.opencv.core.CvType
 import org.opencv.core.CvType.CV_8UC3
 import org.opencv.core.Mat
+import org.opencv.imgproc.Imgproc
 import wee.digital.camera.detector.Box
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.util.*
 import kotlin.math.*
 
@@ -433,5 +442,104 @@ fun Frame?.rgbToBitmapOpenCV(): Bitmap? {
         bmpDisplay
     } catch (e: Throwable) {
         null
+    }
+}
+
+
+fun Frame?.rgbToMatOpenCV(): Mat? {
+    this ?: return null
+    return try {
+        val videoFrame: VideoFrame = this.`as`(Extension.VIDEO_FRAME)
+        val mColour = Mat(videoFrame.height, videoFrame.width, CV_8UC3)
+        val colourArr = ByteArray(videoFrame.height * videoFrame.stride)
+        videoFrame.getData(colourArr)
+        mColour.put(0, 0, colourArr)
+        //Core.transpose(mColour, mColour) // Rotate 90
+        Core.flip(mColour, mColour, 1) // Mirror
+        mColour
+    } catch (e: Throwable) {
+        null
+    }
+}
+
+fun Mat.toBitmap(rect: Rect? = null): Bitmap?{
+    return try{
+        val cropMat = if(rect!=null){
+            this.submat(org.opencv.core.Rect(rect.left,rect.top,rect.width(),rect.height()))
+        }else{
+            this
+        }
+        val bmpDisplay = Bitmap.createBitmap(cropMat.cols(), cropMat.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(cropMat,bmpDisplay)
+        bmpDisplay
+    }catch (e: Exception){
+        null
+    }
+}
+
+
+fun Frame?.depthToBitmapOpenCV(rectFace: org.opencv.core.Rect? = null): Bitmap? {
+    this ?: return null
+    return try {
+        val depthFrame: DepthFrame = this.`as`(Extension.DEPTH_FRAME)
+
+        var mColour = Mat(depthFrame.height, depthFrame.width, CvType.CV_16UC1)
+        val size = (mColour.total() * mColour.elemSize()).toInt()
+        val colourArr = ByteArray(size)
+        depthFrame.getData(colourArr)
+        val shortArr = ShortArray(size / 2)
+        //val floatArr = FloatArray(size / 2)
+        ByteBuffer.wrap(colourArr).order(
+                ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shortArr)
+        val dis = depthFrame.units
+        var i = 0
+
+        /*val newShortArray = ArrayList<Short>()
+        shortArr.forEach {
+            if(it>0){
+                newShortArray.add(it)
+            }
+        }*/
+
+        mColour.put(0, 0, shortArr)
+        //Core.transpose(mColour, mColour) // Rotate 90
+        if(rectFace!=null) {
+            mColour = mColour.submat(rectFace)
+        }
+        mColour.convertTo(mColour, CvType.CV_8UC1,15.0/256.0,15.0/256.0)
+        //Imgproc.equalizeHist(mColour,mColour)
+        Imgproc.applyColorMap(mColour, mColour, Imgproc.COLORMAP_HSV)
+        Core.flip(mColour, mColour, 1) // Mirror
+        val bmpDisplay = Bitmap.createBitmap(mColour.cols(), mColour.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(mColour, bmpDisplay)
+        bmpDisplay
+    } catch (e: Throwable) {
+        null
+    }
+}
+
+
+fun Bitmap.save(logFolder: String) {
+    val curTime = System.currentTimeMillis()
+    val folder = "SaveBitmap/$logFolder"
+    val f = File(Environment.getExternalStorageDirectory(), folder)
+    if (!f.exists()) {
+        f.mkdirs()
+    }
+    val fileLog = "${f.absolutePath}/${curTime}.jpg"
+    val logFile = File(fileLog)
+    if (!logFile.exists()) {
+        try {
+            logFile.createNewFile()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+    try {
+        val out = FileOutputStream(fileLog)
+        out.write(this.toBytes())
+        out.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
     }
 }
