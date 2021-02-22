@@ -199,6 +199,8 @@ object RealSense {
     val DEPTH_SIZE: Int get() = DEPTH_WIDTH * DEPTH_HEIGHT * 3
     var FRAME_RATE = 15
 
+    var isVerifyFace = false
+
     private fun filterConfigByDevice() {
         when (device?.productId) {
             D415 -> {

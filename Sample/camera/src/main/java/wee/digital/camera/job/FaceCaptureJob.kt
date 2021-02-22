@@ -218,7 +218,7 @@ class FaceCaptureJob(private val listener: Listener) :
         fun onCaptureTimeout()
     }
 
-    inner class CaptureTimer : CountDownTimer(9000, 1000) {
+    inner class CaptureTimer : CountDownTimer(if (RealSense.isVerifyFace) 4000 else 9000, 1000) {
 
         var isCountdown: Boolean = false
             private set
@@ -248,7 +248,7 @@ class FaceCaptureJob(private val listener: Listener) :
             isCountdown = true
             RecordVideo.arrayBitmap.clear()
             RecordVideo.isRecordVideo = true
-            autoStep.set(8)
+            autoStep.set(if (RealSense.isVerifyFace) 3 else 8)
             start()
         }
 
