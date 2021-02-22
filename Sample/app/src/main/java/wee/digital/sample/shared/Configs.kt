@@ -41,7 +41,7 @@ object Configs {
     const val END_STEP = "END-STEP"
 
     const val ID_CARD_FRONT = 1
-    const val ID_CARD_BACK =2
+    const val ID_CARD_BACK = 2
 
     fun configWeeOcr(){
         WeeOCR.CAMERA_ID = 1

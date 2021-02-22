@@ -17,6 +17,7 @@ import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
+import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
@@ -97,6 +98,28 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             Shared.ocrCardInfoVP.value?.issueLoc = it.issueLoc
             navigateUI()
         }
+        ocrVM.statusSearchVP.observe {
+            if(it == null || it.responseCode.code != 0L){
+                Shared.messageFail.postValue(
+                        MessageData("Đăng ký thất bại",
+                                "Không thể đăng ký tài khoản, bạn vui lòng thử lại")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+            }
+            if(it.result.data.isExisted == true){
+                Shared.messageFail.postValue(
+                        MessageData("Giấy tờ đã tồn tại",
+                                "Không thể đăng ký tài khoản vì giấy tờ của bạn đã được đăng ký")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+            }else{
+                ocrVM.scanOCRFrontVP(
+                        type = Configs.ID_CARD_FRONT,
+                        sessionId = Utils.getUUIDRandom(),
+                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes()
+                )
+            }
+        }
     }
 
     private fun navigateUI() {
@@ -134,11 +157,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                                 Base64.encodeToString(frameBack.toBytes(), Base64.NO_WRAP)
                         )
                 )
-                ocrVM.scanOCRFrontVP(
-                        type = Configs.ID_CARD_FRONT,
-                        sessionId = Utils.getUUIDRandom(),
-                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes()
-                )
+                ocrVM.searchCustomer(frameFont.toBytes().toStringBase64())
             }
         }
     }

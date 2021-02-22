@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import vplib.ResponseVPFaceSearch
 import vplib.ResponseVPOCR
 import wee.dev.weewebrtc.utils.extension.parse
 import wee.digital.camera.toStringBase64
@@ -23,6 +24,8 @@ class OcrVM : BaseViewModel() {
     val statusExtractFrontVP = EventLiveData<CardRespVP>()
 
     val statusExtractBackVP = EventLiveData<CardRespVP>()
+
+    val statusSearchVP = EventLiveData<ResponseVPFaceSearch>()
 
     @SuppressLint("CheckResult")
     fun scanOCRFrontVP(type: Int, sessionId: String, image: ByteArray) {
@@ -141,11 +144,10 @@ class OcrVM : BaseViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun searchCustomer(type: Int, idCardPhoto: String) {
+    fun searchCustomer(idCardPhoto: String) {
         Single.fromCallable {
             val body = SearchReq(
                     kioskId = Configs.KIOSK_ID,
-                    type = type,
                     sessionId = Utils.getUUIDRandom(),
                     idCardPhoto = idCardPhoto
             )
@@ -153,9 +155,9 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("searchCustomer","$it")
+                    statusSearchVP.postValue(it)
                 }, {
-                    Log.d("searchCustomer","${it.message}")
+                    statusSearchVP.postValue(null)
                 })
     }
 
