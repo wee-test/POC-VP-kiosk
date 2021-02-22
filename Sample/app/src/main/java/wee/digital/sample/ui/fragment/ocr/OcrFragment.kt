@@ -17,7 +17,7 @@ import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
-import wee.digital.camera.toStringBase64
+import wee.digital.camera.utils.OpenCVUtils
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
@@ -63,7 +63,9 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         Configs.configWeeOcr()
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
-        weeOcr = WeeOCR(requireActivity())
+        weeOcr = WeeOCR(requireActivity()).apply {
+            this.initTemplateAlign()
+        }
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
         resetAllFrame()
     }

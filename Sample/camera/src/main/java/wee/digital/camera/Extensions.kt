@@ -394,7 +394,7 @@ fun Bitmap.resize(maxImageSize: Int,format: Bitmap.CompressFormat = Bitmap.Compr
     val width = (ratio * this.width).roundToInt()
     val height = (ratio * this.height).roundToInt()
     val bitmapCP = this.copy(Bitmap.Config.RGB_565,false)
-    val bm = Bitmap.createScaledBitmap(bitmapCP, 960, 640,false)
+    val bm = Bitmap.createScaledBitmap(bitmapCP, width, height,false)
     val stream = ByteArrayOutputStream()
     bm.compress(format, 80, stream)
     val byteArray = stream.toByteArray()
