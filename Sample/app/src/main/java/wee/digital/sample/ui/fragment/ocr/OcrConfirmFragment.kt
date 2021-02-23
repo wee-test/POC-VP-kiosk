@@ -30,6 +30,8 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
 
     var errorMessage = ""
 
+    private val ocrVM: OcrVM by lazy { viewModel(OcrVM::class) }
+
     override fun layoutResource(): Int {
         return R.layout.ocr_confirm
     }
@@ -171,7 +173,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
             ocrInputPhone.error = errorMessage
             return false
         }
-        if (ocrInputEmail.text.isNullOrEmpty()) {
+        if (!ocrVM.isEmailValid(ocrInputEmail.text.toString())) {
             errorMessage = "Email không hợp lệ"
             ocrInputEmail.error = errorMessage
             return false
