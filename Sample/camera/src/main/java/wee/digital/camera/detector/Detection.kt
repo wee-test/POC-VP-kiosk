@@ -74,7 +74,7 @@ class Detection {
         }
 
         val boxRect = box.transformToRect()
-        boxRect.cropFace(colorBitmap)?.also {
+        boxRect.cropPortrait(colorBitmap)?.also {
             statusListener?.faceEligible(it)
         }
         isDetecting = false
