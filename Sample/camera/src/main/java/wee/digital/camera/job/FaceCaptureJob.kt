@@ -14,7 +14,6 @@ import wee.digital.camera.detector.FaceDetector.Companion.MIN_BLUR
 import wee.digital.camera.detector.FaceDetector.Companion.MIN_SCORE
 import wee.digital.camera.uiThread
 import wee.digital.camera.utils.OpenCVUtils
-import wee.digital.camera.utils.RecordVideo
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -119,7 +118,6 @@ class FaceCaptureJob(private val listener: Listener) :
     override fun onFaceChanged() {
         captureTimer.onCancel()
         uiThread {
-            pauseRecordVideo()
             listener.onCaptureTick(null)
             listener.onRecordMessage("Quý khách vui lòng đưa gương mặt vào vùng nhận diện")
         }
@@ -137,7 +135,6 @@ class FaceCaptureJob(private val listener: Listener) :
     override fun onFaceLeaved() {
         captureTimer.onCancel()
         uiThread {
-            pauseRecordVideo()
             listener.onCaptureTick(null)
             listener.onRecordMessage("Quý khách vui lòng đưa gương mặt vào vùng nhận diện")
         }
@@ -146,7 +143,6 @@ class FaceCaptureJob(private val listener: Listener) :
     override fun onManyFaces() {
         captureTimer.onCancel()
         uiThread {
-            pauseRecordVideo()
             listener.onCaptureTick(null)
             listener.onWarningMessage("Có nhiều hơn 1 khuôn mặt trong vùng nhận diện")
         }
@@ -200,7 +196,6 @@ class FaceCaptureJob(private val listener: Listener) :
         captureTimer.onCancel()
         uiThread {
             listener.onRecordMessage(message)
-            pauseRecordVideo()
             listener.onCaptureTick(null)
         }
     }
@@ -218,7 +213,7 @@ class FaceCaptureJob(private val listener: Listener) :
         fun onCaptureTimeout()
     }
 
-    inner class CaptureTimer : CountDownTimer(if (RealSense.isVerifyFace) 4000 else 9000, 1000) {
+    inner class CaptureTimer : CountDownTimer(4000, 1000) {
 
         var isCountdown: Boolean = false
             private set
@@ -240,28 +235,20 @@ class FaceCaptureJob(private val listener: Listener) :
 
         override fun onFinish() {
             isCountdown = false
-            pauseRecordVideo()
             listener.onCaptureTick(null)
         }
 
         fun onStart() {
             isCountdown = true
-            RecordVideo.arrayBitmap.clear()
-            RecordVideo.isRecordVideo = true
-            autoStep.set(if (RealSense.isVerifyFace) 3 else 8)
+            autoStep.set(3)
             start()
         }
 
         fun onCancel() {
             cancel()
             isCountdown = false
-            pauseRecordVideo()
             listener.onCaptureTick(null)
         }
-    }
-
-    fun pauseRecordVideo(){
-        RecordVideo.isRecordVideo = false
     }
 
 }
