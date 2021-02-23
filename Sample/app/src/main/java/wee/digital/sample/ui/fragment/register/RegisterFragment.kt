@@ -5,6 +5,7 @@ import android.util.Base64
 import kotlinx.android.synthetic.main.register.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
+import wee.digital.camera.job.FaceDetectJob
 import wee.digital.camera.toBytes
 import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.gone
@@ -28,7 +29,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     private val registerVM : RegisterVM by lazy { viewModel(RegisterVM::class) }
 
-    private val mFaceDetectJob: FaceCaptureJob = FaceCaptureJob(this)
+    private var mFaceDetectJob: FaceCaptureJob? = null
 
     private var faceBitmap : Bitmap? = null
 
@@ -39,9 +40,10 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
     }
 
     override fun onViewCreated() {
+        RealSense.isVerifyFace = false
         isComplete = false
-        RealSense.isVerifyFace =false
-        mFaceDetectJob.observe(viewLifecycleOwner)
+        mFaceDetectJob = FaceCaptureJob(this)
+        mFaceDetectJob?.observe(viewLifecycleOwner)
         RealSense.imagesLiveData.postValue(null)
         Voice.ins?.request(VoiceData.FACE_REGISTER)
     }
@@ -103,7 +105,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
     }
 
     override fun onPortraitCaptured(image: Bitmap) {
-        mFaceDetectJob.pauseDetect()
+        mFaceDetectJob?.pauseDetect()
         Shared.faceCapture.postValue(image)
         activity?.runOnUiThread {
             if (isComplete) return@runOnUiThread

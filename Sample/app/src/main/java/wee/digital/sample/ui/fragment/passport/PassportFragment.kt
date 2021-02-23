@@ -2,6 +2,7 @@ package wee.digital.sample.ui.fragment.passport
 
 import android.graphics.Bitmap
 import android.graphics.Camera
+import android.util.Base64
 import kotlinx.android.synthetic.main.passport.*
 import wee.dev.weeocr.WeeOCR
 import wee.dev.weeocr.camera.CameraConfig
@@ -84,6 +85,12 @@ class PassportFragment : MainFragment(), FrameStreamListener {
             if (it.frame != null) {
                 sendSocket(it.frame)
                 Shared.passportData.postValue(it)
+                Shared.frameCardData.postValue(
+                        PhotoCardInfo(
+                                Base64.encodeToString(it.frame.toBytes(), Base64.NO_WRAP),
+                                Base64.encodeToString(it.frame.toBytes(), Base64.NO_WRAP)
+                        )
+                )
                 navigate(MainDirections.actionGlobalPassportInfoFragment())
                 return@checkPassport
             }

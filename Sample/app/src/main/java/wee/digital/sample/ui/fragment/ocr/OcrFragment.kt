@@ -17,6 +17,7 @@ import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
+import wee.digital.camera.toStringBase64
 import wee.digital.camera.utils.OpenCVUtils
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
@@ -108,7 +109,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 )
                 navigate(MainDirections.actionGlobalFailFragment())
             }
-            if(it.result.data.isExisted == true){
+            if(it.result.data.isExisted){
                 Shared.messageFail.postValue(
                         MessageData("Giấy tờ đã tồn tại",
                                 "Không thể đăng ký tài khoản vì giấy tờ của bạn đã được đăng ký")

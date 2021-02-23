@@ -40,10 +40,10 @@ class RegisterVM : BaseViewModel(){
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.e("verifyIdCard", "$it")
+                    Log.d("verifyIdCard", "$it")
                     statusVerifyCard.postValue(it)
                 }, {
-                    Log.e("verifyIdCard", "${it.message}")
+                    Log.d("verifyIdCard", "${it.message}")
                     statusVerifyCard.postValue(null)
                 })
     }
@@ -61,8 +61,10 @@ class RegisterVM : BaseViewModel(){
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.d("matchingFrame","$it")
                     statusMatching.postValue(it)
                 }, {
+                    Log.d("matchingFrame","${it.message}")
                     statusMatching.postValue(null)
                 })
     }
@@ -70,15 +72,15 @@ class RegisterVM : BaseViewModel(){
     @SuppressLint("CheckResult")
     fun registerCard(body : CustomerRegisterReq){
         Single.fromCallable {
-            Log.e("registerCard", "$body")
+            Log.d("registerCard", "$body")
             lib?.kioskService!!.customerCardRegister(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.e("registerCard", "$it")
+                    Log.d("registerCard", "$it")
                     statusRegisterCard.postValue(it)
                 }, {
-                    Log.e("registerCard", "${it.message}")
+                    Log.d("registerCard", "${it.message}")
                     statusRegisterCard.postValue(null)
                 })
     }

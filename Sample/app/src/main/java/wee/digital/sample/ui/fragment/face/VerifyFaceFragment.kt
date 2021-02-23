@@ -21,7 +21,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
 
     private val faceVM : FaceVM by lazy { viewModel(FaceVM::class) }
 
-    private val mFaceDetectJob: FaceCaptureJob = FaceCaptureJob(this)
+    private var mFaceDetectJob: FaceCaptureJob? = null
 
     private var isComplete = false
 
@@ -31,7 +31,8 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
         isComplete = false
         RealSense.isVerifyFace = true
         RealSense.imagesLiveData.postValue(null)
-        mFaceDetectJob.observe(viewLifecycleOwner)
+        mFaceDetectJob = FaceCaptureJob(this)
+        mFaceDetectJob?.observe(viewLifecycleOwner)
         Voice.ins?.request(VoiceData.FACE_ENROLL)
     }
 
@@ -83,7 +84,7 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
     }
 
     override fun onPortraitCaptured(image: Bitmap) {
-        mFaceDetectJob.pauseDetect()
+        mFaceDetectJob?.pauseDetect()
         Shared.faceCapture.postValue(image)
         activity?.runOnUiThread {
             if (isComplete) return@runOnUiThread
