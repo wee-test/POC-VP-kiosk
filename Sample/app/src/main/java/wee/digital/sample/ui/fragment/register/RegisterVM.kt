@@ -85,24 +85,24 @@ class RegisterVM : BaseViewModel(){
                 })
     }
 
-    fun createVideo(context : Context, cardData : String){
+    fun createVideo(context : Context, face : String){
         val recordVideo = RecordVideo(context)
         recordVideo.startVideo()
         recordVideo.createVideo(object : RecordVideo.MyVideoCallBack{
             override fun onResult(path: String) {
                 val video = File(path).readBytes()
-                livenessFace(cardData, video.toStringBase64())
+                livenessFace(face, video.toStringBase64())
             }
         })
     }
 
     @SuppressLint("CheckResult")
-    private fun livenessFace(idCardPhoto: String, video: String) {
+    private fun livenessFace(face: String, video: String) {
         Single.fromCallable {
             val body = LivenessReq(
                     kioskId = Configs.KIOSK_ID,
                     sessionId = Utils.getUUIDRandom(),
-                    idCardPhoto = idCardPhoto,
+                    face = face,
                     livenessVideo = video
             )
             lib?.kioskService!!.faceLivenessVP(Gson().toJson(body).toByteArray())

@@ -6,12 +6,16 @@ import kotlinx.android.synthetic.main.verify_face.*
 import wee.dev.weewebrtc.utils.extension.toObject
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
+import wee.digital.camera.resize
 import wee.digital.camera.toBytes
+import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.MessageData
+import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
@@ -51,7 +55,6 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             }
             val arrCustomer = it.customerListString.parse(JsonArray::class) ?: JsonArray()
             if (arrCustomer.isEmpty()) {
-                Shared.customerInfoVerify.postValue(it)
                 navigate(MainDirections.actionGlobalHomeFragment())
             } else {
                 faceVM.getInfoCustomer(arrCustomer[0].toObject()?.get("customerId")?.asString ?: "")
@@ -68,6 +71,25 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             }
             Shared.customerInfoExist.postValue(it)
             navigate(MainDirections.actionGlobalCustomerExistFragment())
+        }
+        faceVM.statusSearchVP.observe {
+            if (it == null || it.responseCode.code != 0L) {
+                Shared.messageFail.postValue(
+                        MessageData("Đăng ký thất bại",
+                                "Không thể đăng ký tài khoản, bạn vui lòng thử lại")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
+            }
+            if (it.result.data.isExisted) {
+                Shared.messageFail.postValue(
+                        MessageData("Giấy tờ đã tồn tại",
+                                "Không thể đăng ký tài khoản vì bạn đã đăng ký tài khoản")
+                )
+                navigate(MainDirections.actionGlobalFailFragment())
+            } else {
+                navigate(MainDirections.actionGlobalHomeFragment())
+            }
         }
     }
 
@@ -92,7 +114,8 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             faceLabelStatusFace.text = "Chờ chút nhé..."
             faceFrameBg.show()
             faceFrame.setImageBitmap(image)
-            faceVM.identifyFace(image.toBytes())
+//            faceVM.identifyFace(image.toBytes())
+            faceVM.searchCustomer(image.toBytes().toStringBase64())
         }
     }
 

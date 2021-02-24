@@ -101,28 +101,6 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             Shared.ocrCardInfoVP.value?.issueLoc = it.issueLoc
             navigateUI()
         }
-        ocrVM.statusSearchVP.observe {
-            if(it == null || it.responseCode.code != 0L){
-                Shared.messageFail.postValue(
-                        MessageData("Đăng ký thất bại",
-                                "Không thể đăng ký tài khoản, bạn vui lòng thử lại")
-                )
-                navigate(MainDirections.actionGlobalFailFragment())
-            }
-            if(it.result.data.isExisted){
-                Shared.messageFail.postValue(
-                        MessageData("Giấy tờ đã tồn tại",
-                                "Không thể đăng ký tài khoản vì giấy tờ của bạn đã được đăng ký")
-                )
-                navigate(MainDirections.actionGlobalFailFragment())
-            }else{
-                ocrVM.scanOCRFrontVP(
-                        type = Configs.ID_CARD_FRONT,
-                        sessionId = Utils.getUUIDRandom(),
-                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes()
-                )
-            }
-        }
     }
 
     private fun navigateUI() {
@@ -160,7 +138,11 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                                 Base64.encodeToString(frameBack.toBytes(), Base64.NO_WRAP)
                         )
                 )
-                ocrVM.searchCustomer(frameFont.toBytes().toStringBase64())
+                ocrVM.scanOCRFrontVP(
+                        type = Configs.ID_CARD_FRONT,
+                        sessionId = Utils.getUUIDRandom(),
+                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes()
+                )
             }
         }
     }

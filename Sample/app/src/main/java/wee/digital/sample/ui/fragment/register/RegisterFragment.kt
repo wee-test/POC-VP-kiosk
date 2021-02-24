@@ -80,6 +80,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
                 return@observe
             }
             sendSocket(true)
+            registerVM.createVideo(requireContext(), Shared.faceCapture.value?.toBytes().toStringBase64())
             navigate(MainDirections.actionGlobalCardFragment())
         }
     }
@@ -137,7 +138,6 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onPause() {
         super.onPause()
-        registerVM.createVideo(requireContext(), Shared.frameCardData.value?.cardFront ?: "")
         RealSense.stop()
     }
 

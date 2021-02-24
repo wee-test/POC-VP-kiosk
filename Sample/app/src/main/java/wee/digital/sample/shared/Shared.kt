@@ -19,8 +19,6 @@ object Shared {
 
     val sessionVideo = MutableLiveData<ResponseVideoCallCreateSession>()
 
-    val customerInfoVerify = MutableLiveData<ResponseFaceIdentity>()
-
     val customerInfoExist = MutableLiveData<ResponseGetCustomerInfo>()
 
     val customerInfoRegisterSuccess = MutableLiveData<ResponseCustomerRegister>()
@@ -89,7 +87,6 @@ object Shared {
     }
 
     fun resetData() {
-        customerInfoVerify.postValue(null)
         customerInfoExist.postValue(null)
         customerInfoRegisterSuccess.postValue(null)
         faceId.postValue(null)

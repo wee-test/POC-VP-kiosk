@@ -13,8 +13,8 @@ data class LivenessReq(
         @SerializedName("sessionId")
         var sessionId: String = "",
 
-        @SerializedName("idCardPhoto")
-        var idCardPhoto: String = "",
+        @SerializedName("facePhoto")
+        var face: String = "",
 
         @SerializedName("livenessVideo")
         var livenessVideo: String = ""

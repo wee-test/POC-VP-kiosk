@@ -25,8 +25,6 @@ class OcrVM : BaseViewModel() {
 
     val statusExtractBackVP = EventLiveData<CardRespVP>()
 
-    val statusSearchVP = EventLiveData<ResponseVPFaceSearch>()
-
     @SuppressLint("CheckResult")
     fun scanOCRFrontVP(type: Int, sessionId: String, image: ByteArray) {
         Single.fromCallable {
@@ -140,24 +138,6 @@ class OcrVM : BaseViewModel() {
                 }, {
                     Log.d("scanOCRBack", "$it")
                     statusExtractBackVP.postValue(CardRespVP(code = -1))
-                })
-    }
-
-    @SuppressLint("CheckResult")
-    fun searchCustomer(idCardPhoto: String) {
-        Single.fromCallable {
-            val body = SearchReq(
-                    kioskId = Configs.KIOSK_ID,
-                    sessionId = Utils.getUUIDRandom(),
-                    idCardPhoto = idCardPhoto
-            )
-            lib?.kioskService!!.faceSearchVP(Gson().toJson(body).toByteArray())
-        }.observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    statusSearchVP.postValue(it)
-                }, {
-                    statusSearchVP.postValue(null)
                 })
     }
 

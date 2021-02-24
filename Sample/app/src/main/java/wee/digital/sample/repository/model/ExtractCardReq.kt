@@ -38,6 +38,7 @@ data class BackCardResp(
 
 data class CardRespVP(
         var code : Int = -1,
+        var mess : String = "",
         var id: String = "",
         var idProb: String = "",
         var name: String = "",

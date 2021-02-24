@@ -1,31 +1,20 @@
 package wee.digital.sample.ui.fragment.face
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.Single
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import vplib.ResponseFaceIdentity
-import vplib.ResponseFaceVerify
 import vplib.ResponseGetCustomerInfo
-import wee.digital.camera.job.FaceCaptureJob
-import wee.digital.camera.toStringBase64
-import wee.digital.camera.utils.RecordVideo
+import vplib.ResponseVPFaceSearch
 import wee.digital.sample.app.lib
-import wee.digital.sample.repository.model.CustomerInfoReq
-import wee.digital.sample.repository.model.IdentifyFaceReq
-import wee.digital.sample.repository.model.LivenessReq
-import wee.digital.sample.repository.model.VerifyFaceReq
+import wee.digital.sample.repository.model.*
 import wee.digital.sample.shared.Configs
-import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
-import java.io.File
 
 class FaceVM : BaseViewModel() {
 
@@ -34,6 +23,8 @@ class FaceVM : BaseViewModel() {
     val statusVerify = EventLiveData<Boolean>()
 
     val statusInfoCustomer = EventLiveData<ResponseGetCustomerInfo>()
+
+    val statusSearchVP = EventLiveData<ResponseVPFaceSearch>()
 
     @SuppressLint("CheckResult")
     fun verifyFace(face: ByteArray, customerId: String) {
@@ -89,6 +80,24 @@ class FaceVM : BaseViewModel() {
                 },{
                     Log.e("getInfoCustomer", "${it.message}")
                     statusInfoCustomer.postValue(null)
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    fun searchCustomer(face: String) {
+        Single.fromCallable {
+            val body = SearchReq(
+                    kioskId = Configs.KIOSK_ID,
+                    sessionId = Utils.getUUIDRandom(),
+                    face = face
+            )
+            lib?.kioskService!!.faceSearchVP(Gson().toJson(body).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    statusSearchVP.postValue(it)
+                }, {
+                    statusSearchVP.postValue(null)
                 })
     }
 
