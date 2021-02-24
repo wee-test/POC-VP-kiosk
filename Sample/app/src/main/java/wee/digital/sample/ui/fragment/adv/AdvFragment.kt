@@ -7,6 +7,7 @@ import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.data.local.SharedHelper
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
@@ -25,7 +26,14 @@ class AdvFragment : MainFragment() {
         advVM.getListAdv()
         addClickListener(advActionStart)
         Shared.resetData()
+        configCheckbox()
+    }
 
+    private fun configCheckbox() {
+        advCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            SharedHelper.instance.put(SharedHelper.STATUS_CALL_API, isChecked)
+        }
+        advCheckbox.isChecked = getStatusApi()
     }
 
     override fun onLiveDataObserve() {

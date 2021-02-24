@@ -19,10 +19,10 @@ class SharedHelper {
         get() = sharePref.edit()
 
     companion object {
-
         val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             SharedHelper()
         }
+        const val STATUS_CALL_API = "STATUS_CALL_API"
     }
 
     fun edit(block: SharedPreferences.Editor.() -> Unit) {
