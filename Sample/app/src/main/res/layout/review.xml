@@ -88,7 +88,7 @@
         android:id="@+id/reviewTab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_30sdp"
-        android:layout_marginHorizontal="@dimen/margin2"
+        android:layout_marginHorizontal="@dimen/margin4"
         android:layout_marginTop="@dimen/margin2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
