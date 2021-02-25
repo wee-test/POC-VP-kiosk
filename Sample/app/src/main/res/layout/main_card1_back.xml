@@ -4,7 +4,7 @@
     android:layout_height="642px"
     android:visibility="invisible"
     tools:visibility="visible"
-    android:background="@mipmap/print_blue"
+    android:background="@mipmap/card1_front"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"

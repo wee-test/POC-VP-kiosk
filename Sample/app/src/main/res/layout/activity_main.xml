@@ -10,7 +10,7 @@
     <!--<include layout="@layout/main_card1_front" />
     <include layout="@layout/main_card1_back"/>-->
 
-    <include layout="@layout/main_card2_front"/>
+
     <include layout="@layout/main_card2_back"/>
 
     <androidx.fragment.app.FragmentContainerView
@@ -52,5 +52,7 @@
         android:layout_margin="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <include layout="@layout/main_card2_front"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
