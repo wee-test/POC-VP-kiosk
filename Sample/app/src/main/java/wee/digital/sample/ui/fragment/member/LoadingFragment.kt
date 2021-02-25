@@ -39,7 +39,7 @@ class LoadingFragment : MainFragment() {
         if (!getStatusApi()) {
             val data = ResponseCustomerRegister()
             data.result.cardNumber = Utils.randomAccountNumber()
-            data.result.customerID = ""
+            data.result.customerID = "${System.currentTimeMillis()}"
             Shared.customerInfoRegisterSuccess.postValue(data)
             sendSocket(true)
             navigate(MainDirections.actionGlobalRatingFragment())

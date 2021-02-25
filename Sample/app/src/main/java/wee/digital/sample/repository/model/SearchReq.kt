@@ -14,5 +14,8 @@ data class SearchReq(
         var sessionId: String = "",
 
         @SerializedName("facePhoto")
-        var face: String = ""
+        var face: String = "",
+
+        @SerializedName("idCardPhoto")
+        var idCardPhoto: String = "dasdsa"
 )

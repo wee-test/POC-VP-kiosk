@@ -89,14 +89,17 @@ class FaceVM : BaseViewModel() {
             val body = SearchReq(
                     kioskId = Configs.KIOSK_ID,
                     sessionId = Utils.getUUIDRandom(),
-                    face = face
+                    face = face,
+                    idCardPhoto = face
             )
             lib?.kioskService!!.faceSearchVP(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.e("searchCustomer", "$it")
                     statusSearchVP.postValue(it)
                 }, {
+                    Log.e("searchCustomer", "${it.message}")
                     statusSearchVP.postValue(null)
                 })
     }

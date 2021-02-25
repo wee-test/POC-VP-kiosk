@@ -75,8 +75,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         ocrVM.statusExtractFrontVP.observe {
             if (it.code != 0) {
                 Shared.messageFail.postValue(
-                        MessageData("Không thể đọc được dữ liệu",
-                                "không thể đọc giấy tờ, bạn vui lòng thử lại")
+                        MessageData("Không thể đọc được dữ liệu", it.mess)
                 )
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
@@ -91,8 +90,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         ocrVM.statusExtractBackVP.observe {
             if (it.code != 0) {
                 Shared.messageFail.postValue(
-                        MessageData("Không thể đọc được dữ liệu",
-                                "không thể đọc giấy tờ, bạn vui lòng thử lại")
+                        MessageData("Không thể đọc được dữ liệu", it.mess)
                 )
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
@@ -174,20 +172,22 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         if(!isStart) return
         if (frameFont != null && frameBack != null) return
         cropFrame(byteArray)
+        Log.e("frameCameraOcr", "start ${weeOcr == null}")
     }
 
     private fun cropFrame(frame: ByteArray) {
         if (processing) return
         processing = true
         weeOcr?.cropObjectRect(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
+            Log.e("typeScan", "type : $type - typeScan : $typeCard")
             activity?.runOnUiThread {
+                Log.e("typeScan2", "type : $type - typeScan : $typeCard")
                 if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
                     processing = false
                     return@runOnUiThread
                 }
                 if (type != typeCard) resetAllFrame()
                 typeCard = type
-                Log.e("typeScan", "type : $type - typeScan : $typeCard")
                 bindFrame(cropped, typeFrontBack)
             }
         }
@@ -280,10 +280,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         disposableCamera = Single.timer(700, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    isStart = true
                     startCamera()
-                    Voice.ins?.request(VoiceData.PUSH_ID_CARD) {
-                        isStart = true
-                    }
+                    Voice.ins?.request(VoiceData.PUSH_ID_CARD) {}
+                    Log.e("startCameraOcr", "Start camera")
                 }, {})
     }
 

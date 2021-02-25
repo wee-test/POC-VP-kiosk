@@ -63,6 +63,7 @@ class OcrVM : BaseViewModel() {
                         )
                         val data = CardRespVP(
                                 code = 0,
+                                mess = it.responseCode.messageServer,
                                 id = it.result.data.id,
                                 idProb = it.result.data.idProb,
                                 name = it.result.data.name,
@@ -130,6 +131,7 @@ class OcrVM : BaseViewModel() {
                     } else {
                         val data = CardRespVP(
                                 code = 0,
+                                mess = it.responseCode.messageServer,
                                 issueDate = it.result.data.issueDate,
                                 issueLoc = it.result.data.issueLoc
                         )
