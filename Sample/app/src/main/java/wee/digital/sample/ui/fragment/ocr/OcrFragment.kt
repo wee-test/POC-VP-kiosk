@@ -17,18 +17,16 @@ import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
-import wee.digital.camera.toStringBase64
-import wee.digital.camera.utils.OpenCVUtils
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
-import wee.digital.sample.shared.Utils
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
@@ -65,7 +63,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity()).apply {
-            this.initTemplateAlign()
+            //this.initTemplateAlign()
         }
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
         resetAllFrame()
@@ -75,8 +73,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         ocrVM.statusExtractFrontVP.observe {
             if (it.code != 0) {
                 Shared.messageFail.postValue(
-                        MessageData("Không thể đọc được dữ liệu",
-                                "không thể đọc giấy tờ, bạn vui lòng thử lại")
+                        MessageData("Không thể đọc được dữ liệu", it.mess)
                 )
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
@@ -91,8 +88,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         ocrVM.statusExtractBackVP.observe {
             if (it.code != 0) {
                 Shared.messageFail.postValue(
-                        MessageData("Không thể đọc được dữ liệu",
-                                "không thể đọc giấy tờ, bạn vui lòng thử lại")
+                        MessageData("Không thể đọc được dữ liệu", it.mess)
                 )
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
@@ -174,6 +170,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         if(!isStart) return
         if (frameFont != null && frameBack != null) return
         cropFrame(byteArray)
+        Log.e("frameCameraOcr", "start ${weeOcr == null}")
     }
 
     private fun cropFrame(frame: ByteArray) {
@@ -181,13 +178,13 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         processing = true
         weeOcr?.cropObjectRect(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
             activity?.runOnUiThread {
+                Log.e("typeScan2", "type : $type - typeScan : $typeCard")
                 if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
                     processing = false
                     return@runOnUiThread
                 }
                 if (type != typeCard) resetAllFrame()
                 typeCard = type
-                Log.e("typeScan", "type : $type - typeScan : $typeCard")
                 bindFrame(cropped, typeFrontBack)
             }
         }
@@ -280,10 +277,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         disposableCamera = Single.timer(700, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    isStart = true
                     startCamera()
-                    Voice.ins?.request(VoiceData.PUSH_ID_CARD) {
-                        isStart = true
-                    }
+                    Voice.ins?.request(VoiceData.PUSH_ID_CARD) {}
+                    Log.e("startCameraOcr", "Start camera")
                 }, {})
     }
 
