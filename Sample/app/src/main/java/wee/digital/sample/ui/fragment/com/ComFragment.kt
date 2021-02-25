@@ -39,7 +39,7 @@ class ComFragment : MainFragment() {
         when(v){
             comViewConnect-> mainActivity.printerSocket.open(editTextPrinterSocket.text?.toString())
             comViewClose-> mainActivity.printerSocket.close()
-            comViewNext-> mainActivity.bindCardColorFront("1234 4567 8910 1112",
+            comViewNext-> mainActivity.printCard("1234 4567 8910 1112",
                     "THI AKA THI THI",
                     "03/30")
         }

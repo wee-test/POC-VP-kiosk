@@ -9,7 +9,6 @@ import androidx.navigation.findNavController
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_card1_front.*
 import kotlinx.android.synthetic.main.main_card2_front.*
 import okhttp3.Response
 import okhttp3.WebSocketListener
@@ -71,7 +70,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         super.onCreate(savedInstanceState)
         weeCaller = WeeCaller(this)
         weeCaller?.init()
-        printerSocket.addListener(MyWebSocketListenr())
+        printerSocket.addListener(MyWebSocketListener())
     }
 
     override fun navController(): NavController {
@@ -190,12 +189,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         })
     }
 
-    fun bindCardColorFront(number: String, name: String, date: String) {
-        /*card1TextViewNumber.text = number
-        card1TextViewName.text = name
-        card1TextViewDate.text = date
-        val bitmap = card1Layout.getBitmap()*/
-
+    fun printCard(number: String, name: String, date: String) {
         card2TextViewNumber.text = number
         card2TextViewName.text = name
         card2TextViewDate.text = date
@@ -228,7 +222,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         socketServer?.stop()
     }
 
-    private inner class MyWebSocketListenr : WebSocketListener() {
+    private inner class MyWebSocketListener : WebSocketListener() {
         override fun onOpen(webSocket: okhttp3.WebSocket, response: Response) {
             toast("opened")
             mainThread {
