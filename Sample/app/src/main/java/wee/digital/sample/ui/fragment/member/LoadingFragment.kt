@@ -37,10 +37,9 @@ class LoadingFragment : MainFragment() {
 
     private fun getDataRegister() {
         if (!getStatusApi()) {
-            val random = Utils.randomDataCard()
             val data = ResponseCustomerRegister()
-            data.result.cardNumber = random.cardNumber
-            data.result.customerID = random.customerId
+            data.result.cardNumber = Utils.randomAccountNumber()
+            data.result.customerID = ""
             Shared.customerInfoRegisterSuccess.postValue(data)
             sendSocket(true)
             navigate(MainDirections.actionGlobalRatingFragment())

@@ -56,7 +56,7 @@ class RatingFragment : MainFragment() {
     override fun onLiveDataObserve() {
         Shared.customerInfoRegisterSuccess.observe {
             it ?: return@observe
-            fragRatingCustomerId.text = it.result.cardNumber
+            fragRatingCustomerId.text = it.result.accountNumber
             frgRatingCustomerCode.text = "#Mã KH: ${it.result.customerID}"
         }
     }

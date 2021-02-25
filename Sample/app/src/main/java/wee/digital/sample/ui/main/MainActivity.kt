@@ -73,13 +73,6 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         weeCaller = WeeCaller(this)
         weeCaller?.init()
         printerSocket.addListener(MyWebSocketListenr())
-
-
-        Observable.interval(200, TimeUnit.MILLISECONDS)
-                .subscribe {
-                    val data = Utils.randomDataCard()
-                    Log.e("randomDataCard", "$data")
-                }
     }
 
     override fun navController(): NavController {

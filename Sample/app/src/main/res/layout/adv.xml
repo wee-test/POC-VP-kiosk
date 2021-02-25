@@ -55,14 +55,17 @@
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/advCheckbox"
-        android:layout_width="wrap_content"
-        app:layout_constraintHorizontal_bias="0.2"
-        android:layout_height="@dimen/_30sdp"
-        android:button="@drawable/checkbox"
-        app:layout_constraintEnd_toEndOf="parent"
+    <View
+        android:id="@+id/advActionOnOff"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/advLabelStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/TextView.Small"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

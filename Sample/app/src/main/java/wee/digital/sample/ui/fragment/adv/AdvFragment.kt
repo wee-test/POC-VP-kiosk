@@ -2,6 +2,7 @@ package wee.digital.sample.ui.fragment.adv
 
 import android.view.View
 import kotlinx.android.synthetic.main.adv.*
+import wee.dev.weewebrtc.utils.extension.setFastClickListener
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
@@ -26,14 +27,15 @@ class AdvFragment : MainFragment() {
         advVM.getListAdv()
         addClickListener(advActionStart)
         Shared.resetData()
-        configCheckbox()
+        configOnOff()
     }
 
-    private fun configCheckbox() {
-        advCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
-            SharedHelper.instance.put(SharedHelper.STATUS_CALL_API, isChecked)
+    private fun configOnOff() {
+        advLabelStatus.text = "${getStatusApi()}"
+        advActionOnOff.setFastClickListener(7) {
+            SharedHelper.instance.put(SharedHelper.STATUS_CALL_API, !getStatusApi())
+            advLabelStatus.text = "${getStatusApi()}"
         }
-        advCheckbox.isChecked = getStatusApi()
     }
 
     override fun onLiveDataObserve() {

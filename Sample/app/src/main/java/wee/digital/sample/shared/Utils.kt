@@ -3,7 +3,6 @@ package wee.digital.sample.shared
 import android.app.Activity
 import android.graphics.Bitmap
 import android.util.DisplayMetrics
-import wee.digital.sample.repository.model.CardRandom
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 import java.lang.Exception
 import java.util.*
@@ -116,18 +115,16 @@ object Utils {
         return UUID.randomUUID().toString()
     }
 
-    fun randomDataCard(): CardRandom {
-        var cardNumber = "0974"
-        for (i in 0..12) {
+    fun randomAccountNumber(): String {
+        var accountNumber = ""
+        for (i in 0..13) {
             val ran = Random().nextInt(9)
-            cardNumber += ran
-            if (cardNumber.length >= 16) {
-                val customerId = randomCustomerId(cardNumber)
-                return CardRandom(cardNumber = cardNumber, customerId = customerId)
+            accountNumber += ran
+            if (accountNumber.length >= 12) {
+                return accountNumber
             }
         }
-        val customerId = randomCustomerId(cardNumber)
-        return CardRandom(cardNumber = cardNumber, customerId = customerId)
+        return accountNumber
     }
 
     private fun randomCustomerId(card: String): String {
