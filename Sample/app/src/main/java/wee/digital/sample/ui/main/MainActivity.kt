@@ -34,7 +34,6 @@ import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
-import wee.digital.sample.ui.fragment.call.CallVM
 import java.net.Inet4Address
 import java.net.InetSocketAddress
 import java.net.NetworkInterface
@@ -201,9 +200,9 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
     }
 
     fun bindCardBlackWhiteFront(number: String, name: String, exDate: String) {
-        card2FrontNumberCard.text = number
-        card2FrontLabelName.text = name
-        card2FrontLabelExDate.text = exDate
+        card2TextViewNumber.text = number
+        card2TextViewName.text = name
+        card2TextViewDate.text = exDate
 
 
         //compress

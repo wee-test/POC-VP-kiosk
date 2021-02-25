@@ -4,7 +4,7 @@
     android:layout_width="1014px"
     android:layout_height="642px"
     android:visibility="invisible"
-    tools:visibility="invisible"
+    tools:visibility="visible"
     android:background="@color/colorWhite"
     app:layout_constraintBottom_toBottomOf="@+id/cardBlueGuide"
     app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontFacePay"
-        android:layout_width="@dimen/_70sdp"
+        android:layout_width="300px"
         android:layout_height="wrap_content"
         android:tint="@color/black"
         android:layout_marginStart="@dimen/margin2"
@@ -27,7 +27,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontNapas"
-        android:layout_width="@dimen/_70sdp"
+        android:layout_width="240px"
         android:tint="@color/black"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/marginY2"
@@ -37,14 +37,15 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/card2FrontNumberCard"
+        android:id="@+id/card2TextViewNumber"
         android:text="3435 4262 7310 2720"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:fontFamily="@font/svn_gilroy_semi_bold"
+        android:fontFamily="@font/inter600"
         style="@style/TextView.Title"
+        android:letterSpacing="0.2"
         android:textColor="@color/colorBlack"
-        android:textSize="@dimen/_25ssp"
+        android:textSize="68px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,40 +53,46 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/TextView.Large"
+        android:fontFamily="@font/inter400"
         android:layout_marginStart="@dimen/margin2"
         android:layout_marginBottom="@dimen/marginY2"
-        android:fontFamily="@font/svn_gilroy_regular"
+        android:textSize="32px"
         android:text="Card Holder Name"
-        app:layout_constraintBottom_toTopOf="@+id/card2FrontLabelName"
+        app:layout_constraintBottom_toTopOf="@+id/card2TextViewName"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/card2FrontLabelName"
+        android:id="@+id/card2TextViewName"
         style="@style/TextView.Large"
+        android:fontFamily="@font/inter600"
+        android:textAllCaps="true"
         android:layout_marginStart="@dimen/margin2"
         android:layout_marginBottom="@dimen/margin3"
-        android:fontFamily="@font/svn_gilroy_bold"
+        android:textSize="42px"
         android:text="Nguyen Van A"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/TextView.Large"
         android:layout_marginEnd="@dimen/margin2"
         android:layout_marginBottom="@dimen/marginY2"
-        android:fontFamily="@font/svn_gilroy_regular"
+        android:fontFamily="@font/inter400"
+        android:textSize="32px"
         android:text="Expiry Date"
-        app:layout_constraintBottom_toTopOf="@+id/card2FrontLabelName"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@+id/card2TextViewName"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/card2FrontLabelExDate"
+        android:id="@+id/card2TextViewDate"
         style="@style/TextView.Large"
         android:layout_marginEnd="@dimen/margin2"
         android:layout_marginBottom="@dimen/margin3"
-        android:fontFamily="@font/svn_gilroy_bold"
+        android:fontFamily="@font/inter600"
+        android:textAllCaps="true"
+        android:textSize="42px"
         android:text="02/30"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

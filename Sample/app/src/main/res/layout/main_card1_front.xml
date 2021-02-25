@@ -60,7 +60,7 @@
         style="@style/TextView.Large"
         android:layout_marginStart="@dimen/margin2"
         android:layout_marginBottom="@dimen/margin3"
-        android:fontFamily="@font/svn_gilroy_bold"
+        android:fontFamily="@font/inter600"
         android:text="Nguyen Van A"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
