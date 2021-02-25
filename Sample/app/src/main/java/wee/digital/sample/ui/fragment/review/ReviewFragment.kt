@@ -23,16 +23,8 @@ class ReviewFragment : MainFragment() {
     }
 
     override fun onViewClick(v: View?) {
-        val mainActivity = activity as? MainActivity ?:return
         when(v){
             reviewActionAccept -> {
-                if (true || Shared.methodReceiveCard.value?.type == 1) {
-                    mainActivity.printCard(
-                            "1234 4567 8910 1112",
-                            Shared.ocrConfirmData.value?.fullName!!,
-                            "39/79"
-                    )
-                }
                 navigate(MainDirections.actionGlobalLoadingFragment())
             }
         }

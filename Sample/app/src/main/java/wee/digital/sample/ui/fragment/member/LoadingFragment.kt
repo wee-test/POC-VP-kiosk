@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.view_header.*
+import vplib.RegisterResult
 import vplib.ResponseCustomerRegister
 import wee.digital.camera.toBytes
 import wee.digital.camera.toStringBase64
@@ -19,6 +20,7 @@ import wee.digital.sample.shared.Utils
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.activityVM
 import wee.digital.sample.ui.fragment.register.RegisterVM
+import wee.digital.sample.ui.main.MainActivity
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
 import java.util.concurrent.TimeUnit
@@ -37,10 +39,14 @@ class LoadingFragment : MainFragment() {
 
     private fun getDataRegister() {
         if (!getStatusApi()) {
-            val data = ResponseCustomerRegister()
-            data.result.cardNumber = Utils.randomAccountNumber()
-            data.result.customerID = "${System.currentTimeMillis()}"
-            Shared.customerInfoRegisterSuccess.postValue(data)
+            val accountNumber = Utils.randomAccountNumber()
+            val respRegister = ResponseCustomerRegister()
+            val resultRegister = RegisterResult()
+            resultRegister.accountNumber = accountNumber
+            resultRegister.customerID = "000001"
+            respRegister.result = resultRegister
+            Shared.customerInfoRegisterSuccess.postValue(respRegister)
+            printCard("9704${accountNumber}")
             sendSocket(true)
             navigate(MainDirections.actionGlobalRatingFragment())
             return
@@ -118,18 +124,30 @@ class LoadingFragment : MainFragment() {
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
+            printCard(it.result.cardNumber)
             Shared.customerInfoRegisterSuccess.postValue(it)
             sendSocket(true)
             navigate(MainDirections.actionGlobalRatingFragment())
         }
     }
 
-    private fun sendSocket(bool : Boolean){
+    private fun sendSocket(bool: Boolean) {
         val req = Shared.socketReqData.value
         req?.cmd = Configs.FORM_STEP_7
         req?.data?.isConfirmed = bool
         Socket.action.sendData(req)
         Socket.action.sendData(SocketReq(cmd = Configs.END_STEP))
+    }
+
+    private fun printCard(card: String) {
+        val mainActivity = activity as? MainActivity ?: return
+        if (true || Shared.methodReceiveCard.value?.type == 1) {
+            mainActivity.printCard(
+                    Utils.spaceAccountNumber(card),
+                    Shared.ocrConfirmData.value?.fullName!!,
+                    "03/07"
+            )
+        }
     }
 
     override fun onResume() {

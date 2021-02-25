@@ -16,7 +16,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontFacePay"
-        android:layout_width="300px"
+        android:layout_width="400px"
         android:layout_height="wrap_content"
         android:layout_marginStart="54px"
         android:layout_marginTop="36px"
@@ -27,7 +27,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontNapas"
-        android:layout_width="240px"
+        android:layout_width="340px"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48px"
         android:tint="@color/colorBlack"
