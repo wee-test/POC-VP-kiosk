@@ -202,9 +202,9 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
     }
 
     fun bindCardBlackWhiteFront(number: String, name: String, exDate: String) {
-        card2FrontNumberCard.text = number
-        card2FrontLabelName.text = name
-        card2FrontLabelExDate.text = exDate
+        card2TextViewNumber.text = number
+        card2TextViewName.text = name
+        card2TextViewDate.text = exDate
 
 
         //compress

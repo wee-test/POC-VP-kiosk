@@ -23,6 +23,8 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/card2BackService"
         style="@style/TextView.Small"
+        android:fontFamily="@font/inter400"
+        android:textSize="32px"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/margin2"
         android:layout_marginTop="@dimen/margin"
@@ -44,18 +46,20 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2BackLineWhite"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginTop="@dimen/margin"
         android:layout_marginEnd="@dimen/margin2"
         android:src="@mipmap/print_line_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/card2BackGuide"
         app:layout_constraintTop_toBottomOf="@+id/card2BackLine" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/card2BackTitle"
         style="@style/TextView.Medium"
+        android:fontFamily="@font/inter600"
+        android:textSize="36px"
         android:layout_width="0dp"
         android:layout_marginTop="@dimen/margin"
         android:text="Authorized signature"
@@ -67,7 +71,8 @@
         android:id="@+id/card2BackContent"
         style="@style/TextView.Small"
         android:layout_width="0dp"
-        android:layout_marginTop="@dimen/marginY2"
+        android:fontFamily="@font/inter400"
+        android:textSize="28px"
         android:layout_marginEnd="@dimen/margin2"
         android:text="This card is the property of Facepay. If found, please return to Facepay. The use of this card is governed by the terms and conditions set by Facepay."
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,6 +82,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/card2BackLabelFacepay"
         style="@style/TextView.Small"
+        android:fontFamily="@font/inter600"
         android:layout_width="wrap_content"
         android:layout_marginEnd="@dimen/margin2"
         android:layout_marginBottom="@dimen/margin"

@@ -7,11 +7,11 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <include layout="@layout/main_card1_front" />
-    <include layout="@layout/main_card2_front"/>
+    <!--<include layout="@layout/main_card1_front" />
+    <include layout="@layout/main_card1_back"/>-->
 
-<!--    <include layout="@layout/main_card1_back"/>-->
-<!--    <include layout="@layout/main_card2_back"/>-->
+    <include layout="@layout/main_card2_front"/>
+    <include layout="@layout/main_card2_back"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFragmentHost"
