@@ -13,11 +13,22 @@
         android:layout_margin="@dimen/_8sdp"
         android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPrinterSocket"
         tools:itemCount="9"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:layout_editor_absoluteX="10dp"
         tools:listitem="@layout/com_item"
         tools:spanCount="3" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextPrinterSocket"
+        style="@style/MatchWidth"
+        android:hint="domain"
+        android:textColor="@color/colorBlack"
+        android:text="172.16.15.107:5000"
+        android:layout_margin="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="0dp"
@@ -54,6 +65,8 @@
             android:layout_weight="1"
             android:background="@drawable/bg_gradient_rounded"
             android:text="print" />
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

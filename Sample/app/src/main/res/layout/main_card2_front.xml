@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/card2FrontRootFront"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card2Layout"
     android:layout_width="1014px"
     android:layout_height="642px"
     android:visibility="invisible"
     tools:visibility="visible"
-    android:background="@color/colorWhite"
+    android:background="@mipmap/card2_front"
     app:layout_constraintBottom_toBottomOf="@+id/cardBlueGuide"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    app:layout_constraintTop_toTopOf="parent">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontFacePay"
         android:layout_width="300px"
         android:layout_height="wrap_content"
-        android:tint="@color/black"
-        android:layout_marginStart="32px"
-        android:layout_marginTop="32px"
+        android:layout_marginStart="54px"
+        android:layout_marginTop="36px"
+        android:tint="@color/colorBlack"
         android:src="@mipmap/facepay"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,48 +28,51 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontNapas"
         android:layout_width="240px"
-        android:tint="@color/black"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32px"
-        android:layout_marginEnd="32px"
+        android:layout_marginEnd="48px"
+        android:tint="@color/colorBlack"
         android:src="@mipmap/napas"
+        app:layout_constraintBottom_toBottomOf="@+id/card2FrontFacePay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/card2FrontFacePay" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/card2TextViewNumber"
-        android:text="3435 4262 7310 2720"
+        android:fontFamily="@font/inter600"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:fontFamily="@font/inter600"
+        android:letterSpacing="0.18"
+        android:lineHeight="34px"
         style="@style/TextView.Title"
-        android:letterSpacing="0.2"
+        android:text="3435  4262  7310  2720"
         android:textColor="@color/colorBlack"
-        android:textSize="68px"
+        android:textSize="60px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView5"
         style="@style/TextView.Large"
-        android:layout_marginStart="32px"
-        android:layout_marginBottom="8px"
+        android:layout_marginBottom="16px"
         android:fontFamily="@font/inter400"
         android:text="Card Holder Name"
+        android:textColor="@color/colorBlack"
         android:textSize="32px"
         app:layout_constraintBottom_toTopOf="@+id/card2TextViewName"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/card2TextViewName" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/card2TextViewName"
         style="@style/TextView.Large"
         android:fontFamily="@font/inter600"
+        android:layout_marginStart="54px"
+        android:layout_marginBottom="54px"
+        android:letterSpacing="0.18"
         android:textAllCaps="true"
-        android:layout_marginStart="32px"
-        android:layout_marginBottom="48px"
-        android:textSize="42px"
+        android:textColor="@color/colorBlack"
+        android:textSize="48px"
         android:text="Nguyen Van A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -80,17 +83,20 @@
         android:fontFamily="@font/inter400"
         android:text="Expiry Date"
         android:textSize="32px"
+        android:textColor="@color/colorBlack"
         app:layout_constraintBaseline_toBaselineOf="@+id/appCompatTextView5"
         app:layout_constraintEnd_toEndOf="@+id/card2TextViewDate" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/card2TextViewDate"
         style="@style/TextView.Large"
-        android:layout_marginEnd="32px"
+        android:layout_marginEnd="54px"
         android:fontFamily="@font/inter600"
-        android:text="02/30"
+        android:letterSpacing="0.18"
         android:textAllCaps="true"
-        android:textSize="42px"
+        android:text="02/30"
+        android:textColor="@color/colorBlack"
+        android:textSize="48px"
         app:layout_constraintBaseline_toBaselineOf="@+id/card2TextViewName"
         app:layout_constraintEnd_toEndOf="parent" />
 
