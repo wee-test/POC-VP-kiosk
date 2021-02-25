@@ -17,18 +17,16 @@ import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
-import wee.digital.camera.toStringBase64
-import wee.digital.camera.utils.OpenCVUtils
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
-import wee.digital.sample.shared.Utils
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.repository.model.*
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
@@ -65,7 +63,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity()).apply {
-            this.initTemplateAlign()
+            //this.initTemplateAlign()
         }
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
         resetAllFrame()
@@ -179,7 +177,6 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         if (processing) return
         processing = true
         weeOcr?.cropObjectRect(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
-            Log.e("typeScan", "type : $type - typeScan : $typeCard")
             activity?.runOnUiThread {
                 Log.e("typeScan2", "type : $type - typeScan : $typeCard")
                 if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
