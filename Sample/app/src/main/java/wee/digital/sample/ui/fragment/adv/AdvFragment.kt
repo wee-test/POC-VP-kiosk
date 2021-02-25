@@ -2,11 +2,13 @@ package wee.digital.sample.ui.fragment.adv
 
 import android.view.View
 import kotlinx.android.synthetic.main.adv.*
+import wee.dev.weewebrtc.utils.extension.setFastClickListener
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.data.local.SharedHelper
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.viewModel
@@ -25,7 +27,15 @@ class AdvFragment : MainFragment() {
         advVM.getListAdv()
         addClickListener(advActionStart)
         Shared.resetData()
+        configOnOff()
+    }
 
+    private fun configOnOff() {
+        advLabelStatus.text = "${getStatusApi()}"
+        advActionOnOff.setFastClickListener(7) {
+            SharedHelper.instance.put(SharedHelper.STATUS_CALL_API, !getStatusApi())
+            advLabelStatus.text = "${getStatusApi()}"
+        }
     }
 
     override fun onLiveDataObserve() {

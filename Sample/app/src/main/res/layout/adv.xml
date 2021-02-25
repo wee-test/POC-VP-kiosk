@@ -53,6 +53,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/advGuide1"
         android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"/>
+        android:layout_height="@dimen/_35sdp" />
+
+    <View
+        android:id="@+id/advActionOnOff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/advLabelStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/TextView.Small"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

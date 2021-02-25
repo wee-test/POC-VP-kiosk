@@ -114,8 +114,11 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             faceLabelStatusFace.text = "Chờ chút nhé..."
             faceFrameBg.show()
             faceFrame.setImageBitmap(image)
-//            faceVM.identifyFace(image.toBytes())
-            faceVM.searchCustomer(image.toBytes().toStringBase64())
+            if (getStatusApi()) {
+                faceVM.identifyFace(image.toBytes())
+            } else {
+                faceVM.searchCustomer(image.toBytes().toStringBase64())
+            }
         }
     }
 

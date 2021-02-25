@@ -9,6 +9,7 @@ import wee.digital.sample.ui.base.activityVM
 import wee.digital.library.extension.backgroundColor
 import wee.digital.library.extension.statusBarColor
 import wee.digital.sample.app.App
+import wee.digital.sample.data.local.SharedHelper
 
 abstract class MainFragment : BaseFragment() {
 
@@ -25,5 +26,8 @@ abstract class MainFragment : BaseFragment() {
         onLiveDataObserve()
     }
 
+    fun getStatusApi(): Boolean{
+        return SharedHelper.instance.bool(SharedHelper.STATUS_CALL_API, false)
+    }
 
 }

@@ -115,4 +115,23 @@ object Utils {
         return UUID.randomUUID().toString()
     }
 
+    fun randomAccountNumber(): String {
+        var accountNumber = ""
+        for (i in 0..13) {
+            val ran = Random().nextInt(9)
+            accountNumber += ran
+            if (accountNumber.length >= 12) {
+                return accountNumber
+            }
+        }
+        return accountNumber
+    }
+
+    private fun randomCustomerId(card: String): String {
+        if (card.length < 16) {
+            return card
+        }
+        return card.substring(0, 12)
+    }
+
 }
