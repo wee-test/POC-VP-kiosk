@@ -7,6 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Single
@@ -26,6 +31,7 @@ import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.LoginKioskReq
 import wee.digital.sample.repository.model.RecordSendData
 import wee.digital.sample.repository.model.UpdateInfoReq
+import wee.digital.sample.repository.network.VPDatabase
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.base.EventLiveData
@@ -33,6 +39,7 @@ import wee.digital.sample.ui.fragment.dialog.alert.Alert
 import wee.digital.sample.ui.fragment.dialog.date.DateArg
 import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
 import wee.digital.sample.ui.fragment.dialog.web.WebArg
+import java.lang.Exception
 
 open class MainVM : ViewModel() {
 
@@ -51,6 +58,8 @@ open class MainVM : ViewModel() {
     val webLiveData = MutableLiveData<WebArg>()
 
     val statusUpdateInfo = EventLiveData<ResponseVideoCallUpdateInfo>()
+
+    val statusUpdateKiosk = EventLiveData<Boolean>()
 
     @SuppressLint("CheckResult")
     fun loginKiosk() {
@@ -126,6 +135,29 @@ open class MainVM : ViewModel() {
             t.printStackTrace()
             Log.e("recordVideo", "Failed: ${t.message}")
         }
+    }
+
+    fun listenerUpdateKiosk() {
+        VPDatabase.ins.insertKiosk()
+        val database = Firebase.database
+        val myRef = database.reference.child("vpKiosk").child("kiosk").child(Configs.KIOSK_CODE)
+        myRef.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                try {
+                    val dataResp = snapshot.child("check").value ?: return
+                    dataResp as Boolean
+                    if (!dataResp) return
+                    statusUpdateKiosk.postValue(true)
+                } catch (e: Exception) {
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                print("")
+            }
+
+        })
     }
 
 }

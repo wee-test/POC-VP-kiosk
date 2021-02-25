@@ -25,6 +25,7 @@ import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.MessageData
+import wee.digital.sample.repository.network.VPDatabase
 import wee.digital.sample.repository.socket.MySocket
 import wee.digital.sample.repository.socket.PrinterSocket
 import wee.digital.sample.repository.socket.Socket
@@ -71,6 +72,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         weeCaller = WeeCaller(this)
         weeCaller?.init()
         printerSocket.addListener(MyWebSocketListener())
+        mainVM.listenerUpdateKiosk()
     }
 
     override fun navController(): NavController {
@@ -82,6 +84,15 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
     override fun onLiveDataObserve() {
         mainVM.dialogLiveData.observe(this::onShowDialog)
+        mainVM.statusUpdateKiosk.observe {
+            VPDatabase.ins.updateCheckVersionKiosk()
+            val intent = packageManager?.getLaunchIntentForPackage("wee.dev.installer")
+            if (intent != null) {
+                startActivity(intent)
+            } else {
+                toast("application update fe not install")
+            }
+        }
         mainVM.statusLoginKiosk.observe {
             if (it == null || it.responseCode?.code ?: -1 != 0L) {
                 disposable = Observable.timer(3, TimeUnit.SECONDS).subscribe {
