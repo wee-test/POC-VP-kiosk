@@ -41,7 +41,7 @@ class OcrVM : BaseViewModel() {
                 .subscribe({
                     Log.d("scanOCRFront", "$it")
                     if (it.responseCode.code != 0L) {
-                        statusExtractFrontVP.postValue(CardRespVP(code = -1))
+                        statusExtractFrontVP.postValue(CardRespVP(code = -1, mess = it.responseCode.messageServer))
                     } else {
                         val checkingResult = CheckingResultResp(
                                 recapturedResult = it.result.data.checkingResult.recapturedResult,
@@ -107,7 +107,7 @@ class OcrVM : BaseViewModel() {
                     }
                 }, {
                     Log.d("scanOCRFront", "${it.message}")
-                    statusExtractFrontVP.postValue(CardRespVP(code = -1))
+                    statusExtractFrontVP.postValue(CardRespVP(code = -1, mess = it.message.toString()))
                 })
     }
 
@@ -127,7 +127,7 @@ class OcrVM : BaseViewModel() {
                 .subscribe({
                     Log.d("scanOCRBack", "$it")
                     if (it.responseCode.code != 0L) {
-                        statusExtractBackVP.postValue(CardRespVP(code = -1))
+                        statusExtractBackVP.postValue(CardRespVP(code = -1, mess = it.responseCode.messageServer))
                     } else {
                         val data = CardRespVP(
                                 code = 0,
@@ -139,7 +139,7 @@ class OcrVM : BaseViewModel() {
                     }
                 }, {
                     Log.d("scanOCRBack", "$it")
-                    statusExtractBackVP.postValue(CardRespVP(code = -1))
+                    statusExtractBackVP.postValue(CardRespVP(code = -1, mess = it.message.toString()))
                 })
     }
 
