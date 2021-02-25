@@ -7,6 +7,7 @@ import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.VoiceData
+import wee.digital.sample.ui.main.MainActivity
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
 
@@ -22,8 +23,12 @@ class ReviewFragment : MainFragment() {
     }
 
     override fun onViewClick(v: View?) {
+        val mainActivity = activity as? MainActivity ?:return
         when(v){
             reviewActionAccept -> {
+                mainActivity.bindCardColorFront("1234 4567 8910 1112",
+                        Shared.ocrConfirmData.value?.fullName!!,
+                        "03/30")
                 navigate(MainDirections.actionGlobalLoadingFragment())
             }
         }
