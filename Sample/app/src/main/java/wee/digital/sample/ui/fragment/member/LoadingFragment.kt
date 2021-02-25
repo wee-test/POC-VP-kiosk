@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.view_header.*
+import vplib.ResponseCustomerRegister
 import wee.digital.camera.toBytes
 import wee.digital.camera.toStringBase64
 import wee.digital.library.extension.gone
@@ -14,6 +15,7 @@ import wee.digital.sample.repository.model.*
 import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.shared.VoiceData
 import wee.digital.sample.ui.base.activityVM
 import wee.digital.sample.ui.fragment.register.RegisterVM
@@ -25,7 +27,7 @@ class LoadingFragment : MainFragment() {
 
     private val registerVM: RegisterVM by lazy { activityVM(RegisterVM::class) }
 
-    private var disposableLoading : Disposable? = null
+    private var disposableLoading: Disposable? = null
 
     override fun layoutResource(): Int = R.layout.loading
 
@@ -33,14 +35,24 @@ class LoadingFragment : MainFragment() {
         headerAction.gone()
     }
 
-    private fun getDataRegister(){
+    private fun getDataRegister() {
+        if (!getStatusApi()) {
+            val random = Utils.randomDataCard()
+            val data = ResponseCustomerRegister()
+            data.result.cardNumber = random.cardNumber
+            data.result.customerID = random.customerId
+            Shared.customerInfoRegisterSuccess.postValue(data)
+            sendSocket(true)
+            navigate(MainDirections.actionGlobalRatingFragment())
+            return
+        }
         val card = Shared.ocrConfirmData.value ?: IdentifyCardInfo()
-        val frameCard = if(Shared.typeCardOcr.value == Configs.TYPE_PASSPORT){
+        val frameCard = if (Shared.typeCardOcr.value == Configs.TYPE_PASSPORT) {
             PhotoCardInfo(
                     cardFront = Shared.passportData.value?.frame.toBytes().toStringBase64(),
                     cardBack = Shared.passportData.value?.frame.toBytes().toStringBase64()
             )
-        }else{
+        } else {
             Shared.frameCardData.value
         }
         val cardInfo = IdentifyCardInfo(

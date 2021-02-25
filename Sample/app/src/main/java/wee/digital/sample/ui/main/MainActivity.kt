@@ -32,14 +32,15 @@ import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.server.SocketServer
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
-import wee.digital.sample.ui.fragment.call.CallVM
 import java.net.Inet4Address
 import java.net.InetSocketAddress
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.nio.ByteBuffer
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
@@ -72,6 +73,13 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         weeCaller = WeeCaller(this)
         weeCaller?.init()
         printerSocket.addListener(MyWebSocketListenr())
+
+
+        Observable.interval(200, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    val data = Utils.randomDataCard()
+                    Log.e("randomDataCard", "$data")
+                }
     }
 
     override fun navController(): NavController {

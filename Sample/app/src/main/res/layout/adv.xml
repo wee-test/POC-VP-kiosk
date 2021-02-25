@@ -59,7 +59,7 @@
         android:id="@+id/advCheckbox"
         android:layout_width="wrap_content"
         app:layout_constraintHorizontal_bias="0.2"
-        android:layout_height="@dimen/_10sdp"
+        android:layout_height="@dimen/_30sdp"
         android:button="@drawable/checkbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
