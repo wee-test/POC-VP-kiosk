@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit
 
 class PrinterSocket {
 
-    var url = "ws://10.10.0.145:57976/android"
+    var url = ""
+        private set
 
     val log = Logger(this::class)
 
@@ -18,24 +19,26 @@ class PrinterSocket {
     fun send(data: String) {
         ws?.send(data)
     }
+
     fun send(data: ByteString) {
         ws?.send(data)
     }
+
     fun close() {
         ws?.close(1000, "Close")
     }
 
-    fun open() {
+    fun open(domain: String?) {
+        domain ?: return
+        url = "ws://$domain/android"
         log.d("connecting to $url")
         val client = OkHttpClient
                 .Builder()
                 .pingInterval(5000, TimeUnit.MILLISECONDS)
                 .build()
-
         val request = Request.Builder()
                 .url(url)
                 .build()
-
         ws = client.newWebSocket(request, ListenerHandler())
         client.dispatcher.executorService.shutdown()
     }

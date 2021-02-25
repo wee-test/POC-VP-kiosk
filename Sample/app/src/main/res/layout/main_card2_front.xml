@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/card2FrontRootFront"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card2Layout"
     android:layout_width="1014px"
     android:layout_height="642px"
     android:visibility="invisible"
@@ -9,10 +12,7 @@
     app:layout_constraintBottom_toBottomOf="@+id/cardBlueGuide"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    app:layout_constraintTop_toTopOf="parent">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontFacePay"

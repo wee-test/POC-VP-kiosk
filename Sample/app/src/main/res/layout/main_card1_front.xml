@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/card1FrontRootFront"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card1Layout"
     android:layout_width="1014px"
     android:layout_height="642px"
     android:visibility="invisible"
@@ -7,10 +11,7 @@
     android:background="@mipmap/print_blue"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    app:layout_constraintTop_toTopOf="parent">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card1FrontFacePay"
@@ -33,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/card1FrontNumberCard"
+        android:id="@+id/card1TextViewNumber"
         android:text="3435 4262 7310 2720"
         android:layout_width="match_parent"
         android:gravity="center"
@@ -52,11 +53,11 @@
         android:fontFamily="@font/svn_gilroy_regular"
         android:text="Card Holder Name"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/card1FrontLabelName"
+        app:layout_constraintBottom_toTopOf="@+id/card1TextViewName"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/card1FrontLabelName"
+        android:id="@+id/card1TextViewName"
         style="@style/TextView.Large"
         android:layout_marginStart="@dimen/margin2"
         android:layout_marginBottom="@dimen/margin3"
@@ -73,11 +74,11 @@
         android:fontFamily="@font/svn_gilroy_regular"
         android:text="Expiry Date"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/card1FrontLabelName"
+        app:layout_constraintBottom_toTopOf="@+id/card1TextViewName"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/card1FrontLabelExDate"
+        android:id="@+id/card1TextViewDate"
         style="@style/TextView.Large"
         android:layout_marginEnd="@dimen/margin2"
         android:layout_marginBottom="@dimen/margin3"

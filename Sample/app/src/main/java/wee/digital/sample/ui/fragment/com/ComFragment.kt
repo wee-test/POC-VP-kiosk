@@ -37,11 +37,14 @@ class ComFragment : MainFragment() {
     override fun onViewClick(v: View?) {
         val mainActivity = activity as? MainActivity ?:return
         when(v){
-            comViewConnect-> mainActivity.printerSocket.open()
+            comViewConnect-> mainActivity.printerSocket.open(editTextPrinterSocket.text?.toString())
             comViewClose-> mainActivity.printerSocket.close()
-            comViewNext-> mainActivity.bindCardColorFront("1234 4567 8910 1112", "CON NẮM NGUYÊN MẬP", "03/30")
+            comViewNext-> mainActivity.bindCardColorFront("1234 4567 8910 1112",
+                    "THI AKA THI THI",
+                    "03/30")
         }
     }
+
     inner class ComAdapter : BaseRecyclerAdapter<ComItem>() {
 
         override fun layoutResource(model: ComItem, position: Int): Int = R.layout.com_item

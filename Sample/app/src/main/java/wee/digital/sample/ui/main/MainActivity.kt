@@ -32,7 +32,6 @@ import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.server.SocketServer
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
-import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseActivity
 import wee.digital.sample.ui.base.activityVM
 import java.net.Inet4Address
@@ -191,30 +190,22 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         })
     }
 
-    fun bindCardColorFront(number: String, name: String, exDate: String) {
-        card1FrontNumberCard.text = number
-        card1FrontLabelName.text = name
-        card1FrontLabelExDate.text = exDate
-        val bitmap = card1FrontRootFront.getBitmap()
-        val bytes = bitmap.toBytes()
-        val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
-        printerSocket.send(byteString)
-    }
+    fun bindCardColorFront(number: String, name: String, date: String) {
+        /*card1TextViewNumber.text = number
+        card1TextViewName.text = name
+        card1TextViewDate.text = date
+        val bitmap = card1Layout.getBitmap()*/
 
-    fun bindCardBlackWhiteFront(number: String, name: String, exDate: String) {
         card2TextViewNumber.text = number
         card2TextViewName.text = name
-        card2TextViewDate.text = exDate
+        card2TextViewDate.text = date
+        val bitmap = card2Layout.getBitmap()
 
-
-        //compress
-        //val stream = ByteArrayOutputStream()
-        //bitmap?.compress(Bitmap.CompressFormat.JPEG,80,stream)
-        val bitmap = card2FrontRootFront.getBitmap()
         val bytes = bitmap.toBytes()
         val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
         printerSocket.send(byteString)
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -239,15 +230,21 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
     private inner class MyWebSocketListenr : WebSocketListener() {
         override fun onOpen(webSocket: okhttp3.WebSocket, response: Response) {
+            toast("opened")
             mainThread {
                 mainTextViewPrinter.text = "open"
             }
         }
 
         override fun onClosed(webSocket: okhttp3.WebSocket, code: Int, reason: String) {
+            toast("closed")
             mainThread {
                 mainTextViewPrinter.text = "close"
             }
+        }
+
+        override fun onFailure(webSocket: okhttp3.WebSocket, t: Throwable, response: Response?) {
+            toast(t.message)
         }
     }
 
