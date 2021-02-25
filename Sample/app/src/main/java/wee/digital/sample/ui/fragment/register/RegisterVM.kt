@@ -29,6 +29,8 @@ class RegisterVM : BaseViewModel(){
 
     val statusMatching = EventLiveData<ResponseVPFaceMatching>()
 
+    val statusLivess = EventLiveData<ResponseVPFaceLiveness>()
+
     @SuppressLint("CheckResult")
     fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
         Single.fromCallable {
@@ -110,8 +112,10 @@ class RegisterVM : BaseViewModel(){
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     Log.d("livenessFace","$it")
+                    statusLivess.postValue(it)
                 }, {
                     Log.d("livenessFace","${it.message}")
+                    statusLivess.postValue(null)
                 })
     }
 

@@ -80,8 +80,21 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
                 return@observe
             }
             sendSocket(true)
-            registerVM.createVideo(requireContext(), Shared.faceCapture.value?.toBytes().toStringBase64())
             navigate(MainDirections.actionGlobalCardFragment())
+        }
+        registerVM.statusLivess.observe {
+            if (it == null || it.responseCode?.code ?: -1 != 0L) {
+                val messFail = MessageData(
+                        "Đăng ký không thành công",
+                        VoiceData.FACE_NOT_MATCHED
+                )
+                sendSocket(false)
+                Shared.messageFail.postValue(messFail)
+                navigate(MainDirections.actionGlobalFailFragment())
+                return@observe
+            }
+            registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront
+                    ?: "", Shared.faceCapture.value.toBytes())
         }
     }
 
@@ -116,7 +129,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerStatusFace.text = "Chờ chút nhé..."
             registerFrameBg.show()
             registerFrame.setImageBitmap(image)
-            registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())
+            registerVM.createVideo(requireContext(), image.toBytes().toStringBase64())
         }
     }
 

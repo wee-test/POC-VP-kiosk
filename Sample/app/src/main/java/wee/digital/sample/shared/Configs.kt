@@ -10,7 +10,7 @@ object Configs {
 
     var KIOSK_ID = ""
 
-    const val SOCKET_URL = "ws://weezi.biz:7080"
+    const val SOCKET_URL = "wss://vpbank.wee.vn/ws"
 
     const val TYPE_NID = "CMND"
 
