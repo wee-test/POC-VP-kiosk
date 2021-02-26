@@ -73,6 +73,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.deleteFileVideo(this)
         weeCaller = WeeCaller(this)
         weeCaller?.init()
         printerSocket.addListener(MyWebSocketListener())
@@ -216,13 +217,13 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
     }
 
     fun printCard1() {
-        val bitmap = nameCard1.getBitmap()
+        val bitmap = include1.getBitmap()
         val bytes = bitmap.toBytes()
         val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
         printerSocket.send(byteString)
     }
     fun printCard2() {
-        val bitmap = nameCard2.getBitmap()
+        val bitmap = include2.getBitmap()
         val bytes = bitmap.toBytes()
         val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
         printerSocket.send(byteString)

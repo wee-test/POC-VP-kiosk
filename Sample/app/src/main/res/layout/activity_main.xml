@@ -58,6 +58,7 @@
         layout="@layout/z_namecard" />
 
     <include
+        android:id="@+id/include1"
         layout="@layout/z_namecard2"
         android:layout_width="1014px"
         android:layout_height="642px"

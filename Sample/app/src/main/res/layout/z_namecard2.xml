@@ -22,41 +22,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <com.github.florent37.diagonallayout.DiagonalLayout
-            android:id="@+id/diagonalLayout"
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="620px"
-            app:diagonal_angle="45"
-            app:diagonal_direction="right"
-            app:diagonal_position="top"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/z_nc_bg" />
-
-        </com.github.florent37.diagonallayout.DiagonalLayout>
-
-        <com.github.florent37.diagonallayout.DiagonalLayout
-            android:id="@+id/diagonalLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="140px"
-            android:background="@color/colorWhite"
-            app:diagonal_angle="45"
-            app:diagonal_direction="right"
-            app:diagonal_position="top"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@color/colorWhite" />
-
-        </com.github.florent37.diagonallayout.DiagonalLayout>
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/z_nc_bg" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView2"
@@ -64,7 +34,7 @@
             android:layout_height="64px"
             android:layout_margin="34px"
             android:src="@drawable/ic_qr"
-            android:tint="#252C64"
+            android:tint="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,19 +43,19 @@
             android:layout_width="120px"
             android:layout_height="120px"
             android:src="@drawable/ic_beer"
-            android:tint="#252C64"
+            android:tint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.14" />
+            app:layout_constraintVertical_bias="0.3" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView6"
             style="@style/TextView.Card"
             android:fontFamily="@font/inter600"
             android:text="AN NHAU"
-            android:textColor="#252C64"
+            android:textColor="@color/colorWhite"
             android:textSize="64px"
             app:layout_constraintEnd_toEndOf="@+id/appCompatImageView3"
             app:layout_constraintStart_toStartOf="@+id/appCompatImageView3"
@@ -95,7 +65,7 @@
             style="@style/TextView.Card"
             android:fontFamily="@font/inter600"
             android:text="DE DIVISION"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="24px"
             app:layout_constraintEnd_toEndOf="@+id/appCompatTextView6"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"

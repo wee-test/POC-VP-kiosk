@@ -1,9 +1,13 @@
 package wee.digital.sample.shared
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Bitmap
+import android.os.Environment
 import android.util.DisplayMetrics
+import android.util.Log
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
+import java.io.File
 import java.lang.Exception
 import java.util.*
 import kotlin.math.roundToInt
@@ -135,9 +139,39 @@ object Utils {
             val str3 = card.substring(8, 12) + "  "
             val str4 = card.substring(12, 16)
             return str1 + str2 + str3 + str4
-        }catch (e : Exception){
+        } catch (e: Exception) {
             return card
         }
     }
+
+    fun deleteFileVideo(context: Context) {
+        try {
+            val path = "${context.externalCacheDir}"
+            val listFile = File(path).listFiles()
+            if (listFile.isNullOrEmpty()) return
+            for (model in listFile) {
+                val name = model.toString().split(".")
+                if (name.last() == "mp4") {
+                    deleteFile(model.toString())
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun deleteFile(path: String) {
+        try {
+            val file = File(path, "")
+            if (file.exists()) {
+                val result = file.delete()
+            } else {
+                Log.e("deleteFile", "file not exists")
+            }
+        } catch (e: java.lang.Exception) {
+            Log.e("deleteFile", e.message.toString())
+        }
+    }
+
 
 }

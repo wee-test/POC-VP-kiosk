@@ -144,7 +144,7 @@ class LoadingFragment : MainFragment() {
         if (true || Shared.methodReceiveCard.value?.type == 1) {
             mainActivity.printCard(
                     Utils.spaceAccountNumber(card),
-                    Shared.ocrConfirmData.value?.fullName!!,
+                    Shared.ocrConfirmData.value?.fullName ?: "Nguyen Van A",
                     "03/07"
             )
         }

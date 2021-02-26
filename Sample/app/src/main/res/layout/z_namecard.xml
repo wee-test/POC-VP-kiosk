@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="1014px"
-    android:layout_height="642px"
+    android:layout_height="1014px"
     android:visibility="invisible"
     tools:visibility="visible"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,55 +16,25 @@
         android:layout_height="1014px"
         android:layout_gravity="center"
         android:background="@color/colorWhite"
-        android:rotation="90"
+
         app:layout_constraintBottom_toBottomOf="@+id/cardBlueGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.github.florent37.diagonallayout.DiagonalLayout
-            android:id="@+id/diagonalLayout"
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="620px"
-            app:diagonal_angle="45"
-            app:diagonal_direction="right"
-            app:diagonal_position="top"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/z_nc_bg" />
-
-        </com.github.florent37.diagonallayout.DiagonalLayout>
-
-        <com.github.florent37.diagonallayout.DiagonalLayout
-            android:id="@+id/diagonalLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="140px"
-            android:background="@color/colorWhite"
-            app:diagonal_angle="45"
-            app:diagonal_direction="right"
-            app:diagonal_position="top"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@color/colorWhite" />
-
-        </com.github.florent37.diagonallayout.DiagonalLayout>
-
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/z_nc_bg" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView3"
-            android:layout_width="40px"
-            android:layout_height="40px"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:layout_marginStart="8px"
             android:src="@drawable/ic_beer"
-            android:tint="#252C64"
+            android:tint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView6"
             app:layout_constraintStart_toEndOf="@+id/appCompatTextView6"
             app:layout_constraintTop_toTopOf="@+id/appCompatTextView6" />
@@ -75,8 +45,8 @@
             android:layout_margin="40px"
             android:fontFamily="@font/inter600"
             android:text="AN NHAU"
-            android:textColor="#252C64"
-            android:textSize="28px"
+            android:textColor="@color/colorWhite"
+            android:textSize="40px"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,8 +54,7 @@
             style="@style/TextView.Card"
             android:layout_marginTop="4px"
             android:text="DE DIVISION"
-            android:textColor="@color/colorBlack"
-            android:textSize="18px"
+            android:textColor="@color/colorWhite"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
             app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />
 
@@ -95,8 +64,8 @@
             android:layout_margin="40px"
             android:fontFamily="@font/inter600"
             android:text="HAI LE (Mr.)"
-            android:textColor="#252C64"
-            android:textSize="40px"
+            android:textColor="@color/colorWhite"
+            android:textSize="70px"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -107,8 +76,8 @@
             style="@style/TextView.Card"
             android:layout_marginTop="8px"
             android:text="RANKED: SERGEANT"
-            android:textColor="@color/colorBlack"
-            android:textSize="16px"
+            android:textColor="@color/colorWhite"
+            android:textSize="32px"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView7"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView7" />
 
@@ -117,8 +86,7 @@
             style="@style/TextView.Card"
             android:layout_marginTop="8px"
             android:text="CURRENT LEVEL"
-            android:textColor="#252C64"
-            android:textSize="16px"
+            android:textColor="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView7"
             app:layout_constraintTop_toTopOf="parent" />
@@ -127,7 +95,7 @@
             android:id="@+id/appCompatTextView9"
             style="@style/TextView.Card"
             android:text="1 BARREL CAN GET DRUNK"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="16px"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView7"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
@@ -137,7 +105,7 @@
             style="@style/TextView.Card"
             android:layout_marginTop="8px"
             android:text="FAVORITE TASTE"
-            android:textColor="#252C64"
+            android:textColor="@color/colorWhite"
             android:textSize="16px"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView7"
             app:layout_constraintTop_toBottomOf="@id/appCompatTextView9" />
@@ -146,7 +114,7 @@
             android:id="@+id/appCompatTextView11"
             style="@style/TextView.Card"
             android:text="FUCKING BEER ALSO"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="16px"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView10"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />

@@ -92,6 +92,7 @@ class RegisterVM : BaseViewModel(){
         recordVideo.startVideo()
         recordVideo.createVideo(object : RecordVideo.MyVideoCallBack{
             override fun onResult(path: String) {
+                Log.e("createVideo", "result : $path")
                 val video = File(path).readBytes()
                 livenessFace(face, video.toStringBase64())
             }
@@ -100,6 +101,7 @@ class RegisterVM : BaseViewModel(){
 
     @SuppressLint("CheckResult")
     private fun livenessFace(face: String, video: String) {
+        Log.e("livenessFace", "push video")
         Single.fromCallable {
             val body = LivenessReq(
                     kioskId = Configs.KIOSK_ID,

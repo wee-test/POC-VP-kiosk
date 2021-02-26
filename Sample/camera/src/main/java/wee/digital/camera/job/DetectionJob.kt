@@ -191,9 +191,9 @@ class DetectionJob(private val listener: FaceCaptureJob.Listener) :
         }
 
         fun onStart() {
+            RecordVideo.isRecordVideo = true
             isCountdown = true
             RecordVideo.arrayBitmap.clear()
-            RecordVideo.isRecordVideo = false
             autoStep.set(8)
             start()
         }

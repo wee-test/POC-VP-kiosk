@@ -9,10 +9,10 @@ data class CardItem(
 )
 
 val listCard1 = listOf(
-        CardItem("PLATINUM_CASHBACK","VPBank Platium Cashback", R.mipmap.card1),
-        CardItem("AUTOLINK","VPBank StepUp Mastercard", R.mipmap.card2)
+        CardItem("PLATINUM_CASHBACK","Thẻ Diamond World Lady", R.mipmap.card1),
+        CardItem("AUTOLINK","Thẻ VPBank StepUp", R.mipmap.card2)
 )
 
 val listCard2 = listOf(
-        CardItem("SHOPEE_PLATINUM","VPBank Shopee Platinum", R.mipmap.card3)
+        CardItem("SHOPEE_PLATINUM","Thẻ VPBank Shopee Platinum", R.mipmap.card3)
 )

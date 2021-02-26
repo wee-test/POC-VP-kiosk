@@ -20,13 +20,14 @@
     <style name="TextView.Card"
         parent="WrapContent">
         <item name="android:ellipsize">end</item>
-        <item name="android:fontFamily">@font/inter400</item>
+        <item name="android:fontFamily">@font/inter600</item>
         <item name="android:includeFontPadding">true</item>
+        <item name="android:textSize">30px</item>
         <item name="android:lineHeight"
             tools:targetApi="p">30px</item>
         <item name="android:letterSpacing"
             tools:targetApi="p">0.16</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:lineSpacingExtra">@dimen/_2sdp</item>
     </style>
     <style name="TextView.Small" parent="TextView">

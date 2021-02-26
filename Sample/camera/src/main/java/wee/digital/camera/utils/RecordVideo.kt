@@ -39,9 +39,10 @@ class RecordVideo(context: Context) {
         try {
             file = File("${ct.externalCacheDir}/${System.currentTimeMillis()}.mp4")
 
+            val frame = (arrayBitmap.size / 7).toInt()
             config = MuxerConfig(
                     file = file!!,
-                    framesPerSecond = 13f,
+                    framesPerSecond = frame.toFloat(),
                     videoWidth = 640,
                     videoHeight = 480
             )
