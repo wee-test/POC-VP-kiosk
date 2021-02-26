@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="1014px"
     android:layout_height="642px"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nameCard2"
     android:visibility="invisible"
     tools:visibility="visible"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nameCard2"
     android:background="@color/colorBlack">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/z_nc_bg" />
+                android:src="@mipmap/z_nc_bg" />
 
         </com.github.florent37.diagonallayout.DiagonalLayout>
 
