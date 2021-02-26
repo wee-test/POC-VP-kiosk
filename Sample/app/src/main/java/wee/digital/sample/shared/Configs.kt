@@ -45,12 +45,12 @@ object Configs {
 
     fun configWeeOcr(){
         WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = "-5"
+        WeeOCR.CAMERA_SATURATION_STEP = -2
         WeeOCR.THRESH_CROP = 64.0
         WeeOCR.BLUR_MIN_VALUE = 80
         WeeOCR.CAMERA_ZOOM = "20"
-        WeeOCR.DELAY_SCAN = 7
-        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 960.0
+        WeeOCR.DELAY_SCAN = 5
+        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 480.0
     }
 
 }
