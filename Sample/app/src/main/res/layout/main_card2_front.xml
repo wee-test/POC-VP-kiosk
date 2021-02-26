@@ -17,18 +17,19 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontFacePay"
         android:layout_width="400px"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54px"
+        android:layout_height="0dp"
+        android:layout_marginStart="36px"
+        android:src="@drawable/ic_facepay"
         android:layout_marginTop="36px"
-        android:tint="@color/colorBlack"
-        android:src="@mipmap/facepay"
+        app:layout_constraintDimensionRatio="h,114:24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontNapas"
-        android:layout_width="340px"
-        android:layout_height="wrap_content"
+        android:layout_width="260px"
+        app:layout_constraintDimensionRatio="h,180:45"
+        android:layout_height="0dp"
         android:layout_marginEnd="48px"
         android:tint="@color/colorBlack"
         android:src="@mipmap/napas"
@@ -46,7 +47,7 @@
         style="@style/TextView.Title"
         android:text="3435  4262  7310  2720"
         android:textColor="@color/colorBlack"
-        android:textSize="60px"
+        android:textSize="54px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +59,8 @@
         android:layout_marginBottom="16px"
         android:fontFamily="@font/inter400"
         android:text="Card Holder Name"
-        android:textColor="@color/colorBlack"
+        android:textColor="#7C7C7C"
+        android:textStyle="bold"
         android:textSize="32px"
         app:layout_constraintBottom_toTopOf="@+id/card2TextViewName"
         app:layout_constraintStart_toStartOf="@+id/card2TextViewName" />
@@ -72,7 +74,7 @@
         android:letterSpacing="0.18"
         android:textAllCaps="true"
         android:textColor="@color/colorBlack"
-        android:textSize="48px"
+        android:textSize="40px"
         android:text="Nguyen Van A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -83,7 +85,7 @@
         android:fontFamily="@font/inter400"
         android:text="Expiry Date"
         android:textSize="32px"
-        android:textColor="@color/colorBlack"
+        android:textColor="#7C7C7C"
         app:layout_constraintBaseline_toBaselineOf="@+id/appCompatTextView5"
         app:layout_constraintEnd_toEndOf="@+id/card2TextViewDate" />
 
@@ -96,7 +98,7 @@
         android:textAllCaps="true"
         android:text="02/30"
         android:textColor="@color/colorBlack"
-        android:textSize="48px"
+        android:textSize="40px"
         app:layout_constraintBaseline_toBaselineOf="@+id/card2TextViewName"
         app:layout_constraintEnd_toEndOf="parent" />
 

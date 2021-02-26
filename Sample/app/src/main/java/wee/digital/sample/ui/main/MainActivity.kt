@@ -216,18 +216,6 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         printerSocket.send(byteString)
     }
 
-    fun printCard1() {
-        val bitmap = include1.getBitmap()
-        val bytes = bitmap.toBytes()
-        val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
-        printerSocket.send(byteString)
-    }
-    fun printCard2() {
-        val bitmap = include2.getBitmap()
-        val bytes = bitmap.toBytes()
-        val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
-        printerSocket.send(byteString)
-    }
     override fun onResume() {
         super.onResume()
         permissionRequest(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) {

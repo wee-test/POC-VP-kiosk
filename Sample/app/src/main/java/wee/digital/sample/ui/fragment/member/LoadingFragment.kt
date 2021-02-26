@@ -38,19 +38,6 @@ class LoadingFragment : MainFragment() {
     }
 
     private fun getDataRegister() {
-        if (!getStatusApi()) {
-            val accountNumber = Utils.randomAccountNumber()
-            val respRegister = ResponseCustomerRegister()
-            val resultRegister = RegisterResult()
-            resultRegister.accountNumber = accountNumber
-            resultRegister.customerID = "000001"
-            respRegister.result = resultRegister
-            Shared.customerInfoRegisterSuccess.postValue(respRegister)
-            printCard("9704${accountNumber}")
-            sendSocket(true)
-            navigate(MainDirections.actionGlobalRatingFragment())
-            return
-        }
         val card = Shared.ocrConfirmData.value ?: IdentifyCardInfo()
         val frameCard = if (Shared.typeCardOcr.value == Configs.TYPE_PASSPORT) {
             PhotoCardInfo(
@@ -116,6 +103,19 @@ class LoadingFragment : MainFragment() {
         registerVM.statusRegisterCard.observe {
             Log.e("registerCard", "$it")
             if(it == null || it?.responseCode?.code ?: -1 != 0L){
+                if (!getStatusApi()) {
+                    val accountNumber = Utils.randomAccountNumber()
+                    val respRegister = ResponseCustomerRegister()
+                    val resultRegister = RegisterResult()
+                    resultRegister.accountNumber = accountNumber
+                    resultRegister.customerID = "000001"
+                    respRegister.result = resultRegister
+                    Shared.customerInfoRegisterSuccess.postValue(respRegister)
+                    printCard("9704${accountNumber}")
+                    sendSocket(true)
+                    navigate(MainDirections.actionGlobalRatingFragment())
+                    return@observe
+                }
                 Shared.messageFail.postValue(
                         MessageData("Đăng ký mở thẻ thất bại",
                                 "Có lỗi xảy ra trong quá trình mở thẻ, bạn vui lòng thử lại")
