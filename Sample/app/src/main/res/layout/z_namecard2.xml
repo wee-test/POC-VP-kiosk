@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="1014px"
+    android:layout_height="642px"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nameCard2"
+    android:visibility="invisible"
+    tools:visibility="visible"
+    android:background="@color/colorBlack">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card2Layout"
+        android:layout_width="642px"
+        android:layout_height="1014px"
+        android:layout_gravity="center"
+        android:background="@color/colorWhite"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="@+id/cardBlueGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.github.florent37.diagonallayout.DiagonalLayout
+            android:id="@+id/diagonalLayout"
+            android:layout_width="match_parent"
+            android:layout_height="620px"
+            app:diagonal_angle="45"
+            app:diagonal_direction="right"
+            app:diagonal_position="top"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/z_nc_bg" />
+
+        </com.github.florent37.diagonallayout.DiagonalLayout>
+
+        <com.github.florent37.diagonallayout.DiagonalLayout
+            android:id="@+id/diagonalLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:background="@color/colorWhite"
+            app:diagonal_angle="45"
+            app:diagonal_direction="right"
+            app:diagonal_position="top"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@color/colorWhite" />
+
+        </com.github.florent37.diagonallayout.DiagonalLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView2"
+            android:layout_width="64px"
+            android:layout_height="64px"
+            android:layout_margin="34px"
+            android:src="@drawable/ic_qr"
+            android:tint="#252C64"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView3"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:src="@drawable/ic_beer"
+            android:tint="#252C64"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.14" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView6"
+            style="@style/TextView.Card"
+            android:fontFamily="@font/inter600"
+            android:text="AN NHAU"
+            android:textColor="#252C64"
+            android:textSize="64px"
+            app:layout_constraintEnd_toEndOf="@+id/appCompatImageView3"
+            app:layout_constraintStart_toStartOf="@+id/appCompatImageView3"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextView.Card"
+            android:fontFamily="@font/inter600"
+            android:text="DE DIVISION"
+            android:textColor="@color/colorBlack"
+            android:textSize="24px"
+            app:layout_constraintEnd_toEndOf="@+id/appCompatTextView6"
+            app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

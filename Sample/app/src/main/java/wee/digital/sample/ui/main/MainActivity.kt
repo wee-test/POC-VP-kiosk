@@ -10,6 +10,9 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_card2_front.*
+import kotlinx.android.synthetic.main.main_card2_front.card2Layout
+import kotlinx.android.synthetic.main.z_namecard.*
+import kotlinx.android.synthetic.main.z_namecard2.*
 import okhttp3.Response
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
@@ -210,8 +213,18 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
         printerSocket.send(byteString)
     }
-
-
+    fun printCard1() {
+        val bitmap = nameCard1.getBitmap()
+        val bytes = bitmap.toBytes()
+        val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
+        printerSocket.send(byteString)
+    }
+    fun printCard2() {
+        val bitmap = nameCard2.getBitmap()
+        val bytes = bitmap.toBytes()
+        val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
+        printerSocket.send(byteString)
+    }
     override fun onResume() {
         super.onResume()
         permissionRequest(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) {
