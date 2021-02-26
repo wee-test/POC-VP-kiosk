@@ -213,6 +213,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         val byteString = ByteBuffer.wrap(bytes, 0, bytes.size).toByteString()
         printerSocket.send(byteString)
     }
+
     fun printCard1() {
         val bitmap = nameCard1.getBitmap()
         val bytes = bitmap.toBytes()

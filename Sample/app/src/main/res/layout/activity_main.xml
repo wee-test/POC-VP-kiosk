@@ -53,7 +53,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <include layout="@layout/z_namecard"/>
+    <include
+        android:id="@+id/include2"
+        layout="@layout/z_namecard" />
 
-    <include layout="@layout/z_namecard2"/>
+    <include
+        layout="@layout/z_namecard2"
+        android:layout_width="1014px"
+        android:layout_height="642px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/mainFragmentHost" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
