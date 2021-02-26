@@ -20,7 +20,7 @@ class ComFragment : MainFragment() {
 
     override fun onViewCreated() {
         setupRecycler()
-        addClickListener(comViewConnect,comViewClose,comViewNext)
+        addClickListener(comViewConnect,comViewClose,comViewNext,comViewNext1)
     }
 
     private fun setupRecycler() {
@@ -39,9 +39,15 @@ class ComFragment : MainFragment() {
         when(v){
             comViewConnect-> mainActivity.printerSocket.open(editTextPrinterSocket.text?.toString())
             comViewClose-> mainActivity.printerSocket.close()
-            comViewNext-> mainActivity.printCard("1234 4567 8910 1112",
-                    "THI AKA THI THI",
-                    "03/30")
+            comViewNext-> {
+                /*mainActivity.printCard("1234 4567 8910 1112",
+                        "THI AKA THI THI",
+                        "03/30")*/
+                mainActivity.printCard1()
+            }
+            comViewNext1-> {
+                mainActivity.printCard2()
+            }
         }
     }
 
