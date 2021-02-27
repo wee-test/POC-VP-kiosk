@@ -185,6 +185,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 }
                 if (type != typeCard) resetAllFrame()
                 typeCard = type
+                weeOcr?.getFullFrame()
                 bindFrame(cropped, typeFrontBack)
             }
         }

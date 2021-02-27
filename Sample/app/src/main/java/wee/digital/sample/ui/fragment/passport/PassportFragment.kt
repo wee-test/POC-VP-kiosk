@@ -35,7 +35,7 @@ class PassportFragment : MainFragment(), FrameStreamListener {
     override fun onViewCreated() {
         complete = false
         processing = false
-        Configs.configWeeOcr()
+        Configs.configWeeOcrPassport()
         weeOcr = WeeOCR(requireActivity())
     }
 
