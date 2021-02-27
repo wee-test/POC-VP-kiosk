@@ -134,9 +134,9 @@ object Utils {
     fun spaceAccountNumber(card: String): String {
         try{
             if (card.length != 16) return card
-            val str1 = card.substring(0, 4) + "  "
-            val str2 = card.substring(4, 8) + "  "
-            val str3 = card.substring(8, 12) + "  "
+            val str1 = card.substring(0, 4) + "   "
+            val str2 = card.substring(4, 8) + "   "
+            val str3 = card.substring(8, 12) + "   "
             val str4 = card.substring(12, 16)
             return str1 + str2 + str3 + str4
         } catch (e: Exception) {

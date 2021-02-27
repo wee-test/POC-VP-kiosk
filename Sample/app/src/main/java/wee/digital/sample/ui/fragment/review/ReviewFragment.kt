@@ -20,6 +20,9 @@ class ReviewFragment : MainFragment() {
         (reviewPager.getChildAt(0) as RecyclerView).overScrollMode = View.OVER_SCROLL_NEVER
         addClickListener(reviewActionAccept)
         Voice.ins?.request(VoiceData.CONFIRM_INFO)
+        Shared.ocrConfirmData.observe {
+            reviewLabelName.text = it.fullName
+        }
     }
 
     override fun onViewClick(v: View?) {

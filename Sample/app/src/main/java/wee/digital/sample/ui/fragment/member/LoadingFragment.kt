@@ -23,6 +23,7 @@ import wee.digital.sample.ui.fragment.register.RegisterVM
 import wee.digital.sample.ui.main.MainActivity
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 class LoadingFragment : MainFragment() {
@@ -152,7 +153,8 @@ class LoadingFragment : MainFragment() {
 
     override fun onResume() {
         super.onResume()
-        disposableLoading = Observable.timer(2, TimeUnit.SECONDS)
+        val time = if (Shared.methodReceiveCard.value?.type == 1) 10 else 2
+        disposableLoading = Observable.timer(time.toLong(), TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     getDataRegister()

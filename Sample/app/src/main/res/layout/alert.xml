@@ -13,7 +13,7 @@
         style="@style/MatchWidth"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_rounded"
         android:padding="@dimen/_32sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +24,8 @@
             android:id="@+id/alertImageViewIcon"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
-            android:src="@drawable/ic_placeholder"
-            android:tint="@color/colorPrimary"
+            android:src="@drawable/ic_cancel"
+            android:tint="@color/colorIndianRed"
             app:layout_constraintBottom_toTopOf="@id/alertTextViewTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertImageViewIcon"
-            tools:text="@string/app_name" />
+            android:text="@string/app_name" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/alertTextViewMessage"
@@ -64,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertTextViewMessage"
-            tools:text="@tools:sample/lorem" />
+            android:text="Tiếp tục" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/alertViewCancel"
@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alertViewAccept"
-            tools:text="@tools:sample/lorem" />
+            android:text="Huỷ bỏ" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -57,7 +57,6 @@ class RecordVideo(context: Context) {
 
     fun createVideo(listener: MyVideoCallBack?) {
         if (arrayBitmap.isNullOrEmpty()) return
-        Toast.makeText(ct, "${arrayBitmap.size}", Toast.LENGTH_SHORT).show()
         handlerVideo?.post {
             for (i in 0 until arrayBitmap.size) {
                 frameBuilder?.createFrame(arrayBitmap[i])

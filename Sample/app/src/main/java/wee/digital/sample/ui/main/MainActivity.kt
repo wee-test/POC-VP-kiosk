@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.com.*
 import kotlinx.android.synthetic.main.main_card2_front.*
 import kotlinx.android.synthetic.main.main_card2_front.card2Layout
 import kotlinx.android.synthetic.main.z_namecard.*
@@ -223,6 +224,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
             lib = vplib.Vplib.newLib(1, "$externalCacheDir")
             mainVM.loginKiosk()
         }
+        printerSocket.open(editTextPrinterSocket.text?.toString())
         startWebSocket()
     }
 
@@ -240,14 +242,12 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
     private inner class MyWebSocketListener : WebSocketListener() {
         override fun onOpen(webSocket: okhttp3.WebSocket, response: Response) {
-            toast("opened")
             mainThread {
                 mainTextViewPrinter.text = "open"
             }
         }
 
         override fun onClosed(webSocket: okhttp3.WebSocket, code: Int, reason: String) {
-            toast("closed")
             mainThread {
                 mainTextViewPrinter.text = "close"
             }

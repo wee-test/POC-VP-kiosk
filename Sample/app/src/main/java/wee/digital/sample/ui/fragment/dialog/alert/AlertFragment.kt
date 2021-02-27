@@ -3,7 +3,9 @@ package wee.digital.sample.ui.fragment.dialog.alert
 import android.widget.TextView
 import kotlinx.android.synthetic.main.alert.*
 import wee.digital.library.extension.*
+import wee.digital.sample.MainDirections
 import wee.digital.sample.R
+import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainDialog
 
 class AlertFragment : MainDialog() {
@@ -20,7 +22,17 @@ class AlertFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
-        mainVM.alertLiveData.observe(this::onBindArg)
+        /*mainVM.alertLiveData.observe(this::onBindArg)*/
+        Shared.messageFail.observe {
+            alertTextViewTitle.text = it.title
+            alertTextViewMessage.text = it.message
+        }
+        alertViewAccept.addViewClickListener {
+            navigate(MainDirections.actionGlobalCardFragment())
+        }
+        alertViewCancel.addViewClickListener {
+            navigate(MainDirections.actionGlobalAdvFragment())
+        }
     }
 
     /**
