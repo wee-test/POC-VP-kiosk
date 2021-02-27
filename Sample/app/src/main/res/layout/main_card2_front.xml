@@ -16,7 +16,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontFacePay"
-        android:layout_width="400px"
+        android:layout_width="320px"
         android:layout_height="0dp"
         android:layout_marginStart="36px"
         android:src="@mipmap/vpbank"
@@ -27,12 +27,11 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/card2FrontNapas"
-        android:layout_width="260px"
+        android:layout_width="340px"
         app:layout_constraintDimensionRatio="h,180:45"
         android:layout_height="0dp"
         android:layout_marginEnd="48px"
-        android:tint="@color/colorBlack"
-        android:src="@mipmap/napas"
+        android:src="@mipmap/img_napas"
         app:layout_constraintBottom_toBottomOf="@+id/card2FrontFacePay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/card2FrontFacePay" />
@@ -44,9 +43,9 @@
         android:gravity="center"
         android:letterSpacing="0.18"
         android:lineHeight="34px"
+        android:textColor="#393939"
         style="@style/TextView.Title"
         android:text="3435  4262  7310  2720"
-        android:textColor="@color/colorBlack"
         android:textSize="54px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +72,7 @@
         android:layout_marginBottom="54px"
         android:letterSpacing="0.18"
         android:textAllCaps="true"
-        android:textColor="@color/colorBlack"
+        android:textColor="#393939"
         android:textSize="40px"
         android:text="Nguyen Van A"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +96,7 @@
         android:letterSpacing="0.18"
         android:textAllCaps="true"
         android:text="02/30"
-        android:textColor="@color/colorBlack"
+        android:textColor="#393939"
         android:textSize="40px"
         app:layout_constraintBaseline_toBaselineOf="@+id/card2TextViewName"
         app:layout_constraintEnd_toEndOf="parent" />

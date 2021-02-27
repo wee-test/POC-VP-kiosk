@@ -56,7 +56,7 @@
             android:fontFamily="@font/inter600"
             android:text="AN NHAU"
             android:textColor="@color/colorWhite"
-            android:textSize="64px"
+            android:textSize="84px"
             app:layout_constraintEnd_toEndOf="@+id/appCompatImageView3"
             app:layout_constraintStart_toStartOf="@+id/appCompatImageView3"
             app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />

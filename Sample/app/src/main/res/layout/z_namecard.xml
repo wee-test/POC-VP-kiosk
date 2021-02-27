@@ -96,7 +96,6 @@
             style="@style/TextView.Card"
             android:text="1 BARREL CAN GET DRUNK"
             android:textColor="@color/colorWhite"
-            android:textSize="16px"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView7"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
@@ -106,7 +105,6 @@
             android:layout_marginTop="8px"
             android:text="FAVORITE TASTE"
             android:textColor="@color/colorWhite"
-            android:textSize="16px"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView7"
             app:layout_constraintTop_toBottomOf="@id/appCompatTextView9" />
 
@@ -115,7 +113,6 @@
             style="@style/TextView.Card"
             android:text="FUCKING BEER ALSO"
             android:textColor="@color/colorWhite"
-            android:textSize="16px"
             app:layout_constraintStart_toStartOf="@+id/appCompatTextView10"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />
 
