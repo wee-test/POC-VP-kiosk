@@ -48,9 +48,9 @@ object Configs {
         WeeOCR.CAMERA_SATURATION_STEP = -2
         WeeOCR.THRESH_CROP = 64.0
         WeeOCR.BLUR_MIN_VALUE = 80
-        WeeOCR.CAMERA_ZOOM = "20"
+        WeeOCR.CAMERA_ZOOM = "22"
         WeeOCR.DELAY_SCAN = 5
-        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 480.0
+        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 640.0
     }
 
 }

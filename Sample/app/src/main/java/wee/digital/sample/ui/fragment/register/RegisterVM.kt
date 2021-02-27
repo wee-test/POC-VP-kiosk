@@ -32,11 +32,11 @@ class RegisterVM : BaseViewModel(){
     val statusLivess = EventLiveData<ResponseVPFaceLiveness>()
 
     @SuppressLint("CheckResult")
-    fun verifyIdCard(cardImage: String, faceImage: ByteArray) {
+    fun verifyIdCard(cardImage: String, faceImage: String) {
         Single.fromCallable {
             val body = VerifyIdCardReq(
                     cardImage = cardImage,
-                    faceImage = Base64.encodeToString(faceImage, Base64.NO_WRAP)
+                    faceImage = faceImage
             )
             lib?.kioskService!!.faceVerifyToIDCard(Gson().toJson(body).toByteArray())
         }.observeOn(Schedulers.io())

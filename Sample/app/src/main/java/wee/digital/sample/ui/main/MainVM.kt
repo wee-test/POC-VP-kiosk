@@ -112,12 +112,11 @@ open class MainVM : ViewModel() {
     }
 
     private fun sendVideoRecord(videoId: String, sizeDataStr: String, data: ByteArray) {
-        val regUrl = "http://weezi.biz:7080/kiosk/videoCall/record"
+        val regUrl = "https://vpbank.wee.vn/api/kiosk/videoCall/record"
         try {
-
             Log.e("recordVideo", "Size: ${data.size}")
             val timeIn = System.currentTimeMillis()
-            regUrl.httpPost().timeout(30000).header(Pair("Content-Type", "application/json"),
+            regUrl.httpPost().timeout(30000).header(
                     Pair("videoCallId", videoId),
                     Pair("Ekycid", videoId),
                     Pair("seg",sizeDataStr)

@@ -141,7 +141,7 @@ class LoadingFragment : MainFragment() {
 
     private fun printCard(card: String) {
         val mainActivity = activity as? MainActivity ?: return
-        if (true || Shared.methodReceiveCard.value?.type == 1) {
+        if (Shared.methodReceiveCard.value?.type == 1) {
             mainActivity.printCard(
                     Utils.spaceAccountNumber(card),
                     Shared.ocrConfirmData.value?.fullName ?: "Nguyen Van A",

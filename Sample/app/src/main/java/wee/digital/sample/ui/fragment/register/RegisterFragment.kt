@@ -69,6 +69,9 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerVM.matchingFrame(Shared.frameCardData.value?.cardFront ?: "", faceBitmap.toBytes())
         }
         registerVM.statusMatching.observe {
+            sendSocket(true)
+            navigate(MainDirections.actionGlobalCardFragment())
+            return@observe
             if(it == null || it.responseCode?.code ?: -1 != 0L){
                 val messFail = MessageData(
                         "Đăng ký không thành công",
@@ -94,7 +97,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
                 return@observe
             }
             registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront
-                    ?: "", Shared.faceCapture.value.toBytes())
+                    ?: "", Shared.faceCapture.value.toBytes().toStringBase64())
         }
     }
 
@@ -129,7 +132,10 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerStatusFace.text = "Chờ chút nhé..."
             registerFrameBg.show()
             registerFrame.setImageBitmap(image)
-            registerVM.createVideo(requireContext(), image.toBytes().toStringBase64())
+            /*registerVM.createVideo(requireContext(), image.toBytes().toStringBase64())*/
+            registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront
+                    ?: "", image.toBytes().toStringBase64())
+            /*registerVM.matchingFrame(Shared.frameCardData.value?.cardFront ?: "", image.toBytes())*/
         }
     }
 

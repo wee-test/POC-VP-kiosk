@@ -82,7 +82,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrVM.scanOCRBackVP(
                     type = Configs.ID_CARD_BACK,
                     sessionId = Utils.getUUIDRandom(),
-                    image = frameBack!!.resize(640, Bitmap.CompressFormat.JPEG).toBytes(),
+                    image = frameBack!!.resize(900, Bitmap.CompressFormat.JPEG).toBytes(),
             )
         }
         ocrVM.statusExtractBackVP.observe {
@@ -137,7 +137,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 ocrVM.scanOCRFrontVP(
                         type = Configs.ID_CARD_FRONT,
                         sessionId = Utils.getUUIDRandom(),
-                        image = frameFont!!.resize(800, Bitmap.CompressFormat.JPEG).toBytes()
+                        image = frameFont!!.resize(900, Bitmap.CompressFormat.JPEG).toBytes()
                 )
             }
         }

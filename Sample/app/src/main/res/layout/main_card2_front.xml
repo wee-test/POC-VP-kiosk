@@ -19,7 +19,7 @@
         android:layout_width="400px"
         android:layout_height="0dp"
         android:layout_marginStart="36px"
-        android:src="@drawable/ic_facepay"
+        android:src="@mipmap/vpbank"
         android:layout_marginTop="36px"
         app:layout_constraintDimensionRatio="h,114:24"
         app:layout_constraintStart_toStartOf="parent"

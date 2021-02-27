@@ -229,6 +229,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
     override fun onPause() {
         super.onPause()
         disposable?.dispose()
+        printerSocket.close()
     }
 
     override fun onDestroy() {
