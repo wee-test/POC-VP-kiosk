@@ -13,6 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import vplib.*
 import wee.digital.camera.toStringBase64
 import wee.digital.camera.utils.RecordVideo
+import wee.digital.library.extension.toast
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.*
 import wee.digital.sample.shared.Configs
@@ -63,10 +64,12 @@ class RegisterVM : BaseViewModel(){
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("matchingFrame","$it")
+                    toast("${it.responseCode.messageServer}")
+                    Log.d("matchingFrame", "$it")
                     statusMatching.postValue(it)
                 }, {
-                    Log.d("matchingFrame","${it.message}")
+                    toast("${it}")
+                    Log.d("matchingFrame", "${it.message}")
                     statusMatching.postValue(null)
                 })
     }
@@ -113,10 +116,12 @@ class RegisterVM : BaseViewModel(){
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("livenessFace","$it")
+                    toast("${it.responseCode.messageServer}")
+                    Log.d("livenessFace", "$it")
                     statusLivess.postValue(it)
                 }, {
-                    Log.d("livenessFace","${it.message}")
+                    toast("${it.message}")
+                    Log.d("livenessFace", "${it.message}")
                     statusLivess.postValue(null)
                 })
     }

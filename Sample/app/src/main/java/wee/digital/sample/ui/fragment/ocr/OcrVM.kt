@@ -7,6 +7,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import vplib.ResponseVPFaceSearch
 import wee.digital.camera.toStringBase64
+import wee.digital.library.extension.toast
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.CardRespVP
 import wee.digital.sample.repository.model.CheckingResultResp
@@ -39,6 +40,7 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    toast("${it.responseCode.messageServer}")
                     Log.d("scanOCRFront", "$it")
                     if (it.responseCode.code != 0L) {
                         statusExtractFrontVP.postValue(CardRespVP(code = -1, mess = it.responseCode.messageServer))
@@ -106,6 +108,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractFrontVP.postValue(data)
                     }
                 }, {
+                    toast("${it.message}")
                     Log.d("scanOCRFront", "${it.message}")
                     statusExtractFrontVP.postValue(CardRespVP(code = -1, mess = it.message.toString()))
                 })
@@ -125,6 +128,7 @@ class OcrVM : BaseViewModel() {
         }.observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    toast("${it.responseCode.messageServer}")
                     Log.d("scanOCRBack", "$it")
                     if (it.responseCode.code != 0L) {
                         statusExtractBackVP.postValue(CardRespVP(code = -1, mess = it.responseCode.messageServer))
@@ -138,6 +142,7 @@ class OcrVM : BaseViewModel() {
                         statusExtractBackVP.postValue(data)
                     }
                 }, {
+                    toast("${it.message}")
                     Log.d("scanOCRBack", "$it")
                     statusExtractBackVP.postValue(CardRespVP(code = -1, mess = it.message.toString()))
                 })
