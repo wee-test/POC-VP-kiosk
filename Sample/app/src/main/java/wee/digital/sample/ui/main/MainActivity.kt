@@ -140,6 +140,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
     }
 
     private fun callVideo(tellersId: String) {
+        weeCaller?.callHangUp()
         weeCaller?.initUserData(Configs.KIOSK_ID) { userData, mess ->
             weeCaller?.sendCall(tellersId, mainVideoCallView, remoteVideoCallView, false, object : CallListener {
                 override fun onCallLog(callLog: CallLog) {
