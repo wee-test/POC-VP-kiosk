@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
+import com.github.kittinunf.fuel.core.DataPart
+import com.github.kittinunf.fuel.core.FileDataPart
 import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpUpload
 import com.github.kittinunf.result.Result
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +33,7 @@ import wee.digital.sample.ui.fragment.dialog.alert.Alert
 import wee.digital.sample.ui.fragment.dialog.date.DateArg
 import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
 import wee.digital.sample.ui.fragment.dialog.web.WebArg
+import java.io.File
 import java.lang.Exception
 
 open class MainVM : ViewModel() {
@@ -84,34 +88,46 @@ open class MainVM : ViewModel() {
     @SuppressLint("CheckResult")
     fun recordVideo(data: RecordData) {
         Single.fromCallable { data.repair() }
-            .observeOn(Schedulers.io())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                if (it) {
-                    /*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
-                    val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
-                    val dataB = Gson().toJson(body).toByteArray()
-                    Log.e("recordVideo","Size Data: ${dataB.size}")
-                    val a = lib?.kioskService!!.videoCallRecord(dataB)
-                    Log.e("recordVideo", "$a")*/
-                    sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID
-                            ?: "", data.sizeDataStr, data.repairedData!!)
-                }
-            }, {
-                Log.e("recordVideo", "${it.message}")
-            })
+                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    if (it) {
+                        /*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
+                        val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
+                        val dataB = Gson().toJson(body).toByteArray()
+                        Log.e("recordVideo","Size Data: ${dataB.size}")
+                        val a = lib?.kioskService!!.videoCallRecord(dataB)
+                        Log.e("recordVideo", "$a")*/
+                        sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID
+                                ?: "", data.sizeDataStr, data)
+                    }
+                }, {
+                    Log.e("recordVideo", "${it.message}")
+                })
     }
 
-    private fun sendVideoRecord(videoId: String, sizeDataStr: String, data: ByteArray) {
-        val regUrl = "https://vpbank.wee.vn/api/kiosk/videoCall/record"
+    private fun sendVideoRecord(videoId: String, sizeDataStr: String, data: RecordData) {
+        val regUrl = "https://vpbank.wee.vn/api/kiosk/videoCall/record".httpUpload()
         try {
-            Log.e("recordVideo", "Size: ${data.size}")
+            //Log.e("recordVideo", "Size: ${data.size}")
             val timeIn = System.currentTimeMillis()
-            regUrl.httpPost().timeout(90000).header(
+            val dataLocalVideoPart = FileDataPart.from(data.localVideo,
+                    data.localVideo!!.path.substringAfterLast("/"), "localVideo")
+            val dataRemoteVideoPart = FileDataPart.from(data.remoteVideo,
+                    data.remoteVideo!!.path.substringAfterLast("/"), "remoteVideo")
+            val dataLocalAudioPart = FileDataPart.from(data.localAudio,
+                    data.localAudio!!.path.substringAfterLast("/"), "localAudio")
+            val dataRemoteAudioPart = FileDataPart.from(data.remoteAudio,
+                    data.remoteAudio!!.path.substringAfterLast("/"), "remoteAudio")
+            regUrl.add(dataLocalVideoPart)
+            regUrl.add(dataRemoteVideoPart)
+            regUrl.add(dataLocalAudioPart)
+            regUrl.add(dataRemoteAudioPart)
+            regUrl.timeout(90000).header(
                     Pair("videoCallId", videoId),
                     Pair("Ekycid", videoId),
                     Pair("seg", sizeDataStr)
-            ).body(data).responseString { _, _, result ->
+            ).responseString { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
                         Log.e("recordVideo", "Send Fail [${System.currentTimeMillis() - timeIn}]: ${result.error}")
