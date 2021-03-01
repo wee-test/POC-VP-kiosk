@@ -13,23 +13,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import io.reactivex.Single
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import vplib.ResponseLogin
-import vplib.ResponseTellerContact
-import vplib.ResponseVideoCallCreateSession
 import vplib.ResponseVideoCallUpdateInfo
 import wee.dev.weewebrtc.repository.model.RecordData
-import wee.digital.camera.toStringBase64
-import wee.digital.library.extension.put
 import wee.digital.library.extension.toast
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.LoginKioskReq
-import wee.digital.sample.repository.model.RecordSendData
 import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.network.VPDatabase
 import wee.digital.sample.shared.Configs
@@ -119,7 +110,7 @@ open class MainVM : ViewModel() {
             regUrl.httpPost().timeout(90000).header(
                     Pair("videoCallId", videoId),
                     Pair("Ekycid", videoId),
-                    Pair("seg",sizeDataStr)
+                    Pair("seg", sizeDataStr)
             ).body(data).responseString { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
