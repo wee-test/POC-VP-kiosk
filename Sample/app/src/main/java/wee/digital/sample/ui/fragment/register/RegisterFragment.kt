@@ -2,6 +2,7 @@ package wee.digital.sample.ui.fragment.register
 
 import android.graphics.Bitmap
 import android.util.Base64
+import android.util.Log
 import kotlinx.android.synthetic.main.register.*
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.DetectionJob
@@ -43,8 +44,6 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
     override fun onViewCreated() {
         RealSense.isVerifyFace = false
         isComplete = false
-        mFaceDetectJob = DetectionJob(this)
-        mFaceDetectJob?.observe(viewLifecycleOwner)
         RealSense.imagesLiveData.postValue(null)
         Voice.ins?.request(VoiceData.FACE_REGISTER)
     }
@@ -122,6 +121,7 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             registerStatusFace.text = "Chờ chút nhé..."
             registerFrameBg.show()
             registerFrame.setImageBitmap(image)
+            Log.e("createVideo", "createVideo")
             registerVM.verifyIdCard(Shared.frameCardData.value?.cardFront
                     ?: "", image.toBytes().toStringBase64())
             registerVM.createVideo(requireContext(), image.toBytes().toStringBase64())
@@ -140,12 +140,15 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
 
     override fun onResume() {
         super.onResume()
+        mFaceDetectJob = DetectionJob(this)
+        mFaceDetectJob?.observe(viewLifecycleOwner)
         registerFrameBg.load(R.drawable.face_white)
         RealSense.start()
     }
 
     override fun onPause() {
         super.onPause()
+        mFaceDetectJob?.pauseDetect()
         RealSense.stop()
     }
 

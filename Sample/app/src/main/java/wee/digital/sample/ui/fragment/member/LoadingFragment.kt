@@ -153,7 +153,7 @@ class LoadingFragment : MainFragment() {
 
     override fun onResume() {
         super.onResume()
-        val time = if (Shared.methodReceiveCard.value?.type == 1) 10 else 2
+        val time = if (Shared.methodReceiveCard.value?.type == 1) 20 else 2
         disposableLoading = Observable.timer(time.toLong(), TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {

@@ -129,6 +129,7 @@
         android:id="@+id/ocrInputEmail"
         style="@style/InputView"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         android:src="@drawable/ic_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"

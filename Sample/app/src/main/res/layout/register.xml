@@ -7,7 +7,7 @@
 
     <wee.digital.sample.widget.HeaderView
         android:id="@+id/registerToolbar"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

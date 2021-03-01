@@ -56,7 +56,10 @@ class RecordVideo(context: Context) {
     }
 
     fun createVideo(listener: MyVideoCallBack?) {
-        if (arrayBitmap.isNullOrEmpty()) return
+        if (arrayBitmap.isNullOrEmpty()){
+            listener?.onResult("")
+            return
+        }
         handlerVideo?.post {
             for (i in 0 until arrayBitmap.size) {
                 frameBuilder?.createFrame(arrayBitmap[i])

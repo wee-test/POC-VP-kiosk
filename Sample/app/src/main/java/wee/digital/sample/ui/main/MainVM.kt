@@ -116,7 +116,7 @@ open class MainVM : ViewModel() {
         try {
             Log.e("recordVideo", "Size: ${data.size}")
             val timeIn = System.currentTimeMillis()
-            regUrl.httpPost().timeout(30000).header(
+            regUrl.httpPost().timeout(90000).header(
                     Pair("videoCallId", videoId),
                     Pair("Ekycid", videoId),
                     Pair("seg",sizeDataStr)

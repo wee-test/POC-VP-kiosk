@@ -16,6 +16,7 @@ import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
 import java.io.File
+import java.lang.Exception
 
 class RegisterVM : BaseViewModel(){
 
@@ -86,11 +87,16 @@ class RegisterVM : BaseViewModel(){
     fun createVideo(context : Context, face : String){
         val recordVideo = RecordVideo(context)
         recordVideo.startVideo()
-        recordVideo.createVideo(object : RecordVideo.MyVideoCallBack{
+        recordVideo.createVideo(object : RecordVideo.MyVideoCallBack {
             override fun onResult(path: String) {
-                Log.e("createVideo", "result : $path")
-                val video = File(path).readBytes()
-                livenessFace(face, video.toStringBase64())
+                try {
+                    Log.e("createVideo", "result : $path")
+                    val video = File(path).readBytes()
+                    livenessFace(face, video.toStringBase64())
+                } catch (e: Exception) {
+                    Log.e("createVideo", "result : ${e.printStackTrace()}")
+                    livenessFace("", "")
+                }
             }
         })
     }
