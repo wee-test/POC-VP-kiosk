@@ -112,22 +112,24 @@ open class MainVM : ViewModel() {
         try {
             //Log.e("recordVideo", "Size: ${data.size}")
             val timeIn = System.currentTimeMillis()
-            val dataLocalVideoPart = FileDataPart.from(data.localVideo,
+            val dataLocalVideoPart = FileDataPart.from(data.localVideo!!.parentFile,
                     data.localVideo!!.path.substringAfterLast("/"), "localVideo")
-            val dataRemoteVideoPart = FileDataPart.from(data.remoteVideo,
+            val dataRemoteVideoPart = FileDataPart.from(data.remoteVideo!!.parentFile,
                     data.remoteVideo!!.path.substringAfterLast("/"), "remoteVideo")
-            val dataLocalAudioPart = FileDataPart.from(data.localAudio,
+            val dataLocalAudioPart = FileDataPart.from(data.localAudio!!.parentFile,
                     data.localAudio!!.path.substringAfterLast("/"), "localAudio")
-            val dataRemoteAudioPart = FileDataPart.from(data.remoteAudio,
+            val dataRemoteAudioPart = FileDataPart.from(data.remoteAudio!!.parentFile,
                     data.remoteAudio!!.path.substringAfterLast("/"), "remoteAudio")
             regUrl.add(dataLocalVideoPart)
             regUrl.add(dataRemoteVideoPart)
             regUrl.add(dataLocalAudioPart)
             regUrl.add(dataRemoteAudioPart)
-            regUrl.timeout(90000).header(
+            regUrl.header(
                     Pair("videoCallId", videoId),
-                    Pair("Ekycid", videoId)
-            ).responseString { _, _, result ->
+                    Pair("Ekycid", videoId),
+                    "Content-Type" to "multipart/form-data"
+            )
+                    .responseString { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
                         Log.e("recordVideo", "Send Fail [${System.currentTimeMillis() - timeIn}]: ${result.error}")
