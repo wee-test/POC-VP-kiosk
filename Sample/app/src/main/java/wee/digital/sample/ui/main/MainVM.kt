@@ -87,26 +87,27 @@ open class MainVM : ViewModel() {
 
     @SuppressLint("CheckResult")
     fun recordVideo(data: RecordData) {
-        Single.fromCallable { data.repair() }
+        /*Single.fromCallable { data.repair() }
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     if (it) {
-                        /*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
+                        *//*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
                         val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
                         val dataB = Gson().toJson(body).toByteArray()
                         Log.e("recordVideo","Size Data: ${dataB.size}")
                         val a = lib?.kioskService!!.videoCallRecord(dataB)
-                        Log.e("recordVideo", "$a")*/
+                        Log.e("recordVideo", "$a")*//*
                         sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID
                                 ?: "", data.sizeDataStr, data)
                     }
                 }, {
                     Log.e("recordVideo", "${it.message}")
-                })
+                })*/
+        sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID ?: "", data)
     }
 
-    private fun sendVideoRecord(videoId: String, sizeDataStr: String, data: RecordData) {
+    private fun sendVideoRecord(videoId: String/*, sizeDataStr: String*/, data: RecordData) {
         val regUrl = "https://vpbank.wee.vn/api/kiosk/videoCall/record".httpUpload()
         try {
             //Log.e("recordVideo", "Size: ${data.size}")
@@ -125,8 +126,7 @@ open class MainVM : ViewModel() {
             regUrl.add(dataRemoteAudioPart)
             regUrl.timeout(90000).header(
                     Pair("videoCallId", videoId),
-                    Pair("Ekycid", videoId),
-                    Pair("seg", sizeDataStr)
+                    Pair("Ekycid", videoId)
             ).responseString { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
