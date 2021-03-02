@@ -3,18 +3,16 @@ package wee.digital.sample.shared
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Environment
 import android.util.DisplayMetrics
 import android.util.Log
 import wee.digital.sample.ui.fragment.dialog.selectable.Selectable
 import java.io.File
-import java.lang.Exception
 import java.util.*
 import kotlin.math.roundToInt
 
 object Utils {
 
-    fun checkSizeBitmap(bm : Bitmap?): Boolean{
+    fun checkSizeBitmap(bm: Bitmap?): Boolean{
         bm ?: return false
         val w = bm.width
         val h = bm.height
@@ -173,5 +171,18 @@ object Utils {
         }
     }
 
+    fun deleteDirectory(path: File): Boolean {
+        if (path.exists()) {
+            val files = path.listFiles() ?: return true
+            for (i in files.indices) {
+                if (files[i].isDirectory) {
+                    deleteDirectory(files[i])
+                } else {
+                    files[i].delete()
+                }
+            }
+        }
+        return path.delete()
+    }
 
 }

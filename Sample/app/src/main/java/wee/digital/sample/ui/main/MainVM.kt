@@ -1,15 +1,11 @@
 package wee.digital.sample.ui.main
 
 import android.annotation.SuppressLint
+import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
-import com.github.kittinunf.fuel.core.DataPart
-import com.github.kittinunf.fuel.core.FileDataPart
-import com.github.kittinunf.fuel.httpPost
-import com.github.kittinunf.fuel.httpUpload
-import com.github.kittinunf.result.Result
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -18,23 +14,30 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
 import vplib.ResponseLogin
 import vplib.ResponseVideoCallUpdateInfo
+import wee.dev.weewebrtc.WeeCaller
 import wee.dev.weewebrtc.repository.model.RecordData
-import wee.digital.library.extension.toast
+import wee.digital.library.extension.toArray
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.LoginKioskReq
 import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.network.VPDatabase
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
+import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.EventLiveData
 import wee.digital.sample.ui.fragment.dialog.alert.Alert
 import wee.digital.sample.ui.fragment.dialog.date.DateArg
 import wee.digital.sample.ui.fragment.dialog.selectable.SelectableAdapter
 import wee.digital.sample.ui.fragment.dialog.web.WebArg
 import java.io.File
-import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
+
 
 open class MainVM : ViewModel() {
 
@@ -87,62 +90,45 @@ open class MainVM : ViewModel() {
 
     @SuppressLint("CheckResult")
     fun recordVideo(data: RecordData) {
-        /*Single.fromCallable { data.repair() }
+        Single.fromCallable {
+            sendVideoPart(Shared.sessionVideo.value?.result?.videoCallID ?: "", data)
+        }
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    if (it) {
-                        *//*val videoCallId = Shared.sessionVideo.value?.result?.videoCallID ?: ""
-                        val body = RecordSendData(videoCallId = videoCallId, Ekycid = data.sizeDataStr, body = data.repairedData)
-                        val dataB = Gson().toJson(body).toByteArray()
-                        Log.e("recordVideo","Size Data: ${dataB.size}")
-                        val a = lib?.kioskService!!.videoCallRecord(dataB)
-                        Log.e("recordVideo", "$a")*//*
-                        sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID
-                                ?: "", data.sizeDataStr, data)
-                    }
+                    Log.e("recordVideo", "${it}")
                 }, {
                     Log.e("recordVideo", "${it.message}")
-                })*/
-        sendVideoRecord(Shared.sessionVideo.value?.result?.videoCallID ?: "", data)
+                })
+
     }
 
-    private fun sendVideoRecord(videoId: String/*, sizeDataStr: String*/, data: RecordData) {
-        val regUrl = "https://vpbank.wee.vn/api/kiosk/videoCall/record".httpUpload()
-        try {
-            //Log.e("recordVideo", "Size: ${data.size}")
-            val timeIn = System.currentTimeMillis()
-            val dataLocalVideoPart = FileDataPart.from(data.localVideo!!.parentFile,
-                    data.localVideo!!.path.substringAfterLast("/"), "localVideo")
-            val dataRemoteVideoPart = FileDataPart.from(data.remoteVideo!!.parentFile,
-                    data.remoteVideo!!.path.substringAfterLast("/"), "remoteVideo")
-            val dataLocalAudioPart = FileDataPart.from(data.localAudio!!.parentFile,
-                    data.localAudio!!.path.substringAfterLast("/"), "localAudio")
-            val dataRemoteAudioPart = FileDataPart.from(data.remoteAudio!!.parentFile,
-                    data.remoteAudio!!.path.substringAfterLast("/"), "remoteAudio")
-            regUrl.add(dataLocalVideoPart)
-            regUrl.add(dataRemoteVideoPart)
-            regUrl.add(dataLocalAudioPart)
-            regUrl.add(dataRemoteAudioPart)
-            regUrl.header(
-                    Pair("videoCallId", videoId),
-                    Pair("Ekycid", videoId),
-                    "Content-Type" to "multipart/form-data"
-            )
-                    .responseString { _, _, result ->
-                when (result) {
-                    is Result.Failure -> {
-                        Log.e("recordVideo", "Send Fail [${System.currentTimeMillis() - timeIn}]: ${result.error}")
-                    }
-                    is Result.Success -> {
-                        Log.e("recordVideo", "Send Success [${System.currentTimeMillis() - timeIn}]: ${result.value}")
-                    }
-                }
-            }
-        } catch (t: Throwable) {
-            t.printStackTrace()
-            Log.e("recordVideo", "Failed: ${t.message}")
-        }
+    private fun sendVideoPart(videoId: String/*, sizeDataStr: String*/, data: RecordData) {
+        val client = OkHttpClient().newBuilder().writeTimeout(280, TimeUnit.SECONDS).readTimeout(280, TimeUnit.SECONDS)
+                .build()
+        val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("localVideo", data.localVideo!!.path.substringAfterLast("/"),
+                        data.localVideo!!.asRequestBody("application/octet-stream".toMediaTypeOrNull()))
+
+                .addFormDataPart("remoteVideo", data.remoteVideo!!.path.substringAfterLast("/"),
+                        data.remoteVideo!!.asRequestBody("application/octet-stream".toMediaTypeOrNull()))
+
+                .addFormDataPart("localAudio", data.localAudio!!.path.substringAfterLast("/"),
+                        data.localAudio!!.asRequestBody("application/octet-stream".toMediaTypeOrNull()))
+
+                .addFormDataPart("remoteAudio", data.remoteAudio!!.path.substringAfterLast("/"),
+                        data.remoteAudio!!.asRequestBody("application/octet-stream".toMediaTypeOrNull()))
+
+                .build()
+        val request: Request = Request.Builder()
+                .url("https://vpbank.wee.vn/api/kiosk/videoCall/record")
+                .addHeader("videoCallId", videoId)
+                .addHeader("Ekycid", videoId)
+                .method("POST", body)
+                .build()
+        val response: Response = client.newCall(request).execute()
+        Log.e("recordVideo", "${response}")
+        Utils.deleteDirectory(File("${Environment.getExternalStoragePublicDirectory("WeeVideoCall")}"))
     }
 
     fun listenerUpdateKiosk() {

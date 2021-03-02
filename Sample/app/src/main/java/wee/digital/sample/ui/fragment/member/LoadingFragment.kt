@@ -6,6 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.view_header.*
 import vplib.RegisterResult
+import vplib.ResponseCode
 import vplib.ResponseCustomerRegister
 import wee.digital.camera.toBytes
 import wee.digital.camera.toStringBase64
@@ -111,6 +112,7 @@ class LoadingFragment : MainFragment() {
                     resultRegister.accountNumber = accountNumber
                     resultRegister.customerID = "000001"
                     respRegister.result = resultRegister
+                    respRegister.responseCode = ResponseCode().also { it.code = -1L }
                     Shared.customerInfoRegisterSuccess.postValue(respRegister)
                     printCard("9704${accountNumber}")
                     sendSocket(true)

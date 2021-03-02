@@ -29,6 +29,7 @@ import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.MessageData
+import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.network.VPDatabase
 import wee.digital.sample.repository.socket.MySocket
 import wee.digital.sample.repository.socket.PrinterSocket
@@ -44,7 +45,7 @@ import java.net.InetSocketAddress
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.nio.ByteBuffer
-import java.util.*
+import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
@@ -173,6 +174,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
                 override fun onRecordedFile(recordData: RecordData) {
                     Log.e("onRecordedFile", "recordVideo")
+                    updateInfo()
                     mainVM.recordVideo(recordData)
                 }
 
@@ -186,6 +188,39 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
 
             })
         }
+    }
+
+    private fun updateInfo(){
+        if (Shared.dataCallLog == null) return
+        weeCaller?.callHangUp()
+        val tellerData = Shared.socketStatusConnect.value?.listTellersIDString
+        val tellersId = tellerData?.toArray()?.get(0)?.asString ?: ""
+        val dataCall = Shared.dataCallLog
+        val timeWaiting = ((dataCall?.ConnectedTimeIn!! - dataCall.TimeCallIn) / 1000).toInt()
+        val timeReceived = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(dataCall.TimeCallIn)
+        val processTime = ((dataCall.ConnectedTimeOut - dataCall.ConnectedTimeIn) / 1000).toInt()
+        val status = when (dataCall.StatusCall) {
+            WeeCaller.CALL_STATUS_CONNECTED -> 1
+            WeeCaller.CALL_STATUS_REJECT -> 2
+            WeeCaller.CALL_STATUS_MISSING -> 3
+            else -> 3
+        }
+        val customerId = Shared.customerInfoRegisterSuccess.value?.result?.customerID ?: ""
+        val code = Shared.customerInfoRegisterSuccess.value?.responseCode?.code ?: -1
+        val body = UpdateInfoReq(
+                kioskId = Configs.KIOSK_ID,
+                videoId = Shared.sessionVideo.value?.result?.videoCallID ?: "",
+                customerId = if(code != 0L) "" else customerId,
+                transType = 1,
+                counterId = tellersId,
+                videoCallStatus = status,
+                timeReceived = timeReceived,
+                waitingTime = timeWaiting,
+                processingTime = if(processTime < 0) 1 else processTime,
+                createAt = System.currentTimeMillis().toString()
+        )
+        Log.e("updateInfo", "$body")
+        mainVM.updateInfo(body)
     }
 
     private fun onShowDialog(directions: NavDirections?) {
