@@ -12,6 +12,7 @@ import wee.digital.camera.utils.RecordVideo
 import wee.digital.sample.app.lib
 import wee.digital.sample.repository.model.*
 import wee.digital.sample.shared.Configs
+import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
 import wee.digital.sample.ui.base.BaseViewModel
 import wee.digital.sample.ui.base.EventLiveData
@@ -41,6 +42,8 @@ class RegisterVM : BaseViewModel(){
                 .subscribe({
                     Log.d("verifyIdCard", "$it")
                     statusVerifyCard.postValue(it)
+                    if (it == null || it.responseCode?.code ?: -1 != 0L || !it.isMatched) return@subscribe
+                    Shared.faceId.postValue(it.validateResult.faceID)
                 }, {
                     Log.d("verifyIdCard", "${it.message}")
                     statusVerifyCard.postValue(null)
