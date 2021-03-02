@@ -53,13 +53,6 @@ class RegisterFragment : MainFragment(), FaceCaptureJob.Listener {
             if (isComplete) return@observe
             registerFrame?.setImageBitmap(it?.first)
         }
-        registerVM.statusVerifyCard.observe {
-            if(it == null || it?.responseCode?.code ?: -1 != 0L || !it.isMatched){
-                return@observe
-            }
-            Shared.faceId.postValue(it.validateResult.faceID)
-        }
-
         registerVM.statusMatching.observe {
             if(it == null || it.responseCode?.code ?: -1 != 0L){
                 val messFail = MessageData(
