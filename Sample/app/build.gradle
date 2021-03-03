@@ -58,13 +58,13 @@ android {
 
     productFlavors {
         dev {
-            resValue "string", "app_name", "Sample Dev"
+            resValue "string", "app_name", "VPBank"
         }
         qc {
-            resValue "string", "app_name", "Sample QC"
+            resValue "string", "app_name", "VPBank QC"
         }
         prod {
-            resValue "string", "app_name", "Sample"
+            resValue "string", "app_name", "VPBank"
         }
     }
 

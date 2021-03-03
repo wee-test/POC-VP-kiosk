@@ -197,6 +197,7 @@ class OcrConfirmFragment : MainFragment(), TextInputView.TextInputListener {
                 issuedPlace = issuePlace,
                 expiredDate = exDate,
                 phone = ocrInputPhone.text.toString(),
+                email = ocrInputEmail.text.toString(),
                 nationality = Shared.ocrCardInfoVP.value?.nationality ?: "Việt Nam",
         )
         Shared.ocrConfirmData.postValue(data)

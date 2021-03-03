@@ -186,6 +186,7 @@ class PassportConfirmFragment : MainFragment(), TextInputView.TextInputListener 
                 issuedPlace = "",
                 expiredDate = exDate,
                 phone = passportInputPhone.text.toString(),
+                email = passportInputEmail.text.toString(),
                 nationality = passportInputInputNationality.text.toString(),
         )
         Shared.ocrConfirmData.postValue(data)

@@ -70,6 +70,7 @@ class LoadingFragment : MainFragment() {
                 customerType = 1,
                 identityCardInfo = cardInfo,
                 phoneNumber = card.phone,
+                email = card.email,
                 createAt = "${System.currentTimeMillis()}"
         )
 

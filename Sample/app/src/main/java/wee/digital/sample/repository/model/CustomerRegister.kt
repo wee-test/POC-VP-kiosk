@@ -37,6 +37,9 @@ data class CustomerInfoRegister(
         @SerializedName("phoneNumber")
         var phoneNumber: String = "",
 
+        @SerializedName("email")
+        var email: String = "",
+
         @SerializedName("createAt")
         var createAt: String = ""
 )
@@ -80,6 +83,9 @@ data class IdentifyCardInfo(
 
         @SerializedName("phoneNumber")
         var phone: String = "",
+
+        @SerializedName("email")
+        var email: String = "",
 
         @SerializedName("passportNumber")
         var passportNumber: String = "",
