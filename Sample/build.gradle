@@ -9,6 +9,7 @@ buildscript {
         maven { url "https://jitpack.io" }
         jcenter()
         google()
+        maven { url "https://egiintel.jfrog.io/artifactory/librealsense"}
     }
 
     dependencies {
@@ -26,8 +27,10 @@ allprojects {
         maven { url "https://jitpack.io" }
         jcenter()
         google()
+        maven { url 'https://dl.bintray.com/netguru/maven/' }
         maven { url "https://dl.bintray.com/intel-realsense/librealsense" }
-        maven {url 'https://developer.huawei.com/repo/'}
+        maven { url 'https://developer.huawei.com/repo/' }
+        maven { url "https://egiintel.jfrog.io/artifactory/librealsense" }
     }
 }
 
