@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.google.mlkit:image-labeling-automl:16.2.1'
 
     // INTER REAL SENSE LIB
-    implementation "com.intel.realsense:librealsense:2.41.0@aar"
+    implementation "com.intel.realsense:librealsense:2.42.0@aar"
     implementation 'org.tensorflow:tensorflow-android:1.13.1'
 
     //video from bitmap
