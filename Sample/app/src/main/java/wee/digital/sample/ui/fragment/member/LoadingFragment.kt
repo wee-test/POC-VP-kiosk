@@ -4,6 +4,7 @@ import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.loading.*
 import kotlinx.android.synthetic.main.view_header.*
 import vplib.RegisterResult
 import vplib.ResponseCode
@@ -37,6 +38,9 @@ class LoadingFragment : MainFragment() {
 
     override fun onViewCreated() {
         headerAction.gone()
+        Shared.cardSelected.observe {
+            loadingCard.setImageResource(it.image)
+        }
     }
 
     private fun getDataRegister() {

@@ -53,5 +53,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/actMainLabelVersion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="1.0.3"
+        style="@style/TextView.Small"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,8 +12,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.com.*
 import kotlinx.android.synthetic.main.main_card2_front.*
 import kotlinx.android.synthetic.main.main_card2_front.card2Layout
-import kotlinx.android.synthetic.main.z_namecard.*
-import kotlinx.android.synthetic.main.z_namecard2.*
 import okhttp3.Response
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
@@ -80,6 +78,7 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
         weeCaller?.init()
         printerSocket.addListener(MyWebSocketListener())
         mainVM.listenerUpdateKiosk()
+        actMainLabelVersion.text = "${wee.digital.sample.BuildConfig.VERSION_NAME}"
     }
 
     override fun navController(): NavController {

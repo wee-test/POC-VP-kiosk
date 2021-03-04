@@ -188,8 +188,6 @@ dependencies {
 
     //WebRTC
     implementation 'com.kailashdabhi:om-recorder:1.1.5'
-    implementation 'com.arthenica:mobile-ffmpeg-full:4.4.LTS'
-    implementation 'nl.bravobit:android-ffmpeg:1.1.7'
     implementation 'androidx.work:work-gcm:2.5.0'
     implementation 'org.conscrypt:conscrypt-android:2.4.0'
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
