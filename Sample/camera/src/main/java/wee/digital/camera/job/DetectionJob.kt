@@ -112,6 +112,15 @@ class DetectionJob(private val listener: FaceCaptureJob.Listener) :
 
     }
 
+    override fun mutilFace() {
+        captureTimer.onCancel()
+        uiThread {
+            pauseRecordVideo()
+            listener.onCaptureTick(null)
+            listener.onRecordMessage("Có nhiều hơn 1 khuôn mặt trong vùng nhận diện")
+        }
+    }
+
     /**
      * implement listener FaceDetectionJob
      */

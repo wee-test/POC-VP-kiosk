@@ -41,6 +41,12 @@ class Detection {
                             statusListener?.faceLeaved()
                             isDetecting = false
                         } else {
+                            val listBox = result.listBox()
+                            if (listBox!!.size > 1) {
+                                isDetecting = false
+                                statusListener?.mutilFace()
+                                return@execute
+                            }
                             statusListener?.hasFace()
                             if (!faceChangeProcess(box)) {
                                 statusListener?.faceChange()
@@ -108,6 +114,7 @@ class Detection {
     interface DetectionListener {
         fun hasFace()
         fun faceLeaved()
+        fun mutilFace()
         fun faceChange()
         fun faceEligible(face: Bitmap)
     }
