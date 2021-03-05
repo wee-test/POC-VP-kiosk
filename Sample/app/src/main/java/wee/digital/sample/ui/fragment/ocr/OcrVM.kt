@@ -141,7 +141,7 @@ class OcrVM : BaseViewModel() {
     }
 
     fun isEmailValid(email: String?): Boolean {
-        email ?: return true
+        if (email.isNullOrEmpty()) return true
         val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
         val pattern: Pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
         val matcher: Matcher = pattern.matcher(email)

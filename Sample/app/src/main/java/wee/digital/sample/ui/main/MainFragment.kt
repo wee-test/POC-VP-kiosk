@@ -26,7 +26,7 @@ abstract class MainFragment : BaseFragment() {
         onLiveDataObserve()
     }
 
-    fun getStatusApi(): Boolean{
+    fun getStatusApi(): Boolean {
         return SharedHelper.instance.bool(SharedHelper.STATUS_CALL_API, false)
     }
 

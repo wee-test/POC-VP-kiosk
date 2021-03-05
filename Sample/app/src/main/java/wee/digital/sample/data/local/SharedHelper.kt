@@ -23,6 +23,7 @@ class SharedHelper {
             SharedHelper()
         }
         const val STATUS_CALL_API = "STATUS_CALL_API"
+        const val URL_SOCKET_PRINTER = "URL_SOCKET_PRINTER"
     }
 
     fun edit(block: SharedPreferences.Editor.() -> Unit) {

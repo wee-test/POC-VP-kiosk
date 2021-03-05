@@ -18,12 +18,16 @@ import wee.digital.sample.repository.socket.Socket
 import wee.digital.sample.shared.Configs
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.shared.Utils
+import wee.digital.sample.ui.base.viewModel
+import wee.digital.sample.ui.fragment.ocr.OcrVM
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
 import wee.digital.sample.widget.TextInputView
 import java.util.concurrent.TimeUnit
 
 class PassportConfirmFragment : MainFragment(), TextInputView.TextInputListener {
+
+    private val ocrVM: OcrVM by lazy { viewModel(OcrVM::class) }
 
     private var disposable: Disposable? = null
 
@@ -155,7 +159,7 @@ class PassportConfirmFragment : MainFragment(), TextInputView.TextInputListener 
             passportInputPhone.error = errorMessage
             return false
         }
-        if (passportInputEmail.text.isNullOrEmpty()) {
+        if (!ocrVM.isEmailValid(passportInputEmail.text.toString())) {
             errorMessage = "Email không hợp lệ"
             passportInputEmail.error = errorMessage
             return false

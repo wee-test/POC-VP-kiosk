@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.com_item.view.*
 import wee.digital.library.adapter.BaseRecyclerAdapter
 import wee.digital.library.extension.load
 import wee.digital.sample.R
+import wee.digital.sample.data.local.SharedHelper
 import wee.digital.sample.shared.Shared
 import wee.digital.sample.ui.main.MainActivity
 import wee.digital.sample.ui.main.MainFragment
@@ -21,6 +22,9 @@ class ComFragment : MainFragment() {
     override fun onViewCreated() {
         setupRecycler()
         addClickListener(comViewConnect,comViewClose,comViewNext)
+
+        val socketUrl = SharedHelper.instance.str(SharedHelper.URL_SOCKET_PRINTER, "") ?: ""
+        editTextPrinterSocket.setText(socketUrl)
     }
 
     private fun setupRecycler() {
@@ -35,11 +39,14 @@ class ComFragment : MainFragment() {
     override fun onLiveDataObserve() {}
 
     override fun onViewClick(v: View?) {
-        val mainActivity = activity as? MainActivity ?:return
-        when(v){
-            comViewConnect-> mainActivity.printerSocket.open(editTextPrinterSocket.text?.toString())
-            comViewClose-> mainActivity.printerSocket.close()
-            comViewNext-> {
+        val mainActivity = activity as? MainActivity ?: return
+        when (v) {
+            comViewConnect -> {
+                SharedHelper.instance.put(SharedHelper.URL_SOCKET_PRINTER, editTextPrinterSocket?.text.toString())
+                mainActivity.printerSocket.open(editTextPrinterSocket.text?.toString())
+            }
+            comViewClose -> mainActivity.printerSocket.close()
+            comViewNext -> {
                 mainActivity.printCard("9234 4567 8910 8684",
                         "TRAN LUU ANH THI",
                         "21/22")

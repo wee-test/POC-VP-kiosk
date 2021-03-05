@@ -26,6 +26,7 @@ import wee.digital.library.extension.*
 import wee.digital.sample.MainDirections
 import wee.digital.sample.R
 import wee.digital.sample.app.lib
+import wee.digital.sample.data.local.SharedHelper
 import wee.digital.sample.repository.model.MessageData
 import wee.digital.sample.repository.model.UpdateInfoReq
 import wee.digital.sample.repository.network.VPDatabase
@@ -259,7 +260,8 @@ class MainActivity : BaseActivity(), SocketServer.Listener {
             lib = vplib.Vplib.newLib(1, "$externalCacheDir")
             mainVM.loginKiosk()
         }
-        printerSocket.open(editTextPrinterSocket.text?.toString())
+        val socketUrl = SharedHelper.instance.str(SharedHelper.URL_SOCKET_PRINTER, "")
+        printerSocket.open(socketUrl)
         startWebSocket()
     }
 
