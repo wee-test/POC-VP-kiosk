@@ -130,7 +130,7 @@
         android:layout_marginTop="@dimen/margin2"
         android:fontFamily="@font/svn_gilroy_bold"
         android:gravity="center"
-        android:text="Bạn vui lòng đưa giấy tờ\nvào hộp tối bên dưới"
+        android:text="Quý khách vui lòng đặt giấy tờ\nvào khây bên dưới."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrRootCamera" />
