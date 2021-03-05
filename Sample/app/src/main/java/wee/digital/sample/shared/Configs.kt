@@ -45,7 +45,7 @@ object Configs {
 
     fun configWeeOcr(){
         WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = -3
+        WeeOCR.CAMERA_SATURATION_STEP = -4
         WeeOCR.THRESH_CROP = 64.0
         WeeOCR.BLUR_MIN_VALUE = 60
         WeeOCR.CAMERA_ZOOM = "22"
@@ -55,7 +55,7 @@ object Configs {
 
     fun configWeeOcrPassport(){
         WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = -3
+        WeeOCR.CAMERA_SATURATION_STEP = -4
         WeeOCR.THRESH_CROP = 64.0
         WeeOCR.BLUR_MIN_VALUE = 60
         WeeOCR.CAMERA_ZOOM = "17"
