@@ -3,6 +3,9 @@ package wee.digital.sample.ui.fragment.face
 import android.graphics.Bitmap
 import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.verify_face.*
+import vplib.CustomerInfo
+import vplib.IdentityCardInfo
+import vplib.ResponseGetCustomerInfo
 import wee.dev.weewebrtc.utils.extension.toObject
 import wee.digital.camera.RealSense
 import wee.digital.camera.job.FaceCaptureJob
@@ -73,23 +76,18 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
             navigate(MainDirections.actionGlobalCustomerExistFragment())
         }
         faceVM.statusSearchVP.observe {
+            val infoCard = IdentityCardInfo()
             if (it == null || it.responseCode.code != 0L) {
-                Shared.messageFail.postValue(
-                        MessageData("Đăng ký thất bại",
-                                "Không thể đăng ký tài khoản, bạn vui lòng thử lại")
-                )
-                navigate(MainDirections.actionGlobalFailFragment())
-                return@observe
-            }
-            if (it.result.data.isExisted) {
-                Shared.messageFail.postValue(
-                        MessageData("Giấy tờ đã tồn tại",
-                                "Không thể đăng ký tài khoản vì bạn đã đăng ký tài khoản")
-                )
-                navigate(MainDirections.actionGlobalFailFragment())
+                infoCard.fullName = ""
             } else {
-                navigate(MainDirections.actionGlobalHomeFragment())
+                infoCard.fullName = it.result.data.fullName
             }
+            val customer = CustomerInfo()
+            customer.identityCardInfo = infoCard
+            val respCustomerExist = ResponseGetCustomerInfo()
+            respCustomerExist.customerInfo = customer
+            Shared.customerInfoExist.postValue(respCustomerExist)
+            navigate(MainDirections.actionGlobalHomeFragment())
         }
     }
 
@@ -97,10 +95,10 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
      * [FaceCaptureJob.Listener] implement
      */
     override fun onCaptureTick(second: String?) {
-        activity?.runOnUiThread {
-            if (isComplete) return@runOnUiThread
+        view?.post {
+            if (isComplete) return@post
             faceLabelTime.text = second
-            faceFrameBg ?: return@runOnUiThread
+            faceFrameBg ?: return@post
             if (second != null) faceFrameBg.show() else faceFrameBg.gone()
         }
     }
@@ -108,8 +106,8 @@ class VerifyFaceFragment : MainFragment(), FaceCaptureJob.Listener {
     override fun onPortraitCaptured(image: Bitmap) {
         mFaceDetectJob?.pauseDetect()
         Shared.faceCapture.postValue(image)
-        activity?.runOnUiThread {
-            if (isComplete) return@runOnUiThread
+        view?.post {
+            if (isComplete) return@post
             isComplete = true
             faceLabelStatusFace.text = "Chờ chút nhé..."
             faceFrameBg.show()

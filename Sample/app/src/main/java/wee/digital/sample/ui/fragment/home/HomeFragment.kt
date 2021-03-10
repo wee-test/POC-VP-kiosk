@@ -20,12 +20,19 @@ class HomeFragment : MainFragment() {
 
     override fun onViewCreated() {
         addClickListener(homeActionLogout, homeTabSelectAuto, homeTabSelectSupport)
-        Voice.ins?.request(VoiceData.HI_UNKNOWN)
     }
 
     override fun onLiveDataObserve() {
         Shared.faceCapture.observe {
             homeImageFace.setImageBitmap(it)
+        }
+        Shared.customerInfoExist.observe {
+            if (it.customerInfo.identityCardInfo.fullName.isNullOrEmpty()) {
+                Voice.ins?.request(VoiceData.HI_UNKNOWN)
+            } else {
+                homeLabelName.text = it.customerInfo.identityCardInfo.fullName
+                Voice.ins?.request("Xin chào, ${it.customerInfo.identityCardInfo.fullName}")
+            }
         }
     }
 
