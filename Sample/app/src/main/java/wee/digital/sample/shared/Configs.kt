@@ -47,8 +47,8 @@ object Configs {
         WeeOCR.CAMERA_ID = 1
         WeeOCR.CAMERA_SATURATION_STEP = -2
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 160
-        WeeOCR.CAMERA_ZOOM = "22"
+        WeeOCR.BLUR_MIN_VALUE = 100
+        WeeOCR.CAMERA_ZOOM = "28"
         WeeOCR.DELAY_SCAN = 2
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 720.0
     }
@@ -57,7 +57,7 @@ object Configs {
         WeeOCR.CAMERA_ID = 1
         WeeOCR.CAMERA_SATURATION_STEP = -2
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 160
+        WeeOCR.BLUR_MIN_VALUE = 100
         WeeOCR.CAMERA_ZOOM = "17"
         WeeOCR.DELAY_SCAN = 2
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 720.0

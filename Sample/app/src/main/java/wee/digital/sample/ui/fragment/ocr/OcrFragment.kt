@@ -63,7 +63,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity()).apply {
-            //this.initTemplateAlign()
+            this.initTemplateCCCD()
+            this.initTemplateCMND()
         }
         addClickListener(ocrResetFont, ocrResetBack, ocrActionNext)
         resetAllFrame()
