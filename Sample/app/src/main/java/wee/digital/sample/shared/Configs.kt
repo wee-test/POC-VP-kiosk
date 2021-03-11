@@ -45,22 +45,22 @@ object Configs {
 
     fun configWeeOcr(){
         WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = -4
+        WeeOCR.CAMERA_SATURATION_STEP = -2
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 60
+        WeeOCR.BLUR_MIN_VALUE = 160
         WeeOCR.CAMERA_ZOOM = "22"
-        WeeOCR.DELAY_SCAN = 4
-        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 640.0
+        WeeOCR.DELAY_SCAN = 2
+        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 720.0
     }
 
     fun configWeeOcrPassport(){
         WeeOCR.CAMERA_ID = 1
-        WeeOCR.CAMERA_SATURATION_STEP = -4
+        WeeOCR.CAMERA_SATURATION_STEP = -2
         WeeOCR.THRESH_CROP = 64.0
-        WeeOCR.BLUR_MIN_VALUE = 60
+        WeeOCR.BLUR_MIN_VALUE = 160
         WeeOCR.CAMERA_ZOOM = "17"
-        WeeOCR.DELAY_SCAN = 4
-        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 640.0
+        WeeOCR.DELAY_SCAN = 2
+        WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 720.0
     }
 
 }

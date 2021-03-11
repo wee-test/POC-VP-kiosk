@@ -20,7 +20,7 @@ android {
         flavorDimensions "default"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'arm64-v8a'/*, 'x86'*/
+            abiFilters "armeabi-v7a"/*"arm64-v8a"*//*, 'x86'*/
         }
     }
 
