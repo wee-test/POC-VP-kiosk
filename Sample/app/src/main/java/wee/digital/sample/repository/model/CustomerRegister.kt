@@ -149,3 +149,21 @@ data class BranchInfo(
         @SerializedName("address")
         var address: String = ""
 )
+
+/*for api VP*/
+data class CustomerCreateAccount(
+        @SerializedName("kioskId")
+        var kioskId: String = Configs.KIOSK_ID,
+
+        @SerializedName("sessionId")
+        var sessionId: String = "",
+
+        @SerializedName("facePhoto")
+        var facePhoto: String = "",
+
+        @SerializedName("number")
+        var number: String = "",
+
+        @SerializedName("fullName")
+        var fullName: String = "",
+)

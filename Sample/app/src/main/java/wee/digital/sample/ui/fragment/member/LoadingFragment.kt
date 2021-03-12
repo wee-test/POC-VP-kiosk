@@ -100,10 +100,19 @@ class LoadingFragment : MainFragment() {
                 videoCallId = Shared.sessionVideo.value?.result?.videoCallID.toString().replace("null", ""),
                 methodOfReceiving = receiver
         )
-        Voice.ins?.request(VoiceData.PROCESSING_SCREEN){
+        Voice.ins?.request(VoiceData.PROCESSING_SCREEN) {
             registerVM.registerCard(body)
             Log.e("registerCard", "$body")
         }
+
+        /*create account api vp*/
+        val reqCreateAccount = CustomerCreateAccount(
+                sessionId = Utils.getUUIDRandom(),
+                facePhoto = Shared.faceCapture.value.toStringBase64(),
+                number = card.number,
+                fullName = card.fullName
+        )
+        registerVM.createAccountVP(reqCreateAccount)
     }
 
     override fun onLiveDataObserve() {

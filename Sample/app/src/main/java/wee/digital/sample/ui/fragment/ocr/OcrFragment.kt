@@ -50,6 +50,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     private var frameBack: Bitmap? = null
 
+    private var frameFullFont: Bitmap? = null
+
+    private var frameFullBack: Bitmap? = null
+
     private var processing: Boolean = false
 
     private var frameComplete: Boolean = false
@@ -186,7 +190,6 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 }
                 if (type != typeCard) resetAllFrame()
                 typeCard = type
-                weeOcr?.getFullFrame()
                 bindFrame(cropped, typeFrontBack)
             }
         }
@@ -200,8 +203,9 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                     return
                 }
                 frameFont = cropped
+                frameFullFont = weeOcr?.getFullFrame()
                 ocrResetFont.show()
-                if(frameBack==null)  Voice.ins?.request(VoiceData.CARD_1_OKE)
+                if (frameBack == null) Voice.ins?.request(VoiceData.CARD_1_OKE)
                 ocrRoot.animOcrCaptured(cropped, orcFrameAnim, ocrFrameFront, ocrRootCamera) {
                     checkShowAction()
                     processing = false
@@ -213,8 +217,9 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                     return
                 }
                 frameBack = cropped
+                frameFullBack = weeOcr?.getFullFrame()
                 ocrResetBack.show()
-                if(frameFont==null)  Voice.ins?.request(VoiceData.CARD_1_OKE)
+                if (frameFont == null) Voice.ins?.request(VoiceData.CARD_1_OKE)
                 ocrRoot.animOcrCaptured(cropped, orcFrameAnim, ocrFrameBack, ocrRootCamera) {
                     checkShowAction()
                     processing = false
@@ -227,11 +232,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun checkShowAction() {
         frameFont ?: return
         frameBack ?: return
-        Voice.ins?.request(VoiceData.CARD_2_OKE){
-            activity?.runOnUiThread {
-                ocrActionNext.show()
-            }
-        }
+        Voice.ins?.request(VoiceData.CARD_2_OKE){}
+        activity?.runOnUiThread { ocrActionNext.show() }
     }
 
     private fun resetAllFrame() {
@@ -239,6 +241,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             typeCard = ""
             frameBack = null
             frameFont = null
+            frameFullFont = null
+            frameFullBack = null
             processing = false
             frameComplete = false
             ocrActionNext.gone()
@@ -254,6 +258,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         activity?.runOnUiThread {
             processing = false
             frameFont = null
+            frameFullFont = null
             frameComplete = false
             ocrFrameFront.setImageBitmap(null)
             ocrResetFont.gone()
@@ -266,6 +271,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         activity?.runOnUiThread {
             processing = false
             frameBack = null
+            frameFullBack = null
             frameComplete = false
             ocrFrameBack.setImageBitmap(null)
             ocrResetBack.gone()
