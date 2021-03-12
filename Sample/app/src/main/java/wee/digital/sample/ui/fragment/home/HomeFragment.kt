@@ -30,7 +30,7 @@ class HomeFragment : MainFragment() {
             if (it.customerInfo.identityCardInfo.fullName.isNullOrEmpty()) {
                 Voice.ins?.request(VoiceData.HI_UNKNOWN)
             } else {
-                homeLabelName.text = it.customerInfo.identityCardInfo.fullName
+                homeLabelName.text = "Xin chào, Quý khách\n${it.customerInfo.identityCardInfo.fullName}"
                 Voice.ins?.request("Xin chào, ${it.customerInfo.identityCardInfo.fullName}")
             }
         }
