@@ -126,4 +126,17 @@ class RegisterVM : BaseViewModel(){
                 })
     }
 
+    @SuppressLint("CheckResult")
+    fun createAccountVP(body: CustomerCreateAccount) {
+        Single.fromCallable {
+            lib?.kioskService!!.faceCreateVP(Gson().toJson(body).toByteArray())
+        }.observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d("createAccountVP", "$it")
+                }, {
+                    Log.d("createAccountVP", "${it.message}")
+                })
+    }
+
 }

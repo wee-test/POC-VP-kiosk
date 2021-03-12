@@ -15,8 +15,10 @@ import wee.dev.weeocr.camera.FrameStreamListener
 import wee.dev.weeocr.repository.utils.SystemUrl
 import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
+import wee.dev.weeocr.utils.BitmapUtils
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
+import wee.digital.library.extension.decodeToBitmap
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
@@ -49,6 +51,10 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private var frameFont: Bitmap? = null
 
     private var frameBack: Bitmap? = null
+
+    private var frameFullFont: Bitmap? = null
+
+    private var frameFullBack: Bitmap? = null
 
     private var processing: Boolean = false
 
@@ -83,7 +89,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             ocrVM.scanOCRBackVP(
                     type = Configs.ID_CARD_BACK,
                     sessionId = Utils.getUUIDRandom(),
-                    image = frameBack!!.resize(900, Bitmap.CompressFormat.JPEG).toBytes(),
+                    image = frameFullBack!!.resize(900, Bitmap.CompressFormat.JPEG).toBytes(),
             )
         }
         ocrVM.statusExtractBackVP.observe {
@@ -138,7 +144,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 ocrVM.scanOCRFrontVP(
                         type = Configs.ID_CARD_FRONT,
                         sessionId = Utils.getUUIDRandom(),
-                        image = frameFont!!.resize(900, Bitmap.CompressFormat.JPEG).toBytes()
+                        image = frameFullFont!!.resize(900, Bitmap.CompressFormat.JPEG).toBytes()
                 )
             }
         }
@@ -184,15 +190,19 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                     processing = false
                     return@runOnUiThread
                 }
+                val frameFull = BitmapUtils.NV21toJPEG(frame, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT, 80).decodeToBitmap()
+                if(frameFull == null){
+                    processing = false
+                    return@runOnUiThread
+                }
                 if (type != typeCard) resetAllFrame()
                 typeCard = type
-                weeOcr?.getFullFrame()
-                bindFrame(cropped, typeFrontBack)
+                bindFrame(cropped, typeFrontBack, frameFull)
             }
         }
     }
 
-    private fun bindFrame(cropped: Bitmap, typeFrontBack: String) {
+    private fun bindFrame(cropped: Bitmap, typeFrontBack: String, frameFull: Bitmap) {
         when (typeFrontBack) {
             SystemUrl.FRONT -> {
                 if (frameFont != null) {
@@ -200,8 +210,9 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                     return
                 }
                 frameFont = cropped
+                frameFullFont = frameFull
                 ocrResetFont.show()
-                if(frameBack==null)  Voice.ins?.request(VoiceData.CARD_1_OKE)
+                if (frameBack == null) Voice.ins?.request(VoiceData.CARD_1_OKE)
                 ocrRoot.animOcrCaptured(cropped, orcFrameAnim, ocrFrameFront, ocrRootCamera) {
                     checkShowAction()
                     processing = false
@@ -213,8 +224,9 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                     return
                 }
                 frameBack = cropped
+                frameFullBack = frameFull
                 ocrResetBack.show()
-                if(frameFont==null)  Voice.ins?.request(VoiceData.CARD_1_OKE)
+                if (frameFont == null) Voice.ins?.request(VoiceData.CARD_1_OKE)
                 ocrRoot.animOcrCaptured(cropped, orcFrameAnim, ocrFrameBack, ocrRootCamera) {
                     checkShowAction()
                     processing = false
@@ -227,11 +239,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun checkShowAction() {
         frameFont ?: return
         frameBack ?: return
-        Voice.ins?.request(VoiceData.CARD_2_OKE){
-            activity?.runOnUiThread {
-                ocrActionNext.show()
-            }
-        }
+        Voice.ins?.request(VoiceData.CARD_2_OKE){}
+        activity?.runOnUiThread { ocrActionNext.show() }
     }
 
     private fun resetAllFrame() {
@@ -239,6 +248,8 @@ class OcrFragment : MainFragment(), FrameStreamListener {
             typeCard = ""
             frameBack = null
             frameFont = null
+            frameFullFont = null
+            frameFullBack = null
             processing = false
             frameComplete = false
             ocrActionNext.gone()
@@ -254,6 +265,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         activity?.runOnUiThread {
             processing = false
             frameFont = null
+            frameFullFont = null
             frameComplete = false
             ocrFrameFront.setImageBitmap(null)
             ocrResetFont.gone()
@@ -266,6 +278,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         activity?.runOnUiThread {
             processing = false
             frameBack = null
+            frameFullBack = null
             frameComplete = false
             ocrFrameBack.setImageBitmap(null)
             ocrResetBack.gone()
