@@ -15,10 +15,8 @@ import wee.dev.weeocr.camera.FrameStreamListener
 import wee.dev.weeocr.repository.utils.SystemUrl
 import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
-import wee.dev.weeocr.utils.BitmapUtils
 import wee.digital.camera.resize
 import wee.digital.camera.toBytes
-import wee.digital.library.extension.decodeToBitmap
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.show
 import wee.digital.library.extension.toast
@@ -79,9 +77,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     override fun onLiveDataObserve() {
         ocrVM.statusExtractFrontVP.observe {
             if (it.code != 0) {
-                Shared.messageFail.postValue(
-                        MessageData("Không thể đọc được dữ liệu", it.mess)
-                )
+                Shared.messageFail.postValue(MessageData("Không thể đọc được dữ liệu", it.mess))
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
@@ -94,9 +90,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         }
         ocrVM.statusExtractBackVP.observe {
             if (it.code != 0) {
-                Shared.messageFail.postValue(
-                        MessageData("Không thể đọc được dữ liệu", it.mess)
-                )
+                Shared.messageFail.postValue(MessageData("Không thể đọc được dữ liệu", it.mess))
                 navigate(MainDirections.actionGlobalFailFragment())
                 return@observe
             }
@@ -183,21 +177,16 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun cropFrame(frame: ByteArray) {
         if (processing) return
         processing = true
-        weeOcr?.cropObjectRect(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack ->
+        weeOcr?.cropObjectRect(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack, fullFrame ->
             activity?.runOnUiThread {
                 Log.e("typeScan2", "type : $type - typeScan : $typeCard")
-                if (type == CAVET || type == NONE || cropped == null || !Utils.checkSizeBitmap(cropped)) {
-                    processing = false
-                    return@runOnUiThread
-                }
-                val frameFull = BitmapUtils.NV21toJPEG(frame, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT, 80).decodeToBitmap()
-                if(frameFull == null){
+                if (type == CAVET || type == NONE || cropped == null || fullFrame == null || !Utils.checkSizeBitmap(cropped)) {
                     processing = false
                     return@runOnUiThread
                 }
                 if (type != typeCard) resetAllFrame()
                 typeCard = type
-                bindFrame(cropped, typeFrontBack, frameFull)
+                bindFrame(cropped, typeFrontBack, fullFrame)
             }
         }
     }

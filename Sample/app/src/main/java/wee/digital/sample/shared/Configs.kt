@@ -49,7 +49,8 @@ object Configs {
         WeeOCR.THRESH_CROP = 64.0
         WeeOCR.BLUR_MIN_VALUE = 100
         WeeOCR.CAMERA_ZOOM = "28"
-        WeeOCR.DELAY_SCAN = 2
+        WeeOCR.DELAY_SCAN = 4
+        WeeOCR.RATIO_THRESH = 0.72f
         WeeOCR.DOWNSCALE_IMAGE_SIZE_TEMPLATE = 720.0
     }
 
