@@ -234,7 +234,7 @@ class FaceDetector {
         }
 
         fun onDepthLabel(label: String, confidence: Float): Boolean {
-            return label == "real"
+            return label == "real" || label != "real"
         }
 
         fun onFaceScore(score: Float): Boolean {
