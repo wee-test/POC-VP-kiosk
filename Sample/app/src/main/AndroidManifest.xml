@@ -36,6 +36,7 @@
             android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait"
             android:fitsSystemWindows="false"
+            android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
 
             <intent-filter>

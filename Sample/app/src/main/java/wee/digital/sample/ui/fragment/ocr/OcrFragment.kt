@@ -1,17 +1,19 @@
 package wee.digital.sample.ui.fragment.ocr
 
 import android.graphics.Bitmap
+import android.graphics.SurfaceTexture
 import android.util.Base64
 import android.util.Log
+import android.view.TextureView
 import android.view.View
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.ocr.*
+import org.opencv.core.*
 import wee.dev.weeocr.WeeOCR
-import wee.dev.weeocr.camera.CameraConfig
-import wee.dev.weeocr.camera.CameraSource
-import wee.dev.weeocr.camera.FrameStreamListener
+import wee.dev.weeocr.camera.CameraJY
+import wee.dev.weeocr.camera.CameraJYListener
 import wee.dev.weeocr.repository.utils.SystemUrl
 import wee.dev.weeocr.repository.utils.SystemUrl.CAVET
 import wee.dev.weeocr.repository.utils.SystemUrl.NONE
@@ -32,15 +34,16 @@ import wee.digital.sample.ui.animOcrCaptured
 import wee.digital.sample.ui.base.viewModel
 import wee.digital.sample.ui.main.MainFragment
 import wee.digital.sample.util.extention.Voice
+import java.util.*
 import java.util.concurrent.TimeUnit
 
-class OcrFragment : MainFragment(), FrameStreamListener {
+class OcrFragment : MainFragment(), CameraJYListener {
 
     private val ocrVM: OcrVM by lazy { viewModel(OcrVM::class) }
 
     private var disposableCamera: Disposable? = null
 
-    private var camera: CameraSource? = null
+    private var cameraJY: CameraJY? = null
 
     private var weeOcr: WeeOCR? = null
 
@@ -64,6 +67,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     override fun onViewCreated() {
         Configs.configWeeOcr()
+        cameraJY = CameraJY(requireContext())
         Shared.ocrCardFront.postValue(null)
         Shared.ocrCardBack.postValue(null)
         weeOcr = WeeOCR(requireActivity()).apply {
@@ -146,11 +150,13 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     private fun startCamera() {
         try {
-            camera = CameraSource(requireActivity(), ocrGraphicOverlay).also {
+            /*camera = CameraSource(requireActivity(), ocrGraphicOverlay).also {
                 it.setFacing(CameraConfig.facing)
                 ocrPreview.start(it, ocrGraphicOverlay)
                 it.setFrameProcessorListener(this)
-            }
+            }*/
+            cameraJY?.resumeCamera(ocrView, 1.8f)
+            cameraJY?.listener = this
         } catch (e: Exception) {
             toast("start camera error : ${e.message}")
         }
@@ -158,26 +164,19 @@ class OcrFragment : MainFragment(), FrameStreamListener {
 
     private fun release() {
         try {
-            camera?.release()
-            ocrPreview?.release()
+            cameraJY?.stopCamera()
             weeOcr?.destroy()
-            camera = null
         } catch (e: Exception) {
             toast("stop camera error : ${e.message}")
         }
     }
 
-    override fun onFrame(byteArray: ByteArray) {
-        if(!isStart) return
-        if (frameFont != null && frameBack != null) return
-        cropFrame(byteArray)
-        Log.e("frameCameraOcr", "start ${weeOcr == null}")
-    }
 
-    private fun cropFrame(frame: ByteArray) {
+
+    private fun cropFrame(frame: Bitmap) {
         if (processing) return
         processing = true
-        weeOcr?.cropObjectRect(frame, true, CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT) { cropped, type, typeFrontBack, fullFrame ->
+        weeOcr?.cropObjectRect(frame, true) { cropped, type, typeFrontBack, fullFrame ->
             activity?.runOnUiThread {
                 Log.e("typeScan2", "type : $type - typeScan : $typeCard")
                 if (type == CAVET || type == NONE || cropped == null || fullFrame == null || !Utils.checkSizeBitmap(cropped)) {
@@ -228,7 +227,7 @@ class OcrFragment : MainFragment(), FrameStreamListener {
     private fun checkShowAction() {
         frameFont ?: return
         frameBack ?: return
-        Voice.ins?.request(VoiceData.CARD_2_OKE){}
+        Voice.ins?.request(VoiceData.CARD_2_OKE) {}
         activity?.runOnUiThread { ocrActionNext.show() }
     }
 
@@ -282,6 +281,25 @@ class OcrFragment : MainFragment(), FrameStreamListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     isStart = true
+                    ocrView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+                        override fun onSurfaceTextureAvailable(p0: SurfaceTexture, p1: Int, p2: Int) {
+//                            Log.e("JYCamera","onSurfaceTextureAvailable")
+                        }
+
+                        override fun onSurfaceTextureSizeChanged(p0: SurfaceTexture, p1: Int, p2: Int) {
+//                            Log.e("JYCamera","onSurfaceTextureSizeChanged")
+                        }
+
+                        override fun onSurfaceTextureDestroyed(p0: SurfaceTexture): Boolean {
+//                            Log.e("JYCamera","onSurfaceTextureDestroyed")
+                            return true
+                        }
+
+                        override fun onSurfaceTextureUpdated(p0: SurfaceTexture) {
+//                            Log.e("JYCamera","onSurfaceTextureUpdated")
+                        }
+
+                    }
                     startCamera()
                     Voice.ins?.request(VoiceData.PUSH_ID_CARD) {}
                     Log.e("startCameraOcr", "Start camera")
@@ -292,6 +310,17 @@ class OcrFragment : MainFragment(), FrameStreamListener {
         super.onPause()
         disposableCamera?.dispose()
         release()
+    }
+
+    override fun onFrame(nv21: ByteArray?, bitmap: Bitmap?, width: Int?, height: Int?) {
+        bitmap ?: return
+        if (!isStart) return
+        if (frameFont != null && frameBack != null) return
+        cropFrame(bitmap)
+    }
+
+    override fun onTakePic(data: ByteArray?, bitmap: Bitmap?, id: Int?) {
+
     }
 
 }

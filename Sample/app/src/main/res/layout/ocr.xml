@@ -85,6 +85,8 @@
         app:layout_constraintTop_toTopOf="@+id/ocrFrameBack"
         tools:visibility="visible" />
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ocrRootCamera"
         style="@style/OCR.Camera"
@@ -92,25 +94,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ocrFrameFront">
 
-        <wee.dev.weeocr.camera.PreviewFullScreen
-            android:id="@+id/ocrPreview"
+        <TextureView
+            android:id="@+id/ocrView"
             style="@style/MatchParent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <wee.dev.weeocr.camera.GraphicOverlay
-                android:id="@+id/ocrGraphicOverlay"
-                style="@style/MatchParent" />
+        <View
+            android:id="@+id/ocrBgCamera"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@mipmap/bg_camera" />
 
-            <View
-                android:id="@+id/ocrBgCamera"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:background="@mipmap/bg_camera" />
-
-        </wee.dev.weeocr.camera.PreviewFullScreen>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,26 +134,27 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ocrActionNext"
-        android:visibility="gone"
         style="@style/Button.Primary"
-        android:background="@drawable/bg_gradient_rounded"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:background="@drawable/bg_gradient_rounded"
         android:text="Tiếp theo"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocrLabelNote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ocrLabelNote"
         tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/ocrLoading"
-        android:visibility="gone"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/ocrActionNext"
         app:layout_constraintEnd_toEndOf="@+id/ocrActionNext"
         app:layout_constraintStart_toStartOf="@+id/ocrActionNext"
-        app:layout_constraintTop_toTopOf="@+id/ocrActionNext"/>
+        app:layout_constraintTop_toTopOf="@+id/ocrActionNext"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
