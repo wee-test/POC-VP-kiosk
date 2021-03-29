@@ -155,7 +155,7 @@ class OcrFragment : MainFragment(), CameraJYListener {
                 ocrPreview.start(it, ocrGraphicOverlay)
                 it.setFrameProcessorListener(this)
             }*/
-            cameraJY?.resumeCamera(ocrView, 1.8f)
+            cameraJY?.resumeCamera(ocrView, 0.5f)
             cameraJY?.listener = this
         } catch (e: Exception) {
             toast("start camera error : ${e.message}")
@@ -172,13 +172,12 @@ class OcrFragment : MainFragment(), CameraJYListener {
     }
 
 
-
-    private fun cropFrame(frame: Bitmap) {
+    private fun cropFrame(frame: Mat) {
         if (processing) return
         processing = true
         weeOcr?.cropObjectRect(frame, true) { cropped, type, typeFrontBack, fullFrame ->
+            Log.e("typeScan2", "type : $type - typeScan : $typeCard - ${Thread.currentThread().name}")
             activity?.runOnUiThread {
-                Log.e("typeScan2", "type : $type - typeScan : $typeCard")
                 if (type == CAVET || type == NONE || cropped == null || fullFrame == null || !Utils.checkSizeBitmap(cropped)) {
                     processing = false
                     return@runOnUiThread
@@ -312,14 +311,14 @@ class OcrFragment : MainFragment(), CameraJYListener {
         release()
     }
 
-    override fun onFrame(nv21: ByteArray?, bitmap: Bitmap?, width: Int?, height: Int?) {
-        bitmap ?: return
+    override fun onFrame(data: Mat?, width: Int?, height: Int?) {
+        data ?: return
         if (!isStart) return
         if (frameFont != null && frameBack != null) return
-        cropFrame(bitmap)
+        cropFrame(data)
     }
 
-    override fun onTakePic(data: ByteArray?, bitmap: Bitmap?, id: Int?) {
+    override fun onTakePic(data: Mat?, id: Int?) {
 
     }
 

@@ -35,6 +35,9 @@ class RecordVideo(context: Context) {
         handlerThreadVideo = HandlerThread("MyVideo")
         handlerThreadVideo?.start()
         handlerVideo = Handler(handlerThreadVideo?.looper!!)
+        handlerThreadVideo?.setUncaughtExceptionHandler { thread, message ->
+            Log.e("RecordVideo","${thread.name} - ${message.message}")
+        }
 
         try {
             file = File("${ct.externalCacheDir}/${System.currentTimeMillis()}.mp4")
